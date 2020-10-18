@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1914647609110022085}
   - component: {fileID: 7897202622757437516}
   - component: {fileID: 3686867449917257766}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 795868722226004645}
   - component: {fileID: 5129711535299446700}
   - component: {fileID: 6167610521542382634}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,8 +231,8 @@ GameObject:
   - component: {fileID: 3389085576981342217}
   - component: {fileID: 2639390122815774133}
   - component: {fileID: 5360472564458659584}
-  m_Layer: 0
-  m_Name: Door2
+  m_Layer: 8
+  m_Name: DoorEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 7899918713174654276}
   - component: {fileID: 3058152499033269904}
   - component: {fileID: 4699212143068604340}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7842478107160261442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Lights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7842478107517536443}
   - component: {fileID: 7842478107517536442}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -570,7 +570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7842478107656810603}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Doorways
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2122,7 +2122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7842478108543030388}
   - component: {fileID: 7842478108543030391}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point Light (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2214,7 +2214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7842478108869382073}
   - component: {fileID: 7842478108869382072}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Point Light (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2342,5 +2342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ac3153cd058e44f85d09121183466e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorways: []
+  doorways:
+  - {fileID: 6167610521542382634}
+  - {fileID: 4699212143068604340}
+  - {fileID: 3686867449917257766}
   MeshCollider: {fileID: 7842478108048086578}
