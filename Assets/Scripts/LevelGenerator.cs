@@ -7,7 +7,7 @@ public class LevelGenerator : MonoBehaviour
 	public Room startRoomPrefab, endRoomPrefab;
 	public List<Room> roomPrefabs = new List<Room> ();
 	public Vector2 iterationRange = new Vector2 (3, 10);
-
+	public PlayerMovement playerPrefab;
 
 	List<Doorway> availableDoorways = new List<Doorway> ();
 
@@ -16,7 +16,7 @@ public class LevelGenerator : MonoBehaviour
 	List<Room> placedRooms = new List<Room> ();
 
 	LayerMask roomLayerMask;
-
+	PlayerMovement player;
 
 
 	void Start ()
@@ -52,7 +52,10 @@ public class LevelGenerator : MonoBehaviour
 		// Level generation finished
 		Debug.Log ("Level generation finished");
 
-
+		// Place Player
+		player = Instantiate (playerPrefab) as PlayerMovement;
+		player.transform.position = startRoom.playerStart.position;
+		player.transform.rotation = startRoom.playerStart.rotation;
 
 //		yield return new WaitForSeconds (3);
 //		ResetLevelGenerator ();
