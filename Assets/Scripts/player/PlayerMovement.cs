@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
           if (isGrounded && velocity.y < 0) // touching floor
           {
-            velocity.y = -0.10f;
+            velocity.y += -0.10f;
 
             //transform.Translate(Vector3()) * Time.deltaTime, Space.World); tentativa de empurrar o jogador numa direção constantmente
             //Vector3 down = new Vector3(0,(float)-0.01,0);

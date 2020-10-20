@@ -5422,12 +5422,12 @@ MonoBehaviour:
     m_Bits: 256
   speed: 5
   gravity: -40
-  jumpHeight: 7
+  jumpHeight: 3
   playerView: {fileID: 8011222295780867464}
   playerViewYOffset: 0.6
   xMouseSensitivity: 30
   yMouseSensitivity: 30
-  fpsDisplayRate: 4
+  fpsDisplayRate: 600
 --- !u!65 &8011222296962671926
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5453,7 +5453,6 @@ GameObject:
   - component: {fileID: 8011222297198986179}
   - component: {fileID: 8011222297198986178}
   - component: {fileID: 8011222297198986177}
-  - component: {fileID: 8011222297198986172}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -5538,19 +5537,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!65 &8011222297198986172
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8011222297198986183}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1.0000001}
-  m_Center: {x: 0.00000005960464, y: 0, z: -0.00000008940696}
 --- !u!1 &8011222297210324261
 GameObject:
   m_ObjectHideFlags: 0
@@ -5575,7 +5561,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8011222297210324261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.825, z: 0}
+  m_LocalPosition: {x: 0, y: -1.825, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8011222296962671924}
