@@ -58,30 +58,30 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-          // Do FPS calculation
-          frameCount++;
-          dt += Time.deltaTime;
-          if (dt > 1.0 / fpsDisplayRate)
-          {
-              fps = Mathf.Round(frameCount / dt);
-              frameCount = 0;
-              dt -= 1.0f / fpsDisplayRate;
-          }
-          /* Ensure that the cursor is locked into the screen */
-          if (Cursor.lockState != CursorLockMode.Locked) {
-              if (Input.GetButtonDown("Fire1"))
-                  Cursor.lockState = CursorLockMode.Locked;
-          }
+        // Do FPS calculation
+        frameCount++;
+        dt += Time.deltaTime;
+        if (dt > 1.0 / fpsDisplayRate)
+        {
+            fps = Mathf.Round(frameCount / dt);
+            frameCount = 0;
+            dt -= 1.0f / fpsDisplayRate;
+        }
+        /* Ensure that the cursor is locked into the screen */
+        if (Cursor.lockState != CursorLockMode.Locked) {
+            if (Input.GetButtonDown("Fire1"))
+                Cursor.lockState = CursorLockMode.Locked;
+        }
 
-          /* Camera rotation stuff, mouse controls this shit */
-          rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
-          rotY += Input.GetAxisRaw("Mouse X") * yMouseSensitivity * 0.02f;
+        /* Camera rotation stuff, mouse controls this shit */
+        rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
+        rotY += Input.GetAxisRaw("Mouse X") * yMouseSensitivity * 0.02f;
 
-          // Clamp the X rotation
-          if(rotX < -90)
-              rotX = -90;
-          else if(rotX > 90)
-              rotX = 90;
+        // Clamp the X rotation
+        if(rotX < -90)
+            rotX = -90;
+        else if(rotX > 90)
+            rotX = 90;
 
         this.transform.rotation = Quaternion.Euler(0, rotY, 0); // Rotates the collider
         playerView.rotation     = Quaternion.Euler(rotX, rotY, 0); // Rotates the camera
@@ -95,9 +95,8 @@ public class PlayerMovement : MonoBehaviour
             AirMove(x,z);
 
         Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
-        controller.Move(velocity * Time.deltaTime);
-
+        controller.Move(move * speed * Time.deltaTime); //apply input
+        controller.Move(velocity * Time.deltaTime); //apply physics
     }
 
 
@@ -105,37 +104,39 @@ public class PlayerMovement : MonoBehaviour
     {
         canDoubleJump = true;
 
+        if (Input.GetButtonDown("Jump"))
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            return;
+        }
+
+        if (x == 0f && z == 0f)
+        {
+            velocity.x = 0; //make him stop
+            velocity.z = 0;
+            return;
+        }
+
         if (velocity.x > 0 && x < 0)
-        {   // if the player presses to oposite direction he immedially goes to a stop
+        {   // if the player presses to oposite direction he immediately goes to a stop
             velocity.x = 0;
+            return;
         }
 
         if (velocity.z > 0 && z < 0)
         {
             velocity.z = 0;
-        }
-
-        if (x == 0f && z == 0f)// && velocity.y == 0 )
-        {
-            velocity.x = 0; //make him stop
-            velocity.z = 0;
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        { //jump
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+            return;
+        } 
 
     }
 
     void AirMove(float x, float z)
     {
         velocity.y += gravity * Time.deltaTime;
-
         if (Input.GetButtonDown("Jump") && canDoubleJump)
         { //jump
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
             canDoubleJump = false;
         }
     }
