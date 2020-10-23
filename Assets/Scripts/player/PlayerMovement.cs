@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 3f;
 
     public Transform playerView;     // Camera
-    public float playerViewYOffset = 2.6f; // The height at which the camera is bound to
+    public float playerViewYOffset = .6f; // The height at which the camera is bound to
     public float xMouseSensitivity = 30.0f;
     public float yMouseSensitivity = 30.0f;
     public float fpsDisplayRate = 4.0f; // 4 updates per sec
