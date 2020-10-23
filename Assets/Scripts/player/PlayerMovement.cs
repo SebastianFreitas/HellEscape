@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float health = 50f;
 
     public CharacterController controller;
+    public GameObject head;
 
     public LayerMask groundMask;
 
@@ -49,9 +50,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Put the camera inside the capsule collider
         playerView.position = new Vector3(
-            transform.position.x,
-            transform.position.y + playerViewYOffset,
-            transform.position.z);
+            head.transform.position.x,
+            head.transform.position.y + playerViewYOffset,
+            head.transform.position.z);
 
 
     }
@@ -130,15 +131,18 @@ public class PlayerMovement : MonoBehaviour
         } 
 
     }
-
+    //to do -> neste preciso momento o jogador tem tanto controllo no ar como no chao this should not be the case
+    //objectivo é que o double jump deia este controllo adicional no ar, no momento em que o jogador faz um double jump input direcional deve ser as impactfull as ground movement
     void AirMove(float x, float z)
     {
+        Debug.Log("In air");
         velocity.y += gravity * Time.deltaTime;
         if (Input.GetButtonDown("Jump") && canDoubleJump)
         { //jump
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             canDoubleJump = false;
         }
+
     }
 
 
