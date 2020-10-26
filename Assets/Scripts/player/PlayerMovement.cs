@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public GameObject head;
 
-    public LayerMask groundMask;
+    public LayerMask  groundMask;
 
     public float speed = 12f;
     public float gravity = -19.81f;
@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     private float fps = 0.0f;
 
     private Vector3 velocity;
+    private float x = 0; //= Input.GetAxis("Horizontal"); // get movement
+    private float z = 0; // = Input.GetAxis("Vertical");
 
     private bool canDoubleJump;
 
@@ -86,13 +88,13 @@ public class PlayerMovement : MonoBehaviour
         this.transform.rotation = Quaternion.Euler(0, rotY, 0); // Rotates the collider
         playerView.rotation     = Quaternion.Euler(rotX, rotY, 0); // Rotates the camera
 
-        float x = Input.GetAxis("Horizontal"); // get movement
-        float z = Input.GetAxis("Vertical");
+        x = Input.GetAxis("Horizontal"); // get movement
+        z = Input.GetAxis("Vertical");
 
         if (controller.isGrounded)
-            GroundMove(x,z);
+            GroundMove();
         else if (!controller.isGrounded)
-            AirMove(x,z);
+            AirMove();
 
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime); //apply input
@@ -100,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void GroundMove(float x, float z)
+    void GroundMove()
     {
         canDoubleJump = true;
 
@@ -132,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
     }
     //to do -> neste preciso momento o jogador tem tanto controllo no ar como no chao this should not be the case
     //objectivo é que o double jump deia este controllo adicional no ar, no momento em que o jogador faz um double jump input direcional deve ser as impactfull as ground movement
-    void AirMove(float x, float z)
+    void AirMove()
     {
         Debug.Log("In air");
         velocity.y += gravity * Time.deltaTime;
@@ -141,8 +143,8 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             canDoubleJump = false;
         }
-
-        //velocity.x = 0;
+        x = 0;
+   
 
     }
 
