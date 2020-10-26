@@ -54,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
             head.transform.position.y + playerViewYOffset,
             head.transform.position.z);
 
-
     }
     // Update is called once per frame
     void Update()
@@ -128,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.z = 0;
             return;
-        } 
+        }
 
     }
     //to do -> neste preciso momento o jogador tem tanto controllo no ar como no chao this should not be the case
@@ -142,6 +141,8 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             canDoubleJump = false;
         }
+
+        //velocity.x = 0;
 
     }
 
