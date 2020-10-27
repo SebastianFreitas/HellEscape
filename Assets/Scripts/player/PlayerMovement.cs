@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask  groundMask;
 
     public float speed = 12f;
-    public float speedBackwards = 9f;
     public float gravity = -19.81f;
     public float jumpHeight = 3f;
 
@@ -96,13 +95,12 @@ public class PlayerMovement : MonoBehaviour
             GroundMove();
         else if (!controller.isGrounded)
             AirMove();
-
+        if (z == -1) z = -.8f;    // make movement backwards somehwat slower than rest
         Vector3 move = transform.right * x + transform.forward * z;
 
-        if (z < 0) controller.Move(move * speedBackwards * Time.deltaTime); //apply input
-        else controller.Move(move * speed * Time.deltaTime); //apply input
+        controller.Move(move * speed * Time.deltaTime);
 
-        controller.Move(velocity * Time.deltaTime); //apply physics
+        controller.Move(velocity * Time.deltaTime);
     }
 
 
@@ -148,8 +146,8 @@ public class PlayerMovement : MonoBehaviour
             canDoubleJump = false;
             return;
         }
-        x = x/2;
-        if (z == -1) z = -0.5f;
+        x = x/2; //reduce sideways movement
+        if (z < 0) z = -0.5f; //further reduce backwards movement while on air
 
 
     }
