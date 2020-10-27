@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask  groundMask;
 
     public float speed = 12f;
+    public float speedBackwards = 9f;
     public float gravity = -19.81f;
     public float jumpHeight = 3f;
 
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         // Put the camera inside the capsule collider
         playerView.position = new Vector3(
             head.transform.position.x,
-            head.transform.position.y + playerViewYOffset,
+            head.transform.position.y,// + playerViewYOffset,
             head.transform.position.z);
 
     }
@@ -97,7 +98,10 @@ public class PlayerMovement : MonoBehaviour
             AirMove();
 
         Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime); //apply input
+
+        if (z < 0) controller.Move(move * speedBackwards * Time.deltaTime); //apply input
+        else controller.Move(move * speed * Time.deltaTime); //apply input
+
         controller.Move(velocity * Time.deltaTime); //apply physics
     }
 
@@ -142,9 +146,11 @@ public class PlayerMovement : MonoBehaviour
         { //jump
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             canDoubleJump = false;
+            return;
         }
-        x = 0;
-   
+        x = x/2;
+        if (z == -1) z = -0.5f;
+
 
     }
 
