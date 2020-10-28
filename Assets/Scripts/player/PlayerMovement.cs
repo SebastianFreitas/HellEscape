@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public GameObject head;
 
-
     public float speed = 12f;
     public float gravity = -19.81f;
     public float jumpHeight = 3f;
@@ -20,28 +19,25 @@ public class PlayerMovement : MonoBehaviour
     public float yMouseSensitivity = 30.0f;
     public float fpsDisplayRate = 4.0f; // 4 updates per sec
 
-    // Camera rotations
-    private float rotX = 0.0f;
-    private float rotY = 0.0f;
-
     private int frameCount = 0;
     private float dt = 0.0f;
     private float fps = 0.0f;
 
     private Vector3 velocity;
-    private float x = 0; //= Input.GetAxis("Horizontal"); // get movement
-    private float z = 0; // = Input.GetAxis("Vertical");
+    private float x = 0; //user input
+    private float z = 0;
+
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
 
     private bool canDoubleJump;
+    private bool isGrounded;
 
 
 
     private void Start()
     {
-        // Hide the cursor
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         if (playerView == null)
         {
             Camera mainCamera = Camera.main;
@@ -74,26 +70,16 @@ public class PlayerMovement : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
         }
 
-        /* Camera rotation stuff, mouse controls this shit */
-        rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
-        rotY += Input.GetAxisRaw("Mouse X") * yMouseSensitivity * 0.02f;
-
-        // Clamp the X rotation
-        if(rotX < -90)
-            rotX = -90;
-        else if(rotX > 90)
-            rotX = 90;
-
-        this.transform.rotation = Quaternion.Euler(0, rotY, 0); // Rotates the collider
-        playerView.rotation     = Quaternion.Euler(rotX, rotY, 0); // Rotates the camera
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         x = Input.GetAxis("Horizontal"); // get movement
         z = Input.GetAxis("Vertical");
 
-        if (controller.isGrounded)
+        if (isGrounded)
             GroundMove();
-        else if (!controller.isGrounded)
+        else if (!isGrounded)
             AirMove();
+
         if (z == -1) z = -.8f;    // make movement backwards somehwat slower than rest
         Vector3 move = transform.right * x + transform.forward * z;
 
@@ -134,17 +120,24 @@ public class PlayerMovement : MonoBehaviour
         }*/
 
     }
-    //to do -> neste preciso momento o jogador tem tanto controllo no ar como no chao this should not be the case
+
     //objectivo é que o double jump deia este controllo adicional no ar, no momento em que o jogador faz um double jump input direcional deve ser as impactfull as ground movement
     void AirMove()
     {
-        //Debug.Log("In air");
-        velocity.y += gravity * Time.deltaTime;
+        Debug.Log("In air");
+        velocity.y += gravity * Time.deltaTime; //apply gravity
+
         if (Input.GetButtonDown("Jump") && canDoubleJump)
         { //jump
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             canDoubleJump = false;
             return;
+        }
+        //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
+        if ((controller.collisionFlags & CollisionFlags.Above) != 0) {
+          if (velocity.y > 0) {
+              velocity.y -= .2f;
+          }
         }
         x = x/2; //reduce sideways movement
         if (z < 0) z = -0.5f; //further reduce backwards movement while on air
