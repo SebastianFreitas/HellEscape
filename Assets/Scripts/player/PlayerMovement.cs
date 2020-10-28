@@ -46,10 +46,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Put the camera inside the capsule collider
-        playerView.position = new Vector3(
+        //this bullshit is centering the camera on the player body and not the head
+        /*playerView.position = new Vector3(
             head.transform.position.x,
             head.transform.position.y,// + playerViewYOffset,
-            head.transform.position.z);
+            head.transform.position.z);*/
 
     }
     // Update is called once per frame
@@ -96,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            Jump();
             return;
         }
         /*
@@ -128,11 +129,12 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime; //apply gravity
 
         if (Input.GetButtonDown("Jump") && canDoubleJump)
-        { //jump
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        {
+            Jump();
             canDoubleJump = false;
             return;
         }
+
         //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
         if ((controller.collisionFlags & CollisionFlags.Above) != 0) {
           if (velocity.y > 0) {
@@ -145,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    void Jump(){velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
 
     void OnCollisionEnter(Collision otherObj) //touch lava die
     {
