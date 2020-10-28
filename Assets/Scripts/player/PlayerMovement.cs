@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public GameObject head;
 
-    public LayerMask  groundMask;
 
     public float speed = 12f;
     public float gravity = -19.81f;
@@ -101,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(move * speed * Time.deltaTime);
 
         controller.Move(velocity * Time.deltaTime);
+        Debug.Log(controller.velocity);
     }
 
 
@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             return;
         }
-
+        /*
         if (x == 0f && z == 0f)
         {
             velocity.x = 0; //make him stop
@@ -131,14 +131,14 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.z = 0;
             return;
-        }
+        }*/
 
     }
     //to do -> neste preciso momento o jogador tem tanto controllo no ar como no chao this should not be the case
     //objectivo é que o double jump deia este controllo adicional no ar, no momento em que o jogador faz um double jump input direcional deve ser as impactfull as ground movement
     void AirMove()
     {
-        Debug.Log("In air");
+        //Debug.Log("In air");
         velocity.y += gravity * Time.deltaTime;
         if (Input.GetButtonDown("Jump") && canDoubleJump)
         { //jump
