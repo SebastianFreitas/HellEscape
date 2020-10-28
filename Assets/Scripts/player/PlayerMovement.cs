@@ -151,9 +151,10 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision otherObj) //touch lava die
     {
-        if (otherObj.gameObject.tag == "Player") {
-            Destroy (gameObject, .5f);
+        if (otherObj.gameObject.tag == "Lava") {
+            Jump();
         }
+        Debug.Log("touched something");
     }
 
     public void TakeDamage(float amount){
