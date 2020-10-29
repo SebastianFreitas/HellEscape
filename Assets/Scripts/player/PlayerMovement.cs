@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 12f;
     public float gravity = -19.81f;
     public float jumpHeight = 3f;
+    public float mass = 3f;
 
     public Transform playerView;     // Camera
     public float playerViewYOffset = .6f; // The height at which the camera is bound to
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private float fps = 0.0f;
 
     private Vector3 velocity;
+    private Vector3 impact = Vector3.zero;
     private float x = 0; //user input
     private float z = 0;
 
@@ -87,6 +89,10 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(move * speed * Time.deltaTime);
 
         controller.Move(velocity * Time.deltaTime);
+
+        if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
+        // consumes the impact energy each cycle:
+        impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
         Debug.Log(controller.velocity);
     }
 
@@ -130,6 +136,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && canDoubleJump)
         {
+            Vector3 move = transform.right * x + transform.forward * z;
+            if (move != Vector3.zero) AddImpact(move,50);
+            else AddImpact(Vector3.up, 50);
             Jump();
             canDoubleJump = false;
             return;
@@ -149,6 +158,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
     public void Jump(){velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
+
+     void AddImpact(Vector3 dir, float force){
+       dir.Normalize();
+       if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+       impact += dir.normalized * force / mass;
+     }
 
 
     public void TakeDamage(float amount){
