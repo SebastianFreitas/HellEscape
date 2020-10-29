@@ -5,10 +5,13 @@ using UnityEngine;
 public class LavaKill : MonoBehaviour
 {
   public GameObject objToDestroy;
+  PlayerMovement playerMov;
 
- /*  void OnTriggerEnter(Collider other)
+   void OnTriggerEnter(Collider other)
   {
       if (other.gameObject.tag == "Player")
-          //Destroy(other.gameObject);
-  }*/
+          playerMov = other.GetComponent<PlayerMovement>();
+          playerMov.JumpInput(5);
+          playerMov.TakeDamage(10);
+  }
 }

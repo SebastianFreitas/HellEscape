@@ -147,15 +147,9 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void Jump(){velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
+    public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
+    public void Jump(){velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
 
-    void OnCollisionEnter(Collision otherObj) //touch lava die
-    {
-        if (otherObj.gameObject.tag == "Lava") {
-            Jump();
-        }
-        Debug.Log("touched something");
-    }
 
     public void TakeDamage(float amount){
       health-= amount;
