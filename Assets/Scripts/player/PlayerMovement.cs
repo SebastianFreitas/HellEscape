@@ -151,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
           }
         }
         x = x/2; //reduce sideways movement
-        if (z < 0) z = -0.5f; //further reduce backwards movement while on air
+
 
 
     }
