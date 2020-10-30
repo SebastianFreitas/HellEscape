@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
     public float speed;
 
@@ -26,7 +26,7 @@ public class Projectile : MonoBehaviour
     }
 
     IEnumerator waiter(){
-      yield return new WaitForSeconds(5f);
+      yield return new WaitForSeconds(3f);
       Destroy(gameObject);
     }
 }

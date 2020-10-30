@@ -16,8 +16,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform playerView;     // Camera
     public float playerViewYOffset = .6f; // The height at which the camera is bound to
-    public float xMouseSensitivity = 30.0f;
-    public float yMouseSensitivity = 30.0f;
     public float fpsDisplayRate = 4.0f; // 4 updates per sec
 
     private int frameCount = 0;
@@ -159,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
     public void Jump(){velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
 
-     void AddImpact(Vector3 dir, float force){
+    public void AddImpact(Vector3 dir, float force){
        dir.Normalize();
        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
        impact += dir.normalized * force / mass;

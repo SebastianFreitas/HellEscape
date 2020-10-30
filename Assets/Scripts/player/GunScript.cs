@@ -11,6 +11,7 @@ public class GunScript : MonoBehaviour
     public Camera fpsCam;
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
+    public GameObject projectile;
 
     private bool canShoot = true;
 
@@ -22,25 +23,10 @@ public class GunScript : MonoBehaviour
     }
 
     void Shoot(){
-      muzzleFlash.Play();
-      RaycastHit hit;
-      if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range)){
-        Target target = hit.transform.GetComponent<Target>();
-
-        if (target != null){
-          target.TakeDamage(damage);
-        }
-        if (hit.transform != null)
-        {
-          GameObject impactGO = Instantiate(impactEffect, hit.point , Quaternion.LookRotation(hit.normal));
-          Destroy(impactGO.transform.GetChild (0).gameObject, .2f);
-          Destroy(impactGO.transform.GetChild (1).gameObject, 5f);
-          Destroy(impactGO, 5.2f);
-        }
-      }
+      GetComponent<AudioSource>().Play();
+      Instantiate(projectile, transform.GetChild(0).position, Quaternion.identity);
       canShoot = false;
       StartCoroutine(waiter());
-
     }
 
     IEnumerator waiter(){
