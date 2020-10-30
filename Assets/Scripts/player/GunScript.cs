@@ -13,6 +13,9 @@ public class GunScript : MonoBehaviour
     public GameObject impactEffect;
     public GameObject projectile;
 
+    private float x = Screen.width / 2;
+    private float y = Screen.height / 2;
+
     private bool canShoot = true;
 
     void Update()
@@ -24,7 +27,8 @@ public class GunScript : MonoBehaviour
 
     void Shoot(){
       GetComponent<AudioSource>().Play();
-      Instantiate(projectile, transform.GetChild(0).position, Quaternion.identity);
+      GameObject bullet = Instantiate(projectile,fpsCam.transform.position , Quaternion.identity);//transform.GetChild(0).position
+      bullet.transform.forward = fpsCam.transform.forward;
       canShoot = false;
       StartCoroutine(waiter());
     }

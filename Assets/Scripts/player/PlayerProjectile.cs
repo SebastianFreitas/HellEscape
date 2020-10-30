@@ -13,14 +13,17 @@ public class PlayerProjectile : MonoBehaviour
 
     void Start()
     {
-      playerView = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-      dir = playerView.ScreenPointToRay(new Vector3(x, y, 0)).direction;
+      /*playerView = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+      ray = playerView.ScreenPointToRay(new Vector3(x, y, 0));
+      dir = ray.direction;//playerView.transform.forward;
+      Debug.Log(ray);
+      transform.forward = playerView.transform.forward;*/
       StartCoroutine(waiter());
     }
 
     void Update()
     {
-        transform.position += dir*Time.deltaTime*50;
+      transform.position += transform.forward*Time.deltaTime*10;
     }
 
     IEnumerator waiter(){
