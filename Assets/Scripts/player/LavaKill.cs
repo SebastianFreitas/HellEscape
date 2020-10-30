@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LavaKill : MonoBehaviour
 {
-  public GameObject objToDestroy;
   private PlayerMovement playerMov;
 
    void OnTriggerEnter(Collider other)
