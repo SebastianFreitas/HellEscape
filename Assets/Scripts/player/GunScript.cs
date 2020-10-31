@@ -27,7 +27,7 @@ public class GunScript : MonoBehaviour
 
     void Shoot(){
       GetComponent<AudioSource>().Play();
-      GameObject bullet = Instantiate(projectile,fpsCam.transform.position , Quaternion.identity);//transform.GetChild(0).position
+      GameObject bullet = Instantiate(projectile,fpsCam.transform.position , Quaternion.Euler(new Vector3(x,y,0)));//transform.GetChild(0).position
       bullet.transform.forward = fpsCam.transform.forward;
       canShoot = false;
       StartCoroutine(waiter());
