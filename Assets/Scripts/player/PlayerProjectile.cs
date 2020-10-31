@@ -23,7 +23,7 @@ public class PlayerProjectile : MonoBehaviour
 
     void Update()
     {
-      transform.position += transform.forward*Time.deltaTime*100;
+      transform.position += transform.forward*Time.deltaTime*500;
     }
 
     IEnumerator waiter(){
