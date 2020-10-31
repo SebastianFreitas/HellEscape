@@ -166,7 +166,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: c4218d1ec938ad44294088238ec884e9, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -605,7 +605,6 @@ GameObject:
   - component: {fileID: 1275545970634226239}
   - component: {fileID: 7982863085990141627}
   - component: {fileID: 222201175276132240}
-  - component: {fileID: 1208877801}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -675,19 +674,6 @@ CharacterController:
   m_SkinWidth: 0.15
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1208877801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5867200448926568734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 183f910b2564a774fa7040f8a743a487, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mass: 3
 --- !u!1 &7356999088010387851
 GameObject:
   m_ObjectHideFlags: 0
