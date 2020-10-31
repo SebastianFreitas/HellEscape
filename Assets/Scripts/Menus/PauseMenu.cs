@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour
 {
     public string mainMenuScene;
     public GameObject pauseMenu;
+    public GameObject crossHair;
     public bool isPaused;
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,9 @@ public class PauseMenu : MonoBehaviour
         else
         {
           isPaused = true;
+          crossHair.SetActive(false);
           pauseMenu.SetActive(true);
+
           Time.timeScale = 0f;
         }
       }
@@ -36,6 +39,7 @@ public class PauseMenu : MonoBehaviour
     {
       isPaused = false;
       pauseMenu.SetActive(false);
+      crossHair.SetActive(true);
       Time.timeScale = 1f;
     }
 
