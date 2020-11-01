@@ -32,7 +32,8 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundMask;
 
     private bool canDoubleJump;
-    private bool isGrounded;
+    public bool isGrounded;
+
 
 
 

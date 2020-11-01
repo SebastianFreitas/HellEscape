@@ -5,25 +5,17 @@ using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
 {
-  private Camera playerView;
-  private Vector3 dir;
-  private float x = Screen.width / 2;
-  private float y = Screen.height / 2;
-  private Ray ray;
+
+  private float speed = 150;
 
     void Start()
     {
-      /*playerView = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-      ray = playerView.ScreenPointToRay(new Vector3(x, y, 0));
-      dir = ray.direction;//playerView.transform.forward;
-      Debug.Log(ray);
-      transform.forward = playerView.transform.forward;*/
       StartCoroutine(waiter());
     }
 
     void Update()
     {
-      transform.position += transform.forward*Time.deltaTime*500;
+      transform.position += transform.forward*Time.deltaTime*speed;
     }
 
     IEnumerator waiter(){

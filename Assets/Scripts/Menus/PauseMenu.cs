@@ -15,15 +15,7 @@ public class PauseMenu : MonoBehaviour
 
 
     public bool isPaused;
-    // Start is called before the first frame update
-    void Start()
-    {
-       //controller = player.GetComponent<CharacterController>();
-       //controller = GameObject.Find("Player").GetComponent<CharacterController>();
-       //playerControl = player.GetComponent<PlayerMovement>();
-       //mouseControl = player.GetComponent<GunScript>();
-       //game = GameObject.Find("LevelGenerator");
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -43,8 +35,6 @@ public class PauseMenu : MonoBehaviour
           Cursor.lockState = CursorLockMode.Confined;
           game.SetActive(false);
           Time.timeScale = 0f;
-          //playerControl.enabled = false;
-          //mouseControl.enabled = false;
         }
       }
     }
