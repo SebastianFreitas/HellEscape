@@ -56,6 +56,7 @@ public class LevelGenerator : MonoBehaviour
 		player = Instantiate (playerPrefab) as PlayerMovement;
 		player.transform.position = startRoom.playerStart.position;
 		player.transform.rotation = startRoom.playerStart.rotation;
+		player.transform.SetParent(transform);
 
 //		yield return new WaitForSeconds (3);
 //		ResetLevelGenerator ();
