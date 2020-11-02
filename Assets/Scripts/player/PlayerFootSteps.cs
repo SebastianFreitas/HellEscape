@@ -7,7 +7,7 @@ public class PlayerFootSteps : MonoBehaviour
 
   AudioSource[] sources;
 
-  public float footstepDelay = .5f;
+  public float footstepDelay = .4f;
   public PlayerMovement playerMov;
 
   public AudioSource doubleJump;

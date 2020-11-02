@@ -59,11 +59,11 @@ public class MouseLook : MonoBehaviour
 
          //Update input
          UpdateMouseBuffer();
-         targetTrans.rotation        = Quaternion.Euler( mouseBuffer.curAbs );
+
      }
 
      //consider late Update for applying the rotation if your game needs it (e.g. if camera parents are rotated in Update for some reason)
-     void LateUpdate() {}
+     void LateUpdate() {targetTrans.rotation        = Quaternion.Euler( mouseBuffer.curAbs );}
 
      private    void UpdateMouseBuffer()
      {
