@@ -14,8 +14,8 @@ public class PauseMenu : MonoBehaviour
     //private GunScript mouseControl;
 
 
-    public bool isPaused;
 
+    public bool isPaused;
 
     // Update is called once per frame
     void Update()

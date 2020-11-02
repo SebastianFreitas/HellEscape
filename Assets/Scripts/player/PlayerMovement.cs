@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded)
             AirMove();
 
-        if (z == -1) z = -.8f;    // make movement backwards somehwat slower than rest
+        if (z == -1) z = -.95f;    // make movement backwards somehwat slower than rest
         Vector3 move = transform.right * x + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
@@ -92,7 +92,6 @@ public class PlayerMovement : MonoBehaviour
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
         // consumes the impact energy each cycle:
         impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
-        Debug.Log(controller.velocity);
     }
 
 
@@ -130,7 +129,6 @@ public class PlayerMovement : MonoBehaviour
     //objectivo é que o double jump deia este controllo adicional no ar, no momento em que o jogador faz um double jump input direcional deve ser as impactfull as ground movement
     void AirMove()
     {
-        Debug.Log("In air");
         velocity.y += gravity * Time.deltaTime; //apply gravity
 
         if (Input.GetButtonDown("Jump") && canDoubleJump)

@@ -52,7 +52,7 @@ public class MouseLook : MonoBehaviour
      void Update ()
      {
          if(controlCursor){    //Cursor Control
-             if(  inputActive && Cursor.lockState != CursorLockMode.Locked)    { Cursor.lockState = CursorLockMode.Locked;    }
+             if(  inputActive && Cursor.lockState != CursorLockMode.Locked)  { Cursor.lockState = CursorLockMode.Locked;  }
              if( !inputActive && Cursor.lockState != CursorLockMode.None)    { Cursor.lockState = CursorLockMode.None;    }
          }
          if(!inputActive){ return; }    //active?
@@ -75,7 +75,7 @@ public class MouseLook : MonoBehaviour
 
 
 
-  //#region Helpers
+  #region Helpers
   [System.Serializable]
   public class BufferV2{
 
@@ -118,3 +118,4 @@ public class MouseLook : MonoBehaviour
          return Vector2.        Lerp(current, target, 1F -Mathf.Exp( -lambda *dt) );
      }
   }
+  #endregion Helpers

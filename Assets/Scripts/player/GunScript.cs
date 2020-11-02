@@ -27,12 +27,15 @@ public class GunScript : MonoBehaviour
     private bool canShoot = true;
     private bool reloading = false;
 
+
+
+
     void Update()
     {
       if (!reloading){
 
           if (Input.GetButton("Fire1") && canShoot ){
-            if (currentBullets != 0)Shoot();
+            if (currentBullets > 0)Shoot();
               else {Reload();}
           }
 
@@ -51,6 +54,7 @@ public class GunScript : MonoBehaviour
       bullet.transform.forward = fpsCam.transform.forward;
       currentBullets--;
       canShoot = false;
+      //StartCoroutine is stoped by SetActive(false) when they come back
       StartCoroutine(waiter());
     }
 
@@ -71,6 +75,12 @@ public class GunScript : MonoBehaviour
       magIn.Play();
       yield return new WaitForSeconds(timeReload);
       currentBullets = magSize;
+      reloading = false;
+    }
+    //this is bad very bad player can pause to reset reload
+    void OnEnable()
+    {
+      canShoot = true;
       reloading = false;
     }
 }
