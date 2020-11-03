@@ -17,9 +17,11 @@ public class GunScript : MonoBehaviour
     public GameObject impactEffect;
     public GameObject projectile;
 
-    public AudioSource shoot;
-    public AudioSource magOut;
-    public AudioSource magIn;
+    public AudioSource audio;
+    public AudioClip shoot;
+    public AudioClip magOut;
+    public AudioClip magIn;
+    public float volume = .6f;
 
     private float x = Screen.width / 2;
     private float y = Screen.height / 2;
@@ -48,8 +50,8 @@ public class GunScript : MonoBehaviour
     }
 
     void Shoot(){
-      shoot.Play();
-      GameObject bullet = Instantiate(projectile, transform.GetChild(6).position , Quaternion.Euler(new Vector3(x,y,0)));
+      audio.PlayOneShot(shoot, volume);
+      GameObject bullet = Instantiate(projectile, transform.GetChild(4).position , Quaternion.Euler(new Vector3(x,y,0)));
       //bullet.transform.SetParent(transform, true); //set bullet as child of gun, its less messy in playtime
       bullet.transform.forward = fpsCam.transform.forward;
       currentBullets--;
@@ -61,7 +63,7 @@ public class GunScript : MonoBehaviour
     void Reload()
     {
       reloading = true;
-      magOut.Play();
+      audio.PlayOneShot(magOut, volume);
       StartCoroutine(waiterReload());
     }
 
@@ -72,7 +74,7 @@ public class GunScript : MonoBehaviour
 
     IEnumerator waiterReload(){
       yield return new WaitForSeconds(.5f);
-      magIn.Play();
+      audio.PlayOneShot(magIn, volume);
       yield return new WaitForSeconds(timeReload);
       currentBullets = magSize;
       reloading = false;

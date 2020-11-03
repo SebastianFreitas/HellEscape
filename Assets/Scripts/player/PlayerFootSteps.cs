@@ -5,16 +5,16 @@ using UnityEngine;
 public class PlayerFootSteps : MonoBehaviour
 {
 
-  AudioSource[] sources;
+/*  AudioSource[] sources;
 
   public float footstepDelay = .4f;
   public PlayerMovement playerMov;
 
-  public AudioSource doubleJump;
-  public AudioSource jump;
+  public AudioSource audio;
+  public AudioClip[] steps;
 
   private float nextFootstep = 0;
-  private bool asDoubleJumped = false;
+  //private bool asDoubleJumped = false;
 
   void Start()
   {
@@ -23,7 +23,7 @@ public class PlayerFootSteps : MonoBehaviour
 
   void Update () {
     if(playerMov.isGrounded){
-      asDoubleJumped = false;
+    //  asDoubleJumped = false;
       if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S)
           || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W)) {
           nextFootstep -= Time.deltaTime;
@@ -32,14 +32,13 @@ public class PlayerFootSteps : MonoBehaviour
               nextFootstep += footstepDelay;
           }
       }
-      if (Input.GetButtonDown("Jump")) jump.Play();
     } else nextFootstep = 0;
-    if(playerMov.isGrounded == false)
+    /*if(playerMov.isGrounded == false)
         {
         if (Input.GetButtonDown("Jump") && !asDoubleJumped) {
         doubleJump.Play();
         asDoubleJumped = true;
-        }
-    }
-  }
+        }*/
+
+  
 }

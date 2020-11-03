@@ -34,6 +34,13 @@ public class PlayerMovement : MonoBehaviour
     private bool canDoubleJump;
     public bool isGrounded;
 
+    public AudioSource audioSource;
+    public AudioClip dash;
+    public AudioClip jump;
+    public AudioClip[] steps;
+    public float volume=0.5f;
+    private float nextFootstep = 0;
+    public float footstepDelay = .4f;
 
 
 
@@ -84,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (z == -1) z = -.95f;    // make movement backwards somehwat slower than rest
         Vector3 move = transform.right * x + transform.forward * z;
-
+        PlayFootSteps(move);
         controller.Move(move * speed * Time.deltaTime);
 
         controller.Move(velocity * Time.deltaTime);
@@ -101,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
+            audioSource.PlayOneShot(jump, volume);
             Jump();
             return;
         }
@@ -133,10 +141,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && canDoubleJump)
         {
+            audioSource.PlayOneShot(dash, volume + .1f);
             Vector3 move = transform.right * x + transform.forward * z;
-            if (move != Vector3.zero) AddImpact(move,50);
-            else AddImpact(Vector3.up, 50);
-            Jump();
+            if (move != Vector3.zero){ AddImpact(move,50); Jump();}
+            else {AddImpact(Vector3.up, 50); Jump();}
+
             canDoubleJump = false;
             return;
         }
@@ -151,6 +160,20 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    }
+
+    private void PlayFootSteps(Vector3 move)
+    {
+      if(isGrounded){
+        if (move != Vector3.zero) {
+            nextFootstep -= Time.deltaTime;
+            if (nextFootstep <= 0) {
+                //sources[Random.Range(0,5)].Play();
+                audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
+                nextFootstep += footstepDelay;
+            }
+        }
+      } else nextFootstep = 0;
     }
 
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
