@@ -33,7 +33,7 @@ public class PlayerFootSteps : MonoBehaviour
           }
       }
       if (Input.GetButtonDown("Jump")) jump.Play();
-    }
+    } else nextFootstep = 0;
     if(playerMov.isGrounded == false)
         {
         if (Input.GetButtonDown("Jump") && !asDoubleJumped) {
