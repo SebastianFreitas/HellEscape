@@ -13,6 +13,7 @@ public class GunScript : MonoBehaviour
     public int magSize = 8;
     public int currentBullets = 8;
     public Camera fpsCam;
+    public CharacterController controller;
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public GameObject projectile;
@@ -62,11 +63,18 @@ public class GunScript : MonoBehaviour
 
 
 
-      GameObject bullet = Instantiate(projectile, transform.GetChild(4).position , transform.GetChild(4).rotation); //Quaternion.Euler(new Vector3(x,y,0))
+      GameObject bullet = Instantiate(projectile, transform.GetChild(4).position , transform.GetChild(4).rotation) ; //Quaternion.Euler(new Vector3(x,y,0))
       bullet.transform.forward = targetPoint - transform.GetChild(4).position;
+      bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
+      //bullet.GetComponent<Rigidbody>().velocity = controller.velocity ;
+
       currentBullets--;
       canShoot = false;
-
+      /* sollution for bullet offset
+      https://gamedev.stackexchange.com/questions/58390/when-i-shoot-from-a-gun-while-walking-the-bullet-is-off-the-center-but-when-st/58431
+      var bullet_speed = transform.TransformDirection(Vector3 (0, 0, speed));
+      clone.velocity=bullet_speed + player.velocity;
+      */
       StartCoroutine(waiter());
     }
 

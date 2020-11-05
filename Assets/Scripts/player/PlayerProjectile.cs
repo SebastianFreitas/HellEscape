@@ -6,9 +6,11 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
 
-  private float speed = 150;
+  private float speed = 100;
   private Vector3 startPosition;
+  public  Vector3 playerSpeed;
   Rigidbody rb;
+
     void Start()
     {
       StartCoroutine(waiter());
@@ -18,7 +20,6 @@ public class PlayerProjectile : MonoBehaviour
     void Update()
     {
       rb.MovePosition(transform.position + transform.forward * speed * Time.fixedDeltaTime);
-      //transform.position += transform.forward*Time.deltaTime*speed;
     }
 
     IEnumerator waiter(){
@@ -30,4 +31,6 @@ public class PlayerProjectile : MonoBehaviour
     {
       StartCoroutine(waiter());
     }
+
+
 }

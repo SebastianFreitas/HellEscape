@@ -102,6 +102,11 @@ public class PlayerMovement : MonoBehaviour
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
         // consumes the impact energy each cycle:
         impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
+
+        /*playerView.position = new Vector3(
+            transform.position.x,
+            transform.position.y + playerViewYOffset,
+            transform.position.z);*/
     }
 
 
@@ -125,13 +130,13 @@ public class PlayerMovement : MonoBehaviour
         //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
         if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
-       Mathf.Clamp(x, -.75f, .75f); //reduce sideways movement
+       Mathf.Clamp(x, -.55f, .55f); //reduce sideways movement
     }
 
     private void PlayFootSteps(Vector3 move)
     {
       if(isGrounded){
-        if (x == 1 || x == -1 || z == 1 || z == -1) {
+        if (x == 1f || x == -1f || z == 1f || z == -.95f) {
             nextFootstep -= Time.deltaTime;
             if (nextFootstep <= 0) {
                 //sources[Random.Range(0,5)].Play();
