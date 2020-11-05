@@ -81,8 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
         //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         isGrounded = controller.isGrounded;
-        x = Input.GetAxis("Horizontal"); // get movement
-        z = Input.GetAxis("Vertical");
+        GetInputWASD();
 
         if (isGrounded)
             GroundMove();
@@ -90,8 +89,12 @@ public class PlayerMovement : MonoBehaviour
             AirMove();
 
         if (z == -1) z = -.95f;    // make movement backwards somehwat slower than rest
+
         Vector3 move = transform.right * x + transform.forward * z;
+        Vector3.Normalize(move);
+
         PlayFootSteps(move);
+
         controller.Move(move * speed * Time.deltaTime);
 
         controller.Move(velocity * Time.deltaTime);
@@ -105,67 +108,30 @@ public class PlayerMovement : MonoBehaviour
     void GroundMove()
     {
         canDoubleJump = true;
-
         if (Input.GetButtonDown("Jump"))
         {
             audioSource.PlayOneShot(jump, volume);
             Jump();
             return;
         }
-        /*
-        if (x == 0f && z == 0f)
-        {
-            velocity.x = 0; //make him stop
-            velocity.z = 0;
-            return;
-        }
-
-        if (velocity.x > 0 && x < 0)
-        {   // if the player presses to oposite direction he immediately goes to a stop
-            velocity.x = 0;
-            return;
-        }
-
-        if (velocity.z > 0 && z < 0)
-        {
-            velocity.z = 0;
-            return;
-        }*/
-
     }
 
-    //objectivo é que o double jump deia este controllo adicional no ar, no momento em que o jogador faz um double jump input direcional deve ser as impactfull as ground movement
     void AirMove()
     {
         velocity.y += gravity * Time.deltaTime; //apply gravity
 
-        if (Input.GetButtonDown("Jump") && canDoubleJump)
-        {
-            audioSource.PlayOneShot(dash, volume + .1f);
-            Vector3 move = transform.right * x + transform.forward * z;
-            if (move != Vector3.zero){ AddImpact(move,50); Jump();}
-            else {AddImpact(Vector3.up, 50); Jump();}
-
-            canDoubleJump = false;
-            return;
-        }
+        if (Input.GetButtonDown("Jump") && canDoubleJump) Dash();
 
         //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
-        if ((controller.collisionFlags & CollisionFlags.Above) != 0) {
-          if (velocity.y > 0) {
-              velocity.y -= .2f;
-          }
-        }
-        x = x/2; //reduce sideways movement
+        if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
-
-
+       Mathf.Clamp(x, -.75f, .75f); //reduce sideways movement
     }
 
     private void PlayFootSteps(Vector3 move)
     {
       if(isGrounded){
-        if (move != Vector3.zero) {
+        if (x == 1 || x == -1 || z == 1 || z == -1) {
             nextFootstep -= Time.deltaTime;
             if (nextFootstep <= 0) {
                 //sources[Random.Range(0,5)].Play();
@@ -185,6 +151,20 @@ public class PlayerMovement : MonoBehaviour
        impact += dir.normalized * force / mass;
      }
 
+    private void GetInputWASD()
+    {
+      x = Input.GetAxis("Horizontal");
+      z = Input.GetAxis("Vertical");
+    }
+
+    private void Dash()
+    {
+      audioSource.PlayOneShot(dash, volume - .1f);
+      Vector3 move = transform.right * x + transform.forward * z;
+      if (x == 1 || x == -1 || z == 1 || z == -1) { AddImpact(move,25); Jump();}
+      else {AddImpact(Vector3.up, 25); Jump();}
+      canDoubleJump = false;
+    }
 
     public void TakeDamage(float amount){
       health-= amount;

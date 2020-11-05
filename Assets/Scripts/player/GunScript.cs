@@ -25,6 +25,7 @@ public class GunScript : MonoBehaviour
 
     private float x = Screen.width / 2;
     private float y = Screen.height / 2;
+    private Transform objectHit;
 
     private bool canShoot = true;
     private bool reloading = false;
@@ -51,12 +52,21 @@ public class GunScript : MonoBehaviour
 
     void Shoot(){
       audio.PlayOneShot(shoot, volume);
-      GameObject bullet = Instantiate(projectile, transform.GetChild(4).position , Quaternion.Euler(new Vector3(x,y,0)));
-      //bullet.transform.SetParent(transform, true); //set bullet as child of gun, its less messy in playtime
-      bullet.transform.forward = fpsCam.transform.forward;
+      RaycastHit hit;
+      Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+      Vector3 targetPoint ;
+      if (Physics.Raycast(ray, out hit))
+          targetPoint = hit.point;
+      else
+          targetPoint = ray.GetPoint( 1000 );
+
+
+
+      GameObject bullet = Instantiate(projectile, transform.GetChild(4).position , transform.GetChild(4).rotation); //Quaternion.Euler(new Vector3(x,y,0))
+      bullet.transform.forward = targetPoint - transform.GetChild(4).position;
       currentBullets--;
       canShoot = false;
-      //StartCoroutine is stoped by SetActive(false) when they come back
+
       StartCoroutine(waiter());
     }
 

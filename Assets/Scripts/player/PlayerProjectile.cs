@@ -7,19 +7,27 @@ public class PlayerProjectile : MonoBehaviour
 {
 
   private float speed = 150;
-
+  private Vector3 startPosition;
+  Rigidbody rb;
     void Start()
     {
       StartCoroutine(waiter());
+      rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-      transform.position += transform.forward*Time.deltaTime*speed;
+      rb.MovePosition(transform.position + transform.forward * speed * Time.fixedDeltaTime);
+      //transform.position += transform.forward*Time.deltaTime*speed;
     }
 
     IEnumerator waiter(){
       yield return new WaitForSeconds(5f);
       Destroy(gameObject);
+    }
+
+    void OnEnable()
+    {
+      StartCoroutine(waiter());
     }
 }
