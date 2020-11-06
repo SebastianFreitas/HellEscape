@@ -17,6 +17,7 @@ public class GunScript : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public GameObject projectile;
+    public GameObject pnt;
 
     public AudioSource audio;
     public AudioClip shoot;
@@ -41,6 +42,8 @@ public class GunScript : MonoBehaviour
           if (Input.GetButton("Fire1") && canShoot ){
             if (currentBullets > 0)Shoot();
               else {Reload();}
+
+            return;
           }
 
           if (Input.GetButton("Reload")){
@@ -54,7 +57,7 @@ public class GunScript : MonoBehaviour
     void Shoot(){
       audio.PlayOneShot(shoot, volume);
       RaycastHit hit;
-      Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+      Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
       Vector3 targetPoint ;
       if (Physics.Raycast(ray, out hit))
           targetPoint = hit.point;
@@ -62,9 +65,9 @@ public class GunScript : MonoBehaviour
           targetPoint = ray.GetPoint( 1000 );
 
 
-
-      GameObject bullet = Instantiate(projectile, transform.GetChild(4).position , transform.GetChild(4).rotation) ; //Quaternion.Euler(new Vector3(x,y,0))
-      bullet.transform.forward = targetPoint - transform.GetChild(4).position;
+      pnt.transform.LookAt(targetPoint);
+      GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation) ; //Quaternion.Euler(new Vector3(x,y,0))
+      //bullet.transform.forward = targetPoint - transform.GetChild(4).position;
       bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
       //bullet.GetComponent<Rigidbody>().velocity = controller.velocity ;
 
