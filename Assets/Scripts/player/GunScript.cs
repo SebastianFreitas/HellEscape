@@ -18,6 +18,7 @@ public class GunScript : MonoBehaviour
     public GameObject impactEffect;
     public GameObject projectile;
     public GameObject pnt;
+    public GameObject muzzleFlashFront;
 
     public AudioSource audio;
     public AudioClip shoot;
@@ -31,30 +32,42 @@ public class GunScript : MonoBehaviour
 
     private bool canShoot = true;
     private bool reloading = false;
+    private bool flashOn = false;
 
-
+    void Start()
+    {
+      muzzleFlashFront.SetActive(false);
+    }
 
 
     void Update()
     {
-      if (!reloading){
+      if (!reloading)
+      {
 
-          if (Input.GetButton("Fire1") && canShoot ){
-            if (currentBullets > 0)Shoot();
-              else {Reload();}
-
-            return;
+          if (Input.GetButton("Fire1") && canShoot )
+          {
+            if (currentBullets > 0) {
+            Shoot();
+            }
+              else Reload();
           }
+          if (Input.GetButton("Reload")) Reload();
 
-          if (Input.GetButton("Reload")){
-            Reload();
-          }
+          //if(Input.GetButtonUp("Fire1")) muzzleFlashFront.SetActive (false);
+
+          //if(!canShoot) muzzleFlashFront.SetActive (false);
+          //if (!flashOn) muzzleFlashFront.SetActive (false);
       }
-
-
     }
 
+    void LateUpdate(){}
+
     void Shoot(){
+      muzzleFlashFront.SetActive(true);
+      StartCoroutine(waiterFlash());
+      //muzzleFlashFront.SetActive(true);
+      Debug.Log("Bam");
       audio.PlayOneShot(shoot, volume);
       RaycastHit hit;
       Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
@@ -62,12 +75,12 @@ public class GunScript : MonoBehaviour
       if (Physics.Raycast(ray, out hit))
           targetPoint = hit.point;
       else
-          targetPoint = ray.GetPoint( 1000 );
+          targetPoint = ray.GetPoint(1000);
 
 
       pnt.transform.LookAt(targetPoint);
       GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation) ; //Quaternion.Euler(new Vector3(x,y,0))
-      //bullet.transform.forward = targetPoint - transform.GetChild(4).position;
+
       bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
       //bullet.GetComponent<Rigidbody>().velocity = controller.velocity ;
 
@@ -91,6 +104,11 @@ public class GunScript : MonoBehaviour
     IEnumerator waiter(){
       yield return new WaitForSeconds(timeBtwShots);
       canShoot = true;
+    }
+
+    IEnumerator waiterFlash(){
+      yield return new WaitForSeconds(.02f);
+      muzzleFlashFront.SetActive(false);
     }
 
     IEnumerator waiterReload(){

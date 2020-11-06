@@ -139,11 +139,11 @@ public class PlayerMovement : MonoBehaviour
         if (x == 1f || x == -1f || z == 1f || z == -.95f) {
             nextFootstep -= Time.deltaTime;
             if (nextFootstep <= 0) {
-                //sources[Random.Range(0,5)].Play();
                 audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
                 nextFootstep += footstepDelay;
             }
         }
+        if (x < 1f && x > -1f && z < 1f && z > -.95f) nextFootstep = 0;
       } else nextFootstep = 0;
     }
 
