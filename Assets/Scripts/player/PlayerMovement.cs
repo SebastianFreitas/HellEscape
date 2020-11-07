@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 impact = Vector3.zero;
     private float x = 0; //user input
     private float z = 0;
+    private float xRaw = 0; //user input
+    private float zRaw = 0;
+    private Vector3 move;
+    private Vector3 moveRaw;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -40,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip[] steps;
     public float volume=0.5f;
     private float nextFootstep = 0;
-    public float footstepDelay = .4f;
+    public float footstepDelay = .3f;
 
 
 
@@ -80,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        //isGrounded = controller.isGrounded;
+
         GetInputWASD();
         PlayFootSteps();
 
@@ -89,10 +93,12 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded)
             AirMove();
 
-        Vector3 move = playerView.transform.right * x + playerView.transform.forward * z;
-        Vector3.Normalize(move);
+        SwitchedDirection();
 
-        
+        move = playerView.transform.right * x + playerView.transform.forward * z;
+        Vector3.Normalize(move);
+        moveRaw = playerView.transform.right * xRaw + playerView.transform.forward * zRaw;
+        Vector3.Normalize(moveRaw);
 
         controller.Move(move * speed * Time.deltaTime);
 
@@ -107,8 +113,6 @@ public class PlayerMovement : MonoBehaviour
             transform.position.y + playerViewYOffset,
             transform.position.z);*/
     }
-
-
     void GroundMove()
     {
         canDoubleJump = true;
@@ -137,17 +141,21 @@ public class PlayerMovement : MonoBehaviour
     {
       if(isGrounded)
       {
+        if (x < 1f && x > -1f && z < 1f && z > -1f) nextFootstep = 0;
+        if (Mathf.Approximately(xRaw,0f) && Mathf.Approximately(zRaw,0f)) nextFootstep = 0;
+
         if (Mathf.Approximately(x,1f) || Mathf.Approximately(x,-1f)  
         || Mathf.Approximately(z,1f)  || Mathf.Approximately(z,-1f)) 
         {
             nextFootstep -= Time.deltaTime;
-            if (nextFootstep <= 0) {
+            if (nextFootstep <= 0) 
+            {
                 audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
                 nextFootstep += footstepDelay;
             }
         }
-        if (x < 1f && x > -1f && z < 1f && z > -1f) nextFootstep = 0;
-      } else nextFootstep = 0;
+      }
+      else nextFootstep = 0;
     }
 
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
@@ -155,15 +163,35 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dash()
     {
-      audioSource.PlayOneShot(dash, volume - .1f);
-      Vector3 move = playerView.transform.right * x + playerView.transform.forward * z;
-      if (Input.GetButtonDown("Fire3")) AddImpact(move,30); JumpInput(1f);
-      if (Mathf.Approximately(x,1f) || Mathf.Approximately(x,-1f)  
-      || Mathf.Approximately(z,1f)  || Mathf.Approximately(z,-.85f)) { AddImpact(move,30); JumpInput(1f);}
-      else {AddImpact(Vector3.up, 25); JumpInput(2);}
       canDoubleJump = false;
-    }
+      audioSource.PlayOneShot(dash, volume - .1f);
 
+      if (Input.GetButton("Fire3"))
+      {
+        AddImpact(Vector3.up, 50); 
+        JumpInput(3f); 
+        return;
+      }
+
+      if (moveRaw != Vector3.zero)
+      {
+        AddImpact(moveRaw, 50); 
+        JumpInput(.5f); 
+        return; 
+      }
+      AddImpact(Vector3.up, 50); 
+      JumpInput(3f);    
+      //Mathf.Approximately(xRaw,1f) || Mathf.Approximately(xRaw,-1f) || Mathf.Approximately(zRaw,1f) || Mathf.Approximately(zRaw,-1f)
+    }
+    private bool SwitchedDirection()
+    {
+      if (Mathf.Approximately(moveRaw.x,1f) && Mathf.Approximately(xRaw,-1f)) 
+      {
+        Debug.Log("mudou de direçao");
+        return true;
+      }
+      return false;
+    }
     public void AddImpact(Vector3 dir, float force){
        dir.Normalize();
        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
@@ -174,6 +202,9 @@ public class PlayerMovement : MonoBehaviour
     {
       x = Input.GetAxis("Horizontal");
       z = Input.GetAxis("Vertical");
+      xRaw = Input.GetAxisRaw("Horizontal");
+      zRaw = Input.GetAxisRaw("Vertical");
+
     }
 
 
