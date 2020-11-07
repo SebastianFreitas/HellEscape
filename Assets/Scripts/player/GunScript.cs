@@ -20,7 +20,7 @@ public class GunScript : MonoBehaviour
     public GameObject pnt;
     public GameObject muzzleFlashFront;
 
-    public AudioSource audio;
+    public AudioSource audioS;
     public AudioClip shoot;
     public AudioClip magOut;
     public AudioClip magIn;
@@ -68,7 +68,7 @@ public class GunScript : MonoBehaviour
       StartCoroutine(waiterFlash());
       //muzzleFlashFront.SetActive(true);
       Debug.Log("Bam");
-      audio.PlayOneShot(shoot, volume);
+      GetComponent<AudioSource>().PlayOneShot(shoot, volume);
       RaycastHit hit;
       Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
       Vector3 targetPoint ;
@@ -97,7 +97,7 @@ public class GunScript : MonoBehaviour
     void Reload()
     {
       reloading = true;
-      audio.PlayOneShot(magOut, volume);
+      GetComponent<AudioSource>().PlayOneShot(magOut, volume);
       StartCoroutine(waiterReload());
     }
 
@@ -113,7 +113,7 @@ public class GunScript : MonoBehaviour
 
     IEnumerator waiterReload(){
       yield return new WaitForSeconds(.5f);
-      audio.PlayOneShot(magIn, volume);
+      GetComponent<AudioSource>().PlayOneShot(magIn, volume);
       yield return new WaitForSeconds(timeReload);
       currentBullets = magSize;
       reloading = false;

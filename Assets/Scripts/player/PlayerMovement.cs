@@ -82,18 +82,17 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         //isGrounded = controller.isGrounded;
         GetInputWASD();
+        PlayFootSteps();
 
         if (isGrounded)
             GroundMove();
         else if (!isGrounded)
             AirMove();
 
-        if (z == -1) z = -.95f;    // make movement backwards somehwat slower than rest
-
         Vector3 move = playerView.transform.right * x + playerView.transform.forward * z;
         Vector3.Normalize(move);
 
-        PlayFootSteps(move);
+        
 
         controller.Move(move * speed * Time.deltaTime);
 
@@ -117,12 +116,13 @@ public class PlayerMovement : MonoBehaviour
         {
             audioSource.PlayOneShot(jump, 1f);
             Jump();
-            return;
         }
+
+        if (z == -1) z = -.85f; //do this by the end so we can use raw input for checks
     }
 
     void AirMove()
-    {
+    {        
         velocity.y += gravity * Time.deltaTime; //apply gravity
 
         if (Input.GetButtonDown("Jump") && canDoubleJump) Dash();
@@ -130,36 +130,36 @@ public class PlayerMovement : MonoBehaviour
         //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
         if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
-       Mathf.Clamp(x, -.3f, .3f); //reduce sideways movement
+        Mathf.Clamp(x, -.3f, .3f); //reduce sideways movement, do this by the end so we can use raw input for checks
     }
 
-    private void PlayFootSteps(Vector3 move)
+    private void PlayFootSteps()
     {
-      if(isGrounded){
-        if (x == 1f || x == -1f || z == 1f || z == -.95f) {
+      if(isGrounded)
+      {
+        if (Mathf.Approximately(x,1f) || Mathf.Approximately(x,-1f)  
+        || Mathf.Approximately(z,1f)  || Mathf.Approximately(z,-1f)) 
+        {
             nextFootstep -= Time.deltaTime;
             if (nextFootstep <= 0) {
                 audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
                 nextFootstep += footstepDelay;
             }
         }
-        if (x < 1f && x > -1f && z < 1f && z > -.95f) nextFootstep = 0;
+        if (x < 1f && x > -1f && z < 1f && z > -1f) nextFootstep = 0;
       } else nextFootstep = 0;
     }
 
-    private void Comparefloats(float a, float b)
-    {
- 
-    }
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
-    public void Jump(){velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
+    public void Jump(){                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
 
     private void Dash()
     {
       audioSource.PlayOneShot(dash, volume - .1f);
       Vector3 move = playerView.transform.right * x + playerView.transform.forward * z;
       if (Input.GetButtonDown("Fire3")) AddImpact(move,30); JumpInput(1f);
-      if (x == 1 || x == -1 || z == 1 || z == -1) { AddImpact(move,30); JumpInput(1f);}
+      if (Mathf.Approximately(x,1f) || Mathf.Approximately(x,-1f)  
+      || Mathf.Approximately(z,1f)  || Mathf.Approximately(z,-.85f)) { AddImpact(move,30); JumpInput(1f);}
       else {AddImpact(Vector3.up, 25); JumpInput(2);}
       canDoubleJump = false;
     }

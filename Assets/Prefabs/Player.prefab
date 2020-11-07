@@ -1064,7 +1064,7 @@ MonoBehaviour:
   projectile: {fileID: 312125936527058168, guid: 4378be984f39b4543b15ad3f3f61c742, type: 3}
   pnt: {fileID: 1748284516484075946}
   muzzleFlashFront: {fileID: 7304419602078367277}
-  audio: {fileID: 7700933543394589877}
+  audioS: {fileID: 0}
   shoot: {fileID: 8300000, guid: e6514db5f2faf7343b7d387ce7bef813, type: 3}
   magOut: {fileID: 8300000, guid: a79ba71783a76fc48b3663719c2485e3, type: 3}
   magIn: {fileID: 8300000, guid: 7b0a8ef320f3c7847b185e5d2adb6a60, type: 3}
@@ -1097,7 +1097,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2609233021776130866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.536, z: -0.006}
+  m_LocalPosition: {x: 0, y: 0.545, z: -0.023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 622176409558562620}
@@ -1113,8 +1113,8 @@ Camera:
   m_GameObject: {fileID: 2609233021776130866}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 1, g: 0.023584902, b: 0.29009572, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1127,8 +1127,8 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.01
+  far clip plane: 500
   field of view: 60
   orthographic: 0
   orthographic size: 5
