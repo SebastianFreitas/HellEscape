@@ -79,8 +79,8 @@ public class PlayerMovement : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
         }
 
-        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        isGrounded = controller.isGrounded;
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        //isGrounded = controller.isGrounded;
         GetInputWASD();
 
         if (isGrounded)
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (z == -1) z = -.95f;    // make movement backwards somehwat slower than rest
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        Vector3 move = playerView.transform.right * x + playerView.transform.forward * z;
         Vector3.Normalize(move);
 
         PlayFootSteps(move);
@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
         canDoubleJump = true;
         if (Input.GetButtonDown("Jump"))
         {
-            audioSource.PlayOneShot(jump, volume);
+            audioSource.PlayOneShot(jump, 1f);
             Jump();
             return;
         }
