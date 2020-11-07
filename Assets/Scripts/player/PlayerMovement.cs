@@ -130,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
         //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
         if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
-       Mathf.Clamp(x, -.55f, .55f); //reduce sideways movement
+       Mathf.Clamp(x, -.3f, .3f); //reduce sideways movement
     }
 
     private void PlayFootSteps(Vector3 move)
@@ -147,8 +147,22 @@ public class PlayerMovement : MonoBehaviour
       } else nextFootstep = 0;
     }
 
+    private void Comparefloats(float a, float b)
+    {
+ 
+    }
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
     public void Jump(){velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
+
+    private void Dash()
+    {
+      audioSource.PlayOneShot(dash, volume - .1f);
+      Vector3 move = playerView.transform.right * x + playerView.transform.forward * z;
+      if (Input.GetButtonDown("Fire3")) AddImpact(move,30); JumpInput(1f);
+      if (x == 1 || x == -1 || z == 1 || z == -1) { AddImpact(move,30); JumpInput(1f);}
+      else {AddImpact(Vector3.up, 25); JumpInput(2);}
+      canDoubleJump = false;
+    }
 
     public void AddImpact(Vector3 dir, float force){
        dir.Normalize();
@@ -162,14 +176,7 @@ public class PlayerMovement : MonoBehaviour
       z = Input.GetAxis("Vertical");
     }
 
-    private void Dash()
-    {
-      audioSource.PlayOneShot(dash, volume - .1f);
-      Vector3 move = transform.right * x + transform.forward * z;
-      if (x == 1 || x == -1 || z == 1 || z == -1) { AddImpact(move,25); Jump();}
-      else {AddImpact(Vector3.up, 25); Jump();}
-      canDoubleJump = false;
-    }
+
 
     public void TakeDamage(float amount){
       health-= amount;

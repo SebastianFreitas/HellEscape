@@ -32,7 +32,7 @@ public class GunScript : MonoBehaviour
 
     private bool canShoot = true;
     private bool reloading = false;
-    private bool flashOn = false;
+
 
     void Start()
     {
