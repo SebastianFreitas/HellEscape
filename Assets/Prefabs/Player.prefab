@@ -275,7 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTrans: {fileID: 8152985570990004033}
-  playerBody: {fileID: 1275545970634226239}
   inputActive: 1
   controlCursor: 0
   pitchClamp: 1
@@ -409,11 +408,12 @@ MonoBehaviour:
   playerViewYOffset: 0
   fpsDisplayRate: 60
   groundCheck: {fileID: 8675176734593606968}
-  groundDistance: 0.2
+  groundDistance: 0.16
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   isGrounded: 0
+  inputLocked: 0
   audioSource: {fileID: 998741484880663113}
   dash: {fileID: 8300000, guid: daafefecf599ce74e97ef78352d14f32, type: 3}
   jump: {fileID: 8300000, guid: f7722b7efebcc4a4b88f23ed41363cce, type: 3}
@@ -426,6 +426,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bb7fb057e5d64434e84b6731439b90a7, type: 3}
   volume: 0.2
   footstepDelay: 0.35
+  acceleration: 100
+  deceleration: 2
+  currentSpeed: 0
 --- !u!143 &222201175276132240
 CharacterController:
   m_ObjectHideFlags: 0

@@ -30,12 +30,19 @@ public class PlayerMovement : MonoBehaviour
     private float zRaw = 0;
     private Vector3 move;
     private Vector3 moveRaw;
+
+
+    private Vector3 olderMove = Vector3.zero;
+    private Vector3 olderMoveRaw = Vector3.zero;
+    private Vector3 desiredDirection = Vector3.zero;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
     private bool canDoubleJump;
     public bool isGrounded;
+
+    public bool inputLocked = false;
 
     public AudioSource audioSource;
     public AudioClip dash;
@@ -66,10 +73,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-
-        //float mouseX =  Input.GetAxisRaw("Mouse X") * 1f * Time.deltaTime;
-        //transform.Rotate(Vector3.up * mouseX);
-
         // Do FPS calculation
         frameCount++;
         dt += Time.deltaTime;
@@ -84,10 +87,11 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
                 Cursor.lockState = CursorLockMode.Locked;
         }
-
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         GetInputWASD();
+
+        transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z);
 
         PlayFootSteps();
 
@@ -97,48 +101,88 @@ public class PlayerMovement : MonoBehaviour
             AirMove();
 
         //SwitchedDirection();
+      MoveState();
+        
 
-        transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z);
+
+    }
+
+    private void MoveState()
+    {
+
+
+        if (inputLocked)
+        {
+          if (desiredDirection.z > 0 && zRaw != -1) z = 1f;
+          if (desiredDirection.z < 0 && zRaw != 1) z = -1f;
+          if (desiredDirection.x > 0 && xRaw != -1) x = 1f;
+          if (desiredDirection.x < 0 && xRaw != 1) x = -1f;  
+
+          if(desiredDirection == Vector3.zero       ||
+            (desiredDirection.z > 0 && zRaw == -1)  ||
+            (desiredDirection.z < 0 && zRaw == 1)   ||
+            (desiredDirection.x > 0 && xRaw == -1)  ||
+            (desiredDirection.x < 0 && xRaw == 1))
+          inputLocked = false;
+        }
 
         move = transform.right * x + transform.forward * z;
-        Vector3.Normalize(move);
         moveRaw = transform.right * xRaw + transform.forward * zRaw;
+
         Vector3.Normalize(moveRaw);
+        Vector3.Normalize(move);
+        
 
-        controller.Move(move * speed * Time.deltaTime);
 
+        /*if (inputLocked)
+        {
+          if( olderMoveRaw.z >= 0  && zRaw == -1) inputLocked = false;
+          else move = olderMove;
+        }*/
+        controller.Move(move * speed * Time.deltaTime); //Time.unscaledDeltaTime
         controller.Move(velocity * Time.deltaTime);
 
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
         // consumes the impact energy each cycle:
         impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
 
-        /*playerView.position = new Vector3(
-            transform.position.x,
-            transform.position.y + playerViewYOffset,
-            transform.position.z);*/
+        if (!inputLocked){
+        olderMove = move;
+        olderMoveRaw = moveRaw;
+        }
+
     }
+
     void GroundMove()
     {
+        inputLocked = false;
         canDoubleJump = true;
         if (Input.GetButtonDown("Jump"))
         {
             audioSource.PlayOneShot(jump, 1f);
             Jump();
+            inputLocked = true;
+            desiredDirection = new Vector3(xRaw,0,zRaw);
         }
-
-        if (z == -1) z = -.85f; //do this by the end so we can use raw input for checks
     }
     void AirMove()
     {        
         velocity.y += gravity * Time.deltaTime; //apply gravity
 
-        if (Input.GetButtonDown("Jump") && canDoubleJump) Dash();
+        if (Input.GetButtonDown("Jump") && canDoubleJump)
+        {
+          Dash();
+          inputLocked = true;
+          desiredDirection = new Vector3(xRaw,0,zRaw);
+        }
+
 
         //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
         if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
         Mathf.Clamp(x, -.3f, .3f); //reduce sideways movement, do this by the end so we can use raw input for checks
+
+
     }
     private void PlayFootSteps()
     {
@@ -172,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
       else nextFootstep = 0;
     }
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
-    public void Jump(){                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
+    public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
     private void Dash()
     {
       canDoubleJump = false;
@@ -195,21 +239,13 @@ public class PlayerMovement : MonoBehaviour
       JumpInput(3f);    
       //Mathf.Approximately(xRaw,1f) || Mathf.Approximately(xRaw,-1f) || Mathf.Approximately(zRaw,1f) || Mathf.Approximately(zRaw,-1f)
     }
-    private bool SwitchedDirection()
-    {
-      if (Mathf.Approximately(moveRaw.x,1f) && Mathf.Approximately(xRaw,-1f)) 
-      {
-        Debug.Log("mudou de direçao");
-        return true;
-      }
-      return false;
-    }
     
-    public void AddImpact(Vector3 dir, float force){
-       dir.Normalize();
-       if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
-       impact += dir.normalized * force / mass;
-     }
+    public void AddImpact(Vector3 dir, float force)
+    {
+      dir.Normalize();
+        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+        impact += dir.normalized * force / mass;        
+    }
 
     private void GetInputWASD()
     {
@@ -218,6 +254,57 @@ public class PlayerMovement : MonoBehaviour
       xRaw = Input.GetAxisRaw("Horizontal");
       zRaw = Input.GetAxisRaw("Vertical");
     }
+
+    private void GetSmoothRawAxis(string name, float sensitivity, float gravity) //ref float axis
+    {
+      var r = Input.GetAxisRaw(name);
+      var s = sensitivity;
+      var g = gravity;
+      var t = Time.unscaledDeltaTime;
+  
+      if (r != 0)
+      {
+          currentSpeed = Mathf.Clamp(currentSpeed + r * s * t, -1f, 1f);
+      }
+      else
+      {
+          currentSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) - g * t) * Mathf.Sign(currentSpeed);
+      }
+    }
+
+    public float acceleration = 100f;
+    public float deceleration = 2f;
+    public float currentSpeed = 0;
+
+    private void UpdateInputGround()
+     {
+         if (z == -1) z = -.85f; //do this by the end so we can use raw input for checks
+         float acceleratingZ = Input.GetAxisRaw("Vertical");
+         if (!Mathf.Approximately(acceleratingZ,0f) || currentSpeed > 0)
+         {
+             if (acceleratingZ > 0)
+             {
+                 currentSpeed = Mathf.Clamp01(currentSpeed + acceleration * Time.deltaTime);
+             }
+             else
+             {
+                 currentSpeed = Mathf.Clamp01(currentSpeed - deceleration * Time.deltaTime);
+             }
+         }
+
+         float acceleratingX = Input.GetAxisRaw("Vertical");
+         if (!Mathf.Approximately(acceleratingX,0f) || currentSpeed > 0)
+         {
+             if (acceleratingX > 0)
+             {
+                 currentSpeed = Mathf.Clamp01(currentSpeed + acceleration * Time.deltaTime);
+             }
+             else
+             {
+                 currentSpeed = Mathf.Clamp01(currentSpeed - deceleration * Time.deltaTime);
+             }
+         }
+     }
 
     public void TakeDamage(float amount){
       health-= amount;
@@ -228,5 +315,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Die(){
       Destroy(gameObject);
+    }
+
+    IEnumerator JumpWaiter(){
+      yield return new WaitForSeconds(1.2f);
+      inputLocked = false;
     }
 }
