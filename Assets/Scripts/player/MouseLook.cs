@@ -36,7 +36,8 @@ public class MouseLook : MonoBehaviour
       playerBody.Rotate(Vector3.up * mouseX);
     }*/
       [Header("CameraTransform")]
-     public    Transform    targetTrans;
+     public    Transform   targetTrans;
+     //public    Transform   playerBody;
       [Header("On/Off & Settings")]
      public    bool        inputActive        = true;
      public    bool        controlCursor    = false;
@@ -63,7 +64,10 @@ public class MouseLook : MonoBehaviour
      }
 
      //consider late Update for applying the rotation if your game needs it (e.g. if camera parents are rotated in Update for some reason)
-     void LateUpdate() {targetTrans.rotation        = Quaternion.Euler( mouseBuffer.curAbs );}
+     void LateUpdate() 
+     {
+         targetTrans.rotation        = Quaternion.Euler( mouseBuffer.curAbs );
+     }
 
      private    void UpdateMouseBuffer()
      {

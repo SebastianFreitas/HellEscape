@@ -66,6 +66,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
+
+        //float mouseX =  Input.GetAxisRaw("Mouse X") * 1f * Time.deltaTime;
+        //transform.Rotate(Vector3.up * mouseX);
+
         // Do FPS calculation
         frameCount++;
         dt += Time.deltaTime;
@@ -94,9 +98,11 @@ public class PlayerMovement : MonoBehaviour
 
         //SwitchedDirection();
 
-        move = playerView.transform.right * x + playerView.transform.forward * z;
+        transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z);
+
+        move = transform.right * x + transform.forward * z;
         Vector3.Normalize(move);
-        moveRaw = playerView.transform.right * xRaw + playerView.transform.forward * zRaw;
+        moveRaw = transform.right * xRaw + transform.forward * zRaw;
         Vector3.Normalize(moveRaw);
 
         controller.Move(move * speed * Time.deltaTime);
@@ -198,18 +204,19 @@ public class PlayerMovement : MonoBehaviour
       }
       return false;
     }
+    
     public void AddImpact(Vector3 dir, float force){
        dir.Normalize();
        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
        impact += dir.normalized * force / mass;
      }
+
     private void GetInputWASD()
     {
       x = Input.GetAxis("Horizontal");
       z = Input.GetAxis("Vertical");
       xRaw = Input.GetAxisRaw("Horizontal");
       zRaw = Input.GetAxisRaw("Vertical");
-
     }
 
     public void TakeDamage(float amount){
