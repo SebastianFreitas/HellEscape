@@ -30,10 +30,6 @@ public class PlayerMovement : MonoBehaviour
     private float zRaw = 0;
     private Vector3 move;
     private Vector3 moveRaw;
-
-
-    private Vector3 olderMove = Vector3.zero;
-    private Vector3 olderMoveRaw = Vector3.zero;
     private Vector3 desiredDirection = Vector3.zero;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -103,14 +99,10 @@ public class PlayerMovement : MonoBehaviour
         //SwitchedDirection();
       MoveState();
         
-
-
     }
 
     private void MoveState()
     {
-
-
         if (inputLocked)
         {
           if (desiredDirection.z > 0 && zRaw != -1) z = 1f;
@@ -131,25 +123,13 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
-        
-
-
-        /*if (inputLocked)
-        {
-          if( olderMoveRaw.z >= 0  && zRaw == -1) inputLocked = false;
-          else move = olderMove;
-        }*/
+      
         controller.Move(move * speed * Time.deltaTime); //Time.unscaledDeltaTime
         controller.Move(velocity * Time.deltaTime);
 
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
         // consumes the impact energy each cycle:
         impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
-
-        if (!inputLocked){
-        olderMove = move;
-        olderMoveRaw = moveRaw;
-        }
 
     }
 
@@ -237,7 +217,6 @@ public class PlayerMovement : MonoBehaviour
       }
       AddImpact(Vector3.up, 75); 
       JumpInput(3f);    
-      //Mathf.Approximately(xRaw,1f) || Mathf.Approximately(xRaw,-1f) || Mathf.Approximately(zRaw,1f) || Mathf.Approximately(zRaw,-1f)
     }
     
     public void AddImpact(Vector3 dir, float force)
@@ -254,58 +233,7 @@ public class PlayerMovement : MonoBehaviour
       xRaw = Input.GetAxisRaw("Horizontal");
       zRaw = Input.GetAxisRaw("Vertical");
     }
-
-    private void GetSmoothRawAxis(string name, float sensitivity, float gravity) //ref float axis
-    {
-      var r = Input.GetAxisRaw(name);
-      var s = sensitivity;
-      var g = gravity;
-      var t = Time.unscaledDeltaTime;
-  
-      if (r != 0)
-      {
-          currentSpeed = Mathf.Clamp(currentSpeed + r * s * t, -1f, 1f);
-      }
-      else
-      {
-          currentSpeed = Mathf.Clamp01(Mathf.Abs(currentSpeed) - g * t) * Mathf.Sign(currentSpeed);
-      }
-    }
-
-    public float acceleration = 100f;
-    public float deceleration = 2f;
-    public float currentSpeed = 0;
-
-    private void UpdateInputGround()
-     {
-         if (z == -1) z = -.85f; //do this by the end so we can use raw input for checks
-         float acceleratingZ = Input.GetAxisRaw("Vertical");
-         if (!Mathf.Approximately(acceleratingZ,0f) || currentSpeed > 0)
-         {
-             if (acceleratingZ > 0)
-             {
-                 currentSpeed = Mathf.Clamp01(currentSpeed + acceleration * Time.deltaTime);
-             }
-             else
-             {
-                 currentSpeed = Mathf.Clamp01(currentSpeed - deceleration * Time.deltaTime);
-             }
-         }
-
-         float acceleratingX = Input.GetAxisRaw("Vertical");
-         if (!Mathf.Approximately(acceleratingX,0f) || currentSpeed > 0)
-         {
-             if (acceleratingX > 0)
-             {
-                 currentSpeed = Mathf.Clamp01(currentSpeed + acceleration * Time.deltaTime);
-             }
-             else
-             {
-                 currentSpeed = Mathf.Clamp01(currentSpeed - deceleration * Time.deltaTime);
-             }
-         }
-     }
-
+    
     public void TakeDamage(float amount){
       health-= amount;
       if (health <= 0f){
@@ -315,10 +243,5 @@ public class PlayerMovement : MonoBehaviour
 
     void Die(){
       Destroy(gameObject);
-    }
-
-    IEnumerator JumpWaiter(){
-      yield return new WaitForSeconds(1.2f);
-      inputLocked = false;
     }
 }
