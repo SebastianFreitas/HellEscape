@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     private float zRaw = 0;
     private Vector3 move;
     private Vector3 moveRaw;
-
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
@@ -65,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
             head.transform.position.z);*/
 
     }
-    // Update is called once per frame
     void Update()
     {
         // Do FPS calculation
@@ -86,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         GetInputWASD();
+
         PlayFootSteps();
 
         if (isGrounded)
@@ -93,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         else if (!isGrounded)
             AirMove();
 
-        SwitchedDirection();
+        //SwitchedDirection();
 
         move = playerView.transform.right * x + playerView.transform.forward * z;
         Vector3.Normalize(move);
@@ -124,7 +123,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (z == -1) z = -.85f; //do this by the end so we can use raw input for checks
     }
-
     void AirMove()
     {        
         velocity.y += gravity * Time.deltaTime; //apply gravity
@@ -136,31 +134,39 @@ public class PlayerMovement : MonoBehaviour
 
         Mathf.Clamp(x, -.3f, .3f); //reduce sideways movement, do this by the end so we can use raw input for checks
     }
-
     private void PlayFootSteps()
     {
       if(isGrounded)
       {
-        if (x < 1f && x > -1f && z < 1f && z > -1f) nextFootstep = 0;
-        if (Mathf.Approximately(xRaw,0f) && Mathf.Approximately(zRaw,0f)) nextFootstep = 0;
+        //if (x < 1f && x > -1f && z < 1f && z > -1f)                         nextFootstep = 0;
+        if (Mathf.Approximately(x,0f) && Mathf.Approximately(z,0f))   nextFootstep = 0; //if player stops movement reset
+        //maybe add steps when  adadadadadad or wswswswswswsw
 
         if (Mathf.Approximately(x,1f) || Mathf.Approximately(x,-1f)  
         || Mathf.Approximately(z,1f)  || Mathf.Approximately(z,-1f)) 
-        {
-            nextFootstep -= Time.deltaTime;
+        {  
             if (nextFootstep <= 0) 
             {
+                nextFootstep -= Time.deltaTime;
+                audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
+                nextFootstep += footstepDelay;     
+            }
+            else
+            {
+              nextFootstep -= Time.deltaTime;
+              if (nextFootstep <= 0)
+              {
                 audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
                 nextFootstep += footstepDelay;
+              }
             }
+              
         }
       }
       else nextFootstep = 0;
     }
-
     public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
     public void Jump(){                 velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
-
     private void Dash()
     {
       canDoubleJump = false;
@@ -168,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
 
       if (Input.GetButton("Fire3"))
       {
-        AddImpact(Vector3.up, 50); 
+        AddImpact(Vector3.up, 75); 
         JumpInput(3f); 
         return;
       }
@@ -179,7 +185,7 @@ public class PlayerMovement : MonoBehaviour
         JumpInput(.5f); 
         return; 
       }
-      AddImpact(Vector3.up, 50); 
+      AddImpact(Vector3.up, 75); 
       JumpInput(3f);    
       //Mathf.Approximately(xRaw,1f) || Mathf.Approximately(xRaw,-1f) || Mathf.Approximately(zRaw,1f) || Mathf.Approximately(zRaw,-1f)
     }
@@ -197,7 +203,6 @@ public class PlayerMovement : MonoBehaviour
        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
        impact += dir.normalized * force / mass;
      }
-
     private void GetInputWASD()
     {
       x = Input.GetAxis("Horizontal");
@@ -206,8 +211,6 @@ public class PlayerMovement : MonoBehaviour
       zRaw = Input.GetAxisRaw("Vertical");
 
     }
-
-
 
     public void TakeDamage(float amount){
       health-= amount;

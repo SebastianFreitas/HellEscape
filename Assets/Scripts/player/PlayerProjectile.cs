@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
 
-  private float speed = 500;
+  private float speed = 1000;
   private Vector3 startPosition;
   public  Vector3 playerSpeed;
   Rigidbody rb;

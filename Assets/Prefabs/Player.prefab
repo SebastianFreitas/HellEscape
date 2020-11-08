@@ -424,7 +424,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 157cb5e39375a8e46a6c3b8bc37c2eac, type: 3}
   - {fileID: 8300000, guid: bb7fb057e5d64434e84b6731439b90a7, type: 3}
   volume: 0.2
-  footstepDelay: 0.3
+  footstepDelay: 0.35
 --- !u!143 &222201175276132240
 CharacterController:
   m_ObjectHideFlags: 0
@@ -956,15 +956,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5351362629937062406, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
       propertyPath: m_SelectedEdges.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5351362629937062406, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
       propertyPath: m_SelectedVertices.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5351362629937062406, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351362629937062406, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
+      propertyPath: m_SelectedEdges.Array.data[0].a
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351362629937062406, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
+      propertyPath: m_SelectedEdges.Array.data[0].b
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351362629937062406, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
+      propertyPath: m_SelectedVertices.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5351362629937062406, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
+      propertyPath: m_SelectedVertices.Array.data[1]
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5961617721140610938, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
       propertyPath: m_LocalPosition.x
