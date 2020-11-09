@@ -73,6 +73,7 @@ public class GunScript : MonoBehaviour
       GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation) ; //Quaternion.Euler(new Vector3(x,y,0))
 
       bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
+      //Rigidbody.AddForce(bullet.transform.forward * 20f);
 
       currentBullets--;
       canShoot = false;

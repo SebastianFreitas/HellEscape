@@ -47,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
   public float volume=0.5f;
   private float nextFootstep = 0;
   public float footstepDelay = .3f;
-
   public float dashCooldown = 1;
 
   private void Start()
@@ -121,10 +120,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //minimum movement
-        if (x > 0f && x < .2f) x = .2f;
-        if (x < 0f && x > -.2f) x = -.2f;
-        if (z > 0f && z < .2f) z = .2f;
-        if (z < 0f && z > -.2f) z = -.2f;
+        if (x > 0f && x < .1f) x = .1f;
+        if (x < 0f && x > -.1f) x = -.1f;
+        if (z > 0f && z < .1f) z = .1f;
+        if (z < 0f && z > -.1f) z = -.1f;
 
         move = transform.right * x + transform.forward * z;
         moveRaw = transform.right * xRaw + transform.forward * zRaw;
@@ -142,7 +141,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
   void GroundMove()
-
     {
         inputLocked = false;
         //canDoubleJump = 1;
@@ -178,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
         if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
-        Mathf.Clamp(x, -.3f, .3f); //reduce sideways movement, do this by the end so we can use raw input for checks
+        Mathf.Clamp(x, -.6f, .6f); //reduce sideways movement
 
 
     }
