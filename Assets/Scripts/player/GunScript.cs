@@ -51,6 +51,7 @@ public class GunScript : MonoBehaviour
             }
               else Reload();
           }
+          if (Input.GetButton("Fire2")) Cannon();
           if (Input.GetButton("Reload")) Reload();
       }
     }
@@ -79,6 +80,14 @@ public class GunScript : MonoBehaviour
       canShoot = false;
 
       StartCoroutine(waiter());
+    }
+
+    void Cannon()
+    {
+      Debug.Log("weird shit");
+      GetComponent <ParticleSystem>().Play();
+      ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
+      em.enabled = true;
     }
 
     void Reload()

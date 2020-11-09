@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
   public float speed = 12f;
   public float gravity = -19.81f;
-  public float jumpHeight = 3f;
+  public float jumpHeight = 1.5f;
   public float mass = 3f;
 
   public Transform playerView;     // Camera
@@ -143,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
   void GroundMove()
     {
         inputLocked = false;
-        //canDoubleJump = 1;
+        canDoubleJump = 2;
         if (Input.GetButtonDown("Jump"))
         {
             audioSource.PlayOneShot(jump, 1f);
@@ -161,15 +161,17 @@ public class PlayerMovement : MonoBehaviour
         {
           JumpDash();
           inputLocked = true;
-          desiredDirection = new Vector3(xRaw,0,zRaw);
-          if (canDoubleJump <= 0 ) StartCoroutine(waiterReload()); 
+
+          //if (canDoubleJump <= 0 ) StartCoroutine(waiter()); 
         }
-        else if (Input.GetButtonDown("Fire2") && canDoubleJump>0)
+        else if (Input.GetButtonDown("Fire3") && canDoubleJump>0)
         {
           Dash();
           inputLocked = true;
           desiredDirection = new Vector3(xRaw,0,zRaw);
-          if (canDoubleJump <= 0 ) StartCoroutine(waiterReload()); 
+          if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
+            else desiredDirection = new Vector3(0,0,1);
+          //if (canDoubleJump <= 0 ) StartCoroutine(waiter()); 
         }
 
 
@@ -251,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
         impact += dir.normalized * force / mass;        
     }
 
-    private void GetInputWASD()
+  private void GetInputWASD()
     {
       x = Input.GetAxis("Horizontal");
       z = Input.GetAxis("Vertical");
@@ -259,18 +261,18 @@ public class PlayerMovement : MonoBehaviour
       zRaw = Input.GetAxisRaw("Vertical");
     }
     
-    public void TakeDamage(float amount){
+  public void TakeDamage(float amount){
       health-= amount;
       if (health <= 0f){
         Die();
       }
     }
 
-    void Die(){
+  void Die(){
       Destroy(gameObject);
     }
 
-  IEnumerator waiterReload()
+  IEnumerator waiter()
   {
     yield return new WaitForSeconds(dashCooldown);
     canDoubleJump = 2;

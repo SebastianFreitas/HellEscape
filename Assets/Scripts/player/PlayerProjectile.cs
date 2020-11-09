@@ -6,26 +6,20 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
 
-  private float speed = 250f;
+  private float speed = 500f;
   private Vector3 startPosition;
   public  Vector3 playerSpeed;
   public AudioClip ricochet;
   public AudioSource source;
 
-  public int bounces = 2;
+  public int bounces = 50;
   Rigidbody rb;
 
     void Start()
     {
-      StartCoroutine(waiter(3f));
+      StartCoroutine(waiter(.5f));
       rb = GetComponent<Rigidbody>();
       rb.AddForce(transform.forward * speed);
-    }
-
-    void Update()
-    {
-      //rb.MovePosition(transform.position + transform.forward * speed * Time.fixedDeltaTime);
-      
     }
 
     IEnumerator waiter(float a){
@@ -35,7 +29,7 @@ public class PlayerProjectile : MonoBehaviour
 
     void OnEnable()
     {
-      StartCoroutine(waiter(3f));
+      StartCoroutine(waiter(.5f));
     }
 
     void OnCollisionEnter(Collision collision)
@@ -48,10 +42,15 @@ public class PlayerProjectile : MonoBehaviour
         if (bounces > 0)
         {
           transform.forward = contact.normal;
-          source.PlayOneShot(ricochet, .1f);
+          AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
           rb.AddForce(transform.forward * 100);
           bounces--;
-        } else StartCoroutine(waiter(.5f));
+        } 
+        else 
+        {
+          //AudioSource.PlayClipAtPoint(audio, this.gameObject.transform.position);
+          Destroy(gameObject);
+        }
 
     }
 
