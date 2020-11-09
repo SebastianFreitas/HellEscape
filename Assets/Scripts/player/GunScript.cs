@@ -44,7 +44,6 @@ public class GunScript : MonoBehaviour
     {
       if (!reloading)
       {
-
           if (Input.GetButton("Fire1") && canShoot )
           {
             if (currentBullets > 0) {
@@ -53,11 +52,6 @@ public class GunScript : MonoBehaviour
               else Reload();
           }
           if (Input.GetButton("Reload")) Reload();
-
-          //if(Input.GetButtonUp("Fire1")) muzzleFlashFront.SetActive (false);
-
-          //if(!canShoot) muzzleFlashFront.SetActive (false);
-          //if (!flashOn) muzzleFlashFront.SetActive (false);
       }
     }
 
@@ -66,8 +60,6 @@ public class GunScript : MonoBehaviour
     void Shoot(){
       muzzleFlashFront.SetActive(true);
       StartCoroutine(waiterFlash());
-      //muzzleFlashFront.SetActive(true);
-      Debug.Log("Bam");
       GetComponent<AudioSource>().PlayOneShot(shoot, volume);
       RaycastHit hit;
       Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
@@ -77,20 +69,14 @@ public class GunScript : MonoBehaviour
       else
           targetPoint = ray.GetPoint(1000);
 
-
       pnt.transform.LookAt(targetPoint);
       GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation) ; //Quaternion.Euler(new Vector3(x,y,0))
 
       bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
-      //bullet.GetComponent<Rigidbody>().velocity = controller.velocity ;
 
       currentBullets--;
       canShoot = false;
-      /* sollution for bullet offset
-      https://gamedev.stackexchange.com/questions/58390/when-i-shoot-from-a-gun-while-walking-the-bullet-is-off-the-center-but-when-st/58431
-      var bullet_speed = transform.TransformDirection(Vector3 (0, 0, speed));
-      clone.velocity=bullet_speed + player.velocity;
-      */
+
       StartCoroutine(waiter());
     }
 

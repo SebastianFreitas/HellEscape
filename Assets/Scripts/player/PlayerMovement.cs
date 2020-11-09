@@ -4,53 +4,54 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float health = 50f;
+  public float health = 50f;
 
-    public CharacterController controller;
-    public GameObject head;
+  public CharacterController controller;
+  public GameObject head;
 
-    public float speed = 12f;
-    public float gravity = -19.81f;
-    public float jumpHeight = 3f;
-    public float mass = 3f;
+  public float speed = 12f;
+  public float gravity = -19.81f;
+  public float jumpHeight = 3f;
+  public float mass = 3f;
 
-    public Transform playerView;     // Camera
-    public float playerViewYOffset = .6f; // The height at which the camera is bound to
-    public float fpsDisplayRate = 4.0f; // 4 updates per sec
+  public Transform playerView;     // Camera
+  public float playerViewYOffset = .6f; // The height at which the camera is bound to
+  public float fpsDisplayRate = 4.0f; // 4 updates per sec
 
-    private int frameCount = 0;
-    private float dt = 0.0f;
-    private float fps = 0.0f;
+  private int frameCount = 0;
+  private float dt = 0.0f;
+  private float fps = 0.0f;
 
-    private Vector3 velocity;
-    private Vector3 impact = Vector3.zero;
-    private float x = 0; //user input
-    private float z = 0;
-    private float xRaw = 0; //user input
-    private float zRaw = 0;
-    private Vector3 move;
-    private Vector3 moveRaw;
-    private Vector3 desiredDirection = Vector3.zero;
-    public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
+  private Vector3 velocity;
+  private Vector3 impact = Vector3.zero;
+  private float x = 0; //user input
+  private float z = 0;
+  private float xRaw = 0; 
+  private float zRaw = 0;
+  private Vector3 move;
+  private Vector3 moveRaw;
+    
+  public Transform groundCheck;
+  public float groundDistance = 0.4f;
+  public LayerMask groundMask;
 
-    private bool canDoubleJump;
-    public bool isGrounded;
+  private int canDoubleJump = 2;
+  public bool isGrounded;
 
-    public bool inputLocked = false;
+  private Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash
+  public bool inputLocked = false;// in this state we are going to lock Horizontal and Vertical input
+  public AudioSource audioSource;
+  public AudioClip dash;
+  public AudioClip jump;
+  public AudioClip[] steps;
+  public float volume=0.5f;
+  private float nextFootstep = 0;
+  public float footstepDelay = .3f;
 
-    public AudioSource audioSource;
-    public AudioClip dash;
-    public AudioClip jump;
-    public AudioClip[] steps;
-    public float volume=0.5f;
-    private float nextFootstep = 0;
-    public float footstepDelay = .3f;
+  public float dashCooldown = 1;
 
+  private void Start()
 
-
-    private void Start()
     {
         if (playerView == null)
         {
@@ -67,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
             head.transform.position.z);*/
 
     }
-    void Update()
+  void Update()
     {
         // Do FPS calculation
         frameCount++;
@@ -101,8 +102,9 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    private void MoveState()
-    {
+  private void MoveState()
+    {   
+    //inertia
         if (inputLocked)
         {
           if (desiredDirection.z > 0 && zRaw != -1) z = 1f;
@@ -117,6 +119,12 @@ public class PlayerMovement : MonoBehaviour
             (desiredDirection.x < 0 && xRaw == 1))
           inputLocked = false;
         }
+
+        //minimum movement
+        if (x > 0f && x < .2f) x = .2f;
+        if (x < 0f && x > -.2f) x = -.2f;
+        if (z > 0f && z < .2f) z = .2f;
+        if (z < 0f && z > -.2f) z = -.2f;
 
         move = transform.right * x + transform.forward * z;
         moveRaw = transform.right * xRaw + transform.forward * zRaw;
@@ -133,10 +141,11 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void GroundMove()
+  void GroundMove()
+
     {
         inputLocked = false;
-        canDoubleJump = true;
+        //canDoubleJump = 1;
         if (Input.GetButtonDown("Jump"))
         {
             audioSource.PlayOneShot(jump, 1f);
@@ -145,15 +154,24 @@ public class PlayerMovement : MonoBehaviour
             desiredDirection = new Vector3(xRaw,0,zRaw);
         }
     }
-    void AirMove()
+  void AirMove()
+
     {        
         velocity.y += gravity * Time.deltaTime; //apply gravity
 
-        if (Input.GetButtonDown("Jump") && canDoubleJump)
+        if (Input.GetButtonDown("Jump") && canDoubleJump>0)
+        {
+          JumpDash();
+          inputLocked = true;
+          desiredDirection = new Vector3(xRaw,0,zRaw);
+          if (canDoubleJump <= 0 ) StartCoroutine(waiterReload()); 
+        }
+        else if (Input.GetButtonDown("Fire2") && canDoubleJump>0)
         {
           Dash();
           inputLocked = true;
           desiredDirection = new Vector3(xRaw,0,zRaw);
+          if (canDoubleJump <= 0 ) StartCoroutine(waiterReload()); 
         }
 
 
@@ -164,7 +182,8 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-    private void PlayFootSteps()
+
+  private void PlayFootSteps()
     {
       if(isGrounded)
       {
@@ -195,31 +214,39 @@ public class PlayerMovement : MonoBehaviour
       }
       else nextFootstep = 0;
     }
-    public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
-    public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
-    private void Dash()
+  public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
+
+  public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
+
+  private void Dash()
     {
-      canDoubleJump = false;
+      canDoubleJump--;
       audioSource.PlayOneShot(dash, volume - .1f);
-
-      if (Input.GetButton("Fire3"))
+      if (moveRaw == Vector3.zero) 
       {
-        AddImpact(Vector3.up, 75); 
-        JumpInput(3f); 
-        return;
+        AddImpact(transform.forward, 50); 
+        JumpInput(.5f); 
       }
-
-      if (moveRaw != Vector3.zero)
+      else 
       {
         AddImpact(moveRaw, 50); 
         JumpInput(.5f); 
-        return; 
       }
-      AddImpact(Vector3.up, 75); 
-      JumpInput(3f);    
-    }
     
-    public void AddImpact(Vector3 dir, float force)
+    }
+
+  private void JumpDash()
+  {
+    canDoubleJump--;
+    audioSource.PlayOneShot(dash, volume - .1f);
+
+    AddImpact(Vector3.up, 50); 
+    JumpInput(3f);
+
+    return;   
+  }
+    
+  public void AddImpact(Vector3 dir, float force)
     {
       dir.Normalize();
         if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
@@ -244,4 +271,10 @@ public class PlayerMovement : MonoBehaviour
     void Die(){
       Destroy(gameObject);
     }
+
+  IEnumerator waiterReload()
+  {
+    yield return new WaitForSeconds(dashCooldown);
+    canDoubleJump = 2;
+  }
 }
