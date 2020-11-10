@@ -87,9 +87,7 @@ public class PlayerMovement : MonoBehaviour
 
         GetInputWASD();
 
-        transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z);
-
-        PlayFootSteps();
+        
 
         if (isGrounded)
             GroundMove();
@@ -98,11 +96,13 @@ public class PlayerMovement : MonoBehaviour
 
         //SwitchedDirection();
       MoveState();
-        
+
+      PlayFootSteps();  
     }
 
   private void MoveState()
-    {   
+    {
+      transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   
     //inertia
         if (inputLocked)
         {
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
       
-        controller.Move(move * speed * Time.deltaTime); //Time.unscaledDeltaTime
+        controller.Move(move * speed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);
 
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
@@ -264,8 +264,9 @@ public class PlayerMovement : MonoBehaviour
   public void TakeDamage(float amount){
       health-= amount;
       if (health <= 0f){
-        Die();
+        Debug.Log("You have dieadded");//Die();
       }
+      Debug.Log("You took "+amount+" damage.");
     }
 
   void Die(){

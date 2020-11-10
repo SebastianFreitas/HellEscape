@@ -7,10 +7,13 @@ public class PlayerProjectile : MonoBehaviour
 {
 
   private float speed = 500f;
+  private float damage = 50;
   private Vector3 startPosition;
   public  Vector3 playerSpeed;
   public AudioClip ricochet;
   public AudioSource source;
+
+  private Monster enemyScript;
 
   public int bounces = 50;
   Rigidbody rb;
@@ -53,6 +56,16 @@ public class PlayerProjectile : MonoBehaviour
         }
 
     }
+
+  void OnTriggerEnter(Collider other)
+  {
+      if (other.gameObject.tag == "Monster")
+      {
+          enemyScript = other.GetComponent<Monster>();
+          enemyScript.TakeDamage(damage);
+      }
+
+  }
 
 
 

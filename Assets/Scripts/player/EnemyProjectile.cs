@@ -9,6 +9,8 @@ public class EnemyProjectile : MonoBehaviour
     private Transform player;
     private Vector3 target;
 
+    public float damage=100;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -28,5 +30,11 @@ public class EnemyProjectile : MonoBehaviour
     IEnumerator waiter(){
       yield return new WaitForSeconds(3f);
       Destroy(gameObject);
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+      if (collision.gameObject.tag == "Player")
+      player.GetComponent<PlayerMovement>().TakeDamage(damage);
     }
 }

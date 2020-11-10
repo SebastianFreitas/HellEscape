@@ -53,7 +53,7 @@ public class Target : MonoBehaviour
         timeBtwShots = startTimeBtwShots;
       }else {
           timeBtwShots -=Time.deltaTime;
-      }
+       }
   }
 
 
