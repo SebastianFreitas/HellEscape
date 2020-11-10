@@ -20,9 +20,11 @@ public class PlayerProjectile : MonoBehaviour
 
     void Start()
     {
-      StartCoroutine(waiter(.5f));
       rb = GetComponent<Rigidbody>();
       rb.AddForce(transform.forward * speed);
+      //rb.velocity =   playerSpeed - rb.velocity;
+      //rb.position = 
+      StartCoroutine(waiter(.5f));
     }
 
     IEnumerator waiter(float a){

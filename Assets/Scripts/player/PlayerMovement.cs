@@ -8,8 +8,10 @@ public class PlayerMovement : MonoBehaviour
 
   public CharacterController controller;
   public GameObject head;
-
   public float speed = 12f;
+  public float currentSpeed = 12f;
+  public float speedModifier = 1;
+  public int speedCounter = 0;
   public float gravity = -19.81f;
   public float jumpHeight = 1.5f;
   public float mass = 3f;
@@ -83,11 +85,10 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Fire1"))
                 Cursor.lockState = CursorLockMode.Locked;
         }
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         GetInputWASD();
-
-        
 
         if (isGrounded)
             GroundMove();
@@ -102,7 +103,7 @@ public class PlayerMovement : MonoBehaviour
 
   private void MoveState()
     {
-      transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   
+      transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //
     //inertia
         if (inputLocked)
         {
@@ -116,7 +117,11 @@ public class PlayerMovement : MonoBehaviour
             (desiredDirection.z < 0 && zRaw == 1)   ||
             (desiredDirection.x > 0 && xRaw == -1)  ||
             (desiredDirection.x < 0 && xRaw == 1))
-          inputLocked = false;
+            {
+              inputLocked = false;
+              speedCounter=0;
+            }
+          
         }
 
         //minimum movement
@@ -130,8 +135,11 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
+
+        if (move == Vector3.zero) speedCounter = 0;
+        currentSpeed = speed + (speedCounter * speedModifier);
       
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * currentSpeed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);
 
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
@@ -142,15 +150,16 @@ public class PlayerMovement : MonoBehaviour
 
   void GroundMove()
     {
-        inputLocked = false;
-        canDoubleJump = 2;
-        if (Input.GetButtonDown("Jump"))
-        {
-            audioSource.PlayOneShot(jump, 1f);
-            Jump();
-            inputLocked = true;
-            desiredDirection = new Vector3(xRaw,0,zRaw);
-        }
+      if (inputLocked) speedCounter++;
+      inputLocked = false;
+      canDoubleJump = 2;
+      if (Input.GetButtonDown("Jump"))
+      {
+          audioSource.PlayOneShot(jump, 1f);
+          Jump();
+          inputLocked = true;
+          desiredDirection = new Vector3(xRaw,0,zRaw);
+      }
     }
   void AirMove()
 
@@ -221,6 +230,7 @@ public class PlayerMovement : MonoBehaviour
   private void Dash()
     {
       canDoubleJump--;
+      speedModifier++;
       audioSource.PlayOneShot(dash, volume - .1f);
       if (moveRaw == Vector3.zero) 
       {

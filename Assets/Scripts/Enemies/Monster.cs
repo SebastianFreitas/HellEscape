@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class Monster : MonoBehaviour
 
     public GameObject projectile;
     private Transform player;
+
+    NavMeshAgent agent;
 
     private bool running = false;
 
@@ -75,10 +78,13 @@ public class Monster : MonoBehaviour
     Destroy(gameObject);
   }
 
-    IEnumerator waiter(){
+    IEnumerator waiter()
+    {
       yield return new WaitForSeconds(3f);
       player = GameObject.FindGameObjectWithTag("Player").transform;
       running = true;  
+      agent.SetDestination(player.transform.position);
+      
     }
 
 

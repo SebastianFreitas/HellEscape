@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1385025671396363178}
   - component: {fileID: 964202095398255077}
   - component: {fileID: 2539950445389455270}
+  - component: {fileID: 1067965367081078771}
   m_Layer: 0
   m_Name: enemySkull
   m_TagString: Untagged
@@ -84,6 +85,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 20.33699, y: 29.575407, z: 22.243118}
   m_Center: {x: 0.070991516, y: -0.7368839, z: 16.62899}
+--- !u!195 &1067965367081078771
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412714010074994750}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &3882840558219327048
 GameObject:
   m_ObjectHideFlags: 0
