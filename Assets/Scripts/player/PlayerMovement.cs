@@ -9,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
   public CharacterController controller;
   public GameObject head;
   public float speed = 12f;
-  public float currentSpeed = 12f;
+  private float currentSpeed = 12f;
+  private Vector3 currentVelocity;
   public float speedModifier = 1;
   public int speedCounter = 0;
   public float gravity = -19.81f;
@@ -138,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (move == Vector3.zero) speedCounter = 0;
         currentSpeed = speed + (speedCounter * speedModifier);
+        //if (velocity.y > 0 ) velocity.y = velocity.y *((speedCounter+1) * speedModifier)/8;
       
         controller.Move(move * currentSpeed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);

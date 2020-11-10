@@ -36,29 +36,6 @@ public class PlayerProjectile : MonoBehaviour
     {
       StartCoroutine(waiter(.5f));
     }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        ContactPoint contact = collision.contacts[0];
-        //Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
-        //Vector3 position = contact.point;
-        //Instantiate(explosionPrefab, position, rotation);
-        //Destroy(gameObject);
-        if (bounces > 0)
-        {
-          transform.forward = contact.normal;
-          AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
-          rb.AddForce(transform.forward * 100);
-          bounces--;
-        } 
-        else 
-        {
-          //AudioSource.PlayClipAtPoint(audio, this.gameObject.transform.position);
-          Destroy(gameObject);
-        }
-
-    }
-
   void OnTriggerEnter(Collider other)
   {
       if (other.gameObject.tag == "Monster")
@@ -68,6 +45,28 @@ public class PlayerProjectile : MonoBehaviour
       }
 
   }
+  void OnCollisionEnter(Collision collision)
+  {
+      ContactPoint contact = collision.contacts[0];
+      //Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
+      //Vector3 position = contact.point;
+      //Instantiate(explosionPrefab, position, rotation);
+      //Destroy(gameObject);
+      if (bounces > 0)
+      {
+        transform.forward = contact.normal;
+        AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
+        rb.AddForce(transform.forward * 100);
+        bounces--;
+      } 
+      else 
+      {
+         //AudioSource.PlayClipAtPoint(audio, this.gameObject.transform.position);
+         Destroy(gameObject);
+      }
+  }
+
+
 
 
 

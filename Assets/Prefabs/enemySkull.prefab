@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1788253703695532676}
   - component: {fileID: 1385025671396363178}
-  - component: {fileID: 964202095398255077}
   - component: {fileID: 2539950445389455270}
-  - component: {fileID: 1067965367081078771}
+  - component: {fileID: 4137760457890274582}
+  - component: {fileID: 8490035148160077464}
   m_Layer: 0
   m_Name: enemySkull
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412714010074994750}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -1.4574754, z: 1.3051347}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 8247908045936771937}
@@ -50,16 +50,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9003c5ff22d7a44a4f000a7f639942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
-  speed: 5
-  stoppingDistance: 10
-  retreatDistance: 10
+  health: 100
+  speed: 100
+  stoppingDistance: 5
+  retreatDistance: 5
   damage: 25
   range: 100
   timeBtwShots: 0.47464538
   startTimeBtwShots: 1
   projectile: {fileID: 5001703177229529540, guid: 131112c6d8bf824489f065b91b6dcba3, type: 3}
---- !u!65 &964202095398255077
+--- !u!65 &2539950445389455270
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,9 +70,9 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20.33699, y: 29.575407, z: 22.243118}
-  m_Center: {x: 0.070991516, y: -0.7368839, z: 16.62899}
---- !u!65 &2539950445389455270
+  m_Size: {x: 21, y: 31, z: 22}
+  m_Center: {x: 0.066496134, y: 0.5270576, z: 16.761103}
+--- !u!65 &4137760457890274582
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,30 +83,24 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 20.33699, y: 29.575407, z: 22.243118}
-  m_Center: {x: 0.070991516, y: -0.7368839, z: 16.62899}
---- !u!195 &1067965367081078771
-NavMeshAgent:
+  m_Size: {x: 22.335203, y: 32.103294, z: 23.610641}
+  m_Center: {x: 0.066496134, y: 0.5270576, z: 16.761103}
+--- !u!54 &8490035148160077464
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412714010074994750}
-  m_Enabled: 1
-  m_AgentTypeID: -1372625422
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 5
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
 --- !u!1 &3882840558219327048
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +241,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1446020383151447230, guid: fbf9613d73f47bb48a9897b9bbe7d7ba, type: 3}
+  - {fileID: 2100000, guid: c8534d6dbe0c45f44b30196810dc8fa3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
