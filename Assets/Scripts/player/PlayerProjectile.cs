@@ -22,8 +22,6 @@ public class PlayerProjectile : MonoBehaviour
   {
      rb = GetComponent<Rigidbody>();
      rb.AddForce(transform.forward * speed);
-     //rb.velocity =   playerSpeed - rb.velocity;
-     //rb.position = 
      StartCoroutine(waiter(.5f));
   }
 

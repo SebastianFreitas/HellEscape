@@ -72,7 +72,7 @@ public class GunScript : MonoBehaviour
 
       pnt.transform.LookAt(targetPoint);
       GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation) ; //Quaternion.Euler(new Vector3(x,y,0))
-
+      Debug.DrawRay(bullet.transform.position, bullet.transform.forward, Color.red); 
       bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
       //Rigidbody.AddForce(bullet.transform.forward * 20f);
 
