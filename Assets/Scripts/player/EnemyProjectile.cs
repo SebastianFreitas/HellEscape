@@ -5,36 +5,37 @@ using UnityEngine;
 public class EnemyProjectile : MonoBehaviour
 {
     public float speed;
-
-    private Transform player;
     private Vector3 target;
-
-    public float damage=100;
-
+    public float damage;
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        target = new Vector3 (player.position.x, player.position.y, player.position.z);
+        //player = GameObject.FindGameObjectWithTag("Player").transform;
+        //target = new Vector3 (player.position.x, player.position.y, player.position.z);
+        GetComponent<Rigidbody>().AddForce(transform.forward * speed);
         StartCoroutine(waiter());
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (transform.position.x == target.x && transform.position.y == target.y){
-          transform.position += transform.forward * Time.deltaTime * speed;
-        } else transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime); //makes projectile move towards target (not the player, it would instead follow the player in that case)
+        //if (transform.position.x == target.x && transform.position.y == target.y){
+        //  transform.position += transform.forward * Time.deltaTime * speed;
+        //} else transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime); //makes projectile move towards target (not the player, it would instead follow the player in that case)
 
     }
 
     IEnumerator waiter(){
-      yield return new WaitForSeconds(3f);
+      yield return new WaitForSeconds(5f);
       Destroy(gameObject);
     }
 
     void OnTriggerEnter(Collider collision)
     {
       if (collision.gameObject.tag == "Player")
-      player.GetComponent<PlayerMovement>().TakeDamage(damage);
+      collision.GetComponent<PlayerMovement>().TakeDamage(damage);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+      Destroy(gameObject);
     }
 }

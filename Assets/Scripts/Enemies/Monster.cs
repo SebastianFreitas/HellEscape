@@ -24,18 +24,9 @@ public class Monster : MonoBehaviour
 
     private Rigidbody skullBody;
 
+    private bool canShoot = true;
 
-    //private bool seeTarget = false; //use to check if enemy as seen the player
-
-    /** send raycast from point A to B
-    Vector3 fromPosition = source.transform.position;
-    Vector3 toPosition = destination.transform.position;
-    Vector3 direction = toPosition - fromPosition;*/
-
-    /*  pos = playerView.transform.position;
-      dir = (this.transform.position - playerView.transform.position).normalized;
-      Debug.DrawLine (pos, pos + dir * 10, Color.red, Mathf.Infinity); */
-
+    public GameObject spawn;
 
     void Start(){
       player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -49,14 +40,13 @@ public class Monster : MonoBehaviour
 
       if (running)
       {
-        if (bullet != null) bullet.transform.LookAt(player, Vector3.up);
-
-        if (Vector3.Distance(transform.position, player.position) > stoppingDistance){
-              transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
         }     
         else 
-        if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance){
-
+        if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
+        {
             transform.position = transform.position;
         } 
         else 
@@ -65,15 +55,14 @@ public class Monster : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
         }
 
-          if (timeBtwShots <= 0){
-              bullet = Instantiate(projectile, transform.position, Quaternion.identity);
-              bullet.GetComponent<EnemyProjectile>().damage = damage;
-              timeBtwShots = startTimeBtwShots;
-          }else {
-              timeBtwShots -=Time.deltaTime;
-          }
-
-          
+        if (canShoot){
+            Debug.Log("Enemy trying to shoot");
+            bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
+            bullet.GetComponent<EnemyProjectile>().damage = damage;
+            bullet.transform.LookAt(player, Vector3.up);
+            canShoot = false;
+            StartCoroutine(fireRateCycle());
+        } 
           running = false;
           StartCoroutine(monsterCycle());
       }  
@@ -91,21 +80,25 @@ public class Monster : MonoBehaviour
     Destroy(gameObject);
   }
 
-    IEnumerator waiter()
-    {
-      yield return new WaitForSeconds(.5f);
-      player = GameObject.FindGameObjectWithTag("Player").transform;
-      running = true;  
-      //agent.SetDestination(player.transform.position);
-      
-    }
+  IEnumerator waiter()
+  {
+    yield return new WaitForSeconds(.5f);
+    player = GameObject.FindGameObjectWithTag("Player").transform;
+    running = true;  
+  }
 
-    IEnumerator monsterCycle()
-    {
-      yield return new WaitForSeconds(.09f);
-      if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
-      running = true;
-    }
+  IEnumerator monsterCycle()
+  {
+    yield return new WaitForSeconds(.09f);
+    if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
+    running = true;
+  }
+
+  IEnumerator fireRateCycle()
+  {
+    yield return new WaitForSeconds(timeBtwShots);
+    canShoot= true;
+  }
 
 
 }

@@ -23,20 +23,14 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         StartCoroutine(waiter());
-        //FillDificulties();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!wait)
         {   
             if (clone == null)
             {   
-                //spawnPoint.rotation = Quaternion.Euler(-90, 0, 0);
-                /*Alive -= killed;
-                dificulty = Alive ;
-                killed = dificulty ;*/
                 killed = 0;
                 for (int i = 0; i<dificulty[difTier]; i++)
                 {
