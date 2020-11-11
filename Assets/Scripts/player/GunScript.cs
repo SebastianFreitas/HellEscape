@@ -84,7 +84,6 @@ public class GunScript : MonoBehaviour
 
     void Cannon()
     {
-      Debug.Log("weird shit");
       GetComponent <ParticleSystem>().Play();
       ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
       em.enabled = true;

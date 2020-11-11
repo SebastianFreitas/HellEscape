@@ -15,27 +15,28 @@ public class PlayerProjectile : MonoBehaviour
 
   private Monster enemyScript;
 
-  public int bounces = 50;
+  public int bounces = 2;
   Rigidbody rb;
 
-    void Start()
-    {
-      rb = GetComponent<Rigidbody>();
-      rb.AddForce(transform.forward * speed);
-      //rb.velocity =   playerSpeed - rb.velocity;
-      //rb.position = 
-      StartCoroutine(waiter(.5f));
-    }
+  void Start()
+  {
+     rb = GetComponent<Rigidbody>();
+     rb.AddForce(transform.forward * speed);
+     //rb.velocity =   playerSpeed - rb.velocity;
+     //rb.position = 
+     StartCoroutine(waiter(.5f));
+  }
 
-    IEnumerator waiter(float a){
-      yield return new WaitForSeconds(a);
-      Destroy(gameObject);
-    }
+  IEnumerator waiter(float a){
+    yield return new WaitForSeconds(a);
+     Destroy(gameObject);
+  }
 
-    void OnEnable()
-    {
-      StartCoroutine(waiter(.5f));
-    }
+  void OnEnable()
+  {
+    StartCoroutine(waiter(.5f));
+  }
+
   void OnTriggerEnter(Collider other)
   {
       if (other.gameObject.tag == "Monster")
@@ -48,10 +49,6 @@ public class PlayerProjectile : MonoBehaviour
   void OnCollisionEnter(Collision collision)
   {
       ContactPoint contact = collision.contacts[0];
-      //Quaternion rotation = Quaternion.FromToRotation(Vector3.up, contact.normal);
-      //Vector3 position = contact.point;
-      //Instantiate(explosionPrefab, position, rotation);
-      //Destroy(gameObject);
       if (bounces > 0)
       {
         transform.forward = contact.normal;
@@ -61,8 +58,10 @@ public class PlayerProjectile : MonoBehaviour
       } 
       else 
       {
-         //AudioSource.PlayClipAtPoint(audio, this.gameObject.transform.position);
-         Destroy(gameObject);
+        //GetComponent <ParticleSystem>().Play();
+        //ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
+        //em.enabled = true;
+        Destroy(gameObject);
       }
   }
 

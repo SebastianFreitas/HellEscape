@@ -225,9 +225,9 @@ public class PlayerMovement : MonoBehaviour
       }
       else nextFootstep = 0;
     }
-  public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -2f * gravity);}
+  public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -3f * gravity);}
 
-  public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);}
+  public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);}
 
   private void Dash()
     {
