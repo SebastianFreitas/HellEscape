@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public string mainMenuScene;
     public GameObject pauseMenu;
     public GameObject crossHair;
+    public GameObject textureRender;
     public GameObject game;
     //private PlayerMovement playerControl;
     //private GunScript mouseControl;
@@ -30,6 +31,7 @@ public class PauseMenu : MonoBehaviour
         {
           isPaused = true;
           crossHair.SetActive(false);
+          textureRender.SetActive(false);
           pauseMenu.SetActive(true);
           Cursor.visible = true;
           Cursor.lockState = CursorLockMode.Confined;
@@ -44,6 +46,7 @@ public class PauseMenu : MonoBehaviour
       isPaused = false;
       pauseMenu.SetActive(false);
       crossHair.SetActive(true);
+      textureRender.SetActive(true);
       Cursor.visible = false;
       Cursor.lockState = CursorLockMode.Locked;
       Time.timeScale = 1f;

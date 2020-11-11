@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviour
     public int[] dificulty;
     private int difTier = 0;
     private int killed = 0;
-    private int stacker = 0;
 
     void Start()
     {
