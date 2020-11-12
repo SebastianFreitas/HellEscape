@@ -9,8 +9,8 @@ public class PlayerMovement : MonoBehaviour
   public CharacterController controller;
   public GameObject head;
   public float speed = 12f;
-  private float currentSpeed = 12f;
-  private Vector3 currentVelocity;
+  public float currentSpeed = 12f;
+  public float maxSpeed = 20;
   public float speedModifier = 1;
   public int speedCounter = 0;
   public float gravity = -19.81f;
@@ -38,7 +38,8 @@ public class PlayerMovement : MonoBehaviour
   public float groundDistance = 0.4f;
   public LayerMask groundMask;
 
-  private int canDoubleJump = 2;
+  private int dashes = 2;
+  private bool canDash = true;
   public bool isGrounded;
 
   private Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash
@@ -137,8 +138,9 @@ public class PlayerMovement : MonoBehaviour
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
 
-        if (move == Vector3.zero) speedCounter = 0;
+        if (moveRaw == Vector3.zero) speedCounter = 0;
         currentSpeed = speed + (speedCounter * speedModifier);
+        if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
         //if (velocity.y > 0 ) velocity.y = velocity.y *((speedCounter+1) * speedModifier)/8;
       
         controller.Move(move * currentSpeed * Time.deltaTime);
@@ -152,9 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
   void GroundMove()
     {
-      if (inputLocked) speedCounter++;
       inputLocked = false;
-      canDoubleJump = 2;
       if (Input.GetButtonDown("Jump"))
       {
           audioSource.PlayOneShot(jump, 1f);
@@ -162,27 +162,35 @@ public class PlayerMovement : MonoBehaviour
           inputLocked = true;
           desiredDirection = new Vector3(xRaw,0,zRaw);
       }
+      else if (Input.GetButtonDown("Fire3") && canDash && dashes >0)
+      {
+        Dash();
+        inputLocked = true;
+        desiredDirection = new Vector3(xRaw,0,zRaw);
+        if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
+          else desiredDirection = new Vector3(0,0,1);
+      }
     }
   void AirMove()
 
     {        
-        velocity.y += gravity * Time.deltaTime; //apply gravity
+        if (velocity.y > 5 || !canDash )velocity.y += gravity * Time.deltaTime; //apply gravity
+        else  velocity.y += 2 * gravity * Time.deltaTime; //apply gravity
 
-        if (Input.GetButtonDown("Jump") && canDoubleJump>0)
+        if (Input.GetButtonDown("Jump") && canDash && dashes >0)
         {
           JumpDash();
           inputLocked = true;
 
-          //if (canDoubleJump <= 0 ) StartCoroutine(waiter()); 
+          //if (dashes <= 0 ) StartCoroutine(waiter()); 
         }
-        else if (Input.GetButtonDown("Fire3") && canDoubleJump>0)
+        else if (Input.GetButtonDown("Fire3") && canDash && dashes >0)
         {
           Dash();
           inputLocked = true;
           desiredDirection = new Vector3(xRaw,0,zRaw);
           if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
-            else desiredDirection = new Vector3(0,0,1);
-          //if (canDoubleJump <= 0 ) StartCoroutine(waiter()); 
+            else desiredDirection = new Vector3(0,0,1); 
         }
 
 
@@ -231,29 +239,35 @@ public class PlayerMovement : MonoBehaviour
 
   private void Dash()
     {
-      canDoubleJump--;
-      speedModifier++;
+      dashes--;
+      speedCounter++;
       audioSource.PlayOneShot(dash, volume - .1f);
       if (moveRaw == Vector3.zero) 
       {
         AddImpact(transform.forward, 50); 
-        JumpInput(.5f); 
+        JumpInput(.1f); 
       }
       else 
       {
         AddImpact(moveRaw, 50); 
-        JumpInput(.5f); 
+        JumpInput(.1f); 
       }
-    
+    if (dashes == 0) StartCoroutine(waiterDashCD());
+    canDash = false;
+    StartCoroutine(waiterDashTimer());
     }
 
   private void JumpDash()
   {
-    canDoubleJump--;
+    dashes--;
     audioSource.PlayOneShot(dash, volume - .1f);
 
     AddImpact(Vector3.up, 50); 
     JumpInput(3f);
+
+    if (dashes == 0) StartCoroutine(waiterDashCD());
+    canDash = false;
+    StartCoroutine(waiterDashTimer());
 
     return;   
   }
@@ -285,9 +299,14 @@ public class PlayerMovement : MonoBehaviour
       Destroy(gameObject);
     }
 
-  IEnumerator waiter()
+  IEnumerator waiterDashCD()
   {
     yield return new WaitForSeconds(dashCooldown);
-    canDoubleJump = 2;
+    dashes = 2;
+  }
+  IEnumerator waiterDashTimer()
+  {
+    yield return new WaitForSeconds(.1f);
+    canDash = true;
   }
 }
