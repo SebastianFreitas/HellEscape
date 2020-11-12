@@ -6,44 +6,53 @@ public class PlayerMovement : MonoBehaviour
 {
   public float health = 50f;
 
+  
   public CharacterController controller;
   public GameObject head;
+
+  [Header("Basic Movement")]
   public float speed = 12f;
   public float currentSpeed = 12f;
   public float maxSpeed = 20;
-  public float speedModifier = 1;
-  public int speedCounter = 0;
+  public float speedModifier = 1;//ammount of speed gainned from each speedCounter
+  public int speedCounter = 0; //used as stacks to increase speed
+
+  [Header("Advanced movement")]
   public float gravity = -19.81f;
   public float jumpHeight = 1.5f;
   public float mass = 3f;
+  public Vector3 velocity;
+  private Vector3 impact = Vector3.zero;
+  private bool canDash = true; //check to stop player from dashing instantly after dashing
+  private bool isSideDashing = false;
+  public float dashCooldown; //ammount of time player needs to wait until dashing again right after dashing
+  private Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash to simulate inertia
+  public bool inputLocked = false;// in this state we are going to lock Horizontal and Vertical input to simulate inertia
 
+
+  [Header("View")]
   public Transform playerView;     // Camera
-  public float playerViewYOffset = .6f; // The height at which the camera is bound to
   public float fpsDisplayRate = 4.0f; // 4 updates per sec
-
   private int frameCount = 0;
   private float dt = 0.0f;
   private float fps = 0.0f;
 
-  private Vector3 velocity;
-  private Vector3 impact = Vector3.zero;
-  private float x = 0; //user input
-  private float z = 0;
+  [Header("Input")]
+
+  public float x = 0; //user input
+  public float z = 0;
   private float xRaw = 0; 
   private float zRaw = 0;
   private Vector3 move;
   private Vector3 moveRaw;
     
-  public Transform groundCheck;
+  [Header("Ground checks")]  
+  public Transform groundCheck;//GameObject from where we use checkSphere to see if player is grounded
   public float groundDistance = 0.4f;
   public LayerMask groundMask;
-
-  private int dashes = 2;
-  private bool canDash = true;
   public bool isGrounded;
 
-  private Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash
-  public bool inputLocked = false;// in this state we are going to lock Horizontal and Vertical input
+  [Header("Sound")]
   public AudioSource audioSource;
   public AudioClip dash;
   public AudioClip jump;
@@ -51,10 +60,9 @@ public class PlayerMovement : MonoBehaviour
   public float volume=0.5f;
   private float nextFootstep = 0;
   public float footstepDelay = .3f;
-  public float dashCooldown = 1;
+ 
 
   private void Start()
-
     {
         if (playerView == null)
         {
@@ -102,7 +110,6 @@ public class PlayerMovement : MonoBehaviour
 
       PlayFootSteps();  
     }
-
   private void MoveState()
     {
       transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //
@@ -114,16 +121,15 @@ public class PlayerMovement : MonoBehaviour
           if (desiredDirection.x > 0 && xRaw != -1) x = 1f;
           if (desiredDirection.x < 0 && xRaw != 1) x = -1f;  
 
-          if(desiredDirection == Vector3.zero       ||
+          if((desiredDirection == Vector3.zero      ||
             (desiredDirection.z > 0 && zRaw == -1)  ||
             (desiredDirection.z < 0 && zRaw == 1)   ||
             (desiredDirection.x > 0 && xRaw == -1)  ||
-            (desiredDirection.x < 0 && xRaw == 1))
+            (desiredDirection.x < 0 && xRaw == 1))  && !isSideDashing)
             {
               inputLocked = false;
               speedCounter=0;
             }
-          
         }
 
         //minimum movement
@@ -153,54 +159,61 @@ public class PlayerMovement : MonoBehaviour
     }
 
   void GroundMove()
-    {
-      inputLocked = false;
+  {
+      if (isSideDashing) inputLocked = true;
+      else  inputLocked = false;
+    
       if (Input.GetButtonDown("Jump"))
       {
-          audioSource.PlayOneShot(jump, 1f);
-          Jump();
-          inputLocked = true;
-          desiredDirection = new Vector3(xRaw,0,zRaw);
+        audioSource.PlayOneShot(jump, 1f);
+        Jump();
+        inputLocked = true;
+        desiredDirection = new Vector3(xRaw,0,zRaw);
       }
-      else if (Input.GetButtonDown("Fire3") && canDash && dashes >0)
+      else if (Input.GetButtonDown("Fire3") && canDash)
       {
         Dash();
         inputLocked = true;
         desiredDirection = new Vector3(xRaw,0,zRaw);
         if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
-          else desiredDirection = new Vector3(0,0,1);
+        else desiredDirection = new Vector3(0,0,1);
       }
-    }
+  }
   void AirMove()
+  {        
+      
+      if (!isSideDashing)
+      {
+        //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
+        if (velocity.y > 7) velocity.y += gravity * Time.deltaTime; //apply gravity
+        else velocity.y += 3 * gravity * Time.deltaTime; 
+      } 
+      else 
+      {
+        velocity.y = 0f;//while sidedashing no gravity is applied
+        inputLocked = true;
+      }
+      
+      if (Input.GetButtonDown("Jump") && canDash )
+      {
+        inputLocked = false; //remove input lock if player dashes/jumps
+        JumpDash();
+        inputLocked = true;
+      }
+      else if (Input.GetButtonDown("Fire3") && canDash )
+      {
+        inputLocked = false;
+        Dash();
+        inputLocked = true;
+        desiredDirection = new Vector3(xRaw,0,zRaw);
+        if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
+        else desiredDirection = new Vector3(0,0,1); 
+      }
+      //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
+      if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
-    {        
-        if (velocity.y > 5 || !canDash )velocity.y += gravity * Time.deltaTime; //apply gravity
-        else  velocity.y += 2 * gravity * Time.deltaTime; //apply gravity
-
-        if (Input.GetButtonDown("Jump") && canDash && dashes >0)
-        {
-          JumpDash();
-          inputLocked = true;
-
-          //if (dashes <= 0 ) StartCoroutine(waiter()); 
-        }
-        else if (Input.GetButtonDown("Fire3") && canDash && dashes >0)
-        {
-          Dash();
-          inputLocked = true;
-          desiredDirection = new Vector3(xRaw,0,zRaw);
-          if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
-            else desiredDirection = new Vector3(0,0,1); 
-        }
-
-
-        //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
-        if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
-
-        Mathf.Clamp(x, -.6f, .6f); //reduce sideways movement
-
-
-    }
+      Mathf.Clamp(x, -.6f, .6f); //reduce sideways movement
+  }
 
   private void PlayFootSteps()
     {
@@ -239,39 +252,39 @@ public class PlayerMovement : MonoBehaviour
 
   private void Dash()
     {
-      dashes--;
       speedCounter++;
       audioSource.PlayOneShot(dash, volume - .1f);
       if (moveRaw == Vector3.zero) 
       {
         AddImpact(transform.forward, 50); 
-        JumpInput(.1f); 
+        //JumpInput(.1f); 
       }
       else 
       {
         AddImpact(moveRaw, 50); 
-        JumpInput(.1f); 
+        //JumpInput(.1f); 
       }
-    if (dashes == 0) StartCoroutine(waiterDashCD());
+    
     canDash = false;
+    isSideDashing = true;
+    StartCoroutine(waiterDashCD());
     StartCoroutine(waiterDashTimer());
     }
 
   private void JumpDash()
   {
-    dashes--;
     audioSource.PlayOneShot(dash, volume - .1f);
 
     AddImpact(Vector3.up, 50); 
     JumpInput(3f);
 
-    if (dashes == 0) StartCoroutine(waiterDashCD());
     canDash = false;
+    StartCoroutine(waiterDashCD());
     StartCoroutine(waiterDashTimer());
 
     return;   
   }
-    
+
   public void AddImpact(Vector3 dir, float force)
     {
       dir.Normalize();
@@ -302,11 +315,12 @@ public class PlayerMovement : MonoBehaviour
   IEnumerator waiterDashCD()
   {
     yield return new WaitForSeconds(dashCooldown);
-    dashes = 2;
+    canDash = true;
   }
   IEnumerator waiterDashTimer()
   {
-    yield return new WaitForSeconds(.1f);
-    canDash = true;
+    yield return new WaitForSeconds(.3f);
+    isSideDashing = false;
   }
+
 }
