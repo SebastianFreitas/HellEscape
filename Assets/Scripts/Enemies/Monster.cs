@@ -17,8 +17,6 @@ public class Monster : MonoBehaviour
   public GameObject projectile;
   private Transform player;
 
-  NavMeshAgent agent;
-
   private bool running = false;
   private GameObject bullet;
 

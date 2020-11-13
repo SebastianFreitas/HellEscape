@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
     if (!isSideDashing)
     {
       //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
-      if (velocity.y > 7) velocity.y += gravity * Time.deltaTime; //apply gravity
+      if (velocity.y > 7) velocity.y += gravity * Time.deltaTime; 
       else velocity.y += 3 * gravity * Time.deltaTime; 
     } 
     else 
@@ -207,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
   {
     if(isGrounded)
     {
-      if (moveRaw != Vector3.zero)
+      if (moveRaw != Vector3.zero && !isSideDashing)
       {  
         nextFootstep -= Time.deltaTime;
         if (nextFootstep <= 0)
@@ -245,9 +245,7 @@ public class PlayerMovement : MonoBehaviour
 
     canDash = false;
     StartCoroutine(waiterDashCD());
-    StartCoroutine(waiterDashTimer());
-
-    return;   
+    StartCoroutine(waiterDashTimer());  
   }
 
   public void AddImpact(Vector3 dir, float force)

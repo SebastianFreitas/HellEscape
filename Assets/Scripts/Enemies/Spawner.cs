@@ -55,7 +55,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator waiter()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
         wait = false;
     }
 
