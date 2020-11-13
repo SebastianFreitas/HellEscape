@@ -61,7 +61,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator waitToSpawn()
     {
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(3f);
         if (difTier +1 < 4) difTier++;
         wait = false;
     }

@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1788253703695532676}
   - component: {fileID: 1385025671396363178}
-  - component: {fileID: 2539950445389455270}
   - component: {fileID: 4137760457890274582}
   - component: {fileID: 8490035148160077464}
+  - component: {fileID: 8779928199854927435}
+  - component: {fileID: 871973643219344508}
   m_Layer: 8
   m_Name: enemySkull
   m_TagString: Monster
@@ -27,8 +28,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412714010074994750}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.4834351, y: 0, z: 0, w: 0.8753802}
+  m_LocalPosition: {x: 0, y: 0.30316752, z: 1.5628421}
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children:
   - {fileID: 8247908045936771937}
@@ -38,7 +39,7 @@ Transform:
   - {fileID: 4974092667127608573}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -57.82, y: 0, z: 0}
 --- !u!114 &1385025671396363178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,28 +53,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  speed: 100
+  speed: 150
   stoppingDistance: 5
-  retreatDistance: 5
+  retreatDistance: 25
   damage: 25
   range: 50
   timeBtwShots: 5
   startTimeBtwShots: 1
   projectile: {fileID: 5001703177229529540, guid: 131112c6d8bf824489f065b91b6dcba3, type: 3}
   spawn: {fileID: 9137672310446947924}
---- !u!65 &2539950445389455270
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1412714010074994750}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 21, y: 31, z: 22}
-  m_Center: {x: 0.066496134, y: 0.5270576, z: 16.761103}
 --- !u!65 &4137760457890274582
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -83,7 +71,7 @@ BoxCollider:
   m_GameObject: {fileID: 1412714010074994750}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 22.335203, y: 32.103294, z: 23.610641}
   m_Center: {x: 0.066496134, y: 0.5270576, z: 16.761103}
@@ -103,6 +91,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!135 &8779928199854927435
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412714010074994750}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 16.28
+  m_Center: {x: 0, y: 0, z: 13.18}
+--- !u!135 &871973643219344508
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412714010074994750}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 17
+  m_Center: {x: 0, y: 0, z: 13.18}
 --- !u!1 &3882840558219327048
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +465,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9137672310446947924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -21.9, z: 10.2}
+  m_LocalPosition: {x: 0, y: -19.7, z: 10.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1788253703695532676}

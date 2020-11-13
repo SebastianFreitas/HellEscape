@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
   private float zRaw = 0;
   private Vector3 move;
   private Vector3 moveRaw;
-    
+
   [Header("Ground checks")]  
   public Transform groundCheck;//GameObject from where we use checkSphere to see if player is grounded
   public float groundDistance = 0.4f;
@@ -63,213 +63,178 @@ public class PlayerMovement : MonoBehaviour
  
 
   private void Start()
+  {
+    if (playerView == null)
     {
-        if (playerView == null)
-        {
-            Camera mainCamera = Camera.main;
-            if (mainCamera != null)
-                playerView = mainCamera.gameObject.transform;
-        }
-
-        // Put the camera inside the capsule collider
-        //this bullshit is centering the camera on the player body and not the head
-        /*playerView.position = new Vector3(
-            head.transform.position.x,
-            head.transform.position.y,// + playerViewYOffset,
-            head.transform.position.z);*/
-
+      Camera mainCamera = Camera.main;
+      if (mainCamera != null) playerView = mainCamera.gameObject.transform;     
     }
+  }
   void Update()
-    {
-        // Do FPS calculation
-        frameCount++;
-        dt += Time.deltaTime;
-        if (dt > 1.0 / fpsDisplayRate)
-        {
-            fps = Mathf.Round(frameCount / dt);
-            frameCount = 0;
-            dt -= 1.0f / fpsDisplayRate;
-        }
-        /* Ensure that the cursor is locked into the screen */
-        if (Cursor.lockState != CursorLockMode.Locked) {
-            if (Input.GetButtonDown("Fire1"))
-                Cursor.lockState = CursorLockMode.Locked;
-        }
+  {
+      // Do FPS calculation
+      frameCount++;
+      dt += Time.deltaTime;
+      if (dt > 1.0 / fpsDisplayRate)
+      {
+          fps = Mathf.Round(frameCount / dt);
+          frameCount = 0;
+          dt -= 1.0f / fpsDisplayRate;
+      }
+      /* Ensure that the cursor is locked into the screen */
+      if (Cursor.lockState != CursorLockMode.Locked) {
+          if (Input.GetButtonDown("Fire1"))
+              Cursor.lockState = CursorLockMode.Locked;
+      }
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+      isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        GetInputWASD();
+      GetInputWASD();
 
-        if (isGrounded)
-            GroundMove();
-        else if (!isGrounded)
-            AirMove();
-
-        //SwitchedDirection();
-      MoveState();
-
-      PlayFootSteps();  
-    }
+      if (isGrounded)
+          GroundMove();
+      else if (!isGrounded)
+          AirMove();
+    
+    MoveState();
+    PlayFootSteps();  
+    
+  }
   private void MoveState()
-    {
-      transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //
+  {
+    transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //
     //inertia
-        if (inputLocked)
+    if (inputLocked)
+    {
+      if (desiredDirection.z > 0 && zRaw != -1) z = 1f;
+      else if (desiredDirection.z < 0 && zRaw != 1) z = -1f;
+      else if (desiredDirection.x > 0 && xRaw != -1) x = 1f;
+      else if (desiredDirection.x < 0 && xRaw != 1) x = -1f;  
+
+      if((desiredDirection == Vector3.zero      ||
+        (desiredDirection.z > 0 && zRaw == -1)  ||
+        (desiredDirection.z < 0 && zRaw == 1)   ||
+        (desiredDirection.x > 0 && xRaw == -1)  ||
+        (desiredDirection.x < 0 && xRaw == 1))  && !isSideDashing)
         {
-          if (desiredDirection.z > 0 && zRaw != -1) z = 1f;
-          if (desiredDirection.z < 0 && zRaw != 1) z = -1f;
-          if (desiredDirection.x > 0 && xRaw != -1) x = 1f;
-          if (desiredDirection.x < 0 && xRaw != 1) x = -1f;  
-
-          if((desiredDirection == Vector3.zero      ||
-            (desiredDirection.z > 0 && zRaw == -1)  ||
-            (desiredDirection.z < 0 && zRaw == 1)   ||
-            (desiredDirection.x > 0 && xRaw == -1)  ||
-            (desiredDirection.x < 0 && xRaw == 1))  && !isSideDashing)
-            {
-              inputLocked = false;
-              speedCounter=0;
-            }
+          inputLocked = false;
+          speedCounter=0;
         }
-
-        //minimum movement
-        if (x > 0f && x < .1f) x = .1f;
-        if (x < 0f && x > -.1f) x = -.1f;
-        if (z > 0f && z < .1f) z = .1f;
-        if (z < 0f && z > -.1f) z = -.1f;
-
-        move = transform.right * x + transform.forward * z;
-        moveRaw = transform.right * xRaw + transform.forward * zRaw;
-
-        Vector3.Normalize(moveRaw);
-        Vector3.Normalize(move);
-
-        if (moveRaw == Vector3.zero) speedCounter = 0;
-        currentSpeed = speed + (speedCounter * speedModifier);
-        if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
-        //if (velocity.y > 0 ) velocity.y = velocity.y *((speedCounter+1) * speedModifier)/8;
-      
-        controller.Move(move * currentSpeed * Time.deltaTime);
-        controller.Move(velocity * Time.deltaTime);
-
-        if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
-        // consumes the impact energy each cycle:
-        impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
-
     }
+
+    //minimum movement
+    if (x > 0f && x < .1f) x = .1f;
+    if (x < 0f && x > -.1f) x = -.1f;
+    if (z > 0f && z < .1f) z = .1f;
+    if (z < 0f && z > -.1f) z = -.1f;
+
+    move = transform.right * x + transform.forward * z;
+    moveRaw = transform.right * xRaw + transform.forward * zRaw;
+
+    Vector3.Normalize(moveRaw);
+    Vector3.Normalize(move);
+
+
+    if (moveRaw == Vector3.zero) speedCounter = 0;
+    currentSpeed = speed + (speedCounter * speedModifier);
+    if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
+  
+    controller.Move(move * currentSpeed * Time.deltaTime);
+    controller.Move(velocity * Time.deltaTime);
+
+    if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
+    // consumes the impact energy each cycle:
+    impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
+  }
 
   void GroundMove()
   {
-      if (isSideDashing) inputLocked = true;
-      else  inputLocked = false;
-    
-      if (Input.GetButtonDown("Jump"))
-      {
-        audioSource.PlayOneShot(jump, 1f);
-        Jump();
-        inputLocked = true;
-        desiredDirection = new Vector3(xRaw,0,zRaw);
-      }
-      else if (Input.GetButtonDown("Fire3") && canDash)
-      {
-        Dash();
-        inputLocked = true;
-        desiredDirection = new Vector3(xRaw,0,zRaw);
-        if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
-        else desiredDirection = new Vector3(0,0,1);
-      }
+    if (isSideDashing) inputLocked = true;
+    else  inputLocked = false;
+  
+    if (Input.GetButtonDown("Jump"))
+    {
+      audioSource.PlayOneShot(jump, 1f);
+      Jump();
+      inputLocked = true;
+      desiredDirection = new Vector3(xRaw,0,zRaw);
+    }
+    else if (Input.GetButtonDown("Fire3") && canDash)
+    {
+      Dash();
+      inputLocked = true;
+      desiredDirection = new Vector3(xRaw,0,zRaw);
+      if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
+      else desiredDirection = new Vector3(0,0,1);
+    }
   }
   void AirMove()
   {        
-      
-      if (!isSideDashing)
-      {
-        //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
-        if (velocity.y > 7) velocity.y += gravity * Time.deltaTime; //apply gravity
-        else velocity.y += 3 * gravity * Time.deltaTime; 
-      } 
-      else 
-      {
-        velocity.y = 0f;//while sidedashing no gravity is applied
-        inputLocked = true;
-      }
-      
-      if (Input.GetButtonDown("Jump") && canDash )
-      {
-        inputLocked = false; //remove input lock if player dashes/jumps
-        JumpDash();
-        inputLocked = true;
-      }
-      else if (Input.GetButtonDown("Fire3") && canDash )
-      {
-        inputLocked = false;
-        Dash();
-        inputLocked = true;
-        desiredDirection = new Vector3(xRaw,0,zRaw);
-        if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
-        else desiredDirection = new Vector3(0,0,1); 
-      }
-      //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
-      if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
+    if (!isSideDashing)
+    {
+      //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
+      if (velocity.y > 7) velocity.y += gravity * Time.deltaTime; //apply gravity
+      else velocity.y += 3 * gravity * Time.deltaTime; 
+    } 
+    else 
+    {
+      velocity.y = 0f;//while sidedashing no gravity is applied
+      inputLocked = true;
+    }
+    
+    if (Input.GetButtonDown("Jump") && canDash )
+    {
+      inputLocked = false; //remove input lock if player dashes/jumps
+      JumpDash();
+      inputLocked = true;
+    }
+    else if (Input.GetButtonDown("Fire3") && canDash )
+    {
+      inputLocked = false;
+      Dash();
+      inputLocked = true;
+      desiredDirection = new Vector3(xRaw,0,zRaw);
+      if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
+      else desiredDirection = new Vector3(0,0,1); 
+    }
+    //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
+    if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
 
-      Mathf.Clamp(x, -.6f, .6f); //reduce sideways movement
+    Mathf.Clamp(x, -.6f, .6f); //reduce sideways movement
   }
 
   private void PlayFootSteps()
+  {
+    if(isGrounded)
     {
-      if(isGrounded)
-      {
-        //if (x < 1f && x > -1f && z < 1f && z > -1f)                         nextFootstep = 0;
-        if (Mathf.Approximately(x,0f) && Mathf.Approximately(z,0f))   nextFootstep = 0; //if player stops movement reset
-        //maybe add steps when  adadadadadad or wswswswswswsw
-
-        if (Mathf.Approximately(x,1f) || Mathf.Approximately(x,-1f)  
-        || Mathf.Approximately(z,1f)  || Mathf.Approximately(z,-1f)) 
-        {  
-            if (nextFootstep <= 0) 
-            {
-                nextFootstep -= Time.deltaTime;
-                audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
-                nextFootstep += footstepDelay;     
-            }
-            else
-            {
-              nextFootstep -= Time.deltaTime;
-              if (nextFootstep <= 0)
-              {
-                audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
-                nextFootstep += footstepDelay;
-              }
-            }
-              
-        }
+      if (moveRaw != Vector3.zero)
+      {  
+        nextFootstep -= Time.deltaTime;
+        if (nextFootstep <= 0)
+        {
+          audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], volume);
+          nextFootstep += footstepDelay;
+        }    
       }
-      else nextFootstep = 0;
     }
+    else nextFootstep = 0;
+  }
   public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -3f * gravity);}
 
   public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity);}
 
   private void Dash()
-    {
-      speedCounter++;
-      audioSource.PlayOneShot(dash, volume - .1f);
-      if (moveRaw == Vector3.zero) 
-      {
-        AddImpact(transform.forward, 50); 
-        //JumpInput(.1f); 
-      }
-      else 
-      {
-        AddImpact(moveRaw, 50); 
-        //JumpInput(.1f); 
-      }
-    
+  {
+    speedCounter++;
+    audioSource.PlayOneShot(dash, volume - .1f);
+    if (moveRaw == Vector3.zero) AddImpact(transform.forward, 50); 
+      else AddImpact(moveRaw, 50); 
+
     canDash = false;
     isSideDashing = true;
     StartCoroutine(waiterDashCD());
     StartCoroutine(waiterDashTimer());
-    }
+  }
 
   private void JumpDash()
   {
@@ -286,31 +251,36 @@ public class PlayerMovement : MonoBehaviour
   }
 
   public void AddImpact(Vector3 dir, float force)
-    {
-      dir.Normalize();
-        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
-        impact += dir.normalized * force / mass;        
-    }
+  {
+    dir.Normalize();
+    if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+    impact += dir.normalized * force / mass;        
+  }
 
   private void GetInputWASD()
+  {
+    if (!isSideDashing) //prevents modifiyng movement while Dashing
     {
       x = Input.GetAxis("Horizontal");
       z = Input.GetAxis("Vertical");
       xRaw = Input.GetAxisRaw("Horizontal");
       zRaw = Input.GetAxisRaw("Vertical");
     }
+  }
     
-  public void TakeDamage(float amount){
-      health-= amount;
-      if (health <= 0f){
-        Debug.Log("You have dieadded");//Die();
-      }
-      Debug.Log("You took "+amount+" damage.");
+  public void TakeDamage(float amount)
+  {
+    health-= amount;
+    if (health <= 0f){
+      Debug.Log("You have dieadded");//Die();
     }
+    Debug.Log("You took "+amount+" damage.");
+  }
 
-  void Die(){
-      Destroy(gameObject);
-    }
+  void Die()
+  {
+    Destroy(gameObject);
+  }
 
   IEnumerator waiterDashCD()
   {

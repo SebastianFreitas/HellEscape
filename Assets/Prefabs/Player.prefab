@@ -420,21 +420,24 @@ MonoBehaviour:
   speed: 12
   currentSpeed: 12
   maxSpeed: 30
-  speedModifier: 0.5
+  speedModifier: 1
   speedCounter: 0
   gravity: -20
   jumpHeight: 3
   mass: 3
+  velocity: {x: 0, y: 0, z: 0}
+  dashCooldown: 1
+  inputLocked: 0
   playerView: {fileID: 8152985570990004033}
-  playerViewYOffset: 0
   fpsDisplayRate: 60
+  x: 0
+  z: 0
   groundCheck: {fileID: 8675176734593606968}
   groundDistance: 0.16
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   isGrounded: 0
-  inputLocked: 0
   audioSource: {fileID: 998741484880663113}
   dash: {fileID: 8300000, guid: daafefecf599ce74e97ef78352d14f32, type: 3}
   jump: {fileID: 8300000, guid: f7722b7efebcc4a4b88f23ed41363cce, type: 3}
@@ -447,7 +450,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bb7fb057e5d64434e84b6731439b90a7, type: 3}
   volume: 0.2
   footstepDelay: 0.35
-  dashCooldown: 1
 --- !u!143 &222201175276132240
 CharacterController:
   m_ObjectHideFlags: 0

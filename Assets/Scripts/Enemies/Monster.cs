@@ -5,71 +5,76 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
-    public float health = 50f;
-    public float speed;
-    public float stoppingDistance;
-    public float retreatDistance;
-    public float damage = 10f;
-    public float range = 100f;
-    public float timeBtwShots;
-    public float startTimeBtwShots= 1f;
+  public float health = 50f;
+  public float speed;
+  public float stoppingDistance;
+  public float retreatDistance;
+  public float damage = 10f;
+  public float range = 100f;
+  public float timeBtwShots;
+  public float startTimeBtwShots= 1f;
 
-    public GameObject projectile;
-    private Transform player;
+  public GameObject projectile;
+  private Transform player;
 
-    NavMeshAgent agent;
+  NavMeshAgent agent;
 
-    private bool running = false;
-    private GameObject bullet;
+  private bool running = false;
+  private GameObject bullet;
 
-    private Rigidbody skullBody;
+  private Rigidbody skullBody;
 
-    private bool canShoot = true;
+  private bool canShoot = true;
 
-    public GameObject spawn;
+  public GameObject spawn;
 
-    void Start(){
-      player = GameObject.FindGameObjectWithTag("Player").transform;
-      timeBtwShots = startTimeBtwShots;
-      skullBody = transform.GetComponent<Rigidbody>();
-      StartCoroutine(waiter());
-    }
+  void Start(){
+    player = GameObject.FindGameObjectWithTag("Player").transform;
+    timeBtwShots = startTimeBtwShots;
+    skullBody = transform.GetComponent<Rigidbody>();
+    transform.Rotate(new Vector3(-60,0,0));
+    StartCoroutine(waiter());
+  }
 
-    void Update()
+  void Update()
+  {
+
+    if (running)
     {
+      transform.LookAt(player);
+      transform.Rotate(new Vector3(-60,0,0));
 
-      if (running)
+      if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
       {
-        if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-        }     
-        else 
-        if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
-        {
-            transform.position = transform.position;
-        } 
-        else 
-        if(Vector3.Distance(transform.position, player.position) < retreatDistance)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-        }
+          transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+      }     
+      else 
+      if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
+      {
+          transform.position = transform.position;
+      } 
+      else 
+      if(Vector3.Distance(transform.position, player.position) < retreatDistance)
+      {
+          transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+      }
 
-        if (canShoot){
-            Debug.Log("Enemy trying to shoot");
-            bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
-            bullet.GetComponent<EnemyProjectile>().damage = damage;
-            bullet.transform.LookAt(player, Vector3.up);
-            canShoot = false;
-            StartCoroutine(fireRateCycle());
-        } 
-          running = false;
-          StartCoroutine(monsterCycle());
-      }  
+      if (canShoot)
+      {
+        bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
+        bullet.GetComponent<EnemyProjectile>().damage = damage;
+        bullet.transform.LookAt(player, Vector3.up);
+        canShoot = false;
+        StartCoroutine(fireRateCycle());
+      } 
+      running = false;
+      StartCoroutine(monsterCycle());
+    }  
   }
 
 
-  public void TakeDamage(float amount){
+  public void TakeDamage(float amount)
+  {
     health-= amount;
     if (health <= 0f){
       Die();
@@ -89,7 +94,7 @@ public class Monster : MonoBehaviour
 
   IEnumerator monsterCycle()
   {
-    yield return new WaitForSeconds(.09f);
+    yield return new WaitForSeconds(.3f);
     if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
     running = true;
   }
