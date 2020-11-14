@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
             if (clone == null)
             {   
                 killed = 0;
-                for (int i = 0; i<dificulty[difTier]; i++)
+                for (int i = 0; i<Random.Range(1, 20); i++)
                 {
                     randomize();
                     Vector3 spawnPoint = new Vector3 (transform.position.x + xSpawn,transform.position.y + ySpawn,transform.position.z+zSpawn);

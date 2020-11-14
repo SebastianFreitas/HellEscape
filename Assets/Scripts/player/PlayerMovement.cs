@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
   public float gravity = -19.81f;
   public float jumpHeight = 1.5f;
   public float mass = 3f;
+  public float dashForce;
+
+  public float JumpDashForce;
   public Vector3 velocity;
   private Vector3 impact = Vector3.zero;
   private bool canDash = true; //check to stop player from dashing instantly after dashing
@@ -227,8 +230,8 @@ public class PlayerMovement : MonoBehaviour
   {
     speedCounter++;
     audioSource.PlayOneShot(dash, volume - .1f);
-    if (moveRaw == Vector3.zero) AddImpact(transform.forward, 50); 
-      else AddImpact(moveRaw, 50); 
+    if (moveRaw == Vector3.zero) AddImpact(transform.forward, dashForce); 
+      else AddImpact(moveRaw, dashForce); 
 
     canDash = false;
     isSideDashing = true;
@@ -240,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
   {
     audioSource.PlayOneShot(dash, volume - .1f);
 
-    AddImpact(Vector3.up, 50); 
+    AddImpact(Vector3.up, JumpDashForce); 
     JumpInput(3f);
 
     canDash = false;

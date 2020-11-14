@@ -189,7 +189,7 @@ MonoBehaviour:
   controlCursor: 0
   pitchClamp: 1
   byPassSmoothing: 0
-  mLambda: 20
+  mLambda: 100
   hSens: 1
   vSens: 1
   mouseBuffer:
@@ -425,6 +425,8 @@ MonoBehaviour:
   gravity: -20
   jumpHeight: 3
   mass: 3
+  dashForce: 100
+  JumpDashForce: 50
   velocity: {x: 0, y: 0, z: 0}
   dashCooldown: 1
   inputLocked: 0

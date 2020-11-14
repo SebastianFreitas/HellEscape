@@ -30,44 +30,30 @@ public class Monster : MonoBehaviour
     player = GameObject.FindGameObjectWithTag("Player").transform;
     timeBtwShots = startTimeBtwShots;
     skullBody = transform.GetComponent<Rigidbody>();
-    transform.Rotate(new Vector3(-60,0,0));
+    //transform.Rotate(new Vector3(-80,0,0));
     StartCoroutine(waiter());
   }
 
   void Update()
   {
-
     if (running)
     {
-      transform.LookAt(player);
-      transform.Rotate(new Vector3(-60,0,0));
-
-      if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
-      {
-          transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-      }     
-      else 
-      if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
-      {
-          transform.position = transform.position;
-      } 
-      else 
-      if(Vector3.Distance(transform.position, player.position) < retreatDistance)
-      {
-          transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-      }
-
-      if (canShoot)
-      {
-        bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
-        bullet.GetComponent<EnemyProjectile>().damage = damage;
-        bullet.transform.LookAt(player, Vector3.up);
-        canShoot = false;
-        StartCoroutine(fireRateCycle());
-      } 
+      Vector3 playerPos = new Vector3(player.position.x, player.position.y-10f, player.position.z);
+      Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
+      skullBody.AddForce(direction_to_player * 9000f);
       running = false;
       StartCoroutine(monsterCycle());
+    
     }  
+  }
+
+  void OnTriggerEnter(Collider other)
+  {
+      if (other.gameObject.tag == "Player")
+      {
+          player.GetComponent<PlayerMovement>().TakeDamage(damage);
+      }
+
   }
 
 
@@ -92,7 +78,8 @@ public class Monster : MonoBehaviour
 
   IEnumerator monsterCycle()
   {
-    yield return new WaitForSeconds(.3f);
+    float a = Random.Range(.6f, 2f); 
+    yield return new WaitForSeconds(a);
     if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
     running = true;
   }
@@ -103,5 +90,31 @@ public class Monster : MonoBehaviour
     canShoot= true;
   }
 
+      //transform.LookAt(player);
+      //transform.Rotate(new Vector3(-80,0,0));
+      /*
+      if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
+      {
+          transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+      }     
+      else 
+      if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
+      {
+          transform.position = transform.position;
+      } 
+      else 
+      if(Vector3.Distance(transform.position, player.position) < retreatDistance)
+      {
+          transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+      }
+
+      if (canShoot)
+      {
+        bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
+        bullet.GetComponent<EnemyProjectile>().damage = damage;
+        bullet.transform.LookAt(player, Vector3.up);
+        canShoot = false;
+        StartCoroutine(fireRateCycle());
+      }*/ 
 
 }
