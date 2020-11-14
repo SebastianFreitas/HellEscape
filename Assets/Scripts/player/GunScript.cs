@@ -23,6 +23,8 @@ public class GunScript : MonoBehaviour
     private RaycastHit hit;
     private bool canShoot = true;
 
+    public GameObject inventory;
+
 
     void Start()
     {
@@ -34,6 +36,7 @@ public class GunScript : MonoBehaviour
     {
       if (Input.GetButton("Fire1") && canShoot ) Shoot();
       else if (Input.GetButton("Fire2")) SecondaryFire();
+      else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
     void Shoot(){
@@ -71,6 +74,11 @@ public class GunScript : MonoBehaviour
       canShoot = true;
     }
 
+    private void OpenInventory()
+    {
+      Vector3 inventoryPosition = new Vector3(fpsCam.transform.position.x, fpsCam.transform.position.y, fpsCam.transform.position.z+5f);
+      Instantiate(inventory,inventoryPosition , fpsCam.transform.rotation);
+    }
     IEnumerator waiterFlash(){
       yield return new WaitForSeconds(.02f);
       muzzleFlashFront.SetActive(false);
