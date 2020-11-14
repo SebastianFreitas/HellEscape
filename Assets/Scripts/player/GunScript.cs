@@ -37,7 +37,7 @@ public class GunScript : MonoBehaviour
       if (Input.GetButton("Fire1") && canShoot ) Shoot(.49f,1);
       else if (Input.GetButton("Fire2") && canShoot) SecondaryFire(.2f);
       else if (Input.GetKey("1") && canShoot) Shoot(.09f,1);
-      else if (Input.GetKey("2") && canShoot) Shoot(1f,20);
+      else if (Input.GetKey("2") && canShoot) Shoot(1f,100);
       else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
@@ -56,8 +56,8 @@ public class GunScript : MonoBehaviour
       pnt.transform.LookAt(targetPoint);
       for(int i = 0; i < numberOfBullets; i++)
       {   
-          float a = Random.Range(-.1f*i,.1f*i);
-          Vector3 positionI = new Vector3(pnt.transform.position.x+a, pnt.transform.position.y+a, pnt.transform.position.z);
+          Vector3 a = Random.insideUnitCircle * .7f;;
+          Vector3 positionI = pnt.transform.position + a;
           GameObject bullet = Instantiate(projectile, positionI , pnt.transform.rotation) ; 
           bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
       }
