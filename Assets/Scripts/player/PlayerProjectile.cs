@@ -2,16 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct convergion
+{
+  public float bludgeoning;
+  public float piercing;
+  public float slashing;
 
+}
 public class PlayerProjectile : MonoBehaviour
 {
 
+  public convergion totalConvergion;
+
   private float speed = 500f;
   private float damage = 50;
-  private Vector3 startPosition;
   public  Vector3 playerSpeed;
   public AudioClip ricochet;
   public AudioSource source;
+
+  public GameObject newBullet;
 
   private Monster enemyScript;
 
@@ -20,9 +29,24 @@ public class PlayerProjectile : MonoBehaviour
 
   void Start()
   {
-     rb = GetComponent<Rigidbody>();
-     rb.AddForce(transform.forward * speed);
-     StartCoroutine(waiter(.5f));
+    rb = GetComponent<Rigidbody>();
+    if (totalConvergion.bludgeoning != 0) convertBludgeoning(); 
+
+    rb.AddForce(transform.forward * speed);
+    StartCoroutine(waiter(.5f));
+  }
+
+  private void convertBludgeoning()
+  {
+    float totalBullets = totalConvergion.bludgeoning/5;
+    float bludgeoningDamage = damage/totalBullets + 10;
+    for(int i = 0; i < totalBullets; i++)
+    {   
+        Vector3 a = Random.insideUnitCircle * .7f;;
+        Vector3 positionI = rb.transform.position + a;
+        GameObject bullet = Instantiate(newBullet, positionI , rb.transform.rotation);
+        bullet.GetComponent<PlayerProjectile>().damage = bludgeoningDamage; 
+    }
   }
 
   IEnumerator waiter(float a){

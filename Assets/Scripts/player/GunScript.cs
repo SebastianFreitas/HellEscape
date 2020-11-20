@@ -2,8 +2,10 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class GunScript : MonoBehaviour
 {
+    public convergion totalConvergion;
     public float damage = 10f;
     public float range = 100f;
     public float timeBtwShots = .5f;
@@ -35,7 +37,7 @@ public class GunScript : MonoBehaviour
     void Update()
     {
       if (Input.GetButton("Fire1") && canShoot ) Shoot(.49f,1);
-      else if (Input.GetButton("Fire2") && canShoot) SecondaryFire(.2f);
+      //else if (Input.GetButton("Fire2") && canShoot) SecondaryFire(.2f);
       else if (Input.GetKey("1") && canShoot) Shoot(.09f,1);
       else if (Input.GetKey("2") && canShoot) Shoot(1f,100);
       else if (Input.GetKeyDown("i")) OpenInventory();
@@ -54,23 +56,12 @@ public class GunScript : MonoBehaviour
           targetPoint = ray.GetPoint(1000);
 
       pnt.transform.LookAt(targetPoint);
-      for(int i = 0; i < numberOfBullets; i++)
-      {   
-          Vector3 a = Random.insideUnitCircle * .7f;;
-          Vector3 positionI = pnt.transform.position + a;
-          GameObject bullet = Instantiate(projectile, positionI , pnt.transform.rotation) ; 
-          bullet.GetComponent<PlayerProjectile>().playerSpeed = controller.velocity;
-      }
+
+      GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation) ; 
+      //bullet.GetComponent<PlayerProjectile>().totalConvergion.bludgeoning = 60;
+      
       canShoot = false;
       StartCoroutine(waiter(attackRate));
-    }
-
-    void SecondaryFire(float attackRate)
-    {
-      Shoot(attackRate,1);
-      /*GetComponent <ParticleSystem>().Play();
-      ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
-      em.enabled = true;*/
     }
 
     IEnumerator waiter(float attackRate){
@@ -84,7 +75,7 @@ public class GunScript : MonoBehaviour
       Instantiate(inventory,inventoryPosition , fpsCam.transform.rotation);
     }
     IEnumerator waiterFlash(){
-      yield return new WaitForSeconds(.02f);
+      yield return new WaitForSeconds(.03f);
       muzzleFlashFront.SetActive(false);
     }
 
