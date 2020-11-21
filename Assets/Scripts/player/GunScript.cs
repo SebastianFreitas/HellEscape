@@ -75,7 +75,7 @@ public class GunScript : MonoBehaviour
       Instantiate(inventory,inventoryPosition , fpsCam.transform.rotation);
     }
     IEnumerator waiterFlash(){
-      yield return new WaitForSeconds(.03f);
+      yield return new WaitForSeconds(.07f);
       muzzleFlashFront.SetActive(false);
     }
 
