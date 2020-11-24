@@ -40,7 +40,7 @@ public class Monster : MonoBehaviour
     {
       Vector3 playerPos = new Vector3(player.position.x, player.position.y-10f, player.position.z);
       Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
-      skullBody.AddForce(direction_to_player * 9000f);
+      skullBody.AddForce(direction_to_player * 20000f);
       running = false;
       StartCoroutine(monsterCycle());
     

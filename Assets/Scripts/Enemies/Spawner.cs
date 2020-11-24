@@ -10,13 +10,15 @@ public class Spawner : MonoBehaviour
 
     private GameObject clone;
 
+    public int maxSpawn;
+
     private bool wait = true;
 
     private float xSpawn;
     private float ySpawn;
     private float zSpawn;
 
-    public int[] dificulty;
+    //public int[] dificulty;
     private int difTier = 0;
     private int killed = 0;
 
@@ -32,9 +34,9 @@ public class Spawner : MonoBehaviour
             if (clone == null)
             {   
                 killed = 0;
-                for (int i = 0; i<Random.Range(1, 20); i++)
+                for (int i = 0; i<maxSpawn; i++)
                 {
-                    randomize();
+                    //randomize();
                     Vector3 spawnPoint = new Vector3 (transform.position.x + xSpawn,transform.position.y + ySpawn,transform.position.z+zSpawn);
                     clone = Instantiate(skull, spawnPoint , transform.rotation);
                     killed++;
