@@ -201,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
       else desiredDirection = new Vector3(0,0,1); 
     }
     //if player collides with ceiling he slowly loses height instead of floating agaisnt the ceilling
-    if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .2f;
+    if (((controller.collisionFlags & CollisionFlags.Above) != 0) && velocity.y > 0) velocity.y -= .8f;
 
     Mathf.Clamp(x, -.6f, .6f); //reduce sideways movement
   }
