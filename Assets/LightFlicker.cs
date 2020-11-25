@@ -14,7 +14,7 @@ public class LightFlicker : MonoBehaviour
     {
         for(int i = 0; i<allObjects.Count;i++)
         {
-            if(Random.value > 0.75) StartCoroutine(waiterOn(timeOn, i));
+            if(Random.value > 0.70) StartCoroutine(waiterOn(timeOn, i));
         }
 
     }
