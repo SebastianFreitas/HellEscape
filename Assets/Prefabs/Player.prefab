@@ -53,6 +53,36 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2169046087924204963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3831391651665136469}
+  m_Layer: 0
+  m_Name: RealBulletHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3831391651665136469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2169046087924204963}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.523, z: 0.218}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 6291769973773968733}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2609233021776130866
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +286,7 @@ Transform:
   m_Children:
   - {fileID: 8152985570990004033}
   - {fileID: 57964445804713797}
+  - {fileID: 3831391651665136469}
   m_Father: {fileID: 1275545970634226239}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1822,6 +1853,10 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 222201175276132240}
+    - target: {fileID: 4206597355969498348, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
+      propertyPath: realBulletHolder
+      value: 
+      objectReference: {fileID: 2169046087924204963}
     - target: {fileID: 4636467642376986305, guid: eeea2c2c06ee3e14291a9f79c34fc1d7, type: 3}
       propertyPath: m_Mesh
       value: 

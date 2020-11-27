@@ -14,6 +14,7 @@ public class GunScript : MonoBehaviour
     public Camera fpsCam;
     public CharacterController controller;
     public GameObject impactEffect;
+    public GameObject realBulletHolder;
     public GameObject projectile;
     public GameObject pnt;
     public GameObject muzzleFlashFront;
@@ -56,8 +57,14 @@ public class GunScript : MonoBehaviour
           targetPoint = ray.GetPoint(1000);
 
       pnt.transform.LookAt(targetPoint);
+      Transform realpos = fpsCam.transform;
+      realpos.LookAt(targetPoint);
+      
 
-      GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation) ; 
+      //GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation);
+      //bullet.GetComponent<PlayerProjectile>().visual = true;
+      GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation);
+      bullet.GetComponent<PlayerProjectile>().initialFade = true;
       //bullet.GetComponent<PlayerProjectile>().totalConvergion.bludgeoning = 60;
       
       canShoot = false;

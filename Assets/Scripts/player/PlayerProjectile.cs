@@ -24,6 +24,10 @@ public class PlayerProjectile : MonoBehaviour
 
   private Monster enemyScript;
 
+  public bool visual = false;
+
+  public bool initialFade = false;
+
   public int bounces = 2;
   Rigidbody rb;
 
@@ -31,6 +35,8 @@ public class PlayerProjectile : MonoBehaviour
   {
     rb = GetComponent<Rigidbody>();
     if (totalConvergion.bludgeoning != 0) convertBludgeoning(); 
+    else if (visual) bounces = 0;
+    else if (initialFade) this.GetComponent<Renderer>().enabled = false;
 
     rb.AddForce(transform.forward * speed);
     StartCoroutine(waiter(.5f));
@@ -73,6 +79,7 @@ public class PlayerProjectile : MonoBehaviour
       ContactPoint contact = collision.contacts[0];
       if (bounces > 0)
       {
+        this.GetComponent<Renderer>().enabled = true;
         transform.forward = contact.normal;
         AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
         rb.AddForce(transform.forward * 100);
