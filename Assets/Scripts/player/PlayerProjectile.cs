@@ -69,7 +69,7 @@ public class PlayerProjectile : MonoBehaviour
   IEnumerator fadeWaiter()
   {
     SetVisibility(false);
-    yield return new WaitForSeconds(.02f);
+    yield return new WaitForSeconds(.005f);
     SetVisibility(true);
   }
 

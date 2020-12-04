@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
   public float mass = 3f;
   public float dashForce;
 
+  [SerializeField] ParticleSystem dashParticleSystem;
+
   public float JumpDashForce;
   public Vector3 velocity;
   private Vector3 impact = Vector3.zero;
@@ -141,6 +143,8 @@ public class PlayerMovement : MonoBehaviour
     if (moveRaw == Vector3.zero) speedCounter = 0;
     currentSpeed = speed + (speedCounter * speedModifier);
     if (currentSpeed > maxSpeed) currentSpeed = maxSpeed;
+
+    if (isSideDashing) currentSpeed *= 5;
   
     controller.Move(move * currentSpeed * Time.deltaTime);
     controller.Move(velocity * Time.deltaTime);
@@ -228,6 +232,7 @@ public class PlayerMovement : MonoBehaviour
 
   private void Dash()
   {
+    dashParticleSystem.Play();
     speedCounter++;
     audioSource.PlayOneShot(dash, volume - .1f);
     if (moveRaw == Vector3.zero) AddImpact(transform.forward, dashForce); 
@@ -241,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
   private void JumpDash()
   {
+    //dashParticleSystem.Play();
     audioSource.PlayOneShot(dash, volume - .1f);
 
     AddImpact(Vector3.up, JumpDashForce); 
@@ -268,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
       zRaw = Input.GetAxisRaw("Vertical");
     }
   }
-    
+
   public void TakeDamage(float amount)
   {
     health-= amount;
@@ -290,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
   }
   IEnumerator waiterDashTimer()
   {
-    yield return new WaitForSeconds(.3f);
+    yield return new WaitForSeconds(.15f);
     isSideDashing = false;
   }
 
