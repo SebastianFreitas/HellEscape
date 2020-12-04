@@ -19,6 +19,9 @@ public class GunScript : MonoBehaviour
     public GameObject pnt;
     public GameObject muzzleFlashFront;
 
+    public GameObject head;
+    public GameObject body;
+
     public AudioSource audioS;
     public AudioClip shoot;
     public float volume = .6f;
@@ -59,13 +62,11 @@ public class GunScript : MonoBehaviour
       pnt.transform.LookAt(targetPoint);
       Transform realpos = fpsCam.transform;
       realpos.LookAt(targetPoint);
-      
 
-      //GameObject bullet = Instantiate(projectile, pnt.transform.position , pnt.transform.rotation);
-      //bullet.GetComponent<PlayerProjectile>().visual = true;
       GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation);
       bullet.GetComponent<PlayerProjectile>().initialFade = true;
-      //bullet.GetComponent<PlayerProjectile>().totalConvergion.bludgeoning = 60;
+      Physics.IgnoreCollision(bullet.GetComponent<Collider>(), head.GetComponent<Collider>());
+      Physics.IgnoreCollision(bullet.GetComponent<Collider>(), body.GetComponent<Collider>());
       
       canShoot = false;
       StartCoroutine(waiter(attackRate));

@@ -22,7 +22,6 @@ public class Monster : MonoBehaviour
 
   private Rigidbody skullBody;
 
-  private bool canShoot = true;
 
   public GameObject spawn;
 
@@ -83,7 +82,7 @@ public class Monster : MonoBehaviour
     if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
     running = true;
   }
-
+/*
   IEnumerator fireRateCycle()
   {
     yield return new WaitForSeconds(timeBtwShots);
@@ -92,7 +91,7 @@ public class Monster : MonoBehaviour
 
       //transform.LookAt(player);
       //transform.Rotate(new Vector3(-80,0,0));
-      /*
+      
       if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
       {
           transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);

@@ -36,7 +36,7 @@ public class PlayerProjectile : MonoBehaviour
     rb = GetComponent<Rigidbody>();
     if (totalConvergion.bludgeoning != 0) convertBludgeoning(); 
     else if (visual) bounces = 0;
-    else if (initialFade) this.GetComponent<Renderer>().enabled = false;
+    else if (initialFade) StartCoroutine(fadeWaiter());
 
     rb.AddForce(transform.forward * speed);
     StartCoroutine(waiter(.5f));
@@ -55,9 +55,22 @@ public class PlayerProjectile : MonoBehaviour
     }
   }
 
+  private void SetVisibility(bool onOff)
+  {
+    this.GetComponent<Renderer>().enabled = onOff;
+    this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
+  }
+
   IEnumerator waiter(float a){
     yield return new WaitForSeconds(a);
      Destroy(gameObject);
+  }
+
+  IEnumerator fadeWaiter()
+  {
+    SetVisibility(false);
+    yield return new WaitForSeconds(.02f);
+    SetVisibility(true);
   }
 
   void OnEnable()
@@ -79,7 +92,7 @@ public class PlayerProjectile : MonoBehaviour
       ContactPoint contact = collision.contacts[0];
       if (bounces > 0)
       {
-        this.GetComponent<Renderer>().enabled = true;
+        SetVisibility(true);
         transform.forward = contact.normal;
         AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
         rb.AddForce(transform.forward * 100);

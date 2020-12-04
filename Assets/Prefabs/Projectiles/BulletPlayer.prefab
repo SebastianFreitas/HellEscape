@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6643595150414006949}
   m_Layer: 11
   m_Name: BulletPlayer
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2264,6 +2264,8 @@ MonoBehaviour:
   ricochet: {fileID: 8300000, guid: 25b62119364b1a642804b64c4165943f, type: 3}
   source: {fileID: 1033672427497998982}
   newBullet: {fileID: 312125936527058168}
+  visual: 0
+  initialFade: 0
   bounces: 3
 --- !u!54 &4441181378661258463
 Rigidbody:
