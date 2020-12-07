@@ -31,20 +31,10 @@ public class Monster : MonoBehaviour
     skullBody = transform.GetComponent<Rigidbody>();
     //transform.Rotate(new Vector3(-80,0,0));
     StartCoroutine(waiter());
+    StartCoroutine(randomJump());
   }
 
-  void Update()
-  {
-    if (running)
-    {
-      Vector3 playerPos = new Vector3(player.position.x, player.position.y-10f, player.position.z);
-      Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
-      skullBody.AddForce(direction_to_player * 20000f);
-      running = false;
-      StartCoroutine(monsterCycle());
-    
-    }  
-  }
+
 
   void OnTriggerEnter(Collider other)
   {
@@ -75,9 +65,20 @@ public class Monster : MonoBehaviour
     running = true;  
   }
 
+  IEnumerator randomJump()
+  {
+    float a = Random.Range(1.5f, 5f);
+    Vector3 playerPos = new Vector3(player.position.x, player.position.y-10f, player.position.z);
+    Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
+    Vector3 randomHeight = new Vector3(0,Random.Range(0,2),0);
+     skullBody.AddForce((randomHeight+direction_to_player) * 500f);
+
+    yield return new WaitForSeconds(a);
+    StartCoroutine(randomJump());
+  }
   IEnumerator monsterCycle()
   {
-    float a = Random.Range(.6f, 2f); 
+    float a = Random.Range(.6f, 5f); 
     yield return new WaitForSeconds(a);
     if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
     running = true;

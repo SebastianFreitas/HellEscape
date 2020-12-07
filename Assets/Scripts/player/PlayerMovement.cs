@@ -128,10 +128,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //minimum movement
-    if (x > 0f && x < .1f) x = .1f;
-    if (x < 0f && x > -.1f) x = -.1f;
-    if (z > 0f && z < .1f) z = .1f;
-    if (z < 0f && z > -.1f) z = -.1f;
+    //if (x > 0f && x < .1f) x = .1f;
+    //if (x < 0f && x > -.1f) x = -.1f;
+    //if (z > 0f && z < .1f) z = .1f;
+    //if (z < 0f && z > -.1f) z = -.1f;
 
     move = transform.right * x + transform.forward * z;
     moveRaw = transform.right * xRaw + transform.forward * zRaw;
