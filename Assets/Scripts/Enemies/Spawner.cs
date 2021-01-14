@@ -25,8 +25,13 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         StartCoroutine(waiter());
+        float a = .1f;
+        for (int i = 0; i < maxSpawn; i++){
+            a = a + 0.05f;
+            StartCoroutine(spawnMobs(a));
+        }
     }
-
+/*
     void Update()
     {
         if (!wait)
@@ -46,7 +51,7 @@ public class Spawner : MonoBehaviour
             StartCoroutine(waitToSpawn());
         }
     }
-
+*/
     void randomize()
     {
       xSpawn = Random.Range(-8.0f, 8.0f);
@@ -66,5 +71,12 @@ public class Spawner : MonoBehaviour
         yield return new WaitForSeconds(3f);
         if (difTier +1 < 4) difTier++;
         wait = false;
+    }
+
+    IEnumerator spawnMobs(float extraTime){
+        
+        yield return new WaitForSeconds(extraTime);
+        Vector3 spawnPoint = new Vector3 (transform.position.x + xSpawn,transform.position.y + ySpawn,transform.position.z+zSpawn);
+        Instantiate(skull, spawnPoint , transform.rotation);
     }
 }
