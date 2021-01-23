@@ -241,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
     canDash = false;
     isSideDashing = true;
     StartCoroutine(waiterDashCD());
-    StartCoroutine(waiterDashTimer());
+    StartCoroutine(waiterDashDuration());
   }
 
   private void JumpDash()
@@ -254,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
 
     canDash = false;
     StartCoroutine(waiterDashCD());
-    StartCoroutine(waiterDashTimer());  
+    StartCoroutine(waiterDashDuration());  
   }
 
   public void AddImpact(Vector3 dir, float force)
@@ -294,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
     yield return new WaitForSeconds(dashCooldown);
     canDash = true;
   }
-  IEnumerator waiterDashTimer()
+  IEnumerator waiterDashDuration()
   {
     yield return new WaitForSeconds(.15f);
     isSideDashing = false;
