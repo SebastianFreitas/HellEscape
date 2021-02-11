@@ -33,11 +33,11 @@ public class PlayerProjectile : MonoBehaviour
 
   void Start()
   {
+    SetVisibility(false);
     rb = GetComponent<Rigidbody>();
-    if (totalConvergion.bludgeoning != 0) convertBludgeoning(); 
-    else if (visual) bounces = 0;
-    else if (initialFade) StartCoroutine(fadeWaiter());
-
+    /*if (totalConvergion.bludgeoning != 0) convertBludgeoning(); 
+    else if (visual) bounces = 0;*/
+    //if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
     rb.AddForce(transform.forward * speed);
     StartCoroutine(waiter(.5f));
   }
@@ -63,7 +63,7 @@ public class PlayerProjectile : MonoBehaviour
 
   IEnumerator waiter(float a){
     yield return new WaitForSeconds(a);
-     Destroy(gameObject);
+    Destroy(gameObject);
   }
 
   IEnumerator fadeWaiter()
@@ -87,8 +87,10 @@ public class PlayerProjectile : MonoBehaviour
       }
 
   }
+
   void OnCollisionEnter(Collision collision)
   {
+        Debug.Log("collided");
       ContactPoint contact = collision.contacts[0];
       if (bounces > 0)
       {
@@ -103,7 +105,7 @@ public class PlayerProjectile : MonoBehaviour
         //GetComponent <ParticleSystem>().Play();
         //ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
         //em.enabled = true;
-        Destroy(gameObject);
+        Destroy(this.gameObject);
       }
   }
 
