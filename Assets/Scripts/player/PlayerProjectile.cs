@@ -57,7 +57,7 @@ public class PlayerProjectile : MonoBehaviour
 
   private void SetVisibility(bool onOff)
   {
-    this.GetComponent<Renderer>().enabled = onOff;
+    //this.GetComponent<Renderer>().enabled = onOff;
     this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
   }
 
@@ -95,9 +95,9 @@ public class PlayerProjectile : MonoBehaviour
       if (bounces > 0)
       {
         SetVisibility(true);
-        transform.forward = contact.normal;
+        //transform.forward = contact.normal;
         AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
-        rb.AddForce(transform.forward * 100);
+        rb.AddForce(contact.normal * 100);
         bounces--;
       } 
       else 
