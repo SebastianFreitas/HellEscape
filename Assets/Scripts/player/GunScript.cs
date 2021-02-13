@@ -20,6 +20,7 @@ public class GunScript : MonoBehaviour
     public GameObject projectile;
     public GameObject pnt;
     public GameObject muzzleFlashFront;
+    public GameObject lightFlash;
 
     public GameObject head;
     public GameObject body;
@@ -36,6 +37,7 @@ public class GunScript : MonoBehaviour
 
     void Start()
     {
+        lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
       muzzleFlashFront.SetActive(false);
     }
@@ -50,9 +52,10 @@ public class GunScript : MonoBehaviour
       else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
-    void Shoot(float attackRate, int numberOfBullets){
+    void Shoot(float attackRate, int numberOfBullets)
+    {
         animator.SetTrigger("Shoot");
-        muzzleFlashFront.SetActive(true);
+        
       StartCoroutine(waiterFlash());
 
       GetComponent<AudioSource>().PlayOneShot(shoot, volume);
@@ -87,8 +90,11 @@ public class GunScript : MonoBehaviour
       Instantiate(inventory,inventoryPosition , fpsCam.transform.rotation);
     }
     IEnumerator waiterFlash(){
-      yield return new WaitForSeconds(.07f);
-      muzzleFlashFront.SetActive(false);
+        muzzleFlashFront.SetActive(true);
+        lightFlash.SetActive(true);
+        yield return new WaitForSeconds(.07f);
+        muzzleFlashFront.SetActive(false);
+        lightFlash.SetActive(false);
     }
 
     void OnEnable()
