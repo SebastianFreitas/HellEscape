@@ -5,6 +5,8 @@ using System.Collections;
 
 public class GunScript : MonoBehaviour
 {
+    public Animator animator;
+
     public convergion totalConvergion;
     public float damage = 10f;
     public float range = 100f;
@@ -34,6 +36,7 @@ public class GunScript : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
       muzzleFlashFront.SetActive(false);
     }
 
@@ -48,7 +51,8 @@ public class GunScript : MonoBehaviour
     }
 
     void Shoot(float attackRate, int numberOfBullets){
-      muzzleFlashFront.SetActive(true);
+        animator.SetTrigger("Shoot");
+        muzzleFlashFront.SetActive(true);
       StartCoroutine(waiterFlash());
 
       GetComponent<AudioSource>().PlayOneShot(shoot, volume);
