@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
   }
   void Update()
   {
+        Debug.Log(velocity);
       // Do FPS calculation
       frameCount++;
       dt += Time.deltaTime;
@@ -107,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
   }
   private void MoveState()
   {
-    transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //
+    transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
     //inertia
     if (inputLocked)
     {
@@ -156,8 +157,12 @@ public class PlayerMovement : MonoBehaviour
 
   void GroundMove()
   {
-    if (isSideDashing) inputLocked = true;
-    else  inputLocked = false;
+        if (isSideDashing) inputLocked = true;
+        else
+        {
+            velocity.y = -1;
+            inputLocked = false;
+        }
   
     if (Input.GetButtonDown("Jump"))
     {
