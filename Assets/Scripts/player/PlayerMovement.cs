@@ -158,11 +158,7 @@ public class PlayerMovement : MonoBehaviour
   void GroundMove()
   {
         if (isSideDashing) inputLocked = true;
-        else
-        {
-            velocity.y = -1;
-            inputLocked = false;
-        }
+
   
     if (Input.GetButtonDown("Jump"))
     {
@@ -179,7 +175,12 @@ public class PlayerMovement : MonoBehaviour
       if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
       else desiredDirection = new Vector3(0,0,1);
     }
-  }
+      else
+      {
+           velocity.y = -1;
+           inputLocked = false;
+      }
+    }
   void AirMove()
   {        
     if (!isSideDashing)
