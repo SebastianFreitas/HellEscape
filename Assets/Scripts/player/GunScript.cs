@@ -39,22 +39,23 @@ public class GunScript : MonoBehaviour
     {
         lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
-      muzzleFlashFront.SetActive(false);
+        muzzleFlashFront.transform.parent = transform.parent;
+        muzzleFlashFront.SetActive(false);
     }
 
 
     void Update()
     {
-      if (Input.GetButton("Fire1") && canShoot ) Shoot(.49f,1);
-      //else if (Input.GetButton("Fire2") && canShoot) SecondaryFire(.2f);
-      else if (Input.GetKey("1") && canShoot) Shoot(.09f,1);
-      else if (Input.GetKey("2") && canShoot) Shoot(1f,100);
-      else if (Input.GetKeyDown("i")) OpenInventory();
+          if (Input.GetButton("Fire1") && canShoot ) Shoot(.49f,1);
+          //else if (Input.GetButton("Fire2") && canShoot) SecondaryFire(.2f);
+          else if (Input.GetKey("1") && canShoot) Shoot(.09f,1);
+          else if (Input.GetKey("2") && canShoot) Shoot(1f,100);
+          else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
     void Shoot(float attackRate, int numberOfBullets)
     {
-        animator.SetTrigger("Shoot");
+      
         
       StartCoroutine(waiterFlash());
 
@@ -90,9 +91,12 @@ public class GunScript : MonoBehaviour
       Instantiate(inventory,inventoryPosition , fpsCam.transform.rotation);
     }
     IEnumerator waiterFlash(){
+        animator.SetTrigger("Shoot");
+ 
         muzzleFlashFront.SetActive(true);
         lightFlash.SetActive(true);
-        yield return new WaitForSeconds(.07f);
+        
+        yield return new WaitForSeconds(.03f);
         muzzleFlashFront.SetActive(false);
         lightFlash.SetActive(false);
     }
