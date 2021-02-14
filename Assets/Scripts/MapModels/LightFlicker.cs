@@ -14,7 +14,7 @@ public class LightFlicker : MonoBehaviour
     {
         for(int i = 0; i<allObjects.Count;i++)
         {
-            if(Random.value > 0.7) StartCoroutine(waiterOn(timeOn, i));
+            if (Random.value > 7) StartCoroutine(waiterOn(timeOn, i));
         }
 
     }
@@ -27,7 +27,7 @@ public class LightFlicker : MonoBehaviour
 
     private IEnumerator waiterOn(float time, int i)
     {
-        time += Random.Range(-10f,10f);
+        time += Random.Range(-5f,5f);//time += Random.Range(-10f,10f);
         yield return new WaitForSeconds(time);
         allObjects[i].GetComponent<Light>().enabled = false;
         StartCoroutine(waiterOff(timeOff, i));
@@ -35,7 +35,7 @@ public class LightFlicker : MonoBehaviour
 
     private IEnumerator waiterOff(float time,int i)
     {
-        time += Random.Range(-.1f,.1f);
+        time += Random.Range(-.5f,.5f);
         yield return new WaitForSeconds(time);
         allObjects[i].GetComponent<Light>().enabled = true;
         StartCoroutine(waiterOn(timeOn, i));
