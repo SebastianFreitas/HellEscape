@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-  public float health = 50f;
+  public int health = 50;
 
   
   public CharacterController controller;
@@ -65,10 +65,15 @@ public class PlayerMovement : MonoBehaviour
   public float volume=0.5f;
   private float nextFootstep = 0;
   public float footstepDelay = .3f;
+    public HealthBar hp;
  
 
   private void Start()
   {
+
+        hp = transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<HealthBar>();
+        hp.SetMaxHealth(health);
+
     if (playerView == null)
     {
       Camera mainCamera = Camera.main;
@@ -280,10 +285,12 @@ public class PlayerMovement : MonoBehaviour
     }
   }
 
-  public void TakeDamage(float amount)
+  public void TakeDamage(int amount)
   {
     health-= amount;
-    if (health <= 0f){
+        hp.SetHealth(health);
+        if (health <= 0f){
+            
       Debug.Log("You have dieadded");//Die();
     }
     Debug.Log("You took "+amount+" damage.");

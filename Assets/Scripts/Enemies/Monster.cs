@@ -18,12 +18,13 @@ public class Monster : MonoBehaviour
   private Transform player;
 
   private bool running = false;
-  private GameObject bullet;
+
 
   private Rigidbody skullBody;
 
 
   public GameObject spawn;
+    private bool canTakeDamage = true;
 
   void Start(){
     player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -36,12 +37,14 @@ public class Monster : MonoBehaviour
 
 
 
-  void OnTriggerEnter(Collider other)
+  void OnCollisionEnter(Collision other)
   {
-      if (other.gameObject.tag == "Player")
-      {
-          player.GetComponent<PlayerMovement>().TakeDamage(damage);
-      }
+        ContactPoint contact = other.contacts[0];
+        if (other.gameObject.CompareTag("Player"))
+        {
+            player.GetComponent<PlayerMovement>().TakeDamage((int)damage);
+            player.GetComponent<PlayerMovement>().AddImpact(new Vector3(1,1,1)-contact.normal, 100f);
+        }
 
   }
 
@@ -49,10 +52,11 @@ public class Monster : MonoBehaviour
   public void TakeDamage(float amount)
   {
     health-= amount;
-    if (health <= 0f){
+    if (health <= 0f && canTakeDamage){
       transform.parent.GetComponent<Room>().killMonster();
       Die();
     }
+        StartCoroutine(waiterImmunity());
   }
 
   void Die()
@@ -64,8 +68,15 @@ public class Monster : MonoBehaviour
   {
     yield return new WaitForSeconds(.5f);
     player = GameObject.FindGameObjectWithTag("Player").transform;
-    running = true;  
   }
+
+    IEnumerator waiterImmunity()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(1f);
+        canTakeDamage = true;
+
+    }
 
   IEnumerator randomJump()
   {

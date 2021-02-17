@@ -14,7 +14,7 @@ public class GameMan : MonoBehaviour
     EndRoom endRoom;
     public Room currentRoom;
 
-    PlayerMovement player;
+    public PlayerMovement player;
     private int dificulty = 1;
 
     // Start is called before the first frame update
@@ -23,9 +23,10 @@ public class GameMan : MonoBehaviour
         
         currentRoom = Instantiate(startRoomPrefab);
         currentRoom.transform.parent = this.transform;
-        currentRoom.SpawnEnemies(dificulty);
+        
         
         InstantiatePlayerInRoom(startRoom);
+        currentRoom.SpawnEnemies(dificulty);
     }
 
     void PlaceRoomAndPlayer(Room room)

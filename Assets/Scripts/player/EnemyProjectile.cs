@@ -31,7 +31,7 @@ public class EnemyProjectile : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
       if (collision.gameObject.tag == "Player")
-      collision.GetComponent<PlayerMovement>().TakeDamage(damage);
+      collision.GetComponent<PlayerMovement>().TakeDamage((int)damage);
     }
 
     void OnCollisionEnter(Collision collision)
