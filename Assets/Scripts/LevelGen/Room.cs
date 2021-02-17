@@ -6,10 +6,25 @@ public class Room : MonoBehaviour
 {
   public Doorway[] doorways;
   public MeshCollider MeshCollider;
-
-
-  //acess to the bounds of mechcollider
-  public Bounds RoomBounds{
+  public Transform playerStart;
+    public int roomType;
+    private bool startedNext = false;
+     
+    //acess to the bounds of mechcollider
+    public Bounds RoomBounds{
     get {return MeshCollider.bounds;}
   }
+
+    void OnTriggerStay(Collider collider)
+    {
+
+        if (collider.CompareTag("Player") && Input.GetKeyUp("e") && !startedNext ) {
+
+            startedNext = true;
+            transform.parent.GetComponent<GameMan>().Next(roomType);
+               
+        }
+
+    }
+
 }

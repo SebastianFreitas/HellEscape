@@ -77,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
   }
   void Update()
   {
-        Debug.Log(velocity);
       // Do FPS calculation
       frameCount++;
       dt += Time.deltaTime;
