@@ -18,7 +18,7 @@ public class LevelBuilder : MonoBehaviour
 	LayerMask roomLayerMask;
 
 
-
+	/*
 	void Start ()
 	{
 		roomLayerMask = LayerMask.GetMask ("Room");
@@ -79,7 +79,7 @@ public class LevelBuilder : MonoBehaviour
 			list.Insert (r, doorway);
 		}
 	}
-
+	
 	void PlaceRoom ()
 	{
 		// Instantiate room
@@ -154,7 +154,7 @@ public class LevelBuilder : MonoBehaviour
 		Vector3 roomPositionOffset = roomDoorway.transform.position - room.transform.position;
 		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 	}
-
+	
 	bool CheckRoomOverlap (Room room)
 	{
 		Bounds bounds = room.RoomBounds;
@@ -174,8 +174,8 @@ public class LevelBuilder : MonoBehaviour
 		}
 
 		return false;
-	}
-
+	}*/
+	/*
 	void PlaceEndRoom ()
 	{
 		// Instantiate room
@@ -243,5 +243,5 @@ public class LevelBuilder : MonoBehaviour
 
 		// Reset coroutine
 		StartCoroutine ("GenerateLevel");
-	}
+	}*/
 }

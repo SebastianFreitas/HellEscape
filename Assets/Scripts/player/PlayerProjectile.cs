@@ -90,7 +90,7 @@ public class PlayerProjectile : MonoBehaviour
 
   void OnCollisionEnter(Collision collision)
   {
-        Debug.Log("collided");
+        
       ContactPoint contact = collision.contacts[0];
       if (bounces > 0)
       {

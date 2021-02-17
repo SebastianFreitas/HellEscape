@@ -8,11 +8,11 @@ public class Spawner : MonoBehaviour
 {
     public GameObject skull;
 
-    private GameObject clone;
+    //private GameObject clone;
 
     public int maxSpawn;
 
-    private bool wait = true;
+    //private bool wait = true;
 
     private float xSpawn;
     private float ySpawn;
@@ -20,8 +20,8 @@ public class Spawner : MonoBehaviour
 
     //public int[] dificulty;
     private int difTier = 0;
-    private int killed = 0;
-
+    //private int killed = 0;
+/*
     void Start()
     {
         StartCoroutine(waiter());
@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
             StartCoroutine(spawnMobs(a));
         }
     }
-/*
+
     void Update()
     {
         if (!wait)
@@ -59,7 +59,7 @@ public class Spawner : MonoBehaviour
       zSpawn = Random.Range(-8.0f, 8.0f);
        
     }
-
+    /*
     IEnumerator waiter()
     {
         yield return new WaitForSeconds(1f);
@@ -78,5 +78,5 @@ public class Spawner : MonoBehaviour
         yield return new WaitForSeconds(extraTime);
         Vector3 spawnPoint = new Vector3 (transform.position.x + xSpawn,transform.position.y + ySpawn,transform.position.z+zSpawn);
         Instantiate(skull, spawnPoint , transform.rotation);
-    }
+    }*/
 }

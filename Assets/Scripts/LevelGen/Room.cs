@@ -4,32 +4,50 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-  public Doorway[] doorways;
-  public MeshCollider MeshCollider;
-  public Transform playerStart;
+    public Doorway[] doorways;
+    public MeshCollider MeshCollider;
+    public Transform playerStart;
     public int roomType;
-    //private bool startedNext = false;
-     
-    //acess to the bounds of mechcollider
-    public Bounds RoomBounds{
-    get {return MeshCollider.bounds;}
-  }
-    /*
-    void OnTriggerStay(Collider collider)
+    public Transform[] enemySpawns;
+    public GameObject skull;
+    public bool locked = true;
+    public int monstersAlive = 0;
+
+
+    private void Start()
     {
+        StartCoroutine(WatchEnemies());
+    }
+    public void SpawnEnemies(int dif)
+    {
+        for (int i = 0; i < enemySpawns.Length; i++)
+        {
+            for (int j = 0; j < dif; j++)
+            {
+                var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x, enemySpawns[i].position.y, enemySpawns[i].position.z), transform.rotation);
+                skully.transform.parent = transform;
+                monstersAlive++;
 
-        if (collider.CompareTag("Player") && Input.GetKeyDown("e") && !startedNext ) {
-
-            startedNext = true;
-            transform.parent.GetComponent<GameMan>().Next(roomType);
-               
+            }
         }
+    }
 
-    }*/
+    public void killMonster()
+    {
+        monstersAlive--;
+    }
 
     public void UseDoor()
     {
-        transform.parent.GetComponent<GameMan>().Next(roomType);
+        if (!locked) transform.parent.GetComponent<GameMan>().Next(roomType);
+    }
+
+    private IEnumerator WatchEnemies()
+    {
+        if (monstersAlive == 0) locked = false;
+        Debug.Log(monstersAlive);
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(WatchEnemies());
     }
 
 }

@@ -50,13 +50,15 @@ public class Monster : MonoBehaviour
   {
     health-= amount;
     if (health <= 0f){
+      transform.parent.GetComponent<Room>().killMonster();
       Die();
     }
   }
 
-  void Die(){
-    Destroy(gameObject);
-  }
+  void Die()
+    {
+        Destroy(gameObject);
+    }
 
   IEnumerator waiter()
   {
@@ -71,7 +73,7 @@ public class Monster : MonoBehaviour
     Vector3 playerPos = new Vector3(player.position.x, player.position.y-10f, player.position.z);
     Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
     Vector3 randomHeight = new Vector3(0,Random.Range(0,2),0);
-     skullBody.AddForce((randomHeight+direction_to_player) * 500f);
+     skullBody.AddForce((randomHeight+direction_to_player) * Random.Range(300f, 1000f));
 
     yield return new WaitForSeconds(a);
     StartCoroutine(randomJump());

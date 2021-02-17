@@ -15,6 +15,7 @@ public class GameMan : MonoBehaviour
     public Room currentRoom;
 
     PlayerMovement player;
+    private int dificulty = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -22,14 +23,9 @@ public class GameMan : MonoBehaviour
         
         currentRoom = Instantiate(startRoomPrefab);
         currentRoom.transform.parent = this.transform;
+        currentRoom.SpawnEnemies(dificulty);
         
         InstantiatePlayerInRoom(startRoom);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void PlaceRoomAndPlayer(Room room)
@@ -37,6 +33,7 @@ public class GameMan : MonoBehaviour
         // Instantiate room
         currentRoom = Instantiate(room);
         currentRoom.transform.parent = this.transform;
+        currentRoom.SpawnEnemies(dificulty);
 
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;
@@ -62,6 +59,7 @@ public class GameMan : MonoBehaviour
     public void Next(int type)
     {
         Destroy(currentRoom.gameObject);
+        dificulty++;
 
         if (type == 1 || type == 2)
         {
@@ -72,10 +70,11 @@ public class GameMan : MonoBehaviour
 
     }
 
-    private void NextRoom(Room room)
+    public void UnlockDoor()
     {
-
+        currentRoom.locked = true;
     }
+
 
     Room GenerateRoom()
     {
