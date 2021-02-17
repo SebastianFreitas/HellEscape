@@ -8,17 +8,21 @@ public class InteractBehaviour : MonoBehaviour
     private Vector3 targetPoint;
     private RaycastHit hit;
 
-    void Update()
+
+    private void Update()
     {
         if (Input.GetKeyDown("e"))
         {
             Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            if (Physics.Raycast(ray, out hit, 3f, LayerMask.NameToLayer("Button")))
+            if (Physics.Raycast(ray, out hit, 10f) && hit.transform.tag == "Button")
             {
-                //hit.transform.gameObject.GetComponent<ButtonDoor>().UseButton();
-                transform.parent.GetComponent<GameMan>().Next(2);
+                //hit.collider.transform.GetComponent<ButtonDoor>().UseDoor();
+                transform.parent.GetComponent<GameMan>().currentRoom.GetComponent<Room>().UseDoor();
             }
         }
+    } 
 
-    }
+        
+
+    
 }

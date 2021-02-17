@@ -8,13 +8,13 @@ public class Room : MonoBehaviour
   public MeshCollider MeshCollider;
   public Transform playerStart;
     public int roomType;
-    private bool startedNext = false;
+    //private bool startedNext = false;
      
     //acess to the bounds of mechcollider
     public Bounds RoomBounds{
     get {return MeshCollider.bounds;}
   }
-
+    /*
     void OnTriggerStay(Collider collider)
     {
 
@@ -25,6 +25,11 @@ public class Room : MonoBehaviour
                
         }
 
+    }*/
+
+    public void UseDoor()
+    {
+        transform.parent.GetComponent<GameMan>().Next(roomType);
     }
 
 }

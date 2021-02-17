@@ -12,7 +12,7 @@ public class GameMan : MonoBehaviour
 
     StartRoom startRoom;
     EndRoom endRoom;
-    Room currentRoom;
+    public Room currentRoom;
 
     PlayerMovement player;
 

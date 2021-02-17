@@ -14,7 +14,7 @@ public class LightFlicker : MonoBehaviour
     {
         for(int i = 0; i<allObjects.Count;i++)
         {
-            if (Random.value > .7) StartCoroutine(waiterOn(timeOn, i));
+            if (Random.value > .8) StartCoroutine(waiterOn(timeOn, i));
         }
 
         //add a omega flashing constanly light
