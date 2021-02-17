@@ -18,7 +18,7 @@ public class Room : MonoBehaviour
     void OnTriggerStay(Collider collider)
     {
 
-        if (collider.CompareTag("Player") && Input.GetKeyUp("e") && !startedNext ) {
+        if (collider.CompareTag("Player") && Input.GetKeyDown("e") && !startedNext ) {
 
             startedNext = true;
             transform.parent.GetComponent<GameMan>().Next(roomType);
