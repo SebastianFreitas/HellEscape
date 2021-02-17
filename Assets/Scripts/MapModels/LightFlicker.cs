@@ -27,9 +27,7 @@ public class LightFlicker : MonoBehaviour
         time += Random.Range(-7f,7f);//time += Random.Range(-10f,10f);
         yield return new WaitForSeconds(time);
 
-        light.GetComponent<Light>().enabled = false;
         light.SetActive(false);
-        //light.transform.GetChild(0).gameObject.SetActive(false);
 
         if (Random.Range(0, 1) > .6 && i - 1 > 0) StartCoroutine(WaiterNeighbor(1f, i - 1));
 
@@ -43,9 +41,7 @@ public class LightFlicker : MonoBehaviour
         time += Random.Range(-.5f,.5f);
         yield return new WaitForSeconds(time);
 
-        light.GetComponent<Light>().enabled = true;
         light.SetActive(true);
-        //light.transform.GetChild(0).gameObject.SetActive(true);
 
         StartCoroutine(waiterOn(timeOn, i));
     }
@@ -55,14 +51,10 @@ public class LightFlicker : MonoBehaviour
     {
         var lightneighbor = allObjects[i];
 
-        lightneighbor.GetComponent<Light>().enabled = false;
         lightneighbor.SetActive(false);
-        //lightneighbor.transform.GetChild(0).gameObject.SetActive(false);
 
         yield return new WaitForSeconds(time);
 
-        lightneighbor.GetComponent<Light>().enabled = true;
         lightneighbor.SetActive(true);
-        //lightneighbor.transform.GetChild(0).gameObject.SetActive(true);
     }
 }
