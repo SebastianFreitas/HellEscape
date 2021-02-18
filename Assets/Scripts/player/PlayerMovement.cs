@@ -290,7 +290,7 @@ public class PlayerMovement : MonoBehaviour
     health-= amount;
         hp.SetHealth(health);
         if (health <= 0f){
-            
+            Die();
       Debug.Log("You have dieadded");//Die();
     }
     Debug.Log("You took "+amount+" damage.");
@@ -298,7 +298,9 @@ public class PlayerMovement : MonoBehaviour
 
   void Die()
   {
+        transform.parent.GetComponent<GameMan>().RestartGame();
     Destroy(gameObject);
+        
   }
 
   IEnumerator waiterDashCD()

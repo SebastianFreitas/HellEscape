@@ -15,14 +15,24 @@ public class RotatingLava : MonoBehaviour
     void Update()
     {
         //transform.Rotate(5f, 0f, 0f, Space.Self);
-       // transform.Rotate(Vector3.up * 50 * Time.deltaTime, Space.Self);
-        transform.position = transform.position + transform.forward * Time.deltaTime *2;
+        // transform.Rotate(Vector3.up * 50 * Time.deltaTime, Space.Self);
+       // transform.rotation = new Quaternion(rotx, roty, rotz, rotw);
+       // transform.Rotate(0f, 360f, 0f, Space.Self);
+        
+        //= transform.position + transform.forward * Time.deltaTime *2;
+
+        transform.parent.transform.Translate(0.02f,0f,0f, Space.Self);
+        transform.Rotate(0, 3 * Time.deltaTime, 0);
+
+        float degrees = 90;
+        Vector3 to = new Vector3(degrees, 0, 0);
+       //transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, to, Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
            var playerMov = other.GetComponent<PlayerMovement>();
            playerMov.JumpInput(10);

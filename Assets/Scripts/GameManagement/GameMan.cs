@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameMan : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class GameMan : MonoBehaviour
 
     public PlayerMovement player;
     private int dificulty = 1;
+
+    public string startScene;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +79,14 @@ public class GameMan : MonoBehaviour
         currentRoom.locked = true;
     }
 
+    public void RestartGame()
+    {
+        foreach (Transform child in transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+        SceneManager.LoadScene(startScene);
+    }
 
     Room GenerateRoom()
     {
