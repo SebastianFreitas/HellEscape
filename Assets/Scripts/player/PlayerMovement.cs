@@ -62,14 +62,19 @@ public class PlayerMovement : MonoBehaviour
   public AudioSource audioSource;
   public AudioClip dash;
   public AudioClip jump;
+  public AudioClip land;
   public AudioClip[] steps;
+  public AudioClip[] hurts;
   public float volume=0.5f;
   private float nextFootstep = 0;
   public float footstepDelay = .3f;
-    public HealthBar hp;
- 
 
-  private void Start()
+
+    public HealthBar hp;
+    private bool isGroundedOlder;
+
+
+    private void Start()
   {
 
         hp = transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<HealthBar>();
@@ -99,6 +104,8 @@ public class PlayerMovement : MonoBehaviour
       }
 
       isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+      if (!isGroundedOlder && isGrounded) audioSource.PlayOneShot(land, volume);
+      isGroundedOlder = isGrounded;
 
       GetInputWASD();
 
@@ -290,12 +297,15 @@ public class PlayerMovement : MonoBehaviour
   {
         if (canTakeDamage)
         {
-            health-= amount;
+            StartCoroutine(waiterImmunity());
+            audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume+1);
+
+            health -= amount;
             hp.SetHealth(health);
             if (health <= 0f)
             {
                 Die();
-                StartCoroutine(waiterImmunity());
+                
             }
             Debug.Log("You took " + amount + " damage.");
         }
@@ -312,7 +322,7 @@ public class PlayerMovement : MonoBehaviour
     void Die()
   {
         transform.parent.GetComponent<GameMan>().RestartGame();
-    Destroy(gameObject);
+        Destroy(gameObject);
         
   }
 

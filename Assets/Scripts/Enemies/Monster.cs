@@ -5,35 +5,24 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
-  public float health = 50f;
-  public float speed;
-  public float stoppingDistance;
-  public float retreatDistance;
-  public float damage = 10f;
-  public float range = 100f;
-  public float timeBtwShots;
-  public float startTimeBtwShots= 1f;
+    [SerializeField] float health = 50f;
+    [SerializeField] float damage = 10f;
 
-  public GameObject projectile;
-  private Transform player;
+    protected Transform player;
+    protected Rigidbody rigidBody;
 
-  //private bool running = false;
+    [Header("Sound")]
+    public AudioSource audioSource;
+    public AudioClip die;
+    public AudioClip[] hurts;
+    public float volume = 0.5f;
 
 
-  public Rigidbody skullBody;
-
-
-  public GameObject spawn;
-    
-
-  void Start(){
-    player = GameObject.FindGameObjectWithTag("Player").transform;
-    timeBtwShots = startTimeBtwShots;
-    skullBody = transform.GetComponent<Rigidbody>();
-    //transform.Rotate(new Vector3(-80,0,0));
-    StartCoroutine(waiter());
-    StartCoroutine(randomJump());
-  }
+    protected void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        rigidBody = transform.GetComponent<Rigidbody>();
+    }
 
 
 
@@ -52,45 +41,24 @@ public class Monster : MonoBehaviour
 
 
   public void TakeDamage(float amount)
-  {
-    health-= amount;
-    if (health <= 0f ){
+  {  
+    health -= amount;
+    if (health <= 0f )
+    {
       transform.parent.GetComponent<Room>().killMonster();
       Die();
-    }
-        
+    } else audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+
   }
 
   void Die()
-    {
+   {
+        AudioSource.PlayClipAtPoint(die, player.position, volume+0.5f);
         Destroy(gameObject);
-    }
-
-  IEnumerator waiter()
-  {
-    yield return new WaitForSeconds(.5f);
-    player = GameObject.FindGameObjectWithTag("Player").transform;
-  }
+   }
 
 
 
-  IEnumerator randomJump()
-  {
-    float a = Random.Range(1.5f, 5f);
-    Vector3 playerPos = new Vector3(player.position.x, player.position.y-10f, player.position.z);
-    Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
-    Vector3 randomHeight = new Vector3(0,Random.Range(0,2),0);
-     skullBody.AddForce((randomHeight+direction_to_player) * Random.Range(300f, 1000f));
-
-    yield return new WaitForSeconds(a);
-    StartCoroutine(randomJump());
-  }
-  IEnumerator monsterCycle()
-  {
-    float a = Random.Range(.6f, 5f); 
-    yield return new WaitForSeconds(a);
-    if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
-  }
 /*
   IEnumerator fireRateCycle()
   {
