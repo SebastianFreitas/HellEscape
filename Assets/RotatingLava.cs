@@ -22,7 +22,7 @@ public class RotatingLava : MonoBehaviour
         //= transform.position + transform.forward * Time.deltaTime *2;
 
         transform.parent.transform.Translate(0.02f,0f,0f, Space.Self);
-        transform.Rotate(0, 3 * Time.deltaTime, 0);
+        transform.Rotate(0, 2 * Time.deltaTime, 0);
 
         float degrees = 90;
         Vector3 to = new Vector3(degrees, 0, 0);

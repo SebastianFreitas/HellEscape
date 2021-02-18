@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour
     private float zSpawn;
 
     //public int[] dificulty;
-    private int difTier = 0;
+   // private int difTier = 0;
     //private int killed = 0;
 /*
     void Start()

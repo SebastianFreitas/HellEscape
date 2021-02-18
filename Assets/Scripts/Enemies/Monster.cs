@@ -17,7 +17,7 @@ public class Monster : MonoBehaviour
   public GameObject projectile;
   private Transform player;
 
-  private bool running = false;
+  //private bool running = false;
 
 
   private Rigidbody skullBody;
@@ -94,7 +94,6 @@ public class Monster : MonoBehaviour
     float a = Random.Range(.6f, 5f); 
     yield return new WaitForSeconds(a);
     if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
-    running = true;
   }
 /*
   IEnumerator fireRateCycle()
