@@ -15,12 +15,11 @@ public class RotatingLava : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.parent.transform.Translate(0.02f,0f,0f, Space.Self);
+        transform.parent.transform.Translate(2f * Time.deltaTime, 0f,0f, Space.Self);
         transform.Rotate(0, 2 * Time.deltaTime, 0);
     }
     private void OnCollisionEnter(Collision collision)
     {
-
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Player"))
         {

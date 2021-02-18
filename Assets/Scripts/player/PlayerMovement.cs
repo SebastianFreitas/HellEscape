@@ -288,14 +288,17 @@ public class PlayerMovement : MonoBehaviour
 
   public void TakeDamage(int amount)
   {
-    health-= amount;
-        hp.SetHealth(health);
-        if (health <= 0f && canTakeDamage){
-            Die();
-      Debug.Log("You have dieadded");//Die();
-            StartCoroutine(waiterImmunity());
+        if (canTakeDamage)
+        {
+            health-= amount;
+            hp.SetHealth(health);
+            if (health <= 0f)
+            {
+                Die();
+                StartCoroutine(waiterImmunity());
+            }
+            Debug.Log("You took " + amount + " damage.");
         }
-    Debug.Log("You took "+amount+" damage.");
   }
 
     IEnumerator waiterImmunity()

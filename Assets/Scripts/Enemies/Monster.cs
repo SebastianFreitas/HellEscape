@@ -37,13 +37,15 @@ public class Monster : MonoBehaviour
 
 
 
-  void OnCollisionEnter(Collision other)
+  void OnTriggerEnter(Collider other)
   {
-        ContactPoint contact = other.contacts[0];
-        if (other.gameObject.CompareTag("Player"))
+        //ContactPoint contact = other.contacts[0];
+        if (other.gameObject.CompareTag("Dude"))
         {
-            player.GetComponent<PlayerMovement>().TakeDamage((int)damage);
-            player.GetComponent<PlayerMovement>().AddImpact(new Vector3(1,1,1)-contact.normal, 100f);
+            var playerScript = other.gameObject.GetComponent<PlayerMovement>();
+            playerScript.AddImpact(-transform.forward, 100f);
+            playerScript.TakeDamage((int)damage);
+            
         }
 
   }
