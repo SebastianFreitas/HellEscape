@@ -9,8 +9,9 @@ public class PlayerMovement : MonoBehaviour
   
   public CharacterController controller;
   public GameObject head;
+  private bool canTakeDamage = true;
 
-  [Header("Basic Movement")]
+    [Header("Basic Movement")]
   public float speed = 12f;
   public float currentSpeed = 12f;
   public float maxSpeed = 20;
@@ -289,14 +290,23 @@ public class PlayerMovement : MonoBehaviour
   {
     health-= amount;
         hp.SetHealth(health);
-        if (health <= 0f){
+        if (health <= 0f && canTakeDamage){
             Die();
       Debug.Log("You have dieadded");//Die();
-    }
+            StartCoroutine(waiterImmunity());
+        }
     Debug.Log("You took "+amount+" damage.");
   }
 
-  void Die()
+    IEnumerator waiterImmunity()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(1f);
+        canTakeDamage = true;
+
+    }
+
+    void Die()
   {
         transform.parent.GetComponent<GameMan>().RestartGame();
     Destroy(gameObject);

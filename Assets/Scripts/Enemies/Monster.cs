@@ -20,11 +20,11 @@ public class Monster : MonoBehaviour
   //private bool running = false;
 
 
-  private Rigidbody skullBody;
+  public Rigidbody skullBody;
 
 
   public GameObject spawn;
-    private bool canTakeDamage = true;
+    
 
   void Start(){
     player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -52,11 +52,11 @@ public class Monster : MonoBehaviour
   public void TakeDamage(float amount)
   {
     health-= amount;
-    if (health <= 0f && canTakeDamage){
+    if (health <= 0f ){
       transform.parent.GetComponent<Room>().killMonster();
       Die();
     }
-        StartCoroutine(waiterImmunity());
+        
   }
 
   void Die()
@@ -70,13 +70,7 @@ public class Monster : MonoBehaviour
     player = GameObject.FindGameObjectWithTag("Player").transform;
   }
 
-    IEnumerator waiterImmunity()
-    {
-        canTakeDamage = false;
-        yield return new WaitForSeconds(1f);
-        canTakeDamage = true;
 
-    }
 
   IEnumerator randomJump()
   {

@@ -45,7 +45,6 @@ public class Room : MonoBehaviour
     private IEnumerator WatchEnemies()
     {
         if (monstersAlive == 0) locked = false;
-        Debug.Log(monstersAlive);
         yield return new WaitForSeconds(1f);
         StartCoroutine(WatchEnemies());
     }
