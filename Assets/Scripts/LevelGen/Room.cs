@@ -8,9 +8,13 @@ public class Room : MonoBehaviour
     public MeshCollider MeshCollider;
     public Transform playerStart;
     public int roomType;
+    public Transform[] randomSpawns;
+    public GameObject[] objects;
     public Transform[] enemySpawns;
     public GameObject[] skulls;
+
     public GameObject skull;
+    public GameObject prop;
     public bool locked = true;
     public int monstersAlive = 0;
 
@@ -33,6 +37,17 @@ public class Room : MonoBehaviour
                 monstersAlive++;
 
             }
+        }
+    }
+
+    public void SpawnObjects()
+    {
+        for (int i = 0; i < randomSpawns.Length; i++)
+        {
+
+                var objecty = Instantiate(objects[Random.Range(0, objects.Length)], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y+2, randomSpawns[i].position.z + (Random.Range(-30, 30))), transform.rotation);
+                objecty.transform.parent = transform;
+              
         }
     }
 

@@ -53,7 +53,7 @@ public class Monster : MonoBehaviour
 
   void Die()
    {
-        AudioSource.PlayClipAtPoint(die, player.position, volume+0.5f);
+        AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         Destroy(gameObject);
    }
 

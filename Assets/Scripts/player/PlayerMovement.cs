@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
       }
 
       isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-      if (!isGroundedOlder && isGrounded) audioSource.PlayOneShot(land, volume);
+     // if (!isGroundedOlder && isGrounded) audioSource.PlayOneShot(land, volume);
       isGroundedOlder = isGrounded;
 
       GetInputWASD();

@@ -30,6 +30,7 @@ public class GameMan : MonoBehaviour
         
         InstantiatePlayerInRoom(startRoom);
         currentRoom.SpawnEnemies(dificulty);
+        currentRoom.SpawnObjects();
     }
 
     void PlaceRoomAndPlayer(Room room)
@@ -38,6 +39,7 @@ public class GameMan : MonoBehaviour
         currentRoom = Instantiate(room);
         currentRoom.transform.parent = this.transform;
         currentRoom.SpawnEnemies(dificulty);
+        currentRoom.SpawnObjects();
 
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;

@@ -7,6 +7,8 @@ public class InteractBehaviour : MonoBehaviour
     public Camera fpsCam;
     private RaycastHit hit;
 
+    public AudioClip teleport;
+
 
     private void Update()
     {
@@ -17,6 +19,7 @@ public class InteractBehaviour : MonoBehaviour
             {
                 //hit.collider.transform.GetComponent<ButtonDoor>().UseDoor();
                 transform.parent.GetComponent<GameMan>().currentRoom.GetComponent<Room>().UseDoor();
+                transform.GetComponent<PlayerMovement>().audioSource.PlayOneShot(teleport, .5f);
             }
         }
     }
