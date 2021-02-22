@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PropBehaviour : MonoBehaviour
 {
     private Rigidbody rb;
+    private Transform oldTransform;
 
     void Start()
     {
@@ -19,6 +21,34 @@ public class PropBehaviour : MonoBehaviour
          yield return new WaitForSeconds(wait);
          GetComponent<Rigidbody>().useGravity = true;
     }
+
+/*void OnCollisionEnter(Collision other)
+  {
+        //ContactPoint contact = other.contacts[0];
+        if (other.gameObject.CompareTag("Dude"))
+        {
+            Debug.Log("should be working");
+            oldTransform = other.transform.parent;
+            other.transform.parent = transform;
+
+        }
+
+
+  }
+
+  
+void OnCollisionExit(Collision other)
+  {
+        //ContactPoint contact = other.contacts[0];
+        if (other.gameObject.CompareTag("Dude"))
+        {
+            Debug.Log("Out");
+            //other.transform.parent = oldTransform;
+        }
+
+
+  }*/
+
 
 
 }

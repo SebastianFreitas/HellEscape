@@ -58,7 +58,9 @@ public class PlayerMovement : MonoBehaviour
   public LayerMask groundMask;
   public bool isGrounded;
 
-  public bool jumped = false;
+  public bool groundLag;//used to give the player a few frames where he can still jump right after leaving the floor
+
+  public bool fallingAtSomeSpeed = false;
 
   [Header("Sound")]
   public AudioSource audioSource;
@@ -106,12 +108,19 @@ public class PlayerMovement : MonoBehaviour
       }
 
       isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-      if (!isGroundedOlder && isGrounded && jumped) {
-        jumped = false;
+      if ((controller.collisionFlags & CollisionFlags.Below) != 0){
+        isGrounded = true;// second check to see if its grounded dependign on collisions
+        inputLocked = false;
+      } 
+
+      if (velocity.y < -15) fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
+
+      if (!isGroundedOlder && isGrounded && fallingAtSomeSpeed) {
+        fallingAtSomeSpeed = false;
         audioSource.PlayOneShot(land, volume+.25f);
-      }
-      if (velocity.y < -3) jumped = true;
-      if ((controller.collisionFlags & CollisionFlags.Below) != 0) isGrounded = true;
+      } else if (isGroundedOlder && !isGrounded ) StartCoroutine(waiterGroundLag());
+      
+      
       
 
       GetInputWASD();
@@ -121,6 +130,14 @@ public class PlayerMovement : MonoBehaviour
       else if (!isGrounded)
           AirMove();
     
+    if (Input.GetButtonDown("Jump") && groundLag)
+    {
+      //audioSource.PlayOneShot(jump, 1f);
+      Jump();
+      inputLocked = true;
+      desiredDirection = new Vector3(xRaw,0,zRaw);
+    }
+
     MoveState();
     PlayFootSteps();  
     isGroundedOlder = isGrounded;
@@ -185,7 +202,6 @@ public class PlayerMovement : MonoBehaviour
       Jump();
       inputLocked = true;
       desiredDirection = new Vector3(xRaw,0,zRaw);
-      jumped = true;
     }
     else if (Input.GetButtonDown("Fire3") && canDash)
     {
@@ -195,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
       if (xRaw !=0 || zRaw != 0) desiredDirection = new Vector3(xRaw,0,zRaw);
       else desiredDirection = new Vector3(0,0,1);
     }
-      else
+      else if (velocity.y < 0)
       {
            velocity.y = -1;
            inputLocked = false;
@@ -260,7 +276,7 @@ public class PlayerMovement : MonoBehaviour
   {
     dashParticleSystem.Play();
     speedCounter++;
-    audioSource.PlayOneShot(dash, volume - .1f);
+    audioSource.PlayOneShot(dash, volume - .3f);
     if (moveRaw == Vector3.zero) AddImpact(transform.forward, dashForce); 
       else AddImpact(moveRaw, dashForce); 
 
@@ -344,5 +360,13 @@ public class PlayerMovement : MonoBehaviour
     yield return new WaitForSeconds(.15f);
     isSideDashing = false;
   }
+
+  IEnumerator waiterGroundLag(){
+    groundLag = true;
+    yield return new WaitForSeconds(.25f);
+    groundLag = false;
+  }
+
+  
 
 }
