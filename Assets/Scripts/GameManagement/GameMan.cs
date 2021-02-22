@@ -31,7 +31,6 @@ public class GameMan : MonoBehaviour
         InstantiatePlayerInRoom(startRoom);
         currentRoom.SpawnEnemies(dificulty);
         currentRoom.SpawnObjects();
-        currentRoom.SpawnObjects();
 
         Physics.IgnoreLayerCollision(0, 11);
     }

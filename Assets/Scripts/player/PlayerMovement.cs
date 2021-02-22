@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
   public float speed = 12f;
   public float currentSpeed = 12f;
   public float maxSpeed = 20;
-  public float speedModifier = 1;//ammount of speed gainned from each speedCounter
+  public float speedModifier = 1;//ammount of speed gained from each speedCounter
   public int speedCounter = 0; //used as stacks to increase speed
 
   [Header("Advanced movement")]
