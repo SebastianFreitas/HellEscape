@@ -34,8 +34,9 @@ public class Monster : MonoBehaviour
             var playerScript = other.gameObject.GetComponent<PlayerMovement>();
             playerScript.AddImpact(-transform.forward, 100f);
             playerScript.TakeDamage((int)damage);
-            
+
         }
+
 
   }
 

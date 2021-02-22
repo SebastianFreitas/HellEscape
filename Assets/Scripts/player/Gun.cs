@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 
-public class Gun : GunMods
+public class GunScript : MonoBehaviour
 {
     public Animator animator;
 

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8874400624355401052}
   m_Layer: 0
   m_Name: Head collider
-  m_TagString: Player
+  m_TagString: Dude
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5304,15 +5304,16 @@ MonoBehaviour:
   x: 0
   z: 0
   groundCheck: {fileID: 8675176734593606968}
-  groundDistance: 0.16
+  groundDistance: 0.15
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   isGrounded: 0
+  jumped: 0
   audioSource: {fileID: 998741484880663113}
   dash: {fileID: 8300000, guid: daafefecf599ce74e97ef78352d14f32, type: 3}
   jump: {fileID: 8300000, guid: f7722b7efebcc4a4b88f23ed41363cce, type: 3}
-  land: {fileID: 8300000, guid: 80451aafa91150f49899033e180f862f, type: 3}
+  land: {fileID: 8300000, guid: 55d011fcf523e65459872cf652fb3400, type: 3}
   steps:
   - {fileID: 8300000, guid: 8d538955452150545934ad7cca51303e, type: 3}
   - {fileID: 8300000, guid: 2a3530962eeb12f49927e2a0241b79cb, type: 3}
@@ -5341,7 +5342,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.3
-  m_SlopeLimit: 90
+  m_SlopeLimit: 45
   m_StepOffset: 0
   m_SkinWidth: 0.15
   m_MinMoveDistance: 0.001

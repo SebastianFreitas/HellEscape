@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
   public LayerMask groundMask;
   public bool isGrounded;
 
+  public bool jumped = false;
+
   [Header("Sound")]
   public AudioSource audioSource;
   public AudioClip dash;
@@ -104,8 +106,13 @@ public class PlayerMovement : MonoBehaviour
       }
 
       isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-     // if (!isGroundedOlder && isGrounded) audioSource.PlayOneShot(land, volume);
-      isGroundedOlder = isGrounded;
+      if (!isGroundedOlder && isGrounded && jumped) {
+        jumped = false;
+        audioSource.PlayOneShot(land, volume+.25f);
+      }
+      if (velocity.y < -3) jumped = true;
+      if ((controller.collisionFlags & CollisionFlags.Below) != 0) isGrounded = true;
+      
 
       GetInputWASD();
 
@@ -116,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
     
     MoveState();
     PlayFootSteps();  
-    
+    isGroundedOlder = isGrounded;
   }
   private void MoveState()
   {
@@ -174,10 +181,11 @@ public class PlayerMovement : MonoBehaviour
   
     if (Input.GetButtonDown("Jump"))
     {
-      audioSource.PlayOneShot(jump, 1f);
+      //audioSource.PlayOneShot(jump, 1f);
       Jump();
       inputLocked = true;
       desiredDirection = new Vector3(xRaw,0,zRaw);
+      jumped = true;
     }
     else if (Input.GetButtonDown("Fire3") && canDash)
     {
@@ -242,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
         }    
       }
     }
-    else nextFootstep = 0;
+    //else nextFootstep = 0;
   }
   public void JumpInput(float height){velocity.y = Mathf.Sqrt(height * -3f * gravity);}
 
@@ -314,7 +322,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator waiterImmunity()
     {
         canTakeDamage = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
         canTakeDamage = true;
 
     }

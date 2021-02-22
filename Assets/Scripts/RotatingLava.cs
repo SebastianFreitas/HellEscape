@@ -15,8 +15,8 @@ public class RotatingLava : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.parent.transform.Translate(2f * Time.deltaTime, 0f,0f, Space.Self);
-        transform.Rotate(0, 2 * Time.deltaTime, 0);
+        transform.parent.transform.Translate(1f * Time.deltaTime, 0f,0f, Space.Self);
+        transform.Rotate(0, 1 * Time.deltaTime, 0);
     }
 
     void OnTriggerStay(Collider other)

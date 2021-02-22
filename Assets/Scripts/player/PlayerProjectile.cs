@@ -42,18 +42,6 @@ public class PlayerProjectile : MonoBehaviour
     StartCoroutine(waiter(.5f));
   }
 
-  private void convertBludgeoning()
-  {
-    float totalBullets = totalConvergion.bludgeoning/5;
-    float bludgeoningDamage = damage/totalBullets + 10;
-    for(int i = 0; i < totalBullets; i++)
-    {   
-        Vector3 a = Random.insideUnitCircle * .7f;;
-        Vector3 positionI = rb.transform.position + a;
-        GameObject bullet = Instantiate(newBullet, positionI , rb.transform.rotation);
-        bullet.GetComponent<PlayerProjectile>().damage = bludgeoningDamage; 
-    }
-  }
 
   private void SetVisibility(bool onOff)
   {
@@ -80,33 +68,30 @@ public class PlayerProjectile : MonoBehaviour
 
   void OnTriggerEnter(Collider other)
   {
-      if (other.gameObject.tag == "Monster")
+      if (other.gameObject.CompareTag("Monster"))
       {
-          enemyScript = other.GetComponent<Monster>();
-          enemyScript.TakeDamage(damage);
+         other.GetComponent<Monster>().TakeDamage(damage);
+         Physics.IgnoreCollision(transform.GetComponent<Collider>(), other.transform.GetComponent<Collider>());
       }
 
   }
 
   void OnCollisionEnter(Collision collision)
   {
-        
       ContactPoint contact = collision.contacts[0];
-      if (bounces > 0)
-      {
-        SetVisibility(true);
-        //transform.forward = contact.normal;
-        AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
-        rb.AddForce(contact.normal * 100);
-        bounces--;
-      } 
-      else 
-      {
-        //GetComponent <ParticleSystem>().Play();
-        //ParticleSystem.EmissionModule em = GetComponent<ParticleSystem>().emission;
-        //em.enabled = true;
-        Destroy(this.gameObject);
-      }
+        if (collision.gameObject.CompareTag("Monster"))
+        {
+            collision.transform.GetComponent<Monster>().TakeDamage(damage);
+            Destroy(this.gameObject);
+        }
+        else if (bounces > 0)
+        {
+            SetVisibility(true);
+            AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
+            rb.AddForce(contact.normal * 100);
+            bounces--;
+        }
+        else Destroy(this.gameObject);
   }
 
 
