@@ -5,7 +5,6 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public Doorway[] doorways;
-    public MeshCollider MeshCollider;
     public Transform playerStart;
     public int roomType;
     public Transform[] randomSpawns;
@@ -46,9 +45,9 @@ public class Room : MonoBehaviour
         for (int i = 0; i < randomSpawns.Length; i++)
         {
             var x = GetRandomWeightedIndex(weight);
-                var objecty = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 8), randomSpawns[i].position.z + (Random.Range(-30, 30))), transform.rotation);
-                objecty.transform.parent = transform;
-                //if (Random.Range(1, 2) < 1) objecty.GetComponent<Rigidbody>().useGravity = true;
+                prop = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 8), randomSpawns[i].position.z + (Random.Range(-30, 30))), transform.rotation);
+                prop.transform.parent = transform;
+
 
               
         }

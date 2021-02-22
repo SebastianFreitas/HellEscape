@@ -72,7 +72,7 @@ public class MouseLook : MonoBehaviour
      private    void UpdateMouseBuffer()
      {
          mouseBuffer.target    += new Vector2( vSens * -Input.GetAxisRaw("Mouse Y"), hSens * Input.GetAxisRaw("Mouse X") );//Mouse Input is inherently framerate independend!
-         mouseBuffer.target.x = pitchClamp?Mathf.Clamp(mouseBuffer.target.x,-80F,+80F) :mouseBuffer.target.x;
+         mouseBuffer.target.x = pitchClamp?Mathf.Clamp(mouseBuffer.target.x,-90F,+90F) :mouseBuffer.target.x;
          mouseBuffer.Update( mLambda, Time.deltaTime, byPassSmoothing );
      }
   }
