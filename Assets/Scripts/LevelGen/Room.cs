@@ -40,16 +40,15 @@ public class Room : MonoBehaviour
         }
     }
 
-    public void SpawnObjects()
+    public void SpawnObjects(int more)
     {
         for (int i = 0; i < randomSpawns.Length; i++)
-        {
-            var x = GetRandomWeightedIndex(weight);
-                prop = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 8), randomSpawns[i].position.z + (Random.Range(-30, 30))), transform.rotation);
+        {   
+            for (int j = 0; j<more; j++){
+                var x = GetRandomWeightedIndex(weight);
+                prop = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 8), randomSpawns[i].position.z + (Random.Range(-15, 15))), transform.rotation);
                 prop.transform.parent = transform;
-
-
-              
+            }  
         }
     }
 

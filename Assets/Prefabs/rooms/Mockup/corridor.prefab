@@ -10623,6 +10623,7 @@ GameObject:
   - component: {fileID: 4819470335902242082}
   - component: {fileID: 3784465706083932853}
   - component: {fileID: 8525611048437706782}
+  - component: {fileID: 7920851547820914987}
   m_Layer: 8
   m_Name: corridor
   m_TagString: Untagged
@@ -11226,7 +11227,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorways: []
-  MeshCollider: {fileID: 0}
   playerStart: {fileID: 3971938920720595226}
   roomType: 2
   randomSpawns:
@@ -11244,8 +11244,8 @@ MonoBehaviour:
   - {fileID: 3773095993713092647}
   objects:
   - {fileID: 103042, guid: 71f7ed2b5b87ec14d93fd8e7ebc473b0, type: 3}
-  - {fileID: 139278, guid: 9095b2931461ffe4ba72056c71f674c7, type: 3}
-  - {fileID: 159428, guid: 0aeaeb6b6af54be4ca95be97e3b0c295, type: 3}
+  - {fileID: 7073512063214474378, guid: 496149a93f886374aa6fcbc827703f80, type: 3}
+  - {fileID: 115062, guid: 61f319715fe50d44091e88e9c99323fe, type: 3}
   - {fileID: 121056, guid: a3b91d9b2c6caf54cbc01a6f96ad2007, type: 3}
   - {fileID: 115764, guid: 27a33e832051391408fdd1fccfd59693, type: 3}
   - {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
@@ -11253,11 +11253,14 @@ MonoBehaviour:
   - {fileID: 107404, guid: 56a257b08e7d1134394edec5debaa2a6, type: 3}
   - {fileID: 151630, guid: 4360492801515c5408cf026e69fa97e6, type: 3}
   - {fileID: 156788, guid: 51986b1cb74648b4aa14a9849f78b381, type: 3}
-  - {fileID: 100000, guid: f3970460522e78e4ab901389359c40d6, type: 3}
-  - {fileID: 100000, guid: c4fde9b27265ff24d811c28b91dea04e, type: 3}
-  - {fileID: 100000, guid: 338855792f4b92e4186c34322bd227b3, type: 3}
-  - {fileID: 100000, guid: f157e90219c2e0946ad4a323d7dfe9fe, type: 3}
-  - {fileID: 100000, guid: d0bdb3af2a3c3194699e22ab850c1cb1, type: 3}
+  - {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}
+  - {fileID: 100000, guid: f9ec2f5b43ac0204199acdb66395048b, type: 3}
+  - {fileID: 100000, guid: 888ce82c0af2ab0499d39c93fb0f4ce4, type: 3}
+  - {fileID: 100000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
+  - {fileID: 1103964131845936, guid: 1e9452c2e358b30408e6165e6d56053d, type: 3}
+  - {fileID: 1884156196641044, guid: 00931e932c93cef48ae2d8cc87408c66, type: 3}
+  - {fileID: 1158754678514140, guid: 0bc9f3e0b20fe984697b880329a181fd, type: 3}
+  - {fileID: 1217707077934046, guid: acd1035e6037f5340b25cdc9d4460022, type: 3}
   enemySpawns:
   - {fileID: 7114348728596050272}
   - {fileID: 5352349276634469974}
@@ -11279,7 +11282,76 @@ MonoBehaviour:
   prop: {fileID: 0}
   locked: 1
   monstersAlive: 0
-  weight: 0a0000006400000064000000640000006400000064000000640000006400000064000000640000000a0000000a0000000a0000000a0000000a0000000a000000
+  weight: 320000001900000032000000960000009600000096000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+--- !u!114 &7920851547820914987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7579815116601319563}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31aca399a055bd24f93a259193912606, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorways: []
+  playerStart: {fileID: 3971938920720595226}
+  roomType: 2
+  randomSpawns:
+  - {fileID: 8722206481304349775}
+  - {fileID: 3537404839508099980}
+  - {fileID: 179065126377436584}
+  - {fileID: 5896813649038872866}
+  - {fileID: 1012883795084519434}
+  - {fileID: 571791505839469128}
+  - {fileID: 1745213944271128224}
+  - {fileID: 2735868420948451341}
+  - {fileID: 8428881973498625955}
+  - {fileID: 8571309438329665759}
+  - {fileID: 8024754670784916399}
+  - {fileID: 3773095993713092647}
+  objects:
+  - {fileID: 103042, guid: 71f7ed2b5b87ec14d93fd8e7ebc473b0, type: 3}
+  - {fileID: 7073512063214474378, guid: 496149a93f886374aa6fcbc827703f80, type: 3}
+  - {fileID: 115062, guid: 61f319715fe50d44091e88e9c99323fe, type: 3}
+  - {fileID: 121056, guid: a3b91d9b2c6caf54cbc01a6f96ad2007, type: 3}
+  - {fileID: 115764, guid: 27a33e832051391408fdd1fccfd59693, type: 3}
+  - {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  - {fileID: 113766, guid: d8ebd259b2328454fb14e5f4dde1b6f6, type: 3}
+  - {fileID: 107404, guid: 56a257b08e7d1134394edec5debaa2a6, type: 3}
+  - {fileID: 151630, guid: 4360492801515c5408cf026e69fa97e6, type: 3}
+  - {fileID: 156788, guid: 51986b1cb74648b4aa14a9849f78b381, type: 3}
+  - {fileID: 100000, guid: cba00f75539bc564fabb9136fccfac6c, type: 3}
+  - {fileID: 100000, guid: f9ec2f5b43ac0204199acdb66395048b, type: 3}
+  - {fileID: 100000, guid: 888ce82c0af2ab0499d39c93fb0f4ce4, type: 3}
+  - {fileID: 100000, guid: f99df1970d4b71441a320ce6acc52709, type: 3}
+  - {fileID: 1103964131845936, guid: 1e9452c2e358b30408e6165e6d56053d, type: 3}
+  - {fileID: 1884156196641044, guid: 00931e932c93cef48ae2d8cc87408c66, type: 3}
+  - {fileID: 1158754678514140, guid: 0bc9f3e0b20fe984697b880329a181fd, type: 3}
+  - {fileID: 1217707077934046, guid: acd1035e6037f5340b25cdc9d4460022, type: 3}
+  enemySpawns:
+  - {fileID: 7114348728596050272}
+  - {fileID: 5352349276634469974}
+  - {fileID: 5113632258017006748}
+  - {fileID: 5607877115925066324}
+  - {fileID: 2588963931164507851}
+  - {fileID: 908122083346962119}
+  - {fileID: 6815324353143743256}
+  - {fileID: 716104693911929897}
+  - {fileID: 1534172791465604408}
+  - {fileID: 8820666076198092495}
+  - {fileID: 3159626949319768586}
+  - {fileID: 4093056939781307488}
+  skulls:
+  - {fileID: 1412714010074994750, guid: 7f3c5e01984cd7d4ea8f58e41e765eb8, type: 3}
+  - {fileID: 1412714010074994750, guid: b76091acef8346d4d89df95529dc935c, type: 3}
+  - {fileID: 1412714010074994750, guid: f8724434da8028045add89ca43ea3a70, type: 3}
+  skull: {fileID: 1412714010074994750, guid: 7f3c5e01984cd7d4ea8f58e41e765eb8, type: 3}
+  prop: {fileID: 0}
+  locked: 1
+  monstersAlive: 0
+  weight: 320000001900000032000000960000009600000096000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
 --- !u!1 &7652551617405521822
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,8 +29,8 @@ public class GameMan : MonoBehaviour
         
         
         InstantiatePlayerInRoom(startRoom);
-        currentRoom.SpawnEnemies(dificulty);
-        currentRoom.SpawnObjects();
+        currentRoom.SpawnEnemies(1);
+        currentRoom.SpawnObjects(dificulty);
 
         Physics.IgnoreLayerCollision(0, 11);
     }
@@ -40,8 +40,8 @@ public class GameMan : MonoBehaviour
         // Instantiate room
         currentRoom = Instantiate(room);
         currentRoom.transform.parent = this.transform;
-        currentRoom.SpawnEnemies(dificulty);
-        currentRoom.SpawnObjects();
+        currentRoom.SpawnEnemies(1);
+        currentRoom.SpawnObjects(10^dificulty);
 
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;

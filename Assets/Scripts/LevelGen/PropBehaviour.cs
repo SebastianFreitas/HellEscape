@@ -17,7 +17,9 @@ public class PropBehaviour : MonoBehaviour
     }
 
     IEnumerator waiterGravity(){
+        
         float wait = Random.Range(15f,60f);
+        if (rb.mass > 6) wait-= 30f;
          yield return new WaitForSeconds(wait);
          GetComponent<Rigidbody>().useGravity = true;
     }
