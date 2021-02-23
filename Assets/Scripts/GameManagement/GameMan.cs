@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameMan : MonoBehaviour
 {
-
     public PlayerMovement playerPrefab;
     List<Doorway> availableDoorways = new List<Doorway>();
     public Room startRoomPrefab, endRoomPrefab;
@@ -41,7 +40,7 @@ public class GameMan : MonoBehaviour
         currentRoom = Instantiate(room);
         currentRoom.transform.parent = this.transform;
         currentRoom.SpawnEnemies(1);
-        currentRoom.SpawnObjects(10^dificulty);
+        currentRoom.SpawnObjects(dificulty);
 
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;
@@ -49,12 +48,6 @@ public class GameMan : MonoBehaviour
         player.transform.rotation = currentRoom.playerStart.rotation;
         player.GetComponent<CharacterController>().enabled = true;
 
-        // Get doorways from current room and add them randomly to the list of available doorways
-        //AddDoorwaysToList
-
-        // Position room
-        //startRoom.transform.position = Vector3.zero;
-        //startRoom.transform.rotation = Quaternion.identity;
     }
 
     void InstantiatePlayerInRoom(Room room)
