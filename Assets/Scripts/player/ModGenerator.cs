@@ -59,117 +59,110 @@ public class ModGenerator : MonoBehaviour
     }
 
 
-        static BaseMod[] modsInterior = 
-           new BaseMod[]{
-                 new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus),
-                 new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus),
-                 new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased),
-                 new BaseMod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased),
-                 new BaseMod(4,10,  "Poison Damage",            grade.interior, operatorType.plus),
-                 new BaseMod(4,10,  "Cold Damage",              grade.interior, operatorType.plus)
-           };
+    static BaseMod[] modsInterior = 
+        new BaseMod[]{
+                new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus),
+                new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus),
+                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased),
+                new BaseMod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased),
+                new BaseMod(4,10,  "Poison Damage",            grade.interior, operatorType.plus),
+                new BaseMod(4,10,  "Cold Damage",              grade.interior, operatorType.plus)
+        };
 
-        static BaseMod[] modsExterior = 
-           new BaseMod[]{           
-                 new BaseMod(10,15, "Grenade Throwing Speed",   grade.exterior, operatorType.increased),
-                 new BaseMod(10,15, "Grenade Damage",           grade.exterior, operatorType.increased),
-                 new BaseMod(5,10,  "Grenade cooldown",         grade.exterior, operatorType.reduced),
-                 new BaseMod(5,10,  "Movement Speed",           grade.exterior, operatorType.increased),
-                 new BaseMod(2,5,   "Grenade Duration",         grade.exterior, operatorType.increased)
-           };  
+    static BaseMod[] modsExterior = 
+        new BaseMod[]{           
+                new BaseMod(10,15, "Grenade Throwing Speed",   grade.exterior, operatorType.increased),
+                new BaseMod(10,15, "Grenade Damage",           grade.exterior, operatorType.increased),
+                new BaseMod(5,10,  "Grenade cooldown",         grade.exterior, operatorType.reduced),
+                new BaseMod(5,10,  "Movement Speed",           grade.exterior, operatorType.increased),
+                new BaseMod(2,5,   "Grenade Duration",         grade.exterior, operatorType.increased)
+        };  
 
-        static int[] InteriorWeight ={1,1,1,1,1,1};
-        
-        static int[] ExteriorWeight ={1,1,1,1,1};  //    
-
-        //int[] gradeWeights ={300,300,2};//chances of rolling grade type on an empty item
-        static int[] maxModsWeight ={1000,900,700,500,300,100,10,1};   //chances for total mods an item will have when rolled
-
-        private int upgradeTier(BaseMod mod, int level){
-                return 0;
-        }        
-        
-        GunMods createWeapon(int maxLevel)
-        {
-            GunMods ret = new GunMods();
-            ret.allModifiers = new Dictionary<grade, HashSet<BaseMod>>();
-            ret.allModifiers[grade.interior] = new HashSet<BaseMod>();
-            ret.allModifiers[grade.exterior] = new HashSet<BaseMod>();
-            ret.allModifiers[grade.special] = new HashSet<BaseMod>();
-            int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
-            int nextGrade;
-            BaseMod newMod = new BaseMod();  
-
-            for(int i = 0; i<totalMods; i++)
-            {
-                nextGrade = GenerateGrade(ret);
-                switch (nextGrade)
-                    {
-                        case 0:
-                        newMod = GenerateInteriorMod(ret);
-                            break;
-                        case 1:
-                        newMod = GenerateExteriorMod(ret);
-                            break;
-                        case 2:
-                        newMod = GenerateInteriorMod(ret);
-                            break;
-                    }
-                ret.allModifiers[newMod.grade].Add(newMod);
-            } 
-            return ret;
-        }
-
-        private int GenerateGrade(GunMods gun)
-        {
-            int[] gradeWeights ={300,300,2};
-
-            int interiors = 0, exteriors = 0, specials = 0;
-
-            foreach (var gradeGroup in gun.allModifiers[grade.interior])    interiors++;
-            foreach (var gradeGroup in gun.allModifiers[grade.exterior])    exteriors++;
-            foreach (var gradeGroup in gun.allModifiers[grade.special])     specials++;
-
-            while(interiors > 0 )   gradeWeights[0] -= 100;
-            while(exteriors > 0 )   gradeWeights[1] -= 100;
-            while(specials > 0 )    gradeWeights[2] -= 1;
-
-            return GetRandomWeightedIndex(gradeWeights);
-            
-        }
-        
-        private BaseMod GenerateInteriorMod(GunMods gun)
-        {
-            BaseMod ret;
-            while(true){
-                ret = modsInterior[GetRandomWeightedIndex(InteriorWeight)];
-                if(ContainsMod(gun, ret)) break;
-            }
-            return ret;
-        }
-
-        private BaseMod GenerateExteriorMod(GunMods gun)
-        {
-            BaseMod ret;
-            while(true){
-                ret = modsExterior[GetRandomWeightedIndex(ExteriorWeight)];
-                if(ContainsMod(gun, ret)) break;
-            }
-            return ret;
-        }
-
-        //gets a weapon and a mod and sees if the gun doesnt have the mod
-        private bool ContainsMod(GunMods gun, BaseMod modifier)
-        {
-            HashSet<BaseMod> gunModsByGrade = gun.allModifiers[modifier.grade]; 
-            foreach (BaseMod mod in gunModsByGrade)
-            {
-                if (mod == modifier) return false;
-            }
-                return true;
-            
-        }
+    static int[] InteriorWeight ={1,1,1,1,1,1};
     
+    static int[] ExteriorWeight ={1,1,1,1,1};  //    
+
+    //int[] gradeWeights ={300,300,2};//chances of rolling grade type on an empty item
+    static int[] maxModsWeight ={1000,900,700,500,300,100,10,1};   //chances for total mods an item will have when rolled
+
+    private int upgradeTier(BaseMod mod, int level){
+            return 0;
+    }        
+    
+    GunMods createWeapon(int maxLevel)
+    {
+        GunMods ret = new GunMods();
+        ret.allModifiers = new Dictionary<grade, HashSet<BaseMod>>();
+        ret.allModifiers[grade.interior] = new HashSet<BaseMod>();
+        ret.allModifiers[grade.exterior] = new HashSet<BaseMod>();
+        ret.allModifiers[grade.special] = new HashSet<BaseMod>();
+        int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
+        int nextGrade;
+        BaseMod newMod = new BaseMod();  
+
+        for(int i = 0; i<totalMods; i++)
+        {
+            nextGrade = GenerateGrade(ret);
+            switch (nextGrade)
+                {
+                    case 0:
+                    newMod = GenerateInteriorMod(ret);
+                        break;
+                    case 1:
+                    newMod = GenerateExteriorMod(ret);
+                        break;
+                    case 2:
+                    newMod = GenerateInteriorMod(ret);
+                        break;
+                }
+            ret.allModifiers[newMod.grade].Add(newMod);
+        } 
+        return ret;
+    }
+
+    private int GenerateGrade(GunMods gun)
+    {
+        int[] gradeWeights = {
+        300 - (gun.allModifiers[grade.interior].Count * 100),
+        300 - (gun.allModifiers[grade.interior].Count * 100),
+        2 - gun.allModifiers[grade.interior].Count };
+
+        return GetRandomWeightedIndex(gradeWeights);
+        
+    }
+    
+    private BaseMod GenerateInteriorMod(GunMods gun)
+    {
+        BaseMod ret;
+        while(true){
+            ret = modsInterior[GetRandomWeightedIndex(InteriorWeight)];
+            if(ContainsMod(gun, ret)) break;
+        }
+        return ret;
+    }
+
+    private BaseMod GenerateExteriorMod(GunMods gun)
+    {
+        BaseMod ret;
+        while(true){
+            ret = modsExterior[GetRandomWeightedIndex(ExteriorWeight)];
+            if(ContainsMod(gun, ret)) break;
+        }
+        return ret;
+    }
+
+    //gets a weapon and a mod and sees if the gun doesnt have the mod
+    private bool ContainsMod(GunMods gun, BaseMod modifier)
+    {
+        HashSet<BaseMod> gunModsByGrade = gun.allModifiers[modifier.grade]; 
+        foreach (BaseMod mod in gunModsByGrade)
+        {
+            if (mod == modifier) return false;
+        }
+            return true;
+        
+    }
+
 
 
 
