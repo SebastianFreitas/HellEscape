@@ -30,6 +30,7 @@ public class Room : MonoBehaviour
         for (int i = 0; i < enemySpawns.Length; i++)
         {
             StartCoroutine(SpawnEnemy(i));
+            monstersAlive++;
             for (int j = 0; j < dif; j++)
             {
             
@@ -98,14 +99,15 @@ public class Room : MonoBehaviour
         skull = skulls[Random.Range(0, skulls.Length)];
         var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x, enemySpawns[i].position.y, enemySpawns[i].position.z), transform.rotation);
         skully.transform.parent = transform;
-        monstersAlive++;
+        
 
     }
 
     private IEnumerator WatchEnemies()
     {
+        
+        yield return new WaitForSeconds(2f);
         if (monstersAlive == 0) locked = false;
-        yield return new WaitForSeconds(1f);
         StartCoroutine(WatchEnemies());
     }
 

@@ -129,9 +129,6 @@ public class PlayerMovement : MonoBehaviour
           GroundMove();
       else if (!isGrounded)
           AirMove();
-    
-
-    //CheckCollisionPlayer();
 
     MoveState();
     PlayFootSteps();  
@@ -190,15 +187,16 @@ public class PlayerMovement : MonoBehaviour
 
   void GroundMove()
   {
-        if (isSideDashing) inputLocked = true;
+    if (isSideDashing) inputLocked = true;
 
   
     if (Input.GetButtonDown("Jump"))
     {
-      //audioSource.PlayOneShot(jump, 1f);
+      audioSource.PlayOneShot(jump, 1f);
       Jump();
       inputLocked = true;
       desiredDirection = new Vector3(xRaw,0,zRaw);
+      groundLag = false;
     }
     else if (Input.GetButtonDown("Fire3") && canDash)
     {
@@ -228,12 +226,13 @@ public class PlayerMovement : MonoBehaviour
       inputLocked = true;
     }
 
-    if (Input.GetButtonDown("Jump") && canDash )
+    if (Input.GetButtonDown("Jump"))
     {
       if (groundLag){ //jump normally even while not touched the ground
         Jump();
         inputLocked = true;
         desiredDirection = new Vector3(xRaw,0,zRaw);
+        groundLag = false;
       } 
       else if (canDash) //dashJump
       {
@@ -348,16 +347,6 @@ public class PlayerMovement : MonoBehaviour
         Destroy(gameObject);
         
   }
-
-  void CheckCollisionPlayer()
-    {
-        if (Physics.CheckSphere(transform.position, 5f,LayerMask.NameToLayer("Room")))
-        {
-           Debug.Log("Entered");
-            AddImpact(-transform.forward, 100f);
-            TakeDamage(10f);
-        }
-    }
     IEnumerator waiterImmunity()
     {
         canTakeDamage = false;
@@ -381,7 +370,7 @@ public class PlayerMovement : MonoBehaviour
 
   IEnumerator waiterGroundLag(){
     groundLag = true;
-    yield return new WaitForSeconds(.25f);
+    yield return new WaitForSeconds(.1f);
     groundLag = false;
   }
 

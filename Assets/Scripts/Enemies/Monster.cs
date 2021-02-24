@@ -43,32 +43,6 @@ public class Monster : MonoBehaviour
         }
     }
 
-
-  /*void OnTriggerEnter(Collider other)
-  {
-        //ContactPoint contact = other.contacts[0];
-        if (other.gameObject.CompareTag("Dude"))
-        {
-            var playerScript = other.gameObject.GetComponent<PlayerMovement>();
-
-
-        }
-  }*/
-
-    void CheckCollisionPlayer()
-    {
-        if (Physics.CheckSphere(transform.position, 5f, 7))
-        {
-
-          //Physics.SphereCast(transform.position,2f,transform.forward);
-          Debug.Log("yep");
-
-        }
-    }
-
-    
-
-
   public void TakeDamage(float amount)
   {  
     health -= amount;
