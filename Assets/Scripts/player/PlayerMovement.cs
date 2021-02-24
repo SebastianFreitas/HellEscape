@@ -281,7 +281,7 @@ public class PlayerMovement : MonoBehaviour
   {
     dashParticleSystem.Play();
     speedCounter++;
-    audioSource.PlayOneShot(dash, volume - .3f);
+    audioSource.PlayOneShot(dash, volume/2);
     if (moveRaw == Vector3.zero) AddImpact(transform.forward, dashForce); 
       else AddImpact(moveRaw, dashForce); 
 
@@ -294,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
   private void JumpDash()
   {
     //dashParticleSystem.Play();
-    audioSource.PlayOneShot(dash, volume - .1f);
+    audioSource.PlayOneShot(dash, volume/2);
 
     AddImpact(Vector3.up, JumpDashForce); 
     JumpInput(3f);

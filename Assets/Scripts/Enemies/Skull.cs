@@ -12,8 +12,7 @@ public class Skull : Monster
     [SerializeField] float maxJumpForce;
     [SerializeField] float minJumpForce;
 
-
-    void Start()
+    new void Start()
     {
         base.Start();
         StartCoroutine(waiterStart());
