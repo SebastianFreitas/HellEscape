@@ -6,9 +6,11 @@ using UnityEngine.AI;
 public class Monster : MonoBehaviour
 {
     [SerializeField] float health = 50f;
-    [SerializeField] float damage = 10f;
+    [SerializeField] public float damage = 10f;
 
     protected Transform player;
+
+    protected PlayerMovement playerMovement;
     protected Rigidbody rigidBody;
 
     [Header("Sound")]
@@ -17,28 +19,54 @@ public class Monster : MonoBehaviour
     public AudioClip[] hurts;
     public float volume = 0.5f;
 
+    private Collider monsterCollider;
+    private Collider playerCollider;
+
+
 
     protected void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Dude").transform;
+        playerMovement = player.GetComponent<PlayerMovement>();
         rigidBody = transform.GetComponent<Rigidbody>();
+        monsterCollider = rigidBody.GetComponent<Collider>();
+        playerCollider = playerMovement.GetComponent<Rigidbody>().GetComponent<Collider>();
     }
 
 
+    void Update(){
+        if (monsterCollider.bounds.Intersects(playerCollider.bounds))
+        {
+            var direction = player.position- transform.position;
+            playerMovement.AddImpact(direction, 100f);
+            playerMovement.TakeDamage((int)damage);
+        }
+    }
 
-  void OnTriggerEnter(Collider other)
+
+  /*void OnTriggerEnter(Collider other)
   {
         //ContactPoint contact = other.contacts[0];
         if (other.gameObject.CompareTag("Dude"))
         {
             var playerScript = other.gameObject.GetComponent<PlayerMovement>();
-            playerScript.AddImpact(-transform.forward, 100f);
-            playerScript.TakeDamage((int)damage);
+
 
         }
+  }*/
 
+    void CheckCollisionPlayer()
+    {
+        if (Physics.CheckSphere(transform.position, 5f, 7))
+        {
 
-  }
+          //Physics.SphereCast(transform.position,2f,transform.forward);
+          Debug.Log("yep");
+
+        }
+    }
+
+    
 
 
   public void TakeDamage(float amount)
@@ -57,6 +85,7 @@ public class Monster : MonoBehaviour
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         Destroy(gameObject);
    }
+
 
 
 

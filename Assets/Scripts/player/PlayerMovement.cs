@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-  public int health = 50;
+  public float health = 50;
 
   
   public CharacterController controller;
@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
   {
 
         hp = transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<HealthBar>();
-        hp.SetMaxHealth(health);
+        hp.SetMaxHealth((int)health);
 
     if (playerView == null)
     {
@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
       if (!isGroundedOlder && isGrounded && fallingAtSomeSpeed) {
         fallingAtSomeSpeed = false;
         audioSource.PlayOneShot(land, volume+.25f);
-      } else if (isGroundedOlder && !isGrounded ) StartCoroutine(waiterGroundLag());
+      } else if (isGroundedOlder && !isGrounded ) StartCoroutine(waiterGroundLag()); 
       
       
       
@@ -130,18 +130,15 @@ public class PlayerMovement : MonoBehaviour
       else if (!isGrounded)
           AirMove();
     
-    if (Input.GetButtonDown("Jump") && groundLag)
-    {
-      //audioSource.PlayOneShot(jump, 1f);
-      Jump();
-      inputLocked = true;
-      desiredDirection = new Vector3(xRaw,0,zRaw);
-    }
+
+    //CheckCollisionPlayer();
 
     MoveState();
     PlayFootSteps();  
     isGroundedOlder = isGrounded;
   }
+
+
   private void MoveState()
   {
     transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
@@ -230,12 +227,21 @@ public class PlayerMovement : MonoBehaviour
       velocity.y = 0f;//while sidedashing no gravity is applied
       inputLocked = true;
     }
-    
+
     if (Input.GetButtonDown("Jump") && canDash )
     {
-      inputLocked = false; //remove input lock if player dashes/jumps
-      JumpDash();
-      inputLocked = true;
+      if (groundLag){ //jump normally even while not touched the ground
+        Jump();
+        inputLocked = true;
+        desiredDirection = new Vector3(xRaw,0,zRaw);
+      } 
+      else if (canDash) //dashJump
+      {
+          inputLocked = false; //remove input lock if player dashes/jumps
+          JumpDash();
+          inputLocked = true;
+      }
+
     }
     else if (Input.GetButtonDown("Fire3") && canDash )
     {
@@ -317,7 +323,7 @@ public class PlayerMovement : MonoBehaviour
     }
   }
 
-  public void TakeDamage(int amount)
+  public void TakeDamage(float amount)
   {
         if (canTakeDamage)
         {
@@ -325,7 +331,7 @@ public class PlayerMovement : MonoBehaviour
             audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume+1);
 
             health -= amount;
-            hp.SetHealth(health);
+            hp.SetHealth((int)health);
             if (health <= 0f)
             {
                 Die();
@@ -335,6 +341,23 @@ public class PlayerMovement : MonoBehaviour
         }
   }
 
+
+  void Die()
+  {
+        transform.parent.GetComponent<GameMan>().RestartGame();
+        Destroy(gameObject);
+        
+  }
+
+  void CheckCollisionPlayer()
+    {
+        if (Physics.CheckSphere(transform.position, 5f,LayerMask.NameToLayer("Room")))
+        {
+           Debug.Log("Entered");
+            AddImpact(-transform.forward, 100f);
+            TakeDamage(10f);
+        }
+    }
     IEnumerator waiterImmunity()
     {
         canTakeDamage = false;
@@ -343,12 +366,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void Die()
-  {
-        transform.parent.GetComponent<GameMan>().RestartGame();
-        Destroy(gameObject);
-        
-  }
+
 
   IEnumerator waiterDashCD()
   {

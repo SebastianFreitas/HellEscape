@@ -19,6 +19,8 @@ public class Skull : Monster
         StartCoroutine(waiterStart());
     }
 
+
+
     IEnumerator randomJump()
     {
 
@@ -36,6 +38,8 @@ public class Skull : Monster
 
 
     }
+
+
 
     IEnumerator waiterStart()
     {

@@ -29,13 +29,10 @@ public class Room : MonoBehaviour
     {
         for (int i = 0; i < enemySpawns.Length; i++)
         {
+            StartCoroutine(SpawnEnemy(i));
             for (int j = 0; j < dif; j++)
             {
-                skull = skulls[Random.Range(0, skulls.Length)];
-                var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x, enemySpawns[i].position.y, enemySpawns[i].position.z), transform.rotation);
-                skully.transform.parent = transform;
-                monstersAlive++;
-
+            
             }
         }
     }
@@ -92,6 +89,17 @@ public class Room : MonoBehaviour
     public void UseDoor()
     {
         if (!locked) transform.parent.GetComponent<GameMan>().Next(roomType);
+    }
+
+    private IEnumerator SpawnEnemy(int i)
+    {
+        var x = Random.Range(.01f,.1f);
+        yield return new WaitForSeconds(x);
+        skull = skulls[Random.Range(0, skulls.Length)];
+        var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x, enemySpawns[i].position.y, enemySpawns[i].position.z), transform.rotation);
+        skully.transform.parent = transform;
+        monstersAlive++;
+
     }
 
     private IEnumerator WatchEnemies()

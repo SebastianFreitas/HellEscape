@@ -29,7 +29,6 @@ public class RotatingLava : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Monster"))
         {
-            Debug.Log("collided with monster");
             var monster = other.GetComponent<Rigidbody>();
             monster.AddForce(transform.forward * -750f);
         }

@@ -31,7 +31,7 @@ public class GameMan : MonoBehaviour
         currentRoom.SpawnEnemies(1);
         currentRoom.SpawnObjects(dificulty);
 
-        Physics.IgnoreLayerCollision(0, 11);
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("Bullet"));
     }
 
     void PlaceRoomAndPlayer(Room room)
