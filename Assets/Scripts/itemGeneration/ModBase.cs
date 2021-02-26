@@ -53,7 +53,7 @@ public class ModBase : MonoBehaviour
     public struct GunMods{
 
         public float averageDamage;
-        public float attackRate;
+        public float fireRate;
         public float weaponDamage;
         public float coldDamage;
         public float fireDamage;
@@ -70,24 +70,40 @@ public class ModBase : MonoBehaviour
         new BaseMod[]{
                 new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus, 0),
                 new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus, 0),
-                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased, 0),
-                new BaseMod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0),
-                new BaseMod(4,10,  "Poison Damage",            grade.interior, operatorType.plus, 0),
-                new BaseMod(4,10,  "Cold Damage",              grade.interior, operatorType.plus, 0)
+                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased, 0)
+                //new BaseMod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0)
         };
 
     public static BaseMod[] modsExterior = 
+        new BaseMod[]{
+                new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus, 0),
+                new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus, 0),
+                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased, 0)
+        };
+
+    public static BaseMod[] modSpecial = 
+        new BaseMod[]{
+                new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus, 0),
+                new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus, 0),
+                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased, 0)
+        };
+
+   /* public static BaseMod[] modsExterior = 
         new BaseMod[]{           
                 new BaseMod(10,15, "Grenade Throwing Speed",   grade.exterior, operatorType.increased, 0),
                 new BaseMod(10,15, "Grenade Damage",           grade.exterior, operatorType.increased, 0),
                 new BaseMod(5,10,  "Grenade cooldown",         grade.exterior, operatorType.reduced, 0),
                 new BaseMod(5,10,  "Movement Speed",           grade.exterior, operatorType.increased, 0),
                 new BaseMod(2,5,   "Grenade Duration",         grade.exterior, operatorType.increased, 0)
-        };  
+        }; */ 
 
-    public static int[] InteriorWeight ={1,1,1,1,1,1};
+    public static int[] InteriorWeight ={1,1,1};
     
-    public static int[] ExteriorWeight ={1,1,1,1,1};  //    
+    public static int[] ExteriorWeight ={1,1,1};  //
+
+    public static int[] SpecialWeight ={1,1,1}; 
+
+       
 
     //int[] gradeWeights ={300,300,2};//chances of rolling grade type on an empty item
     public static int[] maxModsWeight ={1000,900,700,500,300,100,10,1};   //chances for total mods an item will have when rolled
