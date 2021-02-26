@@ -15,7 +15,7 @@ public class PlayerProjectile : MonoBehaviour
   public convergion totalConvergion;
 
   private float speed = 500f;
-  private float damage = 50;
+  private  float damage = 50;
   public  Vector3 playerSpeed;
   public AudioClip ricochet;
   public AudioSource source;
@@ -66,15 +66,15 @@ public class PlayerProjectile : MonoBehaviour
     StartCoroutine(waiter(.5f));
   }
 
-  void OnTriggerEnter(Collider other)
+  /*void OnTriggerEnter(Collider other)
   {
       if (other.gameObject.CompareTag("Monster"))
       {
          other.GetComponent<Monster>().TakeDamage(damage);
-         Physics.IgnoreCollision(transform.GetComponent<Collider>(), other.transform.GetComponent<Collider>());
+         //Physics.IgnoreCollision(transform.GetComponent<Collider>(), other.transform.GetComponent<Collider>());
       }
 
-  }
+  }*/
 
   void OnCollisionEnter(Collision collision)
   {

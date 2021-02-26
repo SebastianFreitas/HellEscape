@@ -3,12 +3,15 @@ using UnityEngine;
 using System.Collections;
 
 
-public class GunScript : MonoBehaviour
+public class GunScript : ModBase
 {
     public Animator animator;
 
+    public GunMods gun1;
+    public GunMods gun2;
+
     public convergion totalConvergion;
-    public float damage = 10f;
+    public float damage = 50f;
     public float range = 100f;
     public float timeBtwShots = .5f;
 
@@ -30,6 +33,8 @@ public class GunScript : MonoBehaviour
     private Vector3 targetPoint ;
     private RaycastHit hit;
     private bool canShoot = true;
+
+    public GunStats items;
 
     public GameObject inventory;
 
@@ -71,9 +76,9 @@ public class GunScript : MonoBehaviour
       realpos.LookAt(targetPoint);
 
       GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation);
-      bullet.GetComponent<PlayerProjectile>().initialFade = true;
-      //Physics.IgnoreCollision(bullet.GetComponent<Collider>(), head.GetComponent<Collider>());
-      //Physics.IgnoreCollision(bullet.GetComponent<Collider>(), body.GetComponent<Collider>());
+      var bulletscript = bullet.GetComponent<PlayerProjectile>();
+      bulletscript.initialFade = true;
+      //bulletscript.damage = damage;
       
       canShoot = false;
       StartCoroutine(waiter(attackRate));

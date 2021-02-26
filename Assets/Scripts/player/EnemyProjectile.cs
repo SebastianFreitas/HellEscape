@@ -6,7 +6,7 @@ public class EnemyProjectile : MonoBehaviour
 {
     public float speed;
     private Vector3 target;
-    public float damage;
+    public float damage = 50f;
     void Start()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;

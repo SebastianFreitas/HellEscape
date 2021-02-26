@@ -3,28 +3,20 @@ using UnityEngine;
 using System.Collections;
 
 
-public class Gun : GunMods
+public class Gun : GunStats
 {
     public Animator animator;
 
-    public convergion totalConvergion;
-    public float damage = 10f;
-    public float range = 100f;
     public float timeBtwShots = .5f;
 
     public Camera fpsCam;
-    public CharacterController controller;
-    public GameObject impactEffect;
+
     public GameObject realBulletHolder;
     public GameObject projectile;
     public GameObject pnt;
     public GameObject muzzleFlashFront;
     public GameObject lightFlash;
 
-    public GameObject head;
-    public GameObject body;
-
-    public AudioSource audioS;
     public AudioClip shoot;
     public float volume = .6f;
     private Vector3 targetPoint ;
