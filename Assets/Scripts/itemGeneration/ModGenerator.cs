@@ -17,55 +17,77 @@ public class ModGenerator : ModBase
             weaponDamage = baseDamage,
             maxRicochets = BaseRicochets,
             level = maxLevel
-        };//0f, baseFireRate, baseDamage, BaseRicochets, 0, new Dictionary<grade,HashSet<BaseMod>>());
+        };
 
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
         int nextGrade;
+        
 
         for (int i = 0; i < totalMods; i++)
         {
+
             nextGrade = GenerateGrade(ret);
             switch (nextGrade)
             {
                 case 0:
-                    ret.mods.Add(GenerateInteriorMod(ret));
+                    var intMod= GenerateInteriorMod(ret);
+                    intMod = UpdateMod(intMod, maxLevel);
+                    GenerateInteriorStats(ret, intMod);
+                    intMod.text = CreateText(intMod);
+                    ret.mods.Add(intMod);
                     break;
                 case 1:
-                    ret.mods.Add(GenerateExteriorMod(ret));
+                    var extMod = GenerateInteriorMod(ret);
+                    extMod = UpdateMod(extMod, maxLevel);
+                    GenerateExteriorStats(ret, extMod);
+                    extMod.text = CreateText(extMod);
+                    ret.mods.Add(extMod);
                     break;
                 case 2:
-                    ret.mods.Add(GenerateSpecialMod(ret));
+                    var newMod = GenerateInteriorMod(ret);
+                    newMod = UpdateMod(newMod, maxLevel);
+                    GenerateSpecialStats(ret, newMod);
+                    newMod.text = CreateText(newMod);
+                    ret.mods.Add(newMod);
                     break;
             }
            
         }
-        ConvergeModStats(ret);
         return ret;
+    }
+
+    private BaseMod GenerateInteriorMod(GunMods gun)
+    {
+        BaseMod aux;
+        while (true)
+        {
+            aux = modsInterior[GetRandomWeightedIndex(InteriorWeight)];
+            if (!ContainsMod(gun, aux)) break;
+        }
+
+        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier);
     }
 
     private void FinishWeapon(GunMods gun)
     {
-        //gun.interiorMods.Select(x => ApplyValues(gun, x));
+        //gun.mods.Select(x => ConvergeModStats(gun, x));
 
 
     }
 
-    private void ConvergeModStats(GunMods gun)
+    private void ConvergeModStats(GunMods gun, BaseMod mod)
     {
-        foreach(BaseMod mod in gun.mods)
-        {
             UpdateMod(mod, gun.level);
             if (mod.grade == grade.interior) GenerateInteriorStats(gun, mod);
             else if (mod.grade == grade.exterior) GenerateInteriorStats(gun, mod);
             else GenerateInteriorStats(gun, mod);
             CreateText(mod);
-        }
 
     }
 
 
     //Creates tier and text
-    private void UpdateMod(BaseMod mod, int level)
+    private BaseMod UpdateMod(BaseMod mod, int level)
     {
         int diference = mod.upperBound - mod.lowerBound;
         mod.tier = 1 + GetRandomWeightedIndex(Enumerable.Range(0, level).ToArray());//Select(x => x * 10)
@@ -73,6 +95,8 @@ public class ModGenerator : ModBase
         mod.upperBound += diference;
         mod.lowerBound += diference;
         mod.upperBound = UnityEngine.Random.Range(mod.lowerBound, mod.upperBound);
+
+        return mod;
     }
 
     public void GenerateInteriorStats(GunMods gun, BaseMod mod)
@@ -150,17 +174,7 @@ public class ModGenerator : ModBase
         return GetRandomWeightedIndex(gradeWeights);
     }
 
-    private BaseMod GenerateInteriorMod(GunMods gun)
-    {
-        BaseMod aux;
-        while (true)
-        {
-            aux =  modsInterior[GetRandomWeightedIndex(InteriorWeight)];
-            if (!ContainsMod(gun, aux)) break;
-        }
 
-        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier);
-    }
 
     private BaseMod GenerateExteriorMod(GunMods gun)
     {
@@ -198,22 +212,25 @@ public class ModGenerator : ModBase
 
     }
 
-    public void CreateText(BaseMod mod)
+    public string CreateText(BaseMod mod)
     {
+        string ret = "";
         switch (mod.op)
         {
             case operatorType.plus:
-                mod.text = "+" + mod.upperBound + " " + mod.text;
+                ret = "+" + mod.upperBound + " " + mod.text;
                 break;
 
             case operatorType.increased:
-                mod.text = mod.upperBound + "% increased " + mod.text;
+                ret = mod.upperBound + "% increased " + mod.text;
                 break;
 
             case operatorType.reduced:
-                mod.text = mod.upperBound + "% reduced " + mod.text;
+                ret = mod.upperBound + "% reduced " + mod.text;
                 break;
         }
+
+        return ret;
     }
 
     public string GenerateText(GunMods gun)

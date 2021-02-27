@@ -90,16 +90,16 @@ public class ModBase : MonoBehaviour
 
     public static BaseMod[] modsExterior =
         new BaseMod[]{
-                new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus, 0),
-                new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus, 0),
-                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased, 0)
+                new BaseMod(4,11,  "Weapon  Damage",           grade.exterior, operatorType.plus, 0),
+                new BaseMod(1,3,   "Bullet Ricochet",          grade.exterior, operatorType.plus, 0),
+                new BaseMod(2,3,   "Weapon Fire Rate",         grade.exterior, operatorType.increased, 0)
         };
 
     public static BaseMod[] modSpecial =
         new BaseMod[]{
-                new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus, 0),
-                new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus, 0),
-                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased, 0)
+                new BaseMod(4,11,  "Weapon  Damage",           grade.special, operatorType.plus, 0),
+                new BaseMod(1,3,   "Bullet Ricochet",          grade.special, operatorType.plus, 0),
+                new BaseMod(2,3,   "Weapon Fire Rate",         grade.special, operatorType.increased, 0)
         };
 
     /* public static BaseMod[] modsExterior = 
