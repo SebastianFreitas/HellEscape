@@ -45,8 +45,8 @@ public class Gun : ModGenerator
         animator = GetComponent<Animator>();
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
-        gun1 = createWeapon(10);
-        Debug.Log(GenerateText(gun1));
+        gun1 = CreateWeapon(10);
+        Debug.Log(GenerateText(gun1) + "yep");
     }
 
 

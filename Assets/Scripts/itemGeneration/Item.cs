@@ -7,7 +7,7 @@ public class Item : ModGenerator
     public GunMods gun;
     void Start()
     {
-        gun = createWeapon(10);
+        //gun = createWeapon(10);
     }
 
     // Update is called once per frame
