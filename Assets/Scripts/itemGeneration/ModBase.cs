@@ -60,13 +60,12 @@ public class ModBase : MonoBehaviour
         public float weaponDamage;
         public int maxRicochets;
         public int level;
-
-        // public int MyProperty { get; set; }
+        public float movementSpeed;
 
         public HashSet<BaseMod> mods;
 
 
-        public GunMods(float averageDamage, float fireRate, float weaponDamage, int maxRicochets, int lvl, HashSet<BaseMod> mods)
+        public GunMods(float averageDamage, float fireRate, float weaponDamage, int maxRicochets, int lvl, HashSet<BaseMod> mods, float movementSpeed)
         {
             this.averageDamage = averageDamage;
             this.fireRate = fireRate;
@@ -74,6 +73,7 @@ public class ModBase : MonoBehaviour
             this.maxRicochets = maxRicochets;
             this.level = lvl;//wtf
             this.mods = mods;
+            this.movementSpeed = movementSpeed;
 
         }
 
@@ -90,7 +90,7 @@ public class ModBase : MonoBehaviour
 
     public static BaseMod[] modsExterior =
         new BaseMod[]{
-                new BaseMod(4,11,  "Weapon  Damage",           grade.exterior, operatorType.plus, 0),
+                new BaseMod(1,3,  "Movement Speed",           grade.exterior, operatorType.increased, 0),
                 new BaseMod(1,3,   "Bullet Ricochet",          grade.exterior, operatorType.plus, 0),
                 new BaseMod(2,3,   "Weapon Fire Rate",         grade.exterior, operatorType.increased, 0)
         };

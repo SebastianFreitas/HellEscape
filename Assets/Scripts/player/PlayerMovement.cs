@@ -336,7 +336,6 @@ public class PlayerMovement : MonoBehaviour
                 Die();
                 
             }
-            Debug.Log("You took " + amount + " damage.");
         }
   }
 

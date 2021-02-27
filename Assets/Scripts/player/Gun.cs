@@ -16,8 +16,6 @@ public class Gun : ModGenerator
     public float timeBtwShots = .5f;
 
     public Camera fpsCam;
-    public CharacterController controller;
-    public GameObject impactEffect;
     public GameObject realBulletHolder;
     public GameObject projectile;
     public GameObject pnt;
@@ -30,6 +28,8 @@ public class Gun : ModGenerator
     public AudioSource audioS;
     public AudioClip shoot;
     public float volume = .6f;
+
+    public PlayerMovement playerScript;
     private Vector3 targetPoint ;
     private RaycastHit hit;
     private bool canShoot = true;
@@ -46,7 +46,10 @@ public class Gun : ModGenerator
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
         gun1 = CreateWeapon(10);
-        Debug.Log(GenerateText(gun1) + "yep");
+        GenerateText(gun1);
+        playerScript.speed *= ((gun1.movementSpeed/100)+1);
+
+        //Debug.Log(GenerateText(gun1) + "yep");
     }
 
 
@@ -80,7 +83,7 @@ public class Gun : ModGenerator
       GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation);
       var bulletscript = bullet.GetComponent<PlayerProjectile>();
       bulletscript.initialFade = true;
-      bulletscript.setStats(gun1.weaponDamage, gun1.maxRicochets);
+      bulletscript.SetStats(gun1.weaponDamage, gun1.maxRicochets);
 
       canShoot = false;
       StartCoroutine(waiter(attackRate));

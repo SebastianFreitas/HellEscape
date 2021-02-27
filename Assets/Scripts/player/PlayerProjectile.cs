@@ -66,7 +66,7 @@ public class PlayerProjectile : MonoBehaviour
     StartCoroutine(waiter(.5f));
   }
 
-  public void setStats(float damage, int bounces)
+  public void SetStats(float damage, int bounces)
   {
     this.damage = damage;
     this.bounces = bounces;
