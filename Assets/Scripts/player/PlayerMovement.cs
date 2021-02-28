@@ -81,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
   {
 
-        hp = transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<HealthBar>();
+        hp = GameObject.FindGameObjectsWithTag("HealthBar")[0].transform.GetComponent<HealthBar>();
         hp.SetMaxHealth((int)health);
 
     if (playerView == null)

@@ -32,8 +32,30 @@ public class ModGenerator : ModBase
             {
                 case 0:
                     gradeWeight[nextGrade] -= 100;
-                    var intMod= GenerateInteriorMod(ret);
-                    intMod = UpdateMod(intMod, maxLevel);
+                    var intMod = GenerateInteriorMod(ret);
+                    if (intMod.tier == 1)
+                    {
+                        var extraMod = CreateExtraMod(intMod, maxLevel);
+                        extraMod = UpdateMod(extraMod, maxLevel, -1);
+                        switch (extraMod.text)
+                        {
+                            case "Weapon Damage":
+                                ret.weaponDamage += extraMod.upperBound;
+                                break;
+
+                            case "Bullet Ricochet":
+                                ret.maxRicochets += extraMod.upperBound;
+                                break;
+
+                            case "Weapon Fire Rate":
+                                ret.fireRate *= (1 + (extraMod.upperBound / 100));
+                                break;
+                        }
+                        extraMod.text = CreateText(extraMod);
+                        ret.mods.Add(extraMod);
+
+                    }
+                    intMod = UpdateMod(intMod, maxLevel,1);
                     switch (intMod.text)
                     {
                         case "Weapon Damage":
@@ -54,7 +76,7 @@ public class ModGenerator : ModBase
                 case 1:
                     gradeWeight[nextGrade] -= 100;
                     var extMod = GenerateExteriorMod(ret);
-                    extMod = UpdateMod(extMod, maxLevel);
+                    extMod = UpdateMod(extMod, maxLevel,1);
                     switch (extMod.text)
                     {
                         case "Movement Speed":
@@ -75,7 +97,7 @@ public class ModGenerator : ModBase
                 case 2:
                     gradeWeight[nextGrade] -= 1;
                     var newMod = GenerateSpecialMod(ret);
-                    newMod = UpdateMod(newMod, maxLevel);
+                    newMod = UpdateMod(newMod, maxLevel,1);
                     switch (newMod.text)
                     {
                         case "Weapon Damage":
@@ -94,28 +116,27 @@ public class ModGenerator : ModBase
                     ret.mods.Add(newMod);
                     break;
             }
+
         }
+        ret.text = GenerateText(ret);
         return ret;
     }
 
-    private BaseMod GenerateInteriorMod(GunMods gun)
+    private BaseMod CreateExtraMod(BaseMod mod, int level)
     {
-        BaseMod aux;
-        while (true)
-        {
-            aux = modsInterior[GetRandomWeightedIndex(InteriorWeight)];
-            //if (!ContainsMod(gun, aux)) break;
-            break;
-        }
-
-        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier);
+        BaseMod aux = modExtra[0];  
+        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier, aux.id);
     }
 
 
+
+
     //Creates tier 
-    private BaseMod UpdateMod(BaseMod mod, int level)
+    private BaseMod UpdateMod(BaseMod mod, int level, int reverse)
     {
         int diference = mod.upperBound - mod.lowerBound;
+        //if (reverse < 0) mod.tier = 1 + GetRandomWeightedIndex(Enumerable.Range(0, level).Select(x => x * 10).ToArray());//
+        if (reverse < 0)  return mod;
         mod.tier = 1 + GetRandomWeightedIndex(Enumerable.Range(0, level).Select(x => x * 10).Reverse().ToArray());//
         diference = diference * mod.tier;
         mod.upperBound += diference;
@@ -189,8 +210,8 @@ public class ModGenerator : ModBase
 
         foreach (var mod in gun.mods)
         {
-            if (mod.grade == grade.interior) interior++;
-            else if (mod.grade == grade.exterior) exterior++;
+            if (mod.grade == Grade.interior) interior++;
+            else if (mod.grade == Grade.exterior) exterior++;
             else special++;
         }
 
@@ -203,6 +224,18 @@ public class ModGenerator : ModBase
     }
 
 
+    private BaseMod GenerateInteriorMod(GunMods gun)
+    {
+        BaseMod aux;
+        while (true)
+        {
+            aux = modsInterior[GetRandomWeightedIndex(InteriorWeight)];
+            if (!ContainsMod(gun, aux)) break;
+
+        }
+
+        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier, aux.id);
+    }
 
     private BaseMod GenerateExteriorMod(GunMods gun)
     {
@@ -210,11 +243,10 @@ public class ModGenerator : ModBase
         while (true)
         {
             aux = modsExterior[GetRandomWeightedIndex(ExteriorWeight)];
-            //if (!ContainsMod(gun, aux)) break;
-            break;
+            if (!ContainsMod(gun, aux)) break;
         }
 
-        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier);
+        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier, aux.id);
     }
 
     private BaseMod GenerateSpecialMod(GunMods gun)
@@ -223,11 +255,11 @@ public class ModGenerator : ModBase
         while (true)
         {
             aux = modSpecial[GetRandomWeightedIndex(SpecialWeight)];
-            //if (!ContainsMod(gun, aux)) break;
-            break;
+            if (!ContainsMod(gun, aux)) break;
+
         }
 
-        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier);
+        return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier, aux.id);
     }
 
     //gets a weapon and a mod and sees if the gun doesnt have the mod
@@ -236,7 +268,7 @@ public class ModGenerator : ModBase
 
         foreach (BaseMod mod in gun.mods)
         {
-            if (mod == modifier) return true;
+            if (mod.id == modifier.id) return true;
         }
         return false;
 
@@ -247,16 +279,19 @@ public class ModGenerator : ModBase
         string ret = "";
         switch (mod.op)
         {
-            case operatorType.plus:
-                ret = "+" + mod.upperBound + " " + mod.text +" -> "+mod.grade +" tier:"+mod.tier;
+            case OperatorType.plus:
+                ret = "+" + mod.upperBound + " " + mod.text;
                 break;
 
-            case operatorType.increased:
-                ret = mod.upperBound + "% increased " + mod.text + " -> " + mod.grade + " tier:" + mod.tier;
+            case OperatorType.increased:
+                ret = mod.upperBound + "% increased " + mod.text;
                 break;
 
-            case operatorType.reduced:
-                ret = mod.upperBound + "% reduced " + mod.text + " -> " + mod.grade + " tier:" + mod.tier;
+            case OperatorType.reduced:
+                ret = mod.upperBound + "% reduced " + mod.text;
+                break;
+            case OperatorType.decreased:
+                ret = mod.upperBound + "% decreased " + mod.text;
                 break;
         }
 

@@ -48,8 +48,6 @@ public class Gun : ModGenerator
         gun1 = CreateWeapon(10);
         GenerateText(gun1);
         playerScript.speed *= ((gun1.movementSpeed/100)+1);
-
-        //Debug.Log(GenerateText(gun1) + "yep");
     }
 
 

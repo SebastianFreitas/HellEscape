@@ -7,31 +7,34 @@ public class ModBase : MonoBehaviour
 
     public float baseDamage = 50f;
     public float baseFireRate = 2f;
-    public int BaseRicochets = 3;
-    public enum operatorType
+    public int BaseRicochets = 1;
+    public enum OperatorType
     {
         plus,
         increased,
         reduced,
+        decreased
     }
 
-    public enum grade
+    public enum Grade
     {
         interior,
         exterior,
-        special
+        special,
+        extra
     }
     public struct BaseMod
     {
         public int upperBound;
         public int lowerBound;
         public string text;
-        public grade grade;
-        public operatorType op;
+        public Grade grade;
+        public OperatorType op;
 
         public int tier;
+        public int id;
 
-        public BaseMod(int lowerBound, int upperBound, string text, grade type, operatorType op, int tier)
+        public BaseMod(int lowerBound, int upperBound, string text, Grade type, OperatorType op, int tier, int id )
         {
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
@@ -39,17 +42,9 @@ public class ModBase : MonoBehaviour
             this.grade = type;
             this.op = op;
             this.tier = tier;
+            this.id = id;
         }
 
-        public static bool operator ==(BaseMod c1, BaseMod c2)
-        {
-            return c1.text.Equals(c2.text);
-        }
-
-        public static bool operator !=(BaseMod c1, BaseMod c2)
-        {
-            return c1.text.Equals(c2.text);
-        }
     }
 
     public struct GunMods
@@ -62,10 +57,12 @@ public class ModBase : MonoBehaviour
         public int level;
         public float movementSpeed;
 
+        public string text;
+
         public HashSet<BaseMod> mods;
 
 
-        public GunMods(float averageDamage, float fireRate, float weaponDamage, int maxRicochets, int lvl, HashSet<BaseMod> mods, float movementSpeed)
+        public GunMods(float averageDamage, float fireRate, float weaponDamage, int maxRicochets, int lvl, string text, HashSet<BaseMod> mods, float movementSpeed)
         {
             this.averageDamage = averageDamage;
             this.fireRate = fireRate;
@@ -73,6 +70,7 @@ public class ModBase : MonoBehaviour
             this.maxRicochets = maxRicochets;
             this.level = lvl;//wtf
             this.mods = mods;
+            this.text = text;
             this.movementSpeed = movementSpeed;
 
         }
@@ -82,25 +80,31 @@ public class ModBase : MonoBehaviour
 
     public static BaseMod[] modsInterior =
         new BaseMod[]{
-                new BaseMod(4,11,  "Weapon  Damage",           grade.interior, operatorType.plus, 0),
-                new BaseMod(1,3,   "Bullet Ricochet",          grade.interior, operatorType.plus, 0),
-                new BaseMod(2,3,   "Weapon Fire Rate",         grade.interior, operatorType.increased, 0)
+                new BaseMod(4,10,  "Weapon  Damage",           Grade.interior, OperatorType.plus, 0, 1),
+                new BaseMod(50,60,  "Weapon  Damage",          Grade.interior, OperatorType.plus, 1,2),
+                new BaseMod(1,2,   "Bullet Ricochet",          Grade.interior, OperatorType.plus, 0,3),
+                new BaseMod(2,3,   "Weapon Fire Rate",         Grade.interior, OperatorType.increased, 0,4)
                 //new BaseMod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0)
         };
 
     public static BaseMod[] modsExterior =
         new BaseMod[]{
-                new BaseMod(1,3,  "Movement Speed",           grade.exterior, operatorType.increased, 0),
-                new BaseMod(1,3,   "Bullet Ricochet",          grade.exterior, operatorType.plus, 0),
-                new BaseMod(2,3,   "Weapon Fire Rate",         grade.exterior, operatorType.increased, 0)
+                new BaseMod(1,3,  "Movement Speed",            Grade.exterior, OperatorType.increased, 0,101),
+                new BaseMod(1,3,   "Bullet Ricochet",          Grade.exterior, OperatorType.plus, 0,102),
+                new BaseMod(2,3,   "Weapon Fire Rate",         Grade.exterior, OperatorType.increased, 0,103)
         };
 
     public static BaseMod[] modSpecial =
         new BaseMod[]{
-                new BaseMod(4,11,  "Weapon  Damage",           grade.special, operatorType.plus, 0),
-                new BaseMod(1,3,   "Bullet Ricochet",          grade.special, operatorType.plus, 0),
-                new BaseMod(2,3,   "Weapon Fire Rate",         grade.special, operatorType.increased, 0)
+                new BaseMod(4,10,  "Weapon  Damage",           Grade.special, OperatorType.plus, 0,201),
+                new BaseMod(1,3,   "Bullet Ricochet",          Grade.special, OperatorType.plus, 0,202),
+                new BaseMod(2,3,   "Weapon Fire Rate",         Grade.special, OperatorType.increased, 0,203)
         };
+
+    public static BaseMod[] modExtra =
+    new BaseMod[]{
+                new BaseMod(-50,-50,  "Weapon Fire Rate",               Grade.extra, OperatorType.decreased, 0,301)
+    };
 
     /* public static BaseMod[] modsExterior = 
          new BaseMod[]{           
@@ -111,7 +115,7 @@ public class ModBase : MonoBehaviour
                  new BaseMod(2,5,   "Grenade Duration",         grade.exterior, operatorType.increased, 0)
          }; */
 
-    public static int[] InteriorWeight = { 1, 1, 1 };
+    public static int[] InteriorWeight = { 10, 5, 10,10 };
 
     public static int[] ExteriorWeight = { 1, 1, 1 };  //
 
