@@ -21,7 +21,7 @@ public class GunText : MonoBehaviour
        // gunA = player[0].transform.GetComponent<Gun>().gun1;
         //Press the space key to change the Text message
        // m_MyText.text += gunA.text;
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.F))
         {
             m_MyText.text = gunA.text;
         }
@@ -29,7 +29,7 @@ public class GunText : MonoBehaviour
 
     IEnumerator FindPlayer()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         var player = GameObject.FindGameObjectsWithTag("PlayerGun");
         gunA = player[0].transform.GetComponent<Gun>().gun1;
         
