@@ -24,6 +24,7 @@ public class PropBehaviour : MonoBehaviour
          GetComponent<Rigidbody>().useGravity = true;
     }
 
+
 /*void OnCollisionEnter(Collision other)
   {
         //ContactPoint contact = other.contacts[0];
