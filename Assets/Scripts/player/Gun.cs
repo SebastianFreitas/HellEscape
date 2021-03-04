@@ -66,7 +66,7 @@ public class Gun : ModGenerator
         
       StartCoroutine(waiterFlash());
 
-      GetComponent<AudioSource>().PlayOneShot(shoot, volume);
+      GetComponent<AudioSource>().PlayOneShot(shoot, volume/2);
 
       Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
       if (Physics.Raycast(ray, out hit))
@@ -78,10 +78,24 @@ public class Gun : ModGenerator
       Transform realpos = fpsCam.transform;
       realpos.LookAt(targetPoint);
 
-      GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation);
+      GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
       var bulletscript = bullet.GetComponent<PlayerProjectile>();
       bulletscript.initialFade = true;
       bulletscript.SetStats(gun1.GetDamage(), gun1.GetBounces());
+
+        for (var i = 0; i < gun1.bulletsPerShot-1; i++) //shoot extra bullets
+        {
+            var pelletRot = realpos.rotation;
+            var aux = 0.05f;
+            pelletRot.x += Random.Range(-aux, aux);
+            pelletRot.y += Random.Range(-aux, aux);
+
+            bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot);
+            bulletscript = bullet.GetComponent<PlayerProjectile>();
+            bulletscript.initialFade = true;
+            bulletscript.SetStats(gun1.GetDamage(), gun1.GetBounces());
+        }
+
 
       canShoot = false;
       StartCoroutine(waiter(attackRate));

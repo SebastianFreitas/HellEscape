@@ -21,7 +21,8 @@ public class ModGenerator : ModBase
             increasedFireRate = 0,
             increasedDamage = 0,
             additionalBounces=0,
-            increasedSpeed=0
+            increasedSpeed=0,
+            bulletsPerShot=1
  
         };
 
@@ -67,11 +68,14 @@ public class ModGenerator : ModBase
                 extraMod = UpdateMod(extraMod, maxLevel, -1);
                 switch (extraMod.text)
                 {
-                    case "% Base Fire Rate":
+                    case "25% Base Fire Rate":
                         ret.baseRate = .5f;
                         break;
-                    case "% Base Weapon Damage":
+                    case "50% Base Weapon Damage":
                         ret.baseDamage = 25 ;
+                        break;
+                    case "20% Base Weapon Damage":
+                        ret.baseDamage = 10;
                         break;
 
                 }
@@ -94,6 +98,9 @@ public class ModGenerator : ModBase
                 case "Movement Speed":
                     ret.increasedSpeed += newMod.upperBound;
                     break;
+                case "Bullets per Shot":
+                    ret.bulletsPerShot += newMod.upperBound;
+                    break;
             }
             newMod.text = CreateModText(newMod);
             ret.mods.Add(newMod);
@@ -113,9 +120,12 @@ public class ModGenerator : ModBase
                 aux = modExtra[0];
                 return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier, aux.id);
 
-
             case "Weapon Fire Rate":
                 aux = modExtra[1];
+                return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier, aux.id);
+
+            case "Bullets per Shot":
+                aux = modExtra[2];
                 return new BaseMod(aux.lowerBound, aux.upperBound, aux.text, aux.grade, aux.op, aux.tier, aux.id);
 
         }
@@ -208,7 +218,7 @@ public class ModGenerator : ModBase
                 ret =  mod.upperBound + " " + mod.text;
                 break;
             case OperatorType.non:
-                ret = mod.upperBound +  mod.text;
+                ret = mod.text;
                 break;
         }
 

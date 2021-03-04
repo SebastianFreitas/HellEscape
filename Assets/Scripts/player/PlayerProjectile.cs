@@ -39,7 +39,7 @@ public class PlayerProjectile : MonoBehaviour
     else if (visual) bounces = 0;*/
     //if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
     rb.AddForce(transform.forward * speed);
-    StartCoroutine(waiter(.5f));
+    StartCoroutine(waiter(5f));
   }
 
 
@@ -83,7 +83,7 @@ public class PlayerProjectile : MonoBehaviour
         else if (bounces > 0)
         {
             SetVisibility(true);
-            AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position);
+            AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
             rb.AddForce(contact.normal * 100);
             bounces--;
         }
