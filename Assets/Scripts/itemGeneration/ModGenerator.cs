@@ -14,16 +14,23 @@ public class ModGenerator : ModBase
         GunMods ret = new GunMods
         {
             mods = new HashSet<BaseMod>(),
-            fireRate        = baseFireRate,
-            weaponDamage    = baseDamage,
-            maxRicochets    = BaseRicochets,
-            level = maxLevel
+            baseRate = baseFireRate,
+            baseDamage = baseDamage,
+            baseBounces = BaseRicochets,
+            level = maxLevel,
+            increasedFireRate = 0,
+            additionalDamage =0,
+            additionalBounces=0,
+            increasedSpeed=0
+ 
         };
 
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
         int nextGrade;
         var newMod = new BaseMod();
         var extra = false;
+
+
 
 
 
@@ -60,17 +67,10 @@ public class ModGenerator : ModBase
                 extraMod = UpdateMod(extraMod, maxLevel, -1);
                 switch (extraMod.text)
                 {
-                    case "Weapon Damage":
-                        ret.weaponDamage += extraMod.upperBound;
-                        break;
-
-                    case "Bullet Ricochet":
-                        ret.maxRicochets += extraMod.upperBound;
-                        break;
-
                     case "Max Fire Rate":
-                        ret.fireRate = .5f;
+                        ret.baseRate = 0.5f;
                         break;
+
                 }
                 extraMod.text = CreateText(extraMod);
                 ret.mods.Add(extraMod);
@@ -78,26 +78,26 @@ public class ModGenerator : ModBase
             switch (newMod.text)
             {
                 case "Weapon Damage":
-                    ret.weaponDamage += newMod.upperBound;
+                    ret.additionalDamage += newMod.upperBound;
                     break;
 
                 case "Bullet Ricochet":
-                    ret.maxRicochets += newMod.upperBound;
+                    ret.baseBounces += newMod.upperBound;
                     break;
 
                 case "Weapon Fire Rate":
-                    ret.fireRate *= (1 + (newMod.upperBound / 100));
-                    Debug.Log(newMod.upperBound);
+                    ret.increasedFireRate +=  newMod.upperBound;
                     break;
                 case "Movement Speed":
-                    ret.movementSpeed += newMod.upperBound;
+                    ret.increasedSpeed += newMod.upperBound;
                     break;
             }
             newMod.text = CreateText(newMod);
             ret.mods.Add(newMod);
         }
         ret.text = GenerateText(ret);
-        ret.averageDamage = ret.weaponDamage * ret.fireRate;
+        
+
         return ret;
     }
 
@@ -111,8 +111,6 @@ public class ModGenerator : ModBase
     {
         int diference = mod.upperBound - mod.lowerBound;
         if (reverse < 0)  return mod;
-        int[] list = Enumerable.Range(1, level).Reverse().ToArray();
-        for (int i = list.Count()-1, a = 10; i >= 0; i--, a*=a) list[i] += a;
 
         mod.tier = 1 + GetRandomWeightedIndex(modWeight);//
         diference = diference * mod.tier;
@@ -199,9 +197,9 @@ public class ModGenerator : ModBase
     public string GenerateText(GunMods gun)
     {
         string text = "";
-        text += "Average damage: " + gun.averageDamage+"\n";
-        text += "Fire rate: " + gun.fireRate + "\n";
-        text += "Max Ricochets: " + gun.maxRicochets + "\n";
+        text += " DPS: " + gun.GetAverageDamage() + "\n";
+        text += "Fire rate: " + gun.GetFireRate() + "\n";
+        text += "Max Ricochets: " + gun.GetBounces() + "\n";
 
         foreach (var mod in gun.mods)
         {

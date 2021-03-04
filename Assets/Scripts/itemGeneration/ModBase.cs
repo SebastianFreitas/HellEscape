@@ -5,7 +5,7 @@ using UnityEngine;
 public class ModBase : MonoBehaviour
 {
 
-    public float baseDamage = 50f;
+    public int baseDamage = 50;
     public float baseFireRate = 2f;
     public int BaseRicochets = 1;
     public enum OperatorType
@@ -34,7 +34,7 @@ public class ModBase : MonoBehaviour
         public int tier;
         public int id;
 
-        public BaseMod(int lowerBound, int upperBound, string text, Grade type, OperatorType op, int tier, int id )
+        public BaseMod(int lowerBound, int upperBound, string text, Grade type, OperatorType op, int tier, int id)
         {
             this.lowerBound = lowerBound;
             this.upperBound = upperBound;
@@ -47,32 +47,64 @@ public class ModBase : MonoBehaviour
 
     }
 
+
+
     public struct GunMods
     {
 
-        public float averageDamage;
-        public float fireRate;
-        public float weaponDamage;
-        public int maxRicochets;
+        public float baseRate;
+        public int baseDamage;
+        public int baseBounces;
         public int level;
-        public float movementSpeed;
+
+        public float increasedFireRate;
+        public int additionalDamage;
+        public int additionalBounces;
+        public float increasedSpeed;
 
         public string text;
 
         public HashSet<BaseMod> mods;
 
 
-        public GunMods(float averageDamage, float fireRate, float weaponDamage, int maxRicochets, int lvl, string text, HashSet<BaseMod> mods, float movementSpeed)
+
+        public GunMods( float fireRate, int weaponDamage, int maxRicochets, int lvl,
+                        string text, HashSet<BaseMod> mods, float movementSpeed,
+                        float increasedFireRate, int additionalDamage, int additionalBounces, float increasedSpeed)
         {
-            this.averageDamage = averageDamage;
-            this.fireRate = fireRate;
-            this.weaponDamage = weaponDamage;
-            this.maxRicochets = maxRicochets;
+            this.baseRate = fireRate;
+            this.baseDamage = weaponDamage;
+            this.baseBounces = maxRicochets;
             this.level = lvl;//wtf
             this.mods = mods;
             this.text = text;
-            this.movementSpeed = movementSpeed;
+            this.increasedSpeed = movementSpeed;
+            this.increasedFireRate = increasedFireRate;
+            this.additionalDamage = additionalDamage;
+            this.additionalBounces = additionalBounces;
+            this.increasedSpeed = increasedSpeed;
 
+
+        }
+
+        public float GetFireRate()
+        {
+            return baseRate*(1+increasedFireRate/100);
+        }
+
+        public int GetDamage()
+        {
+            return baseDamage + additionalDamage;
+        }
+
+        public int GetBounces()
+        {
+            return baseBounces + additionalBounces;
+        }
+
+        public float GetAverageDamage()
+        {
+            return GetDamage() * GetFireRate();
         }
 
     }
@@ -81,7 +113,7 @@ public class ModBase : MonoBehaviour
     public static BaseMod[] modsInterior =
         new BaseMod[]{
                 new BaseMod(4,10,  "Weapon  Damage",           Grade.interior, OperatorType.plus, 0, 1),
-                new BaseMod(195,205,  "Weapon  Damage",          Grade.interior, OperatorType.plus, 1,1),
+                new BaseMod(195,2005,  "Weapon  Damage",          Grade.interior, OperatorType.plus, 1,1),
                 new BaseMod(1,2,   "Bullet Ricochet",          Grade.interior, OperatorType.plus, 0,3),
                 new BaseMod(2,3,   "Weapon Fire Rate",         Grade.interior, OperatorType.increased, 0,4)
                 //new BaseMod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0)

@@ -47,13 +47,13 @@ public class Gun : ModGenerator
         muzzleFlashFront.SetActive(false);
         gun1 = CreateWeapon(10);
         GenerateText(gun1);
-        playerScript.speed *= ((gun1.movementSpeed/100)+1);
+        playerScript.speed *= ((gun1.increasedSpeed/100)+1);
     }
 
 
     void Update()
     {
-          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.fireRate,1);
+          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.GetFireRate(),1);
           //else if (Input.GetButton("Fire2") && canShoot) SecondaryFire(.2f);
           else if (Input.GetKey("1") && canShoot) Shoot(.09f,1);
           else if (Input.GetKey("2") && canShoot) Shoot(1f,100);
@@ -81,7 +81,7 @@ public class Gun : ModGenerator
       GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation);
       var bulletscript = bullet.GetComponent<PlayerProjectile>();
       bulletscript.initialFade = true;
-      bulletscript.SetStats(gun1.weaponDamage, gun1.maxRicochets);
+      bulletscript.SetStats(gun1.GetDamage(), gun1.GetBounces());
 
       canShoot = false;
       StartCoroutine(waiter(attackRate));
