@@ -46,7 +46,7 @@ public class Gun : ModGenerator
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
         gun1 = CreateWeapon(10);
-        GenerateText(gun1);
+        CreateGunText(gun1);
         playerScript.speed *= ((gun1.increasedSpeed/100)+1);
     }
 
@@ -103,7 +103,7 @@ public class Gun : ModGenerator
         muzzleFlashFront.SetActive(true);
         lightFlash.SetActive(true);
         
-        yield return new WaitForSeconds(.03f);
+        yield return new WaitForSeconds(.02f);
         muzzleFlashFront.SetActive(false);
         lightFlash.SetActive(false);
     }
