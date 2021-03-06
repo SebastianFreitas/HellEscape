@@ -311,7 +311,14 @@ public class PlayerMovement : MonoBehaviour
     impact += dir.normalized * force / mass;        
   }
 
-  private void GetInputWASD()
+    public void AddHighImpact(Vector3 dir)
+    {
+        dir.Normalize();
+        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+        impact += dir.normalized * 400f / mass;
+    }
+
+    private void GetInputWASD()
   {
     if (!isSideDashing) //prevents modifiyng movement while Dashing
     {

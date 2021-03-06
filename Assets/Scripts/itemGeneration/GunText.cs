@@ -29,10 +29,11 @@ public class GunText : MonoBehaviour
 
     IEnumerator FindPlayer()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         var player = GameObject.FindGameObjectsWithTag("PlayerGun");
-        gunA = player[0].transform.GetComponent<Gun>().gun1;
-        
+        gunA = player[0].transform.GetComponent<Gun>().gunText;
+        StartCoroutine(FindPlayer());
+
     }
 }
 

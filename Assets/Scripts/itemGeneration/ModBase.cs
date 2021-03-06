@@ -60,7 +60,7 @@ public class ModBase : MonoBehaviour
         public int level;
 
         public float increasedFireRate;
-        public int increasedDamage;
+        public float increasedDamage;
         public int additionalBounces;
         public float increasedSpeed;
         public int bulletsPerShot;
@@ -92,12 +92,14 @@ public class ModBase : MonoBehaviour
 
         public float GetFireRate()
         {
-            return baseRate*(1+increasedFireRate/100);
+            return baseRate*(1+(increasedFireRate/100));
         }
 
-        public int GetDamage()
+        public float GetDamage()
         {
-            return baseDamage  *(int)(1 + increasedDamage / 100);
+            
+            return (float)baseDamage*(1 + (increasedDamage / 100));
+            
         }
 
         public int GetBounces()
@@ -156,7 +158,7 @@ public class ModBase : MonoBehaviour
                  new BaseMod(2,5,   "Grenade Duration",         grade.exterior, operatorType.increased, 0)
          }; */
 
-    public static int[] InteriorWeight = { 10, 10, 10, 5, 5, 5};
+    public static int[] InteriorWeight = { 100, 10, 10, 3, 3, 3};
 
     public static int[] ExteriorWeight = { 1, 1, 1 };  //
 

@@ -38,6 +38,8 @@ public class Gun : ModGenerator
 
     public GameObject inventory;
 
+    public GunMods gunText;
+
 
     void Start()
     {
@@ -46,21 +48,20 @@ public class Gun : ModGenerator
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
         gun1 = CreateWeapon(10);
-        CreateGunText(gun1);
+        gun2 = CreateWeapon(10);
         playerScript.speed *= ((gun1.increasedSpeed/100)+1);
     }
 
 
     void Update()
     {
-          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.GetFireRate(),1);
-          //else if (Input.GetButton("Fire2") && canShoot) SecondaryFire(.2f);
-          else if (Input.GetKey("1") && canShoot) Shoot(.09f,1);
-          else if (Input.GetKey("2") && canShoot) Shoot(1f,100);
-          else if (Input.GetKeyDown("i")) OpenInventory();
+          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.GetFireRate(),1, 1);
+          else if (Input.GetButton("Fire2") && canShoot) Shoot(1 / gun2.GetFireRate(), 1,2);
+
+        else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
-    void Shoot(float attackRate, int numberOfBullets)
+    void Shoot(float attackRate, int numberOfBullets, int gun)
     {
       
         
@@ -78,12 +79,26 @@ public class Gun : ModGenerator
       Transform realpos = fpsCam.transform;
       realpos.LookAt(targetPoint);
 
+        GunMods gunx;
+        if (gun == 1)
+        {
+            gunx = gun1;
+            gunText = gun1;
+        }
+
+        else
+        {
+            gunx = gun2;
+            gunText = gun2;
+        } 
+
+
       GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
       var bulletscript = bullet.GetComponent<PlayerProjectile>();
       bulletscript.initialFade = true;
-      bulletscript.SetStats(gun1.GetDamage(), gun1.GetBounces());
+      bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces());
 
-        for (var i = 0; i < gun1.bulletsPerShot-1; i++) //shoot extra bullets
+        for (var i = 0; i < gunx.bulletsPerShot-1; i++) //shoot extra bullets
         {
             var pelletRot = realpos.rotation;
             var aux = 0.05f;
@@ -93,7 +108,7 @@ public class Gun : ModGenerator
             bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot);
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.initialFade = true;
-            bulletscript.SetStats(gun1.GetDamage(), gun1.GetBounces());
+            bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces());
         }
 
 
