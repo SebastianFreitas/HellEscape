@@ -101,7 +101,7 @@ public class Gun : ModGenerator
         for (var i = 0; i < gunx.bulletsPerShot-1; i++) //shoot extra bullets
         {
             var pelletRot = realpos.rotation;
-            var aux = 0.05f;
+            var aux = 0.1f;
             pelletRot.x += Random.Range(-aux, aux);
             pelletRot.y += Random.Range(-aux, aux);
 

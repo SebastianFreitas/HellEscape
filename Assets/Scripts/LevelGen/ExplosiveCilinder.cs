@@ -6,29 +6,31 @@ public class ExplosiveCilinder : PropBehaviour
 {
     [SerializeField] float health;
 
-  
-  void OnCollisionEnter(Collision other)
+    public AudioSource audioSource;
+    public AudioClip kaboom;
+
+
+    void OnCollisionEnter(Collision other)
   {
         //ContactPoint contact = other.contacts[0];
-        if (other.gameObject.CompareTag("Bullet"))
-        {
-            Explode(transform.position, 6f);
-
-        }
+        if (other.gameObject.CompareTag("Bullet")) Explode(transform.position, 6f);
 
 
   }
 
     void Explode(Vector3 center, float radius)
     {
-        int layerMask = 7 << 9;
+        transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+
+        audioSource.PlayOneShot(kaboom,.2f);
+
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Dude")){
                 hitCollider.SendMessage("TakeDamage", 50);
                 var direction = hitCollider.transform.position - transform.position;
-                hitCollider.SendMessage("AddImpact", direction) ;
+                hitCollider.SendMessage("AddHighImpact", direction) ;
             }
             else
             if (hitCollider.CompareTag("Monster"))
@@ -43,13 +45,14 @@ public class ExplosiveCilinder : PropBehaviour
                 var direction = hitCollider.transform.position - transform.position;
                 hitCollider.GetComponent<Rigidbody>().AddExplosionForce(500f, transform.position, radius);
             }
-
         }
+        StartCoroutine(Die());
     }
 
-    void Die()
+    IEnumerator Die()
    {
-        //AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
+        transform.GetChild(1).gameObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
    }
 }
