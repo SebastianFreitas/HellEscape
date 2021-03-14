@@ -11,18 +11,18 @@ public class ExplosiveCilinder : PropBehaviour
 
 
     void OnCollisionEnter(Collision other)
-  {
+    {
         //ContactPoint contact = other.contacts[0];
         if (other.gameObject.CompareTag("Bullet")) Explode(transform.position, 6f);
 
 
-  }
+    }
 
     void Explode(Vector3 center, float radius)
     {
         transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
 
-        audioSource.PlayOneShot(kaboom,.2f);
+        audioSource.PlayOneShot(kaboom,.05f);
 
         Collider[] hitColliders = Physics.OverlapSphere(center, radius);
         foreach (var hitCollider in hitColliders)
@@ -50,9 +50,9 @@ public class ExplosiveCilinder : PropBehaviour
     }
 
     IEnumerator Die()
-   {
+    {
         transform.GetChild(1).gameObject.SetActive(false);
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
-   }
+    }
 }

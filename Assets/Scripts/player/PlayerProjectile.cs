@@ -80,7 +80,15 @@ public class PlayerProjectile : MonoBehaviour
             collision.transform.GetComponent<Monster>().TakeDamage(damage);
             Destroy(this.gameObject);
         }
-        else if (bounces > 0)
+        else
+        if (collision.gameObject.CompareTag("Prop"))
+        {
+            collision.transform.GetComponent<Rigidbody>().AddForce(contact.normal * 100);
+
+        }
+
+
+        if (bounces > 0 )
         {
             SetVisibility(true);
             AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);

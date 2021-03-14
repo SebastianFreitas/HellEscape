@@ -158,7 +158,7 @@ public class ModBase : MonoBehaviour
                  new BaseMod(2,5,   "Grenade Duration",         grade.exterior, operatorType.increased, 0)
          }; */
 
-    public static int[] InteriorWeight = { 10, 10, 10, 3, 3, 3};
+    public static int[] InteriorWeight = { 10, 10, 10, 2, 2, 2};
 
     public static int[] ExteriorWeight = { 1, 1, 1 };  //
 

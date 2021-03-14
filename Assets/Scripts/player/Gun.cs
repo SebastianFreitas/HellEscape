@@ -55,13 +55,13 @@ public class Gun : ModGenerator
 
     void Update()
     {
-          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.GetFireRate(),1, 1);
-          else if (Input.GetButton("Fire2") && canShoot) Shoot(1 / gun2.GetFireRate(), 1,2);
+          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.GetFireRate(), 1);
+          else if (Input.GetButton("Fire2") && canShoot) Shoot(1 / gun2.GetFireRate(),2);
 
         else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
-    void Shoot(float attackRate, int numberOfBullets, int gun)
+    void Shoot(float attackRate, int gun)
     {
       
         
@@ -85,7 +85,6 @@ public class Gun : ModGenerator
             gunx = gun1;
             gunText = gun1;
         }
-
         else
         {
             gunx = gun2;
@@ -100,12 +99,12 @@ public class Gun : ModGenerator
 
         for (var i = 0; i < gunx.bulletsPerShot-1; i++) //shoot extra bullets
         {
-            var pelletRot = realpos.rotation;
-            var aux = 0.1f;
-            pelletRot.x += Random.Range(-aux, aux);
-            pelletRot.y += Random.Range(-aux, aux);
+            var pelletRot = realpos;
+            var spread = 5f;
+            pelletRot.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
-            bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot);
+            bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot.rotation);
+
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.initialFade = true;
             bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces());

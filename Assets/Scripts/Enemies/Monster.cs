@@ -21,6 +21,7 @@ public class Monster : MonoBehaviour
 
     private Collider monsterCollider;
     private Collider playerCollider;
+    public ParticleSystem emi;
 
 
 
@@ -56,6 +57,12 @@ public class Monster : MonoBehaviour
 
   void Die()
    {
+
+        //var rotatedToPlayer = transform.rotation.SetFromToRotation(player.position, transform.position);
+        var rep = player;
+        rep.LookAt(transform.position);
+        var bloodSplat = Instantiate(emi, transform.position, rep.rotation);
+        bloodSplat.Play();
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         Destroy(gameObject);
    }
