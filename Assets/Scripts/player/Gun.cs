@@ -55,8 +55,8 @@ public class Gun : ModGenerator
 
     void Update()
     {
-          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.GetFireRate(), 1);
-          else if (Input.GetButton("Fire2") && canShoot) Shoot(1 / gun2.GetFireRate(),2);
+          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.finalFireRate, 1);
+          else if (Input.GetButton("Fire2") && canShoot) Shoot(1 / gun2.finalFireRate,2);
 
         else if (Input.GetKeyDown("i")) OpenInventory();
     }
@@ -107,7 +107,7 @@ public class Gun : ModGenerator
 
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.initialFade = true;
-            bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces());
+            bulletscript.SetStats(gunx.finalDamage, gunx.finalBounces);
         }
 
 

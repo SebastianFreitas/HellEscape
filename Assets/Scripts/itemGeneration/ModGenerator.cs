@@ -106,8 +106,11 @@ public class ModGenerator : ModBase
             ret.mods.Add(newMod);
         }
         ret.text = CreateGunText(ret);
-        
 
+        ret.finalFireRate = ret.GetFireRate();
+        ret.finalDamage = ret.GetDamage();
+        ret.finalBounces = ret.GetBounces();
+        ret.averageDamage = ret.GetAverageDamage();
         return ret;
     }
 

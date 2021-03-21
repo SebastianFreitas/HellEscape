@@ -68,27 +68,10 @@ public class ModBase : MonoBehaviour
 
         public HashSet<BaseMod> mods;
 
-
-
-        /*public GunMods( float fireRate, int weaponDamage, int maxRicochets, int lvl,
-                        string text, HashSet<BaseMod> mods, float movementSpeed,
-                        float increasedFireRate, int increasedDamage, int additionalBounces, float increasedSpeed)
-        {
-            this.baseRate = fireRate;
-            this.baseDamage = weaponDamage;
-            this.baseBounces = maxRicochets;
-            this.level = lvl;//wtf
-            this.mods = mods;
-            this.text = text;
-            this.increasedSpeed = movementSpeed;
-            this.increasedFireRate = increasedFireRate;
-            this.increasedDamage = increasedDamage;
-            this.additionalBounces = additionalBounces;
-            this.increasedSpeed = increasedSpeed;
-
-
-
-        }*/
+        public float finalFireRate;
+        public float finalDamage;
+        public int finalBounces;
+        public float averageDamage;
 
         public float GetFireRate()
         {

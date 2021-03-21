@@ -21,7 +21,8 @@ public class Monster : MonoBehaviour
 
     private Collider monsterCollider;
     private Collider playerCollider;
-    public ParticleSystem emi;
+    public ParticleSystem damageBleed;
+    public ParticleSystem deathBleed;
 
 
 
@@ -47,11 +48,22 @@ public class Monster : MonoBehaviour
   public void TakeDamage(float amount)
   {  
     health -= amount;
+
+
     if (health <= 0f )
     {
-      transform.parent.GetComponent<Room>().killMonster();
-      Die();
-    } else audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+        transform.parent.GetComponent<Room>().killMonster();
+        Die();
+    } 
+    else
+    {
+        var rep = player;
+        rep.LookAt(transform.position);
+        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+        var bloodSplat = Instantiate(damageBleed, transform.position, rep.rotation);
+        bloodSplat.Play();
+    }
+
 
   }
 
@@ -61,9 +73,9 @@ public class Monster : MonoBehaviour
         //var rotatedToPlayer = transform.rotation.SetFromToRotation(player.position, transform.position);
         var rep = player;
         rep.LookAt(transform.position);
-        var bloodSplat = Instantiate(emi, transform.position, rep.rotation);
-        bloodSplat.Play();
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
+        var bloodSplat = Instantiate(deathBleed, transform.position, rep.rotation);
+        bloodSplat.Play();
         Destroy(gameObject);
    }
 
