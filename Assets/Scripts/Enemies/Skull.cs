@@ -12,9 +12,12 @@ public class Skull : Monster
     [SerializeField] float maxJumpForce;
     [SerializeField] float minJumpForce;
 
+    public ParticleSystem action;
+
     new void Start()
     {
         base.Start();
+        action.Stop();
         StartCoroutine(waiterStart());
     }
 
@@ -22,6 +25,13 @@ public class Skull : Monster
 
     IEnumerator randomJump()
     {
+
+        //var ashes = Instantiate(action, transform.position, transform.rotation);
+        //ashes.transform.parent = transform;
+        //Destroy(ashes, 1f);
+        //ashes.Play();
+        action.Play();
+        StartCoroutine(AshesWaiter());
 
         Vector3 playerPos = new Vector3(base.player.position.x, base.player.position.y - 10f, base.player.position.z);
 
@@ -33,11 +43,16 @@ public class Skull : Monster
 
         var a = Random.Range(minWaitingTime, maxWaitingTime);
         yield return new WaitForSeconds(a);
+        
         StartCoroutine(randomJump());
 
 
     }
-
+    IEnumerator AshesWaiter()
+    {
+        yield return new WaitForSeconds(.5f);
+        action.Stop();
+    }
 
 
     IEnumerator waiterStart()

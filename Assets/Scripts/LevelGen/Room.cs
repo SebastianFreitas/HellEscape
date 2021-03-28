@@ -21,20 +21,15 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
-        
         StartCoroutine(WatchEnemies());
-
     }
+
     public void SpawnEnemies(int dif)
     {
-        for (int i = 0; i < enemySpawns.Length; i++)
+        var total = 4;
+        for (int i = 0; i < total; i++)
         {
-            StartCoroutine(SpawnEnemy(i));
-            monstersAlive++;
-            for (int j = 0; j < dif; j++)
-            {
-            
-            }
+            StartCoroutine(SpawnEnemy(Random.Range(0,5)));
         }
     }
 
@@ -44,11 +39,7 @@ public class Room : MonoBehaviour
         {   
             for (int j = 0; j<more; j++){
                 var x = GetRandomWeightedIndex(weight);
-                //prop = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 6), randomSpawns[i].position.z + (Random.Range(-60, 60))), transform.rotation);
                 prop = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 6), randomSpawns[i].position.z ), transform.rotation, transform);
-                //prop.transform.parent = transform;
-                //prop.transform.eulerAngles = new Vector3(transform.eulerAngles.x, Random.Range(0, 360), transform.eulerAngles.z);
-                //prop.GetComponent<Rigidbody>().AddForce();
             }  
         }
     }
@@ -97,10 +88,12 @@ public class Room : MonoBehaviour
         var x = Random.Range(.01f,.1f);
         yield return new WaitForSeconds(x);
         skull = skulls[Random.Range(0, skulls.Length)];
-        var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x, enemySpawns[i].position.y, enemySpawns[i].position.z), transform.rotation);
-        skully.transform.parent = transform;
-        
-
+        for(int a=0; a<3; a++)
+        {
+            var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x+ Random.Range(-.5f,.5f) , enemySpawns[i].position.y , enemySpawns[i].position.z + Random.Range(-.5f, .5f)), transform.rotation);
+            monstersAlive++;
+            skully.transform.parent = transform;
+        }
     }
 
     private IEnumerator WatchEnemies()
