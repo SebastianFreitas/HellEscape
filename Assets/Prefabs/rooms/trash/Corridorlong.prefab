@@ -199,6 +199,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &3976586859733502176
@@ -248,7 +249,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorways: []
-  MeshCollider: {fileID: 8368695288192981499}
+  playerStart: {fileID: 0}
+  roomType: 0
+  randomSpawns: []
+  objects: []
+  enemySpawns: []
+  skulls: []
+  skull: {fileID: 0}
+  prop: {fileID: 0}
+  locked: 1
+  monstersAlive: 0
+  weight: 
 --- !u!1 &3976586859738211909
 GameObject:
   m_ObjectHideFlags: 0

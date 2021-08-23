@@ -14,7 +14,7 @@ public class PlayerProjectile : MonoBehaviour
 
   public convergion totalConvergion;
 
-  private float speed = 500f;
+  public float speed = 500f;
   private  float damage = 0;
   public  Vector3 playerSpeed;
   public AudioClip ricochet;
@@ -35,11 +35,10 @@ public class PlayerProjectile : MonoBehaviour
   {
     SetVisibility(false);
     rb = GetComponent<Rigidbody>();
-    /*if (totalConvergion.bludgeoning != 0) convertBludgeoning(); 
-    else if (visual) bounces = 0;*/
-    //if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
+
+    if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
     rb.AddForce(transform.forward * speed);
-    StartCoroutine(waiter(5f));
+    StartCoroutine(waiter(10f));
   }
 
 
@@ -92,7 +91,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             SetVisibility(true);
             AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
-            rb.AddForce(contact.normal * 100);
+            rb.AddForce(contact.normal * 10);
             bounces--;
         }
         else Destroy(this.gameObject);

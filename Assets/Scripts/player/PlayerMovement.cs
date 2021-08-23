@@ -17,8 +17,10 @@ public class PlayerMovement : MonoBehaviour
   public float maxSpeed = 20;
   public float speedModifier = 1;//ammount of speed gained from each speedCounter
   public int speedCounter = 0; //used as stacks to increase speed
+    [SerializeField] private float slopeForce;
+    [SerializeField] private float slopeForceRayLength;
 
-  [Header("Advanced movement")]
+    [Header("Advanced movement")]
   public float gravity = -19.81f;
   public float jumpHeight = 1.5f;
   public float mass = 3f;
@@ -177,7 +179,10 @@ public class PlayerMovement : MonoBehaviour
     if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
     // consumes the impact energy each cycle:
     impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
-  }
+
+        if ((x != 0 || z != 0) && OnSlope())
+            controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
+    }
 
   void GroundMove()
   {
@@ -323,6 +328,7 @@ public class PlayerMovement : MonoBehaviour
     }
   }
 
+
   public void TakeDamage(float amount)
   {
         if (canTakeDamage)
@@ -340,8 +346,16 @@ public class PlayerMovement : MonoBehaviour
         }
   }
 
+    private bool OnSlope()
+    {
+        RaycastHit hit;
 
-  void Die()
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, controller.height / 2 * slopeForceRayLength))
+            if (hit.normal != Vector3.up)
+                return true;
+        return false;
+    }
+    void Die()
   {
         transform.parent.GetComponent<GameMan>().RestartGame();
         Destroy(gameObject);
