@@ -3,12 +3,12 @@ using UnityEngine;
 using System.Collections;
 
 
-public class Gun : ModGenerator
+public class Gun : MonoBehaviour
 {
     public Animator animator;
+    public GunGenerator gunGen;
 
-    public GunMods gun1;
-    public GunMods gun2;
+    public GunOfAType gun1;
 
     public convergion totalConvergion;
     public float damage = 50f;
@@ -38,26 +38,25 @@ public class Gun : ModGenerator
 
     public GameObject inventory;
 
-    public GunMods gunText;
+    public GunOfAType gunText;
 
 
     void Start()
     {
+        gunGen = new GunGenerator();
+        gun1 = gunGen.CreateWeapon(10, GunType.shotgun);
         lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
-        gun1 = CreateWeapon(10);
-        gun2 = CreateWeapon(10);
+
         playerScript.speed *= ((gun1.increasedSpeed/100)+1);
     }
 
 
     void Update()
     {
-          if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.finalFireRate, 1);
-          else if (Input.GetButton("Fire2") && canShoot) Shoot(1 / gun2.finalFireRate,2);
-
+        if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.finalFireRate, 1);
         else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
@@ -79,17 +78,11 @@ public class Gun : ModGenerator
       Transform realpos = fpsCam.transform;
       realpos.LookAt(targetPoint);
 
-        GunMods gunx;
-        if (gun == 1)
-        {
-            gunx = gun1;
-            gunText = gun1;
-        }
-        else
-        {
-            gunx = gun2;
-            gunText = gun2;
-        } 
+        GunOfAType gunx;
+        gunx = gun1;
+        gunText = gun1;
+       
+
 
 
       GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
@@ -97,7 +90,7 @@ public class Gun : ModGenerator
       bulletscript.initialFade = true;
       bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces());
 
-        for (var i = 0; i < gunx.bulletsPerShot-1; i++) //shoot extra bullets
+        for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
             var pelletRot = realpos;
             var spread = 5f;

@@ -8,7 +8,7 @@ public class GunText : MonoBehaviour
 {
     public Text m_MyText;
 
-    public GunMods gunA;
+    public GunOfAType gunA;
 
     void Start()
     {

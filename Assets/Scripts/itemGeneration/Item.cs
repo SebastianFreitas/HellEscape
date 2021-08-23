@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item : ModGenerator 
 {
-    public GunMods gun;
+    public GunOfAType gun;
     void Start()
     {
         //gun = createWeapon(10);
