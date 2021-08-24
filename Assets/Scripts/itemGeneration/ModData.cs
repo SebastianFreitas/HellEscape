@@ -176,10 +176,10 @@ public class GunOfAType
         switch (type)
         {
             case GunType.normal:
-                baseRate = 2f;
+                baseRate = 10f;
                 baseDamage = 50;
                 baseBounces = 2;
-                baseBulletsPerShot = 1;
+                baseBulletsPerShot = 10;
                 break;
             case GunType.shotgun:
                 baseRate = 1f;

@@ -6,7 +6,8 @@ public class Portal : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        transform.parent.GetComponent<Room>().UseDoor();
+        if (other.CompareTag("Dude"))
+            transform.parent.GetComponent<Room>().UseDoor();
     }
 
 }

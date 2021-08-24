@@ -25,11 +25,6 @@ public class Skull : Monster
 
     IEnumerator randomJump()
     {
-
-        //var ashes = Instantiate(action, transform.position, transform.rotation);
-        //ashes.transform.parent = transform;
-        //Destroy(ashes, 1f);
-        //ashes.Play();
         action.Play();
         StartCoroutine(AshesWaiter());
 

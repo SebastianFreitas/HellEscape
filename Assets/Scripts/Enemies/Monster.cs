@@ -62,6 +62,7 @@ public class Monster : MonoBehaviour
         audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
         var bloodSplat = Instantiate(damageBleed, transform.position, rep.rotation);
         bloodSplat.Play();
+        KillBloodWaiter(bloodSplat);
     }
 
 
@@ -76,44 +77,49 @@ public class Monster : MonoBehaviour
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         var bloodSplat = Instantiate(deathBleed, transform.position, rep.rotation);
         bloodSplat.Play();
+        KillBloodWaiter(bloodSplat);
         Destroy(gameObject);
    }
 
+    IEnumerator KillBloodWaiter(ParticleSystem blood)
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(blood);
+    }
 
 
-
-/*
-  IEnumerator fireRateCycle()
-  {
-    yield return new WaitForSeconds(timeBtwShots);
-    canShoot= true;
-  }
-
-      //transform.LookAt(player);
-      //transform.Rotate(new Vector3(-80,0,0));
-      
-      if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
+    /*
+      IEnumerator fireRateCycle()
       {
-          transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-      }     
-      else 
-      if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
-      {
-          transform.position = transform.position;
-      } 
-      else 
-      if(Vector3.Distance(transform.position, player.position) < retreatDistance)
-      {
-          transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+        yield return new WaitForSeconds(timeBtwShots);
+        canShoot= true;
       }
 
-      if (canShoot)
-      {
-        bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
-        bullet.GetComponent<EnemyProjectile>().damage = damage;
-        bullet.transform.LookAt(player, Vector3.up);
-        canShoot = false;
-        StartCoroutine(fireRateCycle());
-      }*/ 
+          //transform.LookAt(player);
+          //transform.Rotate(new Vector3(-80,0,0));
+
+          if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
+          {
+              transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+          }     
+          else 
+          if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
+          {
+              transform.position = transform.position;
+          } 
+          else 
+          if(Vector3.Distance(transform.position, player.position) < retreatDistance)
+          {
+              transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
+          }
+
+          if (canShoot)
+          {
+            bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
+            bullet.GetComponent<EnemyProjectile>().damage = damage;
+            bullet.transform.LookAt(player, Vector3.up);
+            canShoot = false;
+            StartCoroutine(fireRateCycle());
+          }*/
 
 }
