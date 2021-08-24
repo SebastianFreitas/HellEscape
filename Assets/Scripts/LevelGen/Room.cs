@@ -11,6 +11,7 @@ public class Room : MonoBehaviour
     public GameObject[] objects;
     public Transform[] enemySpawns;
     public GameObject[] skulls;
+    public GameObject portal;
 
     public GameObject skull;
     public GameObject prop;
@@ -21,6 +22,7 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
+        portal.SetActive(false);
         StartCoroutine(WatchEnemies());
     }
 
@@ -100,7 +102,11 @@ public class Room : MonoBehaviour
     {
         
         yield return new WaitForSeconds(2f);
-        if (monstersAlive == 0) locked = false;
+        if (monstersAlive == 0)
+        {
+            locked = false;
+            portal.SetActive(true);
+        }
         StartCoroutine(WatchEnemies());
     }
 
