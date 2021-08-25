@@ -88,7 +88,7 @@ public class Gun : MonoBehaviour
       GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
       var bulletscript = bullet.GetComponent<PlayerProjectile>();
       bulletscript.initialFade = true;
-      bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces());
+      bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces(), gunx.shotSpeed, gunx.bounceSpeed);
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
@@ -100,7 +100,7 @@ public class Gun : MonoBehaviour
 
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.initialFade = true;
-            bulletscript.SetStats(gunx.finalDamage, gunx.finalBounces);
+            bulletscript.SetStats(gunx.finalDamage, gunx.finalBounces, gunx.shotSpeed, gunx.bounceSpeed);
         }
 
 
@@ -118,6 +118,7 @@ public class Gun : MonoBehaviour
       Vector3 inventoryPosition = new Vector3(fpsCam.transform.position.x, fpsCam.transform.position.y, fpsCam.transform.position.z+5f);
       Instantiate(inventory,inventoryPosition , fpsCam.transform.rotation);
     }
+
     IEnumerator waiterFlash(){
         animator.SetTrigger("Shoot");
  

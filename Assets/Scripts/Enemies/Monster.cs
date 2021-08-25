@@ -76,7 +76,7 @@ public class Monster : MonoBehaviour
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         var bloodSplat = Instantiate(deathBleed, transform.position, rep.rotation);
         bloodSplat.Play();
-        Destroy(gameObject, .5f);
+        Destroy(gameObject);
    }
 
 

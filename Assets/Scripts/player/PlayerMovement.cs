@@ -69,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
   public AudioClip dash;
   public AudioClip jump;
   public AudioClip land;
+  public AudioClip teleport;
   public AudioClip[] steps;
   public AudioClip[] hurts;
   public float volume=0.5f;
@@ -180,8 +181,8 @@ public class PlayerMovement : MonoBehaviour
     // consumes the impact energy each cycle:
     impact = Vector3.Lerp(impact, Vector3.zero, 5*Time.deltaTime);
 
-        if ((x != 0 || z != 0) && OnSlope())
-            controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
+    if ((x != 0 || z != 0) && OnSlope())
+        controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
     }
 
   void GroundMove()
@@ -356,11 +357,11 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
     void Die()
-  {
+    {
         transform.parent.GetComponent<GameMan>().RestartGame();
         Destroy(gameObject);
         
-  }
+    }
     IEnumerator waiterImmunity()
     {
         canTakeDamage = false;
@@ -368,8 +369,6 @@ public class PlayerMovement : MonoBehaviour
         canTakeDamage = true;
 
     }
-
-
 
   IEnumerator waiterDashCD()
   {
@@ -388,6 +387,11 @@ public class PlayerMovement : MonoBehaviour
     groundLag = false;
   }
 
+    
+    public void TeleportSound()
+    {
+        audioSource.PlayOneShot(teleport, volume);
+    }
   
 
 }

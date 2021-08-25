@@ -2260,7 +2260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagePopup: {fileID: 6057400560045297773, guid: 70c2b71be99ac2442823b7965a91c4a7, type: 3}
-  speed: 50
+  bounceSpeed: 250
   playerSpeed: {x: 0, y: 0, z: 0}
   ricochet: {fileID: 8300000, guid: 25b62119364b1a642804b64c4165943f, type: 3}
   source: {fileID: 1033672427497998982}
@@ -2276,8 +2276,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312125936527058168}
   serializedVersion: 2
-  m_Mass: 0.01
-  m_Drag: 2
+  m_Mass: 0.5
+  m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0

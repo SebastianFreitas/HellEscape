@@ -131,8 +131,10 @@ public class GunOfAType
     public float baseRate;
     public int baseDamage;
     public int baseBounces;
+    public int bounceSpeed;
     public int level;
-    public int baseBulletsPerShot; 
+    public int baseBulletsPerShot;
+    public int shotSpeed;
     public GunType type;
 
     public float increasedFireRate;
@@ -176,28 +178,36 @@ public class GunOfAType
         switch (type)
         {
             case GunType.normal:
-                baseRate = 10f;
+                baseRate = 2f;
                 baseDamage = 50;
                 baseBounces = 2;
-                baseBulletsPerShot = 10;
+                baseBulletsPerShot = 1;
+                shotSpeed = 1500;
+                bounceSpeed = 100;
                 break;
             case GunType.shotgun:
                 baseRate = 1f;
                 baseDamage = 20;
                 baseBounces = 1;
                 baseBulletsPerShot = 8;
+                shotSpeed = 1000;
+                bounceSpeed = 100;
                 break;
             case GunType.machinegun:
                 baseRate = 5f;
-                baseDamage = 20;
+                baseDamage = 50;
                 baseBounces = 1;
                 baseBulletsPerShot = 1;
+                shotSpeed = 1000;
+                bounceSpeed = 100;
                 break;
             case GunType.sniper:
                 baseRate = .5f;
                 baseDamage = 200;
                 baseBounces = 10;
                 baseBulletsPerShot = 1;
+                shotSpeed = 3000;
+                bounceSpeed = 500;
                 break;
         }
         return gun;

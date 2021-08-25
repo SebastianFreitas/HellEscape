@@ -64,6 +64,8 @@ public class GameMan : MonoBehaviour
         Destroy(currentRoom.gameObject);
         dificulty++;
 
+        playerPrefab.TeleportSound();
+
         if (type == 1 || type == 2)
         {
             PlaceRoomAndPlayer(GenerateRoom());

@@ -17,6 +17,7 @@ public class GunGenerator : ModData
             baseRate = 0,
             baseDamage = 0,
             baseBounces = 0,
+            bounceSpeed = 0,
             baseBulletsPerShot = 1,
             level = maxLevel,
             increasedFireRate = 0,

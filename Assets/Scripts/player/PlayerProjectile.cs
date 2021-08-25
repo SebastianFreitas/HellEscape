@@ -12,24 +12,23 @@ public struct convergion
 public class PlayerProjectile : MonoBehaviour
 {
     public GameObject damagePopup;
-  public convergion totalConvergion;
+    public convergion totalConvergion;
+    public float bounceSpeed = 500f;
+    private float speed;
 
-  public float speed = 500f;
-  private  float damage = 0;
-  public  Vector3 playerSpeed;
-  public AudioClip ricochet;
-  public AudioSource source;
+    private  float damage = 0;
+    public  Vector3 playerSpeed;
+    public AudioClip ricochet;
+    public AudioSource source;
 
-  public GameObject newBullet;
+    public GameObject newBullet;
 
-  private Monster enemyScript;
+    public bool visual = false;
 
-  public bool visual = false;
+    public bool initialFade = false;
 
-  public bool initialFade = false;
-
-  public int bounces = 2;
-  Rigidbody rb;
+    public int bounces = 2;
+    Rigidbody rb;
 
     
 
@@ -67,10 +66,12 @@ public class PlayerProjectile : MonoBehaviour
     StartCoroutine(waiter(2f));
   }
 
-  public void SetStats(float damage, int bounces)
+  public void SetStats(float damage, int bounces, int bulletSpeed, int bounceSpeed)
   {
     this.damage = damage;
     this.bounces = bounces;
+    this.speed = bulletSpeed;
+    this.bounceSpeed = bounceSpeed;
   }
 
   void OnCollisionEnter(Collision collision)
@@ -82,37 +83,24 @@ public class PlayerProjectile : MonoBehaviour
 
             Destroy(this.gameObject);
         }
-        else
+        /*else
         if (collision.gameObject.CompareTag("Prop"))
         {
-            collision.transform.GetComponent<Rigidbody>().AddForce(contact.normal * 100);
+            //collision.transform.GetComponent<Rigidbody>().AddForce(contact.normal * 100);
 
-        }
+        }*/
 
 
         if (bounces > 0 )
         {
             SetVisibility(true);
             AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
-            rb.AddForce(contact.normal * 10);
+            rb.AddForce(contact.normal * bounceSpeed);
             bounces--;
         }
         else Destroy(this.gameObject);
   }
 
-    private void DamagePopup(float damage)
-    {
-        //var rep = player;
-        //rep.LookAt(transform.position);
-
-        GameObject currentText = Instantiate(damagePopup);
-        TextMesh textMesh = currentText.GetComponentInChildren<TextMesh>();
-
-        currentText.transform.position = rb.position;
-
-        textMesh.text = damage.ToString();
-        Destroy(currentText, .3f);
-    }
 
 
 
