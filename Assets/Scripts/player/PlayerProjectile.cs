@@ -11,7 +11,7 @@ public struct convergion
 }
 public class PlayerProjectile : MonoBehaviour
 {
-
+    public GameObject damagePopup;
   public convergion totalConvergion;
 
   public float speed = 500f;
@@ -31,15 +31,17 @@ public class PlayerProjectile : MonoBehaviour
   public int bounces = 2;
   Rigidbody rb;
 
-  void Start()
-  {
-    SetVisibility(false);
-    rb = GetComponent<Rigidbody>();
+    
 
-    if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
-    rb.AddForce(transform.forward * speed);
-    StartCoroutine(waiter(10f));
-  }
+    void Start()
+      {
+        SetVisibility(false);
+        rb = GetComponent<Rigidbody>();
+
+        if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
+        rb.AddForce(transform.forward * speed);
+        StartCoroutine(waiter(10f));
+      }
 
 
   private void SetVisibility(bool onOff)
@@ -77,6 +79,7 @@ public class PlayerProjectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Monster"))
         {
             collision.transform.GetComponent<Monster>().TakeDamage(damage);
+
             Destroy(this.gameObject);
         }
         else
@@ -96,6 +99,20 @@ public class PlayerProjectile : MonoBehaviour
         }
         else Destroy(this.gameObject);
   }
+
+    private void DamagePopup(float damage)
+    {
+        //var rep = player;
+        //rep.LookAt(transform.position);
+
+        GameObject currentText = Instantiate(damagePopup);
+        TextMesh textMesh = currentText.GetComponentInChildren<TextMesh>();
+
+        currentText.transform.position = rb.position;
+
+        textMesh.text = damage.ToString();
+        Destroy(currentText, .3f);
+    }
 
 
 

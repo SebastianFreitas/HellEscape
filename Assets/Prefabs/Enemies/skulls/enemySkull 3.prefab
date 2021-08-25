@@ -37,6 +37,7 @@ Transform:
   - {fileID: 2467144814242496514}
   - {fileID: 4974092667127608573}
   - {fileID: 1702069446983965561}
+  - {fileID: 3074182625058087182}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -83.515, y: 0, z: 0}
@@ -89,6 +90,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
   - {fileID: 8300000, guid: 0a149ddebde65ad40997208bb9a6b117, type: 3}
   volume: 0.5
+  spawnPoint: {fileID: 3074182625058087182}
+  damagePopup: {fileID: 6057400560045297773, guid: 70c2b71be99ac2442823b7965a91c4a7, type: 3}
   damageBleed: {fileID: 4624859801505476159, guid: 0056336a800d6154e891351101d4b989, type: 3}
   deathBleed: {fileID: 2286383227415357548, guid: 1da3f1cf8697b144eba4468c8a9c5a4f, type: 3}
   maxAltitudeJumpDistance: 1
@@ -437,6 +440,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6891046844346027508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3074182625058087182}
+  m_Layer: 9
+  m_Name: DamageTextPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3074182625058087182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6891046844346027508}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2, y: -0, z: 29.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1788253703695532676}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7679334924226156034
 GameObject:
   m_ObjectHideFlags: 0

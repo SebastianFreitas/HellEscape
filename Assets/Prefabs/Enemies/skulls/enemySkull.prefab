@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &824823361053177707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4213288911444037105}
+  m_Layer: 5
+  m_Name: DamageTextPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4213288911444037105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824823361053177707}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -1.3, y: 0, z: 29.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1788253703695532676}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!1 &1412714010074994750
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +67,7 @@ Transform:
   - {fileID: 2467144814242496514}
   - {fileID: 4974092667127608573}
   - {fileID: 5060400832478022441}
+  - {fileID: 4213288911444037105}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -83.515, y: 0, z: 0}
@@ -92,6 +123,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 59de6c2039230d54183a449e8514331f, type: 3}
   - {fileID: 8300000, guid: 2c349fa9dbb93284e9f2b058631e2b48, type: 3}
   volume: 0.5
+  spawnPoint: {fileID: 4213288911444037105}
+  damagePopup: {fileID: 6057400560045297773, guid: 70c2b71be99ac2442823b7965a91c4a7, type: 3}
   damageBleed: {fileID: 4624859801505476159, guid: 0056336a800d6154e891351101d4b989, type: 3}
   deathBleed: {fileID: 2286383227415357548, guid: 1da3f1cf8697b144eba4468c8a9c5a4f, type: 3}
   maxAltitudeJumpDistance: 2

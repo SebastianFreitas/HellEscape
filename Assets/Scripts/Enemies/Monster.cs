@@ -19,6 +19,8 @@ public class Monster : MonoBehaviour
     public AudioClip[] hurts;
     public float volume = 0.5f;
 
+
+
     private Collider monsterCollider;
     private Collider playerCollider;
     public ParticleSystem damageBleed;
@@ -49,7 +51,6 @@ public class Monster : MonoBehaviour
   {  
     health -= amount;
 
-
     if (health <= 0f )
     {
         transform.parent.GetComponent<Room>().killMonster();
@@ -62,10 +63,8 @@ public class Monster : MonoBehaviour
         audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
         var bloodSplat = Instantiate(damageBleed, transform.position, rep.rotation);
         bloodSplat.Play();
-        KillBloodWaiter(bloodSplat);
+        
     }
-
-
   }
 
   void Die()
@@ -77,15 +76,10 @@ public class Monster : MonoBehaviour
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         var bloodSplat = Instantiate(deathBleed, transform.position, rep.rotation);
         bloodSplat.Play();
-        KillBloodWaiter(bloodSplat);
-        Destroy(gameObject);
+        Destroy(gameObject, .5f);
    }
 
-    IEnumerator KillBloodWaiter(ParticleSystem blood)
-    {
-        yield return new WaitForSeconds(1f);
-        Destroy(blood);
-    }
+
 
 
     /*
