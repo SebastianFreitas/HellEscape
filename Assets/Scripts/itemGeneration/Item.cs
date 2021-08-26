@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : ModGenerator 
+public class Item : GunGenerator 
 {
-    public GunOfAType gun;
+    private GunOfAType gun;
     void Start()
     {
-        //gun = createWeapon(10);
+        gun = CreateWeapon(10);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }

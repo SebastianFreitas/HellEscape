@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412714010074994750}
-  m_LocalRotation: {x: -0.66597867, y: -0, z: -0, w: 0.74597085}
-  m_LocalPosition: {x: 0, y: 0.17336917, z: 1.8767508}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children:
   - {fileID: 8247908045936771937}
@@ -40,7 +40,7 @@ Transform:
   - {fileID: 3074182625058087182}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -83.515, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8490035148160077464
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -90,8 +90,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
   - {fileID: 8300000, guid: 0a149ddebde65ad40997208bb9a6b117, type: 3}
   volume: 0.5
-  spawnPoint: {fileID: 3074182625058087182}
-  damagePopup: {fileID: 6057400560045297773, guid: 70c2b71be99ac2442823b7965a91c4a7, type: 3}
+  drop: {fileID: 8199240434200272038, guid: 4c67cbad9a3e5d64681f2209d868b8f5, type: 3}
   damageBleed: {fileID: 4624859801505476159, guid: 0056336a800d6154e891351101d4b989, type: 3}
   deathBleed: {fileID: 2286383227415357548, guid: 1da3f1cf8697b144eba4468c8a9c5a4f, type: 3}
   maxAltitudeJumpDistance: 1

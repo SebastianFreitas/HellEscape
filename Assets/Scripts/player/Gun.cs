@@ -44,7 +44,7 @@ public class Gun : MonoBehaviour
     void Start()
     {
         gunGen = new GunGenerator();
-        gun1 = gunGen.CreateWeapon(10, GunType.normal);
+        gun1 = gunGen.CreateWeapon(10);
         lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
         muzzleFlashFront.transform.parent = transform.parent;

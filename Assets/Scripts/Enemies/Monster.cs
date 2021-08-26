@@ -19,7 +19,7 @@ public class Monster : MonoBehaviour
     public AudioClip[] hurts;
     public float volume = 0.5f;
 
-
+    public GameObject drop;
 
     private Collider monsterCollider;
     private Collider playerCollider;
@@ -76,9 +76,19 @@ public class Monster : MonoBehaviour
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         var bloodSplat = Instantiate(deathBleed, transform.position, rep.rotation);
         bloodSplat.Play();
+        Drop();
         Destroy(gameObject);
    }
 
+    private void Drop()
+    {
+        if (Random.Range(1,20) > 19)
+        {
+           GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
+           //x.transform.position = transform.position;
+
+        }
+    }
 
 
 

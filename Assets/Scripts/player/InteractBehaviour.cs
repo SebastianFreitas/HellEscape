@@ -17,8 +17,8 @@ public class InteractBehaviour : MonoBehaviour
             Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             if (Physics.Raycast(ray, out hit, 10f) )
             {
-                if (hit.transform.CompareTag("Button")) hit.collider.transform.GetComponent<ButtonDoor>().UseDoor();
-                else if (hit.transform.CompareTag("Item"))  transform.GetComponent<Gun>().gun1 = hit.collider.transform.GetComponent<Item>().gun;
+                //if (hit.transform.CompareTag("Button")) hit.collider.transform.GetComponent<ButtonDoor>().UseDoor();
+                //else if (hit.transform.CompareTag("Item"))  transform.GetComponent<Gun>().gun1 = hit.collider.transform.GetComponent<Item>().gun;
             }
             
         }

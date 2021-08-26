@@ -8,8 +8,9 @@ using UnityEngine;
 
 public class GunGenerator : ModData
 {
-    public int[] gradeWeight = { 300, 300, 2 };
-    public GunOfAType CreateWeapon(int maxLevel, GunType type)
+    public int[] gradeWeight = {300, 300, 2};
+    public int[] typeWeight = {100, 10, 10, 10};
+    public GunOfAType CreateWeapon(int maxLevel)
     {
         GunOfAType ret = new GunOfAType
         {
@@ -25,7 +26,7 @@ public class GunGenerator : ModData
             additionalBounces = 0,
             increasedSpeed = 0
         };
-
+        var type = randomyseGunType();
         ret = ret.ChangeType(ret, type);
 
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
@@ -52,7 +53,6 @@ public class GunGenerator : ModData
                     gradeWeight[nextGrade] -= 1;
                     newMod = GenerateSpecialMod(ret);
                     newMod = UpdateMod(newMod, maxLevel, 1);
-
                     break;
             }
 
@@ -69,9 +69,11 @@ public class GunGenerator : ModData
                 case "Weapon Fire Rate":
                     ret.increasedFireRate += newMod.upperBound;
                     break;
+
                 case "Movement Speed":
                     ret.increasedSpeed += newMod.upperBound;
                     break;
+
                 case "Bullets per Shot":
                     ret.baseBulletsPerShot += newMod.upperBound;
                     break;
@@ -89,6 +91,32 @@ public class GunGenerator : ModData
         return ret;
     }
 
+    private GunType randomyseGunType()
+    {
+        var x = GetRandomWeightedIndex(typeWeight);
+        GunType ret = GunType.normal;
+
+        switch (x)
+        {
+            case 0:
+                ret = GunType.normal;
+                break;
+
+            case 1:
+                ret = GunType.sniper;
+                break;
+
+            case 2:
+                ret = GunType.machinegun;
+                break;
+
+            case 3:
+                ret = GunType.shotgun;
+                break;
+        }
+
+        return ret;
+    }
 
     private Mod UpdateMod(Mod mod, int level, int reverse)
     {

@@ -24,6 +24,7 @@ public class Room : MonoBehaviour
     {
         portal.SetActive(false);
         StartCoroutine(WatchEnemies());
+        StartCoroutine(TimerPortalUnlock());
     }
 
     public void SpawnEnemies(int dif)
@@ -108,6 +109,13 @@ public class Room : MonoBehaviour
             portal.SetActive(true);
         }
         StartCoroutine(WatchEnemies());
+    }
+
+    private IEnumerator TimerPortalUnlock()
+    {
+        yield return new WaitForSeconds(90f);
+        locked = false;
+        portal.SetActive(true);
     }
 
 }
