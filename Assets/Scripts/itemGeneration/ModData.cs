@@ -185,6 +185,7 @@ public class GunOfAType
                 shotSpeed = 1500;
                 bounceSpeed = 100;
                 break;
+
             case GunType.shotgun:
                 baseRate = 1f;
                 baseDamage = 20;
@@ -193,6 +194,7 @@ public class GunOfAType
                 shotSpeed = 1000;
                 bounceSpeed = 100;
                 break;
+
             case GunType.machinegun:
                 baseRate = 5f;
                 baseDamage = 50;
@@ -201,6 +203,7 @@ public class GunOfAType
                 shotSpeed = 1000;
                 bounceSpeed = 100;
                 break;
+
             case GunType.sniper:
                 baseRate = .5f;
                 baseDamage = 200;

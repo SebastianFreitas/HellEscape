@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameMan : MonoBehaviour
 {
     public PlayerMovement playerPrefab;
-    List<Doorway> availableDoorways = new List<Doorway>();
     public Room startRoomPrefab, endRoomPrefab;
     public List<Room> roomPrefabs = new List<Room>();
 
@@ -64,7 +63,7 @@ public class GameMan : MonoBehaviour
         Destroy(currentRoom.gameObject);
         dificulty++;
 
-        playerPrefab.TeleportSound();
+        
 
         if (type == 1 || type == 2)
         {

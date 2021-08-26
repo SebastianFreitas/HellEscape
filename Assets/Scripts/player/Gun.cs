@@ -62,33 +62,29 @@ public class Gun : MonoBehaviour
 
     void Shoot(float attackRate, int gun)
     {
-      
-        
-      StartCoroutine(waiterFlash());
 
-      GetComponent<AudioSource>().PlayOneShot(shoot, volume/2);
+        StartCoroutine(waiterFlash());
 
-      Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
-      if (Physics.Raycast(ray, out hit))
-          targetPoint = hit.point;
-      else
-          targetPoint = ray.GetPoint(1000);
+        GetComponent<AudioSource>().PlayOneShot(shoot, volume/2);
 
-      pnt.transform.LookAt(targetPoint);
-      Transform realpos = fpsCam.transform;
-      realpos.LookAt(targetPoint);
+        Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
+        if (Physics.Raycast(ray, out hit))
+            targetPoint = hit.point;
+        else
+            targetPoint = ray.GetPoint(1000);
+
+        pnt.transform.LookAt(targetPoint);
+        Transform realpos = fpsCam.transform;
+        realpos.LookAt(targetPoint);
 
         GunOfAType gunx;
         gunx = gun1;
         gunText = gun1;
-       
 
-
-
-      GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
-      var bulletscript = bullet.GetComponent<PlayerProjectile>();
-      bulletscript.initialFade = true;
-      bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces(), gunx.shotSpeed, gunx.bounceSpeed);
+        GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
+        var bulletscript = bullet.GetComponent<PlayerProjectile>();
+        bulletscript.initialFade = true;
+        bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces(), gunx.shotSpeed, gunx.bounceSpeed);
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {

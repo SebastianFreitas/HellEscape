@@ -23,7 +23,7 @@ public class GunText : MonoBehaviour
        // m_MyText.text += gunA.text;
         if (Input.GetKey(KeyCode.F))
         {
-            m_MyText.text = gunA.text;
+          // m_MyText.text = gunA.text;
         }
     }
 
