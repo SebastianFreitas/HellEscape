@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
             {
                 var x = slots[i].GetComponent<Slot>();
                 x.gun = gun;
-                x.UpdateGunText(gun.type.ToString());
+                x.UpdateGunText();
                 break;
             }
         }

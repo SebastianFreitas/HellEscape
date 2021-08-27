@@ -8,32 +8,21 @@ public class Slot : MonoBehaviour
     public GunOfAType gun;
     public Text gunText;
 
-    void Start()
+
+    public void UpdateGunText()
     {
-        Hide();
+        gunText.text = gun.type.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SwitchGun()
     {
+        Debug.Log("tried");
+        if (gun != null)
+        {
+            GameObject.FindWithTag("PlayerGun").transform.GetComponent<Gun>().SetGun(gun);
+            Debug.Log("switched gun");
+        }
         
-    }
-
-    public void UpdateGunText(string text)
-    {
-        gunText.text = text;
-    }
-
-    void Hide()
-    {
-        GetComponent<CanvasRenderer>().SetAlpha(0f); //this makes everything transparent
-        //canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
-    }
-
-    public void Show()
-    {
-        GetComponent<CanvasRenderer>().SetAlpha(1f); //this makes everything transparent
-        //canvasGroup.blocksRaycasts = false; //this prevents the UI element to receive input events
     }
 
 

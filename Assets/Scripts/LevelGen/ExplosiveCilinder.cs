@@ -28,9 +28,10 @@ public class ExplosiveCilinder : PropBehaviour
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Dude")){
+                //hitCollider.gameObject.GetComponent<PlayerMovement>().TakeDamage(50);
                 hitCollider.SendMessage("TakeDamage", 50);
                 var direction = hitCollider.transform.position - transform.position;
-                hitCollider.SendMessage("AddHighImpact", direction) ;
+                hitCollider.SendMessage("AddHighImpact", direction);
             }
             else
             if (hitCollider.CompareTag("Monster"))

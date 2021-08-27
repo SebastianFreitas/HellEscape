@@ -10,11 +10,18 @@ public class ButtonThroughKeySelection : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(key))
+        if (Input.GetKeyDown("tab"))
         {
             EventSystem.current.SetSelectedGameObject(this.gameObject);
-            this.gameObject.GetComponent<Slot>().Show();
         }
-    }
 
+        if (Input.GetKeyDown("o") )
+        {
+          
+            GetComponent<Button>().onClick.Invoke();
+            
+        }
+
+
+    }
 }

@@ -175,6 +175,8 @@ public class GunOfAType
 
     public GunOfAType ChangeType(GunOfAType gun, GunType type)
     {
+        gun.type = type;
+
         switch (type)
         {
             case GunType.normal:

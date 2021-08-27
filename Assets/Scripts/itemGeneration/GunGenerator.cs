@@ -9,9 +9,9 @@ using UnityEngine;
 public class GunGenerator : ModData
 {
     public int[] gradeWeight = {300, 300, 2};
-    public int[] typeWeight = {100, 10, 10, 10};
+    public int[] typeWeight = {10, 10, 10, 10};
     public GunOfAType CreateWeapon(int maxLevel)
-    {
+     {
         GunOfAType ret = new GunOfAType
         {
             mods = new HashSet<Mod>(),
@@ -26,7 +26,7 @@ public class GunGenerator : ModData
             additionalBounces = 0,
             increasedSpeed = 0
         };
-        var type = randomyseGunType();
+        var type = RandomiseGunType();
         ret = ret.ChangeType(ret, type);
 
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
@@ -90,7 +90,6 @@ public class GunGenerator : ModData
         ret.averageDamage = ret.GetAverageDamage();
         return ret;
     }
-
     public GunOfAType CreateWeaponEmpty()
     {
         GunOfAType ret = new GunOfAType();
@@ -104,11 +103,11 @@ public class GunGenerator : ModData
 
         return ret;
     }
-    private GunType randomyseGunType()
+    private GunType RandomiseGunType()
     {
-        var x = GetRandomWeightedIndex(typeWeight);
+        var x = UnityEngine.Random.Range(0,3);
+        Debug.Log(x);
         GunType ret = GunType.normal;
-
         switch (x)
         {
             case 0:

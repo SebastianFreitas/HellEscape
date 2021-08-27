@@ -126,6 +126,11 @@ public class Gun : MonoBehaviour
         lightFlash.SetActive(false);
     }
 
+    public void SetGun(GunOfAType gun)
+    {
+        this.gun = gun;
+    }
+
     void OnEnable()
     {
       canShoot = true;

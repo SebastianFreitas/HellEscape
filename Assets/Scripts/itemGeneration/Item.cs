@@ -16,7 +16,6 @@ public class Item : GunGenerator
         {
             var x = GameObject.FindGameObjectWithTag("Inventory").transform;
             x.GetComponent<Inventory>().AddWeapon(gun);
-            Debug.Log("yep");
             Destroy(this.gameObject);
         }
     }
