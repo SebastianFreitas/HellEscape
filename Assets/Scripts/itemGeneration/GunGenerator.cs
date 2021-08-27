@@ -91,6 +91,19 @@ public class GunGenerator : ModData
         return ret;
     }
 
+    public GunOfAType CreateWeaponEmpty()
+    {
+        GunOfAType ret = new GunOfAType();
+        ret = ret.ChangeType(ret, GunType.normal);
+
+        ret.text = CreateGunText(ret);
+        ret.finalFireRate = ret.GetFireRate();
+        ret.finalDamage = ret.GetDamage();
+        ret.finalBounces = ret.GetBounces();
+        ret.averageDamage = ret.GetAverageDamage();
+
+        return ret;
+    }
     private GunType randomyseGunType()
     {
         var x = GetRandomWeightedIndex(typeWeight);
@@ -220,10 +233,13 @@ public class GunGenerator : ModData
         text += gun.GetFireRate() + "  Fire rate\n";
         text += gun.GetBounces() + "  Max Ricochets\n";
         text += "---------------------------------\n";
-
-        foreach (var mod in gun.mods)
+        if (gun.mods != null)
         {
-            text += mod.text + "\n";
+            foreach (var mod in gun.mods)
+            {
+                text += mod.text + "\n";
+            }
+
         }
 
         return text;

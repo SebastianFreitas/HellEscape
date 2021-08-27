@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour
     public Animator animator;
     public GunGenerator gunGen;
 
-    public GunOfAType gun1;
+    public GunOfAType gun;
 
     public convergion totalConvergion;
     public float damage = 50f;
@@ -44,19 +44,19 @@ public class Gun : MonoBehaviour
     void Start()
     {
         gunGen = new GunGenerator();
-        gun1 = gunGen.CreateWeapon(10);
+        gun = gunGen.CreateWeaponEmpty();
         lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
 
-        playerScript.speed *= ((gun1.increasedSpeed/100)+1);
+        playerScript.speed *= ((gun.increasedSpeed/100)+1);
     }
 
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun1.finalFireRate, 1);
+        if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun.finalFireRate, 1);
         else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
@@ -78,8 +78,8 @@ public class Gun : MonoBehaviour
         realpos.LookAt(targetPoint);
 
         GunOfAType gunx;
-        gunx = gun1;
-        gunText = gun1;
+        gunx = this.gun;
+        gunText = this.gun;
 
         GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
         var bulletscript = bullet.GetComponent<PlayerProjectile>();

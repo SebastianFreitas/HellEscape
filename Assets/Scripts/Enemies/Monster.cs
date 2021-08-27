@@ -63,14 +63,11 @@ public class Monster : MonoBehaviour
         audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
         var bloodSplat = Instantiate(damageBleed, transform.position, rep.rotation);
         bloodSplat.Play();
-        
     }
   }
 
   void Die()
    {
-
-        //var rotatedToPlayer = transform.rotation.SetFromToRotation(player.position, transform.position);
         var rep = player;
         rep.LookAt(transform.position);
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
@@ -82,11 +79,9 @@ public class Monster : MonoBehaviour
 
     private void Drop()
     {
-        if (Random.Range(1,20) > 19)
+        if (Random.Range(1,20) > 10)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
-           //x.transform.position = transform.position;
-
         }
     }
 

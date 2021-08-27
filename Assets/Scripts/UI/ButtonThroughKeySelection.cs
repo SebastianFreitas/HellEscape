@@ -13,6 +13,7 @@ public class ButtonThroughKeySelection : MonoBehaviour
         if (Input.GetKeyDown(key))
         {
             EventSystem.current.SetSelectedGameObject(this.gameObject);
+            this.gameObject.GetComponent<Slot>().Show();
         }
     }
 

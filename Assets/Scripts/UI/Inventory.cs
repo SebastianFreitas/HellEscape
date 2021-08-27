@@ -15,8 +15,17 @@ public class Inventory : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void AddWeapon(GunOfAType gun)
     {
-        
+        for (int i = 0; i < 6; i++)
+        {
+            if (slots[i].GetComponent<Slot>().gun == null)
+            {
+                var x = slots[i].GetComponent<Slot>();
+                x.gun = gun;
+                x.UpdateGunText(gun.type.ToString());
+                break;
+            }
+        }
     }
 }
