@@ -1,29 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, ISelectHandler
 {
     public GunOfAType gun;
-    public Text gunText;
+    public Text gunType;
+    public GunText uiText;
 
 
     public void UpdateGunText()
     {
-        gunText.text = gun.type.ToString();
+        gunType.text = gun.type.ToString();
     }
 
     public void SwitchGun()
     {
-        Debug.Log("tried");
         if (gun != null)
         {
             GameObject.FindWithTag("PlayerGun").transform.GetComponent<Gun>().SetGun(gun);
-            Debug.Log("switched gun");
         }
         
     }
 
+    public void ShowGun()
+    {
+        if (gun != null)
+        {
+            uiText.UpdateText(gun.text);
+        }
+        
+    }
 
+    public void OnSelect(BaseEventData eventData)
+    {
+        Debug.Log("Weapon is selected");
+        ShowGun();
+    }
 }

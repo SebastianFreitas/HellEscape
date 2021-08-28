@@ -14,14 +14,5 @@ public class ButtonThroughKeySelection : MonoBehaviour
         {
             EventSystem.current.SetSelectedGameObject(this.gameObject);
         }
-
-        if (Input.GetKeyDown("o") )
-        {
-          
-            GetComponent<Button>().onClick.Invoke();
-            
-        }
-
-
     }
 }

@@ -14,7 +14,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     public void AddWeapon(GunOfAType gun)
     {
         for (int i = 0; i < 6; i++)

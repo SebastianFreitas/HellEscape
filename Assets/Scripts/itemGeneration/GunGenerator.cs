@@ -9,7 +9,7 @@ using UnityEngine;
 public class GunGenerator : ModData
 {
     public int[] gradeWeight = {300, 300, 2};
-    public int[] typeWeight = {10, 10, 10, 10};
+    public int[] typeWeight = {50, 10, 10, 10};
     public GunOfAType CreateWeapon(int maxLevel)
      {
         GunOfAType ret = new GunOfAType
@@ -106,7 +106,7 @@ public class GunGenerator : ModData
     private GunType RandomiseGunType()
     {
         var x = UnityEngine.Random.Range(0,3);
-        Debug.Log(x);
+        
         GunType ret = GunType.normal;
         switch (x)
         {
