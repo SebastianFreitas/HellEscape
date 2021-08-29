@@ -5,6 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public GameObject[] slots;
+    public int fragments = 0;
     void Start()
     {
         for(int i = 0; i<6; i++)
@@ -25,6 +26,8 @@ public class Inventory : MonoBehaviour
                 x.UpdateGunText();
                 break;
             }
+
+            if (i == 6) fragments++;
         }
     }
 }

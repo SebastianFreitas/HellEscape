@@ -8,10 +8,10 @@ public class SlotWeaponSwap : MonoBehaviour
 {
 
     void Update()
-    {
+    {/*
         if (Input.GetKeyDown("e"))
         {
             GetComponent<Button>().onClick.Invoke();
-        }
+        }*/
     }
 }

@@ -57,7 +57,6 @@ public class Gun : MonoBehaviour
     void Update()
     {
         if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun.finalFireRate, 1);
-        else if (Input.GetKeyDown("i")) OpenInventory();
     }
 
     void Shoot(float attackRate, int gun)
@@ -107,12 +106,6 @@ public class Gun : MonoBehaviour
     IEnumerator waiter(float attackRate){
       yield return new WaitForSeconds(attackRate);
       canShoot = true;
-    }
-
-    private void OpenInventory()
-    {
-      Vector3 inventoryPosition = new Vector3(fpsCam.transform.position.x, fpsCam.transform.position.y, fpsCam.transform.position.z+5f);
-      Instantiate(inventory,inventoryPosition , fpsCam.transform.rotation);
     }
 
     IEnumerator waiterFlash(){

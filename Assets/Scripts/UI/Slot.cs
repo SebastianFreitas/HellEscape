@@ -10,6 +10,18 @@ public class Slot : MonoBehaviour, ISelectHandler
     public Text gunType;
     public GunText uiText;
 
+    public GameObject ButtonGameObject;
+
+
+    public void Update()
+    {
+        // Compare selected gameObject with referenced Button gameObject
+        if (EventSystem.current.currentSelectedGameObject == ButtonGameObject)
+        {
+            if (Input.GetKeyDown("e"))  GetComponent<Button>().onClick.Invoke();
+            
+        }
+    }
 
     public void UpdateGunText()
     {
@@ -33,10 +45,9 @@ public class Slot : MonoBehaviour, ISelectHandler
         }
         
     }
-
+    
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log("Weapon is selected");
         ShowGun();
     }
 }
