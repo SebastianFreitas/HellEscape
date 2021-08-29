@@ -34,7 +34,6 @@ public class Gun : MonoBehaviour
     private RaycastHit hit;
     private bool canShoot = true;
 
-    public GunStats items;
 
     public GameObject inventory;
 
