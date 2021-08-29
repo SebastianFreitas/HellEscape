@@ -26,6 +26,7 @@ public class Slot : MonoBehaviour, ISelectHandler
     public void UpdateGunText()
     {
         gunType.text = gun.type.ToString();
+        uiText.gameObject.SetActive(true);
     }
 
     public void SwitchGun()
@@ -42,6 +43,7 @@ public class Slot : MonoBehaviour, ISelectHandler
         if (gun != null)
         {
             uiText.UpdateText(gun.text);
+            StartCoroutine(FadeGunText());
         }
         
     }
@@ -49,5 +51,11 @@ public class Slot : MonoBehaviour, ISelectHandler
     public void OnSelect(BaseEventData eventData)
     {
         ShowGun();
+    }
+
+    IEnumerator FadeGunText()
+    {
+        yield return new WaitForSeconds(10f);
+        uiText.gameObject.SetActive(false);
     }
 }
