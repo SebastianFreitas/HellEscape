@@ -63,7 +63,7 @@ public class PlayerProjectile : MonoBehaviour
 
   void OnEnable()
   {
-    StartCoroutine(waiter(2f));
+    StartCoroutine(waiter(10f));
   }
 
   public void SetStats(float damage, int bounces, int bulletSpeed, int bounceSpeed)
