@@ -3559,6 +3559,7 @@ MonoBehaviour:
   gunType: {fileID: 1350475593}
   uiText: {fileID: 538348217}
   ButtonGameObject: {fileID: 211337726}
+  inventory: {fileID: 1577497379}
 --- !u!114 &211337733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4141,6 +4142,7 @@ MonoBehaviour:
   gunType: {fileID: 407880283}
   uiText: {fileID: 538348217}
   ButtonGameObject: {fileID: 272235136}
+  inventory: {fileID: 1577497379}
 --- !u!114 &272235143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4303,6 +4305,7 @@ MonoBehaviour:
   gunType: {fileID: 891239892}
   uiText: {fileID: 538348217}
   ButtonGameObject: {fileID: 302626416}
+  inventory: {fileID: 1577497379}
 --- !u!114 &302626423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6342,7 +6345,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: wadawdwada
+  m_Text: 
 --- !u!222 &538348219
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15774,6 +15777,7 @@ RectTransform:
   - {fileID: 211337727}
   - {fileID: 2145821829}
   - {fileID: 538348216}
+  - {fileID: 1819277227}
   m_Father: {fileID: 136759971}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15801,6 +15805,7 @@ MonoBehaviour:
   - {fileID: 272235136}
   - {fileID: 211337726}
   - {fileID: 2145821828}
+  fragmentText: {fileID: 1819277230}
   fragments: 0
 --- !u!222 &1577497380
 CanvasRenderer:
@@ -17346,6 +17351,7 @@ MonoBehaviour:
   gunType: {fileID: 786894778}
   uiText: {fileID: 538348217}
   ButtonGameObject: {fileID: 1642901406}
+  inventory: {fileID: 1577497379}
 --- !u!114 &1642901413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19467,6 +19473,99 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1819277226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1819277227}
+  - component: {fileID: 1819277230}
+  - component: {fileID: 1819277229}
+  - component: {fileID: 1819277228}
+  m_Layer: 5
+  m_Name: FragmentText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1819277227
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819277226}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1577497378}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 68.947, y: 35.57}
+  m_SizeDelta: {x: 137.8931, y: 59.8799}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1819277228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819277226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1819277229
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819277226}
+  m_CullTransparentMesh: 1
+--- !u!114 &1819277230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819277226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922c89a19f1e8ed41ac121b9ecd6f53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MyText: {fileID: 1819277228}
 --- !u!1 &1839533422
 GameObject:
   m_ObjectHideFlags: 0
@@ -21460,6 +21559,7 @@ MonoBehaviour:
   gunType: {fileID: 41173801}
   uiText: {fileID: 538348217}
   ButtonGameObject: {fileID: 2073965676}
+  inventory: {fileID: 1577497379}
 --- !u!114 &2073965683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21925,6 +22025,7 @@ MonoBehaviour:
   gunType: {fileID: 1685766131}
   uiText: {fileID: 538348217}
   ButtonGameObject: {fileID: 2145821828}
+  inventory: {fileID: 1577497379}
 --- !u!114 &2145821835
 MonoBehaviour:
   m_ObjectHideFlags: 0

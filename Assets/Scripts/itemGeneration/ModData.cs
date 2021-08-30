@@ -199,7 +199,7 @@ public class GunOfAType
 
             case GunType.machinegun:
                 baseRate = 5f;
-                baseDamage = 50;
+                baseDamage = 20;
                 baseBounces = 1;
                 baseBulletsPerShot = 1;
                 shotSpeed = 1000;

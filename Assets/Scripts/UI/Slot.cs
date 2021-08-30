@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,10 @@ public class Slot : MonoBehaviour, ISelectHandler
 {
     public GunOfAType gun;
     public Text gunType;
-    public GunText uiText;
+    public TextUI uiText;
 
     public GameObject ButtonGameObject;
+    public Inventory inventory;
 
 
     public void Update()
@@ -18,14 +20,26 @@ public class Slot : MonoBehaviour, ISelectHandler
         // Compare selected gameObject with referenced Button gameObject
         if (EventSystem.current.currentSelectedGameObject == ButtonGameObject)
         {
-            if (Input.GetKeyDown("e"))  GetComponent<Button>().onClick.Invoke();
-            
+            if (Input.GetKeyDown("e")) GetComponent<Button>().onClick.Invoke();
+            if (Input.GetKeyDown("f")) DismantleGun();
+
+            if (!uiText.isActiveAndEnabled) uiText.gameObject.SetActive(true);
         }
     }
 
-    public void UpdateGunText()
+    private void DismantleGun()
     {
-        gunType.text = gun.type.ToString();
+        inventory.UpdateFragments(gun.level);
+        gun = null;
+        UpdateInventoryText();
+        ShowGun();
+    }
+
+    public void UpdateInventoryText()
+    {
+        if (gun != null) gunType.text = gun.type.ToString();
+        else gunType.text = "-";
+
         uiText.gameObject.SetActive(true);
     }
 
@@ -45,7 +59,8 @@ public class Slot : MonoBehaviour, ISelectHandler
             uiText.UpdateText(gun.text);
             StartCoroutine(FadeGunText());
         }
-        
+        else uiText.UpdateText("");
+
     }
     
     public void OnSelect(BaseEventData eventData)

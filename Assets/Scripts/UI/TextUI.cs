@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class GunText : MonoBehaviour
+public class TextUI : MonoBehaviour
 {
     public Text m_MyText;
 
