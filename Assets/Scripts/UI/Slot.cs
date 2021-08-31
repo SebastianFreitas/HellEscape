@@ -17,6 +17,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     public Gun playerGun;
 
     private String gunType;
+    private bool equiped = false;
 
 
     public void Update()
@@ -44,8 +45,10 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             inventory.UpdateFragments(gun.level);
             gun = null;
-            UpdateInventoryText();
+            gunTypeText.text = "-";
+            gunType = null;
             ShowGun();
+            if (equiped) playerGun.EquipBaseGun();
         }
     }
 
@@ -56,6 +59,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
             playerGun.SetGun(gun);
             gunType = "< " + gun.type + " >";
             gunTypeText.text = gunType;
+            equiped = true;
         }
     }
 
@@ -65,6 +69,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             gunType = gun.type.ToString();
             gunTypeText.text = gunType;
+            equiped = false;
         }
     }
 

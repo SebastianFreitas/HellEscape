@@ -58,6 +58,11 @@ public class Gun : MonoBehaviour
         if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun.finalFireRate, 1);
     }
 
+    internal void EquipBaseGun()
+    {
+        gun = gunGen.CreateWeaponEmpty();
+    }
+
     void Shoot(float attackRate, int gun)
     {
 

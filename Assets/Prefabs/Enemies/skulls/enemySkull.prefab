@@ -124,8 +124,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2c349fa9dbb93284e9f2b058631e2b48, type: 3}
   volume: 0.5
   drop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
-  damageBleed: {fileID: 4624859801505476159, guid: 0056336a800d6154e891351101d4b989, type: 3}
-  deathBleed: {fileID: 2286383227415357548, guid: 1da3f1cf8697b144eba4468c8a9c5a4f, type: 3}
+  AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
+  AshesDeath: {fileID: 6949414622727591476, guid: 3951fdba16877ec4c869d44b800da58c, type: 3}
   maxAltitudeJumpDistance: 2
   minAltitudeJumpDistance: 0
   maxWaitingTime: 2.5
@@ -637,6 +637,10 @@ PrefabInstance:
     - target: {fileID: 6497474030158354884, guid: 1652cce96dbdba04b888303c67371683, type: 3}
       propertyPath: m_Name
       value: Ashes
+      objectReference: {fileID: 0}
+    - target: {fileID: 6497474030158354884, guid: 1652cce96dbdba04b888303c67371683, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1652cce96dbdba04b888303c67371683, type: 3}

@@ -108,12 +108,13 @@ public class Room : MonoBehaviour
             locked = false;
             portal.SetActive(true);
         }
+        Debug.Log("Monster alive -> " + monstersAlive);
         StartCoroutine(WatchEnemies());
     }
 
     private IEnumerator TimerPortalUnlock()
     {
-        yield return new WaitForSeconds(90f);
+        yield return new WaitForSeconds(60f);
         locked = false;
         portal.SetActive(true);
     }

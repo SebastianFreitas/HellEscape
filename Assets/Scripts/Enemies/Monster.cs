@@ -23,8 +23,8 @@ public class Monster : MonoBehaviour
 
     private Collider monsterCollider;
     private Collider playerCollider;
-    public ParticleSystem damageBleed;
-    public ParticleSystem deathBleed;
+    public ParticleSystem AshesDamage;
+    public ParticleSystem AshesDeath;
 
 
 
@@ -61,7 +61,7 @@ public class Monster : MonoBehaviour
         var rep = player;
         rep.LookAt(transform.position);
         audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
-        var bloodSplat = Instantiate(damageBleed, transform.position, rep.rotation);
+        var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
         bloodSplat.Play();
     }
   }
@@ -71,7 +71,7 @@ public class Monster : MonoBehaviour
         var rep = player;
         rep.LookAt(transform.position);
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
-        var bloodSplat = Instantiate(deathBleed, transform.position, rep.rotation);
+        var bloodSplat = Instantiate(AshesDeath, transform.position, rep.rotation);
         bloodSplat.Play();
         Drop();
         Destroy(gameObject);
