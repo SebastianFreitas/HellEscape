@@ -8,10 +8,10 @@ public class Monster : MonoBehaviour
     [SerializeField] float health = 50f;
     [SerializeField] public float damage = 10f;
 
-    protected Transform player;
+    public Transform player;
 
-    protected PlayerMovement playerMovement;
-    protected Rigidbody rigidBody;
+    public PlayerMovement playerMovement;
+    public Rigidbody rigidBody;
 
     [Header("Sound")]
     public AudioSource audioSource;
@@ -30,8 +30,6 @@ public class Monster : MonoBehaviour
 
     protected void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Dude").transform;
-        playerMovement = player.GetComponent<PlayerMovement>();
         rigidBody = transform.GetComponent<Rigidbody>();
         monsterCollider = rigidBody.GetComponent<Collider>();
         playerCollider = playerMovement.GetComponent<Rigidbody>().GetComponent<Collider>();

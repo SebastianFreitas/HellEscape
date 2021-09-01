@@ -27,6 +27,8 @@ public class GameMan : MonoBehaviour
         
         
         InstantiatePlayerInRoom(startRoom);
+        currentRoom.player = playerPrefab.transform;
+        currentRoom.playerMovement = playerPrefab;
         currentRoom.SpawnEnemies(1);
         currentRoom.SpawnObjects(dificulty);
 
@@ -40,6 +42,8 @@ public class GameMan : MonoBehaviour
         // Instantiate room
         currentRoom = Instantiate(room);
         currentRoom.transform.parent = this.transform;
+        currentRoom.player = playerPrefab.transform;
+        currentRoom.playerMovement = playerPrefab;
         currentRoom.SpawnEnemies(1);
         currentRoom.SpawnObjects(dificulty);
 
