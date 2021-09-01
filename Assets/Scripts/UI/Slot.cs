@@ -12,6 +12,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     public TextUI gunDescription;
 
     public GameObject ButtonGameObject;
+
     public Inventory inventory;
 
     public Gun playerGun;
@@ -27,10 +28,10 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         {
             if (Input.GetKeyDown("e")) GetComponent<Button>().onClick.Invoke();
             if (Input.GetKeyDown("f")) DismantleGun();
-
             if (!gunDescription.isActiveAndEnabled) gunDescription.gameObject.SetActive(true);
         }
     }
+
 
     public void AddWeapon(GunOfAType gun)
     {

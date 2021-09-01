@@ -185,7 +185,7 @@ public class GunOfAType
                 baseBounces = 2;
                 baseBulletsPerShot = 1;
                 shotSpeed = 1500;
-                bounceSpeed = 100;
+                bounceSpeed = 250;
                 break;
 
             case GunType.shotgun:
@@ -194,7 +194,7 @@ public class GunOfAType
                 baseBounces = 1;
                 baseBulletsPerShot = 8;
                 shotSpeed = 1000;
-                bounceSpeed = 100;
+                bounceSpeed = 150;
                 break;
 
             case GunType.machinegun:
@@ -203,7 +203,7 @@ public class GunOfAType
                 baseBounces = 1;
                 baseBulletsPerShot = 1;
                 shotSpeed = 1000;
-                bounceSpeed = 100;
+                bounceSpeed = 150;
                 break;
 
             case GunType.sniper:

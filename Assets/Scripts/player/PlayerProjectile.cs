@@ -13,7 +13,7 @@ public class PlayerProjectile : MonoBehaviour
 {
     public GameObject damagePopup;
     public convergion totalConvergion;
-    public float bounceSpeed = 500f;
+    public float bounceSpeed = 1000f;
     private float speed;
 
     private  float damage = 0;
@@ -33,63 +33,56 @@ public class PlayerProjectile : MonoBehaviour
     
 
     void Start()
-      {
+    {
         SetVisibility(false);
         rb = GetComponent<Rigidbody>();
 
         if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
         rb.AddForce(transform.forward * speed);
         StartCoroutine(waiter(10f));
-      }
+    }
 
 
-  private void SetVisibility(bool onOff)
-  {
+    private void SetVisibility(bool onOff)
+    {
     //this.GetComponent<Renderer>().enabled = onOff;
     this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
-  }
+    }
 
-  IEnumerator waiter(float a){
+    IEnumerator waiter(float a){
     yield return new WaitForSeconds(a);
     Destroy(gameObject);
-  }
+    }
 
-  IEnumerator fadeWaiter()
-  {
+    IEnumerator fadeWaiter()
+    {
     SetVisibility(false);
     yield return new WaitForSeconds(.005f);
     SetVisibility(true);
-  }
+    }
 
-  void OnEnable()
-  {
-    StartCoroutine(waiter(10f));
-  }
+    void OnEnable()
+    {
+        StartCoroutine(waiter(10f));
+    }
 
-  public void SetStats(float damage, int bounces, int bulletSpeed, int bounceSpeed)
-  {
-    this.damage = damage;
-    this.bounces = bounces;
-    this.speed = bulletSpeed;
-    this.bounceSpeed = bounceSpeed;
-  }
+    public void SetStats(float damage, int bounces, int bulletSpeed, int bounceSpeed)
+    {
+        this.damage = damage;
+        this.bounces = bounces;
+        this.speed = bulletSpeed;
+        this.bounceSpeed = bounceSpeed;
+    }
 
-  void OnCollisionEnter(Collision collision)
-  {
-      ContactPoint contact = collision.contacts[0];
+    void OnCollisionEnter(Collision collision)
+    {
+        ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
             collision.transform.GetComponent<Monster>().TakeDamage(damage);
 
             Destroy(this.gameObject);
         }
-        /*else
-        if (collision.gameObject.CompareTag("Prop"))
-        {
-            //collision.transform.GetComponent<Rigidbody>().AddForce(contact.normal * 100);
-
-        }*/
-
 
         if (bounces > 0 )
         {
@@ -99,13 +92,5 @@ public class PlayerProjectile : MonoBehaviour
             bounces--;
         }
         else Destroy(this.gameObject);
-  }
-
-
-
-
-
-
-
-
+    }
 }
