@@ -19,7 +19,7 @@ public class Room : MonoBehaviour
     public int monstersAlive = 0;
     public int[] weight;
 
-    public Transform player;
+    public GameObject player;
     public PlayerMovement playerMovement;
 
     private void Start()
@@ -98,8 +98,7 @@ public class Room : MonoBehaviour
             var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x+ Random.Range(-.5f,.5f) , enemySpawns[i].position.y , enemySpawns[i].position.z + Random.Range(-.5f, .5f)), transform.rotation);
             monstersAlive++;
             var y = skully.GetComponent<Monster>();
-            y.playerMovement = playerMovement;
-            y.player = player;
+            y.player = this.player;
             skully.transform.parent = transform;
         }
     }

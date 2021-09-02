@@ -28,7 +28,7 @@ public class Skull : Monster
         action.Play();
         StartCoroutine(AshesWaiter());
 
-        Vector3 playerPos = new Vector3(base.player.position.x, base.player.position.y - 10f, base.player.position.z);
+        Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y - 10f, base.player.transform.position.z);
 
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
 

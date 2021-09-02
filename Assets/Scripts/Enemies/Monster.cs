@@ -8,7 +8,7 @@ public class Monster : MonoBehaviour
     [SerializeField] float health = 50f;
     [SerializeField] public float damage = 10f;
 
-    public Transform player;
+    public GameObject player;
 
     public PlayerMovement playerMovement;
     public Rigidbody rigidBody;
@@ -32,16 +32,17 @@ public class Monster : MonoBehaviour
     {
         rigidBody = transform.GetComponent<Rigidbody>();
         monsterCollider = rigidBody.GetComponent<Collider>();
-        playerCollider = playerMovement.GetComponent<Rigidbody>().GetComponent<Collider>();
+        playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
     }
 
 
     void Update(){
         if (monsterCollider.bounds.Intersects(playerCollider.bounds))
         {
-            var direction = player.position- transform.position;
-            playerMovement.AddImpact(direction, 100f);
-            playerMovement.TakeDamage((int)damage);
+            var direction = player.transform.position- transform.position;
+            var playerScript = player.GetComponent<PlayerMovement>();
+            playerScript.AddImpact(direction, 100f);
+            playerScript.TakeDamage((int)damage);
         }
     }
 
@@ -56,7 +57,7 @@ public class Monster : MonoBehaviour
     } 
     else
     {
-        var rep = player;
+        var rep = player.transform;
         rep.LookAt(transform.position);
         audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
         var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
@@ -66,7 +67,7 @@ public class Monster : MonoBehaviour
 
   void Die()
    {
-        var rep = player;
+        var rep = player.transform;
         rep.LookAt(transform.position);
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         var bloodSplat = Instantiate(AshesDeath, transform.position, rep.rotation);

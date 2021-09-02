@@ -95,15 +95,6 @@ public class PlayerMovement : MonoBehaviour
   }
   void Update()
   {
-      // Do FPS calculation
-      frameCount++;
-      dt += Time.deltaTime;
-      if (dt > 1.0 / fpsDisplayRate)
-      {
-          fps = Mathf.Round(frameCount / dt);
-          frameCount = 0;
-          dt -= 1.0f / fpsDisplayRate;
-      }
       /* Ensure that the cursor is locked into the screen */
       if (Cursor.lockState != CursorLockMode.Locked) {
           if (Input.GetButtonDown("Fire1"))
