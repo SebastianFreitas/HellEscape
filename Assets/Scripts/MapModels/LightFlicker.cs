@@ -14,13 +14,13 @@ public class LightFlicker : MonoBehaviour
     {
         for(int i = 0; i<allObjects.Count;i++)
         {
-            if (Random.value > .8) StartCoroutine(waiterOn(timeOn, i));
+            if (Random.value > .8) StartCoroutine(WaiterOn(timeOn, i));
         }
 
         //add a omega flashing constanly light
     }
 
-    private IEnumerator waiterOn(float time, int i)
+    private IEnumerator WaiterOn(float time, int i)
     {
         var light = allObjects[i];
 
@@ -31,10 +31,10 @@ public class LightFlicker : MonoBehaviour
 
         if (Random.Range(0, 1) > .6 && i - 1 > 0) StartCoroutine(WaiterNeighbor(1f, i - 1));
 
-        StartCoroutine(waiterOff(timeOff, i));
+        StartCoroutine(WaiterOff(timeOff, i));
     }
 
-    private IEnumerator waiterOff(float time,int i)
+    private IEnumerator WaiterOff(float time,int i)
     {
         var light = allObjects[i];
 
@@ -43,7 +43,7 @@ public class LightFlicker : MonoBehaviour
 
         light.SetActive(true);
 
-        StartCoroutine(waiterOn(timeOn, i));
+        StartCoroutine(WaiterOn(timeOn, i));
     }
 
     //theres a chance that when a ligh goes out another close to it might also

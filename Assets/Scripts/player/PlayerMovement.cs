@@ -40,10 +40,6 @@ public class PlayerMovement : MonoBehaviour
 
   [Header("View")]
   public Transform playerView;     // Camera
-  public float fpsDisplayRate = 4.0f; // 4 updates per sec
-  private int frameCount = 0;
-  private float dt = 0.0f;
-  private float fps = 0.0f;
 
   [Header("Input")]
 
