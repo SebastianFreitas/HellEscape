@@ -16,10 +16,12 @@ public class PlayerProjectile : MonoBehaviour
     public float bounceSpeed = 1000f;
     private float speed;
 
-    private  float damage = 0;
-    public  Vector3 playerSpeed;
+    private float damage = 0;
+    public Vector3 playerSpeed;
     public AudioClip ricochet;
     public AudioSource source;
+
+    public ParticleSystem spark;
 
     public GameObject newBullet;
 
@@ -87,6 +89,10 @@ public class PlayerProjectile : MonoBehaviour
         if (bounces > 0 )
         {
             SetVisibility(true);
+
+            var sparkBounce = Instantiate(spark, transform.position, Quaternion.Inverse(transform.rotation));
+            sparkBounce.Play();
+
             AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
             rb.AddForce(contact.normal * bounceSpeed);
             bounces--;
