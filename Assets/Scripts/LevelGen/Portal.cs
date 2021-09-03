@@ -14,16 +14,15 @@ public class Portal : MonoBehaviour
         {
             transform.parent.GetComponent<Room>().UseDoor();
 
-        }
+        }        
+    }
+
+    void OnEnable()
+    {      
         foreach (var x in lights)
         {
             x.color = Color.red;
         }
-            
-    }
-
-    void OnEnable()
-    {
         audioSource.PlayOneShot(openPortalSound);
     }
 
