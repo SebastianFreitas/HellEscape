@@ -42,7 +42,7 @@ public class Room : MonoBehaviour
     {
         for (int i = 0; i < randomSpawns.Length; i++)
         {   
-            for (int j = 0; j<more; j++){
+            for (int j = 0; j<4; j++){
                 var x = GetRandomWeightedIndex(weight);
                 prop = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 6), randomSpawns[i].position.z ), transform.rotation, transform);
             }  
