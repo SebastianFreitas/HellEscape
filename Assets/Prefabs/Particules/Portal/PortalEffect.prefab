@@ -58,7 +58,10 @@ VisualEffect:
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 1024, y: 0, z: 0, w: 0}
+        m_Name: ParticlesColor
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -140,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 7584146024233176277}
   openPortalSound: {fileID: 8300000, guid: 16c4fadd836b8ca4fb6d1df8da79c5c3, type: 3}
+  lights: []
 --- !u!82 &7584146024233176277
 AudioSource:
   m_ObjectHideFlags: 0

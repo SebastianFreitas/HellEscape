@@ -11,21 +11,23 @@ public class LightFlickerOne : MonoBehaviour
     //public Material brightness;
 
     public float waitTime;     // The total of seconds the flash wil last
-    public float maxIntensity;     // The maximum intensity the flash will reach
+    private float maxIntensity;     // The maximum intensity the flash will reach
 
     public float timeOff;
     public float timeOn;
 
     void Start()
     {
+        maxIntensity = light_.intensity;
         //brightness = this.transform.GetComponentInChildren<Renderer>().materials[1];// = new Material(brightness);
         //brightness = new Material(brightness);
-        if (Random.Range(1,10) > 8) StartCoroutine(WaiterOn(timeOn));
+        if (Random.Range(1,10) > 7)   StartCoroutine(WaiterOn(timeOn));
+          
     }
 
     public IEnumerator FlashNow()
     {
-        waitTime += Random.Range(0, 0.5f);
+       // waitTime += Random.Range(0, 0.5f);
 
         while (light_.intensity < maxIntensity)
         {

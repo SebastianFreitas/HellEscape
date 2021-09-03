@@ -8,9 +8,12 @@ public class PropBehaviour : MonoBehaviour
     private Rigidbody rb;
     private Transform oldTransform;
 
+    public bool trown = true;
+
     void Start()
     {
-        transform.Rotate(Random.Range(0,180), Random.Range(0, 180), Random.Range(0, 180));
+        if (trown) transform.Rotate(Random.Range(0,180), Random.Range(0, 180), Random.Range(0, 180));
+        
         rb = GetComponent<Rigidbody>();
         StartCoroutine(waiterGravity());
 
