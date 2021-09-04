@@ -25,7 +25,7 @@ public class LightFlickerOne : MonoBehaviour
           
     }
 
-    public IEnumerator FlashNow()
+    public IEnumerator TurnOnSlowly()
     {
        // waitTime += Random.Range(0, 0.5f);
 
@@ -51,8 +51,8 @@ public class LightFlickerOne : MonoBehaviour
     {
         time += Random.Range(-.8f, 2f);
         yield return new WaitForSeconds(time);
-
-        TurnOn();
+        if (Random.Range(1, 10) > 8) StartCoroutine(Blink());
+        else TurnOnSlow();
 
         StartCoroutine(WaiterOn(timeOn));
     }
@@ -67,31 +67,51 @@ public class LightFlickerOne : MonoBehaviour
     private void TurnOn()
     {
         light_.enabled = true;
-        light_.intensity = 0;
         mesh.enabled = true;
-        StartCoroutine(FlashNow());
         //brightness.EnableKeyword("_EMISSION");
     }
 
-    private void Blink()
+    private void TurnOnSlow()
     {
-        TurnOff();
-        StartCoroutine(BlinkWaiter(5f));
+        light_.enabled = true;
+        light_.intensity = 0;
+        mesh.enabled = true;
+        StartCoroutine(TurnOnSlowly());
     }
 
-    private IEnumerator BlinkWaiter(float time)
-    {
-        time += Random.Range(-.5f, .5f);
-        yield return new WaitForSeconds(time);
 
-        TurnOn();
+    private void GetShot()
+    {
+        TurnOff();
+        StartCoroutine(GetShotWaiter(Random.Range(2f,7f)));
+    }
+
+    private IEnumerator  GetShotWaiter(float v)
+    {
+        TurnOff();
+        yield return new WaitForSeconds(v);
+        TurnOnSlow();
+    }
+
+    private IEnumerator Blink()
+    {
+        var time = 0.07f;
+        for(int i = 0; i< Random.Range(2,6); i++)
+        {
+            time += Random.Range(-0.03f, 0.03f);
+            TurnOff();
+            yield return new WaitForSeconds(time);
+            TurnOn();
+            yield return new WaitForSeconds(time);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            Blink();
+            if (Random.Range(1,10) > 8) GetShot();
+            else StartCoroutine(Blink());
         }
         
     }
