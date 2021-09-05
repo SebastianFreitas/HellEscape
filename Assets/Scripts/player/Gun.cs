@@ -55,7 +55,11 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && canShoot ) Shoot(1/gun.finalFireRate, 1);
+        if (Input.GetButton("Fire1") && canShoot)
+        {
+            canShoot = false;
+            Shoot(1 / gun.finalFireRate, 1);
+        }
     }
 
     internal void EquipBaseGun()
@@ -103,7 +107,7 @@ public class Gun : MonoBehaviour
         }
 
 
-      canShoot = false;
+      
       StartCoroutine(waiter(attackRate));
     }
 
