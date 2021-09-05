@@ -13,7 +13,6 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-
         StartCoroutine(GiveGunToSlots());
         UpdateFragments(fragments);
     }

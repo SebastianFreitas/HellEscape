@@ -40,9 +40,9 @@ public class Monster : MonoBehaviour
         if (monsterCollider.bounds.Intersects(playerCollider.bounds))
         {
             var direction = player.transform.position- transform.position;
-            var playerScript = player.GetComponent<PlayerMovement>();
+            var playerScript = player.GetComponent<PlayerBasicMovement>();
             playerScript.AddImpact(direction, 100f);
-            playerScript.TakeDamage((int)damage);
+            player.GetComponent<PlayerHpManager>().TakeDamage((int)damage);
         }
     }
 

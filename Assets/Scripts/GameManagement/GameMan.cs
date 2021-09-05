@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameMan : MonoBehaviour
 {
-    public PlayerMovement playerPrefab;
+    
     public Room startRoomPrefab, endRoomPrefab;
     public List<Room> roomPrefabs = new List<Room>();
 
@@ -13,10 +13,14 @@ public class GameMan : MonoBehaviour
     EndRoom endRoom;
     public Room currentRoom;
 
-    public PlayerMovement player;
+    private GameObject player;
     private int dificulty = 1;
 
     public string startScene;
+
+    [Header("References")]
+    public HealthBar hpBar;
+    public GameObject playerPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +31,7 @@ public class GameMan : MonoBehaviour
         
         
         InstantiatePlayerInRoom(startRoom);
-        currentRoom.player = player.gameObject;
+        currentRoom.player = player;
         currentRoom.SpawnEnemies(1);
         currentRoom.SpawnObjects(dificulty);
 
@@ -41,7 +45,7 @@ public class GameMan : MonoBehaviour
         // Instantiate room
         currentRoom = Instantiate(room);
         currentRoom.transform.parent = this.transform;
-        currentRoom.player = player.gameObject;
+        currentRoom.player = player;
         currentRoom.SpawnEnemies(1);
         currentRoom.SpawnObjects(dificulty);
 
@@ -56,8 +60,9 @@ public class GameMan : MonoBehaviour
     void InstantiatePlayerInRoom(Room room)
     {
         // Place Player
-        player = Instantiate(playerPrefab, currentRoom.playerStart.position, currentRoom.playerStart.rotation) as PlayerMovement;
+        player = Instantiate(playerPrefab, currentRoom.playerStart.position, currentRoom.playerStart.rotation) as GameObject;
         player.transform.SetParent(transform);
+        player.GetComponent<PlayerHpManager>().hp = hpBar;
     }
 
     public void Next(int type)

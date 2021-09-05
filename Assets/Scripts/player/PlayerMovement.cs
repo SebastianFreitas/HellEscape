@@ -366,6 +366,7 @@ public class PlayerMovement : MonoBehaviour
   {
     yield return new WaitForSeconds(.15f);
     isSideDashing = false;
+        inputLocked = false;
   }
 
   IEnumerator waiterGroundLag(){

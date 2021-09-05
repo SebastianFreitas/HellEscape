@@ -110,7 +110,7 @@ public class LightFlickerOne : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            if (Random.Range(1,10) > 8) GetShot();
+            if (Random.Range(1,10) > 6) GetShot();
             else StartCoroutine(Blink());
         }
         

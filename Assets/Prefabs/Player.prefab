@@ -11923,6 +11923,8 @@ GameObject:
   - component: {fileID: 998741484880663113}
   - component: {fileID: 1209158473306384404}
   - component: {fileID: 2646470129748338497}
+  - component: {fileID: 8082080043408529685}
+  - component: {fileID: 4129841686453281990}
   m_Layer: 7
   m_Name: Player
   m_TagString: Dude
@@ -11953,7 +11955,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5867200448926568734}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6c5b103c6b162c47a45841a9fd48dd0, type: 3}
   m_Name: 
@@ -12152,6 +12154,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fpsCam: {fileID: 4277711486013876564}
   teleport: {fileID: 8300000, guid: 91ba0721026837045b94cf0569955af4, type: 3}
+--- !u!114 &8082080043408529685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5867200448926568734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3f8be3145b0a048b88cbc109272078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  controller: {fileID: 222201175276132240}
+  head: {fileID: 5301819808457710860}
+  speed: 12
+  slopeForce: 6
+  slopeForceRayLength: 1.5
+  gravity: -20
+  jumpHeight: 2.5
+  mass: 3
+  dashForce: 0
+  JumpDashForce: 50
+  canDash: 1
+  isSideDashing: 0
+  dashCooldown: 0
+  desiredDirection: {x: 0, y: 0, z: 0}
+  inputLocked: 0
+  playerView: {fileID: 8152985570990004033}
+  xRaw: 0
+  zRaw: 0
+  moveRaw: {x: 0, y: 0, z: 0}
+  groundCheck: {fileID: 8675176734593606968}
+  groundDistance: 0.4
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isGrounded: 0
+  groundLag: 0
+  fallingAtSomeSpeed: 0
+--- !u!114 &4129841686453281990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5867200448926568734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44d6ce7a014fb14e9691935c031c0dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  hp: {fileID: 0}
 --- !u!1 &6049056961728924806
 GameObject:
   m_ObjectHideFlags: 0
