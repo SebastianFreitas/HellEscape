@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayerBasicMovement : MonoBehaviour
 {
-    public float health = 50;
-
-
     public CharacterController controller;
-    public GameObject head;
+    public PlayerSounds playerSound;
 
     [Header("Basic Movement")]
     public float speed = 12f;
-
     [SerializeField] private float slopeForce;
     [SerializeField] private float slopeForceRayLength;
 
@@ -21,42 +17,37 @@ public class PlayerBasicMovement : MonoBehaviour
     public float jumpHeight = 1.5f;
     public float mass = 3f;
     public float dashForce;
-
     public float JumpDashForce;
     private Vector3 velocity;
     private Vector3 impact = Vector3.zero;
-    public bool canDash = true; //check to stop player from dashing instantly after dashing
-    public bool isSideDashing = false;
+    private bool canDash = true; //check to stop player from dashing instantly after dashing
+    private bool isSideDashing = false;
     public float dashCooldown; //ammount of time player needs to wait until dashing again right after dashing
-    public Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash to simulate inertia
-    public bool inputLocked = false;// in this state we are going to lock Horizontal and Vertical input to simulate inertia
-
+    private Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash to simulate inertia
+    private bool inputLocked = false;// in this state we are going to lock Horizontal and Vertical input to simulate inertia
 
     [Header("View")]
     public Transform playerView;     // Camera
 
     [Header("Input")]
-
     private float x = 0; //user input
     private float z = 0;
-    public float xRaw = 0;
-    public float zRaw = 0;
+    private float xRaw = 0;
+    private float zRaw = 0;
     private Vector3 move;
-    public Vector3 moveRaw;
+    private Vector3 moveRaw;
 
     [Header("Ground checks")]
     public Transform groundCheck;//GameObject from where we use checkSphere to see if player is grounded
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    public bool isGrounded;
-
-    public bool groundLag;//used to give the player a few frames where he can still jump right after leaving the floor
-
-    public bool fallingAtSomeSpeed = false;
-
+    private bool isGrounded;
+    private bool groundLag;//used to give the player a few frames where he can still jump right after leaving the floor
+    private bool fallingAtSomeSpeed = false;
     private bool isGroundedOlder;
 
 
+    
     private void Start()
     {
         if (playerView == null)
@@ -65,6 +56,7 @@ public class PlayerBasicMovement : MonoBehaviour
             if (mainCamera != null) playerView = mainCamera.gameObject.transform;
         }
     }
+
     void Update()
     {
         /* Ensure that the cursor is locked into the screen */
@@ -86,12 +78,9 @@ public class PlayerBasicMovement : MonoBehaviour
         if (!isGroundedOlder && isGrounded && fallingAtSomeSpeed)
         {
             fallingAtSomeSpeed = false;
-            //audioSource.PlayOneShot(land, volume + .25f);
+            playerSound.PlayLandSound();
         }
         else if (isGroundedOlder && !isGrounded) StartCoroutine(waiterGroundLag());
-
-
-
 
         GetInputWASD();
 
@@ -101,15 +90,35 @@ public class PlayerBasicMovement : MonoBehaviour
             AirMove();
 
         MoveState();
-        
+        playerSound.PlayFootStepsSound(isGrounded, moveRaw, isSideDashing);
         isGroundedOlder = isGrounded;
     }
-
 
     private void MoveState()
     {
         transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
-                                                                                                                          //inertia
+                                                                                                                         
+        Inertia();
+
+        move = transform.right * x + transform.forward * z;
+        moveRaw = transform.right * xRaw + transform.forward * zRaw;
+
+        Vector3.Normalize(moveRaw);
+        Vector3.Normalize(move);
+
+        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime);
+
+        if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
+        // consumes the impact energy each cycle:
+        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
+
+        if ((x != 0 || z != 0) && OnSlope())
+            controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
+    }
+
+    private void Inertia()
+    {
         if (inputLocked)
         {
             if (desiredDirection.z > 0 && zRaw != -1) z = 1f;
@@ -126,37 +135,16 @@ public class PlayerBasicMovement : MonoBehaviour
                 inputLocked = false;
             }
         }
-
-        move = transform.right * x + transform.forward * z;
-        moveRaw = transform.right * xRaw + transform.forward * zRaw;
-
-        Vector3.Normalize(moveRaw);
-        Vector3.Normalize(move);
-
-
-
-        //if (isSideDashing) speed *= 5;
-        //else speed = 12f;
-
-        controller.Move(move * speed * Time.deltaTime);
-        controller.Move(velocity * Time.deltaTime);
-
-        if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
-        // consumes the impact energy each cycle:
-        impact = Vector3.Lerp(impact, Vector3.zero, 5 * Time.deltaTime);
-
-        if ((x != 0 || z != 0) && OnSlope())
-            controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
     }
 
     void GroundMove()
     {
+        Debug.Log("on ground");
         if (isSideDashing) inputLocked = true;
-        inputLocked = false;
+        else inputLocked = false;
 
         if (Input.GetButtonDown("Jump"))
         {
-            //audioSource.PlayOneShot(jump, 1f);
             Jump();
             inputLocked = true;
             desiredDirection = new Vector3(xRaw, 0, zRaw);
@@ -176,8 +164,10 @@ public class PlayerBasicMovement : MonoBehaviour
             inputLocked = false;
         }
     }
+
     void AirMove()
     {
+        Debug.Log("on air");
         if (!isSideDashing)
         {
             //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
@@ -194,6 +184,7 @@ public class PlayerBasicMovement : MonoBehaviour
         {
             if (groundLag)
             { //jump normally even while not touched the ground
+                inputLocked = false;
                 Jump();
                 inputLocked = true;
                 desiredDirection = new Vector3(xRaw, 0, zRaw);
@@ -224,10 +215,11 @@ public class PlayerBasicMovement : MonoBehaviour
     public void JumpInput(float height) { velocity.y = Mathf.Sqrt(height * -3f * gravity); }
 
     public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity); }
+
     private void JumpDash()
     {
         //dashParticleSystem.Play();
-        //audioSource.PlayOneShot(dash, volume / 2);
+        playerSound.PlayDashSound();
 
         AddImpact(Vector3.up, JumpDashForce);
         JumpInput(3f);
@@ -240,7 +232,7 @@ public class PlayerBasicMovement : MonoBehaviour
     private void Dash()
     {
         //dashParticleSystem.Play();
-        //audioSource.PlayOneShot(dash, volume / 2);
+        playerSound.PlayDashSound();
         if (moveRaw == Vector3.zero) AddImpact(transform.forward, 250);
         else AddImpact(moveRaw, 250);
 
@@ -275,7 +267,6 @@ public class PlayerBasicMovement : MonoBehaviour
         }
     }
 
-
     private bool OnSlope()
     {
         RaycastHit hit;
@@ -297,7 +288,6 @@ public class PlayerBasicMovement : MonoBehaviour
         isSideDashing = false;
         inputLocked = false;
     }
-
     IEnumerator waiterGroundLag()
     {
         groundLag = true;

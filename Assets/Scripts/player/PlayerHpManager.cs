@@ -7,6 +7,7 @@ public class PlayerHpManager : MonoBehaviour
     public float health = 50;
     public HealthBar hp;
     private bool canTakeDamage = true;
+    public PlayerSounds playerSounds;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class PlayerHpManager : MonoBehaviour
         if (canTakeDamage)
         {
             StartCoroutine(waiterImmunity());
-            //audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume + 1);
+            playerSounds.PlayTakeDamageSound();
 
             health -= amount;
             hp.SetHealth((int)health);
