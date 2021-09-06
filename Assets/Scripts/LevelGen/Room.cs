@@ -7,7 +7,7 @@ public class Room : MonoBehaviour
     public Doorway[] doorways;
     public Transform playerStart;
     public int roomType;
-    public Transform[] randomSpawns;
+    public Transform[] propSpawns;
     public GameObject[] objects;
     public Transform[] enemySpawns;
     public GameObject[] skulls;
@@ -40,11 +40,11 @@ public class Room : MonoBehaviour
 
     public void SpawnObjects(int more)
     {
-        for (int i = 0; i < randomSpawns.Length; i++)
+        for (int i = 0; i < propSpawns.Length; i++)
         {   
             for (int j = 0; j<4; j++){
                 var x = GetRandomWeightedIndex(weight);
-                prop = Instantiate(objects[x], new Vector3(randomSpawns[i].position.x, randomSpawns[i].position.y + Random.Range(2, 6), randomSpawns[i].position.z ), transform.rotation, transform);
+                prop = Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y + Random.Range(2, 6), propSpawns[i].position.z ), transform.rotation, transform);
             }  
         }
     }

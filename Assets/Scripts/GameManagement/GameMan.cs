@@ -44,7 +44,7 @@ public class GameMan : MonoBehaviour
     {
         // Instantiate room
         currentRoom = Instantiate(room);
-        currentRoom.transform.parent = this.transform;
+        currentRoom.transform.Rotate(0, 0, Random.Range(-180, 180));
         currentRoom.player = player;
         currentRoom.SpawnEnemies(1);
         currentRoom.SpawnObjects(dificulty);
