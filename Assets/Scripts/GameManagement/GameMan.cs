@@ -32,7 +32,7 @@ public class GameMan : MonoBehaviour
         
         InstantiatePlayerInRoom(startRoom);
         currentRoom.player = player;
-        currentRoom.SpawnEnemies(1);
+        currentRoom.PickLayout();
         currentRoom.SpawnObjects(dificulty);
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("Bullet"));
@@ -44,9 +44,9 @@ public class GameMan : MonoBehaviour
     {
         // Instantiate room
         currentRoom = Instantiate(room);
-        currentRoom.transform.Rotate(0, 0, Random.Range(-180, 180));
+        currentRoom.transform.parent = this.transform;
         currentRoom.player = player;
-        currentRoom.SpawnEnemies(1);
+        currentRoom.PickLayout();
         currentRoom.SpawnObjects(dificulty);
 
         //teleport player to new room

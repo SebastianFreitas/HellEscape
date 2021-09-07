@@ -14,13 +14,14 @@ public class Room : MonoBehaviour
     public GameObject portal;
 
     public GameObject skull;
-    public GameObject prop;
     public bool locked = true;
     public int monstersAlive = 0;
     public int[] weight;
 
     public GameObject player;
     public PlayerMovement playerMovement;
+
+    public GameObject[] Layouts;
 
     private void Start()
     {
@@ -29,22 +30,29 @@ public class Room : MonoBehaviour
         StartCoroutine(TimerPortalUnlock());
     }
 
-    public void SpawnEnemies(int dif)
+
+    public void PickLayout()
     {
-        var total = 4;
-        for (int i = 0; i < total; i++)
+        var x = Random.Range(0, Layouts.Length);
+        Layouts[x].SetActive(true);
+        var y = Layouts[x].GetComponentsInChildren<Monster>();
+
+        foreach ( Monster z in y)
         {
-            StartCoroutine(SpawnEnemy(Random.Range(0,5)));
+            z.player = this.player;
+            z.transform.parent = transform;
+            monstersAlive++;
         }
+
     }
 
     public void SpawnObjects(int more)
     {
         for (int i = 0; i < propSpawns.Length; i++)
         {   
-            for (int j = 0; j<4; j++){
+            for (int j = 0; j<Random.Range(1,6); j++){
                 var x = GetRandomWeightedIndex(weight);
-                prop = Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y + Random.Range(2, 6), propSpawns[i].position.z ), transform.rotation, transform);
+                Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y + Random.Range(2, 6), propSpawns[i].position.z ), transform.rotation, transform);
             }  
         }
     }
@@ -88,21 +96,6 @@ public class Room : MonoBehaviour
         if (!locked) transform.parent.GetComponent<GameMan>().Next(roomType);
     }
 
-    private IEnumerator SpawnEnemy(int i)
-    {
-        var x = Random.Range(.01f,.1f);
-        yield return new WaitForSeconds(x);
-        skull = skulls[Random.Range(0, skulls.Length)];
-        for(int a=0; a<3; a++)
-        {
-            var skully = Instantiate(skull, new Vector3(enemySpawns[i].position.x+ Random.Range(-.5f,.5f) , enemySpawns[i].position.y , enemySpawns[i].position.z + Random.Range(-.5f, .5f)), transform.rotation);
-            monstersAlive++;
-            var y = skully.GetComponent<Monster>();
-            y.player = this.player;
-            skully.transform.parent = transform;
-        }
-    }
-
     private IEnumerator WatchEnemies()
     {
         
@@ -111,6 +104,7 @@ public class Room : MonoBehaviour
         {
             locked = false;
             portal.SetActive(true);
+            
         }
         Debug.Log("Monster alive -> " + monstersAlive);
         StartCoroutine(WatchEnemies());
