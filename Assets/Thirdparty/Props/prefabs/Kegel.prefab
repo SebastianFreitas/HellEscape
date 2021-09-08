@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424252}
+  - component: {fileID: 3932167222659868928}
+  - component: {fileID: 212777702988623612}
+  - component: {fileID: -3664820363176912516}
   m_Layer: 8
   m_Name: Kegel
   m_TagString: Prop
@@ -31,6 +34,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3932167222659868928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43562a8c87d1d9b4d8782ef6a40efe3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trown: 1
+  isMainMenuProp: 0
+--- !u!54 &212777702988623612
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139516}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 2
+--- !u!64 &-3664820363176912516
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139516}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &160396
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +190,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43562a8c87d1d9b4d8782ef6a40efe3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trown: 1
+  isMainMenuProp: 0
 --- !u!64 &5287397698819197630
 MeshCollider:
   m_ObjectHideFlags: 0

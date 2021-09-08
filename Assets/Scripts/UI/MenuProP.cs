@@ -10,15 +10,26 @@ public class MenuProP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        body.AddForce(new Vector3(0,0,-1) * 1f);
+        StartProp();
+    }
 
-        if (Random.Range(0, 5) > 2) x = Random.Range(-0.1f, 0.1f);
-        if (Random.Range(0, 5) > 2) y = Random.Range(-0.1f, 0.1f);
-        if (Random.Range(0, 5) > 2) z = Random.Range(-0.1f, 0.1f);
+    private void StartProp()
+    {
+        
+        
+
+        if (Random.Range(0, 5) > 1) x = Random.Range(-1f, 1f);
+        if (Random.Range(0, 5) > 1) y = Random.Range(-1f, 1f);
+        if (Random.Range(0, 5) > 1) z = Random.Range(-1f, 1f);
+
+        body.AddTorque(new Vector3(x, y, z), ForceMode.Force);
+        body.AddForce(new Vector3(x, y, z) * Random.Range(.5f, 2f));
+
         m_EulerAngleVelocity = new Vector3(x, y, z);
     }
 
     // Update is called once per frame
+    /*
     void Update()
     {
 
@@ -26,7 +37,7 @@ public class MenuProP : MonoBehaviour
         body.MoveRotation(body.rotation * deltaRotation);
         body.transform.Rotate(x, y, z);
         //transform.position += Vector3.back * 0.0001f;
-    }
+    }*/
 
     private void OnCollisionEnter(Collision collision)
     {
