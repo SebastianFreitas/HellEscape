@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MenuProP : MonoBehaviour
+{
+    public Rigidbody body;
+    private float x = 0, y = 0, z = 0;
+    private Vector3 m_EulerAngleVelocity;
+    // Start is called before the first frame update
+    void Start()
+    {
+        body.AddForce(new Vector3(0,0,-1) * 1f);
+
+        if (Random.Range(0, 5) > 2) x = Random.Range(-0.1f, 0.1f);
+        if (Random.Range(0, 5) > 2) y = Random.Range(-0.1f, 0.1f);
+        if (Random.Range(0, 5) > 2) z = Random.Range(-0.1f, 0.1f);
+        m_EulerAngleVelocity = new Vector3(x, y, z);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
+        body.MoveRotation(body.rotation * deltaRotation);
+        body.transform.Rotate(x, y, z);
+        //transform.position += Vector3.back * 0.0001f;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        transform.GetComponent<MenuProP>().enabled = false;
+    }
+}

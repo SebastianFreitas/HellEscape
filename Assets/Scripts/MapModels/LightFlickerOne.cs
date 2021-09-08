@@ -16,12 +16,14 @@ public class LightFlickerOne : MonoBehaviour
     public float timeOff;
     public float timeOn;
 
+    public bool oN = false;
+
     void Start()
     {
         maxIntensity = light_.intensity;
         //brightness = this.transform.GetComponentInChildren<Renderer>().materials[1];// = new Material(brightness);
         //brightness = new Material(brightness);
-        if (Random.Range(1,10) > 7)   StartCoroutine(WaiterOn(timeOn));
+        if (Random.Range(1,10) > 7 || oN)   StartCoroutine(WaiterOn(timeOn));
           
     }
 
