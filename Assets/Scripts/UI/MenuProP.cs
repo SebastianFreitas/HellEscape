@@ -18,12 +18,12 @@ public class MenuProP : MonoBehaviour
         
         
 
-        if (Random.Range(0, 5) > 1) x = Random.Range(-1f, 1f);
-        if (Random.Range(0, 5) > 1) y = Random.Range(-1f, 1f);
-        if (Random.Range(0, 5) > 1) z = Random.Range(-1f, 1f);
+        x = Random.Range(-1f, 1f);
+        y = Random.Range(-1f, 1f);
+        z = Random.Range(-1f, 1f);
 
         body.AddTorque(new Vector3(x, y, z), ForceMode.Force);
-        body.AddForce(new Vector3(x, y, z) * Random.Range(.5f, 2f));
+        body.AddForce(new Vector3(x, y, z) * Random.Range(.5f, 4f));
 
         m_EulerAngleVelocity = new Vector3(x, y, z);
     }

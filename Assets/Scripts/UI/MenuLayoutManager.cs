@@ -7,10 +7,12 @@ public class MenuLayoutManager : MonoBehaviour
     [SerializeField] GameObject[] layouts;
 
     private int currenlayout;
+    private GameObject layout;
     void Start()
     {
         currenlayout = Random.Range(0, layouts.Length);
-        layouts[currenlayout].SetActive(true);
+        //layouts[currenlayout].SetActive(true);
+        layout = Instantiate(layouts[currenlayout], transform);
         StartCoroutine(ChangeLayoutWaiter());
     }
 
@@ -30,8 +32,8 @@ public class MenuLayoutManager : MonoBehaviour
 
         while (currenlayout == newLayout) newLayout = Random.Range(0, layouts.Length);
 
-        layouts[currenlayout].SetActive(false);
+        Destroy(layout);
         currenlayout = newLayout;
-        layouts[currenlayout].SetActive(true);
+        layout = Instantiate(layouts[currenlayout], transform);
     }
 }

@@ -18,7 +18,7 @@ public class HighLightButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        buttonText.text = formatedString.Replace("{value}", "-> ");
+        buttonText.text = formatedString.Replace("{value}", "-");
     }
 
     public void OnPointerExit(PointerEventData eventData)
