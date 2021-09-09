@@ -53,20 +53,20 @@ public class LightFlickerOne : MonoBehaviour
     {
         time += Random.Range(-.8f, 2f);
         yield return new WaitForSeconds(time);
-        if (Random.Range(1, 10) > 8) StartCoroutine(Blink());
+        if (Random.Range(1, 10) > 3) StartCoroutine(Blink());
         else TurnOnSlow();
 
         StartCoroutine(WaiterOn(timeOn));
     }
 
-    private void TurnOff()
+    public void TurnOff()
     {
         light_.enabled = false;
         mesh.enabled = false;
         //brightness.DisableKeyword("_EMISSION");
     }
 
-    private void TurnOn()
+    public void TurnOn()
     {
         light_.enabled = true;
         mesh.enabled = true;
@@ -82,7 +82,7 @@ public class LightFlickerOne : MonoBehaviour
     }
 
 
-    private void GetShot()
+    public void GetShot()
     {
         TurnOff();
         StartCoroutine(GetShotWaiter(Random.Range(2f,7f)));

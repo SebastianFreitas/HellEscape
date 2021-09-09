@@ -21,9 +21,21 @@ public class MenuLayoutManager : MonoBehaviour
     {
         yield return new WaitForSeconds(30);
 
+        var lights = transform.GetComponentsInChildren<LightFlickerOne>();
+
+        foreach (LightFlickerOne light in lights) StartCoroutine(TurnOffLight(light));
+
         GenNewLayout();
 
         StartCoroutine(ChangeLayoutWaiter());
+    }
+
+    private IEnumerator TurnOffLight(LightFlickerOne light)
+    {
+        light.TurnOff();
+        yield return new WaitForSeconds(Random.Range(1f,3f));
+        light.TurnOn();
+
     }
 
     private void GenNewLayout()

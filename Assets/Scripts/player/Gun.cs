@@ -91,6 +91,7 @@ public class Gun : MonoBehaviour
         GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
         var bulletscript = bullet.GetComponent<PlayerProjectile>();
         bulletscript.initialFade = true;
+        bulletscript.Gun = gunx;
         bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces(), gunx.shotSpeed, gunx.bounceSpeed);
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
@@ -102,6 +103,7 @@ public class Gun : MonoBehaviour
             bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot.rotation);
 
             bulletscript = bullet.GetComponent<PlayerProjectile>();
+            bulletscript.Gun = gunx;
             bulletscript.initialFade = true;
             bulletscript.SetStats(gunx.finalDamage, gunx.finalBounces, gunx.shotSpeed, gunx.bounceSpeed);
         }

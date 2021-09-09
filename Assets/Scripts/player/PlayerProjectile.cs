@@ -32,7 +32,9 @@ public class PlayerProjectile : MonoBehaviour
     public int bounces = 2;
     Rigidbody rb;
 
-    
+    private GunOfAType gun;
+
+    public GunOfAType Gun { get => gun; set => gun = value; }
 
     void Start()
     {

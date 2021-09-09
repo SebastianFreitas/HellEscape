@@ -41,8 +41,10 @@ public class PlayerHpManager : MonoBehaviour
     IEnumerator waiterImmunity()
     {
         canTakeDamage = false;
-        yield return new WaitForSeconds(.5f);
+        
+        yield return new WaitForSeconds(10f);
         canTakeDamage = true;
-
+        
+       
     }
 }
