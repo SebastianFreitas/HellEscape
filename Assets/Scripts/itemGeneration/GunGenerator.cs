@@ -36,50 +36,7 @@ public class GunGenerator : ModData
 
         for (int i = 0; i < totalMods; i++)
         {
-            nextGrade = GetRandomWeightedIndex(gradeWeight);
-            switch (nextGrade)
-            {
-                case 0:
-                    gradeWeight[nextGrade] -= 100;
-                    newMod = GenerateInteriorMod(ret);
-                    newMod = UpdateMod(newMod, maxLevel, 1);
-                    break;
-                case 1:
-                    gradeWeight[nextGrade] -= 100;
-                    newMod = GenerateExteriorMod(ret);
-                    newMod = UpdateMod(newMod, maxLevel, 1);
-                    break;
-                case 2:
-                    gradeWeight[nextGrade] -= 1;
-                    newMod = GenerateSpecialMod(ret);
-                    newMod = UpdateMod(newMod, maxLevel, 1);
-                    break;
-            }
-
-            switch (newMod.text)
-            {
-                case "Weapon Damage":
-                    ret.increasedDamage += newMod.upperBound;
-                    break;
-
-                case "Bullet Ricochet":
-                    ret.baseBounces += newMod.upperBound;
-                    break;
-
-                case "Weapon Fire Rate":
-                    ret.increasedFireRate += newMod.upperBound;
-                    break;
-
-                case "Movement Speed":
-                    ret.increasedSpeed += newMod.upperBound;
-                    break;
-
-                case "Bullets per Shot":
-                    ret.baseBulletsPerShot += newMod.upperBound;
-                    break;
-            }
-            newMod.text = CreateModText(newMod);
-            ret.mods.Add(newMod);
+            newMod = AddMod(maxLevel, ret);
         }
 
 
@@ -90,6 +47,57 @@ public class GunGenerator : ModData
         ret.averageDamage = ret.GetAverageDamage();
         return ret;
     }
+
+    public Mod AddMod(int maxLevel, GunOfAType ret)
+    {
+        var newMod = new Mod();
+        int nextGrade = GetRandomWeightedIndex(gradeWeight);
+        switch (nextGrade)
+        {
+            case 0:
+                gradeWeight[nextGrade] -= 100;
+                newMod = GenerateInteriorMod(ret);
+                newMod = UpdateMod(newMod, maxLevel, 1);
+                break;
+            case 1:
+                gradeWeight[nextGrade] -= 100;
+                newMod = GenerateExteriorMod(ret);
+                newMod = UpdateMod(newMod, maxLevel, 1);
+                break;
+            case 2:
+                gradeWeight[nextGrade] -= 1;
+                newMod = GenerateSpecialMod(ret);
+                newMod = UpdateMod(newMod, maxLevel, 1);
+                break;
+        }
+
+        switch (newMod.text)
+        {
+            case "Weapon Damage":
+                ret.increasedDamage += newMod.upperBound;
+                break;
+
+            case "Bullet Ricochet":
+                ret.baseBounces += newMod.upperBound;
+                break;
+
+            case "Weapon Fire Rate":
+                ret.increasedFireRate += newMod.upperBound;
+                break;
+
+            case "Movement Speed":
+                ret.increasedSpeed += newMod.upperBound;
+                break;
+
+            case "Bullets per Shot":
+                ret.baseBulletsPerShot += newMod.upperBound;
+                break;
+        }
+        newMod.text = CreateModText(newMod);
+        ret.mods.Add(newMod);
+        return newMod;
+    }
+
     public GunOfAType CreateWeaponEmpty()
     {
         GunOfAType ret = new GunOfAType();

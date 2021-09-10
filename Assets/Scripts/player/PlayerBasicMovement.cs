@@ -139,7 +139,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void GroundMove()
     {
-        Debug.Log("on ground");
+
         if (isSideDashing) inputLocked = true;
         else inputLocked = false;
 
@@ -167,7 +167,6 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void AirMove()
     {
-        Debug.Log("on air");
         if (!isSideDashing)
         {
             //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach

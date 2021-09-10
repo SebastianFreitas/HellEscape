@@ -173,6 +173,45 @@ public class GunOfAType
         return GetDamage() * GetFireRate() * baseBulletsPerShot;
     }
 
+    public HashSet<Mod> GetExteriorMods()
+    {
+
+        var ret = new HashSet<Mod>();
+
+        foreach(Mod x in mods)
+        {
+            if (x.grade.ToString() == "Exterior") ret.Add(x);
+        }
+
+        return ret;
+    }
+
+    public HashSet<Mod> GetInteriorMods()
+    {
+
+        var ret = new HashSet<Mod>();
+
+        foreach (Mod x in mods)
+        {
+            if (x.grade.ToString() == "Interior") ret.Add(x);
+        }
+
+        return ret;
+    }
+
+    public HashSet<Mod> GetSpecialMods()
+    {
+
+        var ret = new HashSet<Mod>();
+
+        foreach (Mod x in mods)
+        {
+            if (x.grade.ToString() == "Special") ret.Add(x);
+        }
+
+        return ret;
+    }
+
     public GunOfAType ChangeType(GunOfAType gun, GunType type)
     {
         gun.type = type;

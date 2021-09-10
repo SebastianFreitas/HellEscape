@@ -32,7 +32,7 @@ public class GameMan : MonoBehaviour
         
         InstantiatePlayerInRoom(startRoom);
         currentRoom.player = player;
-        currentRoom.PickLayout();
+        //currentRoom.PickLayout();
         currentRoom.SpawnObjects(dificulty);
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("Bullet"));
