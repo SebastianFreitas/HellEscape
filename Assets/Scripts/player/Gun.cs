@@ -39,6 +39,16 @@ public class Gun : MonoBehaviour
 
     public GunOfAType gunText;
 
+    float m_start, m_time;
+    int m_fired = 0;
+    void OnEnable()
+    {
+        m_start = m_time = Time.time;
+        m_time +=0.2f;
+
+    }
+
+
 
     void Start()
     {
@@ -55,9 +65,21 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        if (Time.time >= m_time)
+        {
+            m_time += 1 / gun.finalFireRate;
+            ++m_fired;
+            //            Debug.Log("Rate of fire: " + (Time.time - m_start) / m_fired);
+
+            if (m_fired % 200 == 0)
+            {
+                Debug.Log("Next 200 in: " + (Time.time - m_start));
+            }
+
+        }
         if (Input.GetButton("Fire1") && canShoot)
         {
-            canShoot = false;
+            
             Shoot(1 / gun.finalFireRate, 1);
         }
     }
@@ -69,7 +91,7 @@ public class Gun : MonoBehaviour
 
     void Shoot(float attackRate, int gun)
     {
-
+        canShoot = false;
         StartCoroutine(waiterFlash());
 
         GetComponent<AudioSource>().PlayOneShot(shoot, volume/2);
@@ -132,10 +154,5 @@ public class Gun : MonoBehaviour
     public void SetGun(GunOfAType gun)
     {
         this.gun = gun;
-    }
-
-    void OnEnable()
-    {
-      canShoot = true;
     }
 }

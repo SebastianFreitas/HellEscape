@@ -107,6 +107,8 @@ public class GunGenerator : ModData
         GunOfAType ret = new GunOfAType();
         ret = ret.ChangeType(ret, GunType.normal);
 
+        ret.mods = new HashSet<Mod>();
+
         ret.text = CreateGunText(ret);
         ret.finalFireRate = ret.GetFireRate();
         ret.finalDamage = ret.GetDamage();
@@ -196,7 +198,7 @@ public class GunGenerator : ModData
 
     private bool ContainsMod(GunOfAType gun, Mod modifier)
     {
-
+        if (gun.mods.Count == 0) return false;
         foreach (Mod mod in gun.mods)
         {
             if (mod.id == modifier.id) return true;
@@ -243,7 +245,7 @@ public class GunGenerator : ModData
 
         text += gun.GetFireRate() + "  Fire rate\n";
         text += gun.GetBounces() + "  Max Ricochets\n";
-        text += "---------------------------------\n";
+        text += "-----------------------\n-----------------------\n";
         if (gun.mods != null)
         {
             foreach (var mod in gun.mods)

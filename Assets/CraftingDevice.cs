@@ -38,13 +38,14 @@ public class CraftingDevice : GunGenerator
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            gradeWeight[0] = 300;
+            gradeWeight[1] = 300;
+            gradeWeight[2] = 2;
             gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
             guntext.text = gun.text;
             //exteriorMods = gun.GetExteriorMods();
             //interiorMods = gun.GetInteriorMods();
-            //specialMods = gun.GetSpecialMods();
-
-            Debug.Log(gradeWeight[0]);
+            //specialMods = gun.GetSpecialMods()
 
             //base.gradeWeight[0] -= interiorMods.Count*100;
             //base.gradeWeight[1] -= exteriorMods.Count*100;
