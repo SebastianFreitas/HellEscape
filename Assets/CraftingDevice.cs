@@ -12,6 +12,9 @@ public class CraftingDevice : GunGenerator
     private HashSet<Mod> interiorMods;
     private HashSet<Mod> specialMods;
 
+    public GameObject online;
+    public GameObject offline;
+
     public int zoneLevel = 1;
     // Start is called before the first frame update
     void Start()
@@ -50,7 +53,8 @@ public class CraftingDevice : GunGenerator
             //base.gradeWeight[0] -= interiorMods.Count*100;
             //base.gradeWeight[1] -= exteriorMods.Count*100;
             //base.gradeWeight[2] -= specialMods.Count;
-
+            offline.SetActive(false);
+            online.SetActive(true);
         }
 
 
