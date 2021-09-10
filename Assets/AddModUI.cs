@@ -20,7 +20,7 @@ public class AddModUI : MonoBehaviour
         {
             craftingTable.AddNewMod();
 
-            Destroy(this.gameObject);
+            Destroy(collision.gameObject);
         }
     }
 }

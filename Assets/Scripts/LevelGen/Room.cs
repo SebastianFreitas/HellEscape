@@ -106,7 +106,6 @@ public class Room : MonoBehaviour
             portal.SetActive(true);
             
         }
-        Debug.Log("Monster alive -> " + monstersAlive);
         StartCoroutine(WatchEnemies());
     }
 

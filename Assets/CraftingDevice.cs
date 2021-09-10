@@ -23,9 +23,13 @@ public class CraftingDevice : GunGenerator
 
     public void AddNewMod()
     {
+        if (gradeWeight[0]+gradeWeight[1]+gradeWeight[2] != 0)
+        {
+            gun.mods.Add(AddMod(zoneLevel, gun));
+            FinishWeaponText(gun);
+            guntext.text = gun.text;
+        }
 
-        gun.mods.Add(AddMod(zoneLevel, gun));
-        guntext.text = gun.text;
     }
 
 
@@ -36,12 +40,15 @@ public class CraftingDevice : GunGenerator
         {
             gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
             guntext.text = gun.text;
-           // exteriorMods = gun.GetExteriorMods();
+            //exteriorMods = gun.GetExteriorMods();
             //interiorMods = gun.GetInteriorMods();
             //specialMods = gun.GetSpecialMods();
-            //gradeWeight[0] -= interiorMods.Count*100;   
-            //gradeWeight[1] -= exteriorMods.Count*100;
-            //gradeWeight[2] -= specialMods.Count;
+
+            Debug.Log(gradeWeight[0]);
+
+            //base.gradeWeight[0] -= interiorMods.Count*100;
+            //base.gradeWeight[1] -= exteriorMods.Count*100;
+            //base.gradeWeight[2] -= specialMods.Count;
 
         }
 

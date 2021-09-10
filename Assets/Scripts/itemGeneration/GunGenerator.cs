@@ -11,7 +11,7 @@ public class GunGenerator : ModData
     public int[] gradeWeight = {300, 300, 2};
     public int[] typeWeight = {50, 10, 10, 10};
     public GunOfAType CreateWeapon(int maxLevel)
-     {
+    {
         GunOfAType ret = new GunOfAType
         {
             mods = new HashSet<Mod>(),
@@ -39,7 +39,11 @@ public class GunGenerator : ModData
             newMod = AddMod(maxLevel, ret);
         }
 
+        return FinishWeaponText(ret);
+    }
 
+    public  GunOfAType FinishWeaponText(GunOfAType ret)
+    {
         ret.text = CreateGunText(ret);
         ret.finalFireRate = ret.GetFireRate();
         ret.finalDamage = ret.GetDamage();
