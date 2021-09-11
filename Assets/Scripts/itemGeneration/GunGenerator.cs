@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class GunGenerator : ModData
 {
-    public int[] gradeWeight = {300, 300, 2};
+    
     public int[] typeWeight = {50, 10, 10, 10};
     public GunOfAType CreateWeapon(int maxLevel)
     {
@@ -36,7 +36,7 @@ public class GunGenerator : ModData
 
         for (int i = 0; i < totalMods; i++)
         {
-            newMod = AddMod(maxLevel, ret, gradeWeight);
+            newMod = AddMod(maxLevel, ret);
         }
 
         return FinishWeaponText(ret);
@@ -52,24 +52,24 @@ public class GunGenerator : ModData
         return ret;
     }
 
-    public Mod AddMod(int maxLevel, GunOfAType ret, int[] grade)
+    public Mod AddMod(int maxLevel, GunOfAType ret)
     {
         var newMod = new Mod();
-        int nextGrade = GetRandomWeightedIndex(grade);
+        int nextGrade = GetRandomWeightedIndex(ret.gradeWeight);
         switch (nextGrade)
         {
             case 0:
-                gradeWeight[nextGrade] -= 100;
+                ret.gradeWeight[nextGrade] -= 100;
                 newMod = GenerateInteriorMod(ret);
                 newMod = UpdateMod(newMod, maxLevel, 1);
                 break;
             case 1:
-                gradeWeight[nextGrade] -= 100;
+                ret.gradeWeight[nextGrade] -= 100;
                 newMod = GenerateExteriorMod(ret);
                 newMod = UpdateMod(newMod, maxLevel, 1);
                 break;
             case 2:
-                gradeWeight[nextGrade] -= 1;
+                ret.gradeWeight[nextGrade] -= 1;
                 newMod = GenerateSpecialMod(ret);
                 newMod = UpdateMod(newMod, maxLevel, 1);
                 break;
@@ -254,6 +254,17 @@ public class GunGenerator : ModData
             }
 
         }
+
+        return text;
+    }
+
+    public string CreateGunStats(GunOfAType gun)
+    {
+        string text = "";
+        text += gun.GetAverageDamage() + "\n";
+        text += gun.GetDamage() + "\n";
+        text += gun.GetFireRate() + "\n";
+        text += gun.GetBounces() + "\n";
 
         return text;
     }

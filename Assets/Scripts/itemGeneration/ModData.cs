@@ -145,6 +145,7 @@ public class GunOfAType
     public string text;
 
     public HashSet<Mod> mods;
+    public int[] gradeWeight = { 200, 200, 2 };
 
     public float finalFireRate;
     public float finalDamage;

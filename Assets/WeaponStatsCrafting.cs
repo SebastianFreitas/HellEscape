@@ -8,15 +8,20 @@ public class WeaponStatsCrafting : MonoBehaviour
     [SerializeField] TMPro.TextMeshPro[] valuesExterior;
     [SerializeField] TMPro.TextMeshPro[] valuesSpecial;
 
+    public GameObject[] mods;
 
-    [SerializeField] TMPro.TextMeshPro[] typesInterior;
-    [SerializeField] TMPro.TextMeshPro[] typesExterior;
-    [SerializeField] TMPro.TextMeshPro[] typesSpecial;
+
 
     public GunOfAType gun;
     void OnEnable()
     {
         UpdateUI();
+    }
+
+
+    public void ResetUI()
+    {
+        foreach (GameObject x in mods) x.SetActive(false);
     }
 
     public void UpdateUI()
@@ -29,21 +34,21 @@ public class WeaponStatsCrafting : MonoBehaviour
             if (mod.grade.Equals(Grade.interior))
             {
                 valuesInterior[i].text = mod.text;
-                typesInterior[i].text = mod.grade.ToString();
+                mods[i].SetActive(true);
                 i++;
             }
 
             if (mod.grade.Equals(Grade.exterior))
             {
                 valuesExterior[e].text = mod.text;
-                typesExterior[e].text = mod.grade.ToString();
+                mods[e+2].SetActive(true);
                 e++;
             }
 
             if (mod.grade.Equals(Grade.special))
             {
                 valuesSpecial[s].text = mod.text;
-                typesSpecial[s].text = mod.grade.ToString();
+                mods[s+4].SetActive(true);
                 s++;
             }
 
