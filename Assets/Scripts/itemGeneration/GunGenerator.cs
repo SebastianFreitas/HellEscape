@@ -36,7 +36,7 @@ public class GunGenerator : ModData
 
         for (int i = 0; i < totalMods; i++)
         {
-            newMod = AddMod(maxLevel, ret);
+            newMod = AddMod(maxLevel, ret, gradeWeight);
         }
 
         return FinishWeaponText(ret);
@@ -52,10 +52,10 @@ public class GunGenerator : ModData
         return ret;
     }
 
-    public Mod AddMod(int maxLevel, GunOfAType ret)
+    public Mod AddMod(int maxLevel, GunOfAType ret, int[] grade)
     {
         var newMod = new Mod();
-        int nextGrade = GetRandomWeightedIndex(gradeWeight);
+        int nextGrade = GetRandomWeightedIndex(grade);
         switch (nextGrade)
         {
             case 0:
