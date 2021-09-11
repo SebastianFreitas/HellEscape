@@ -7,11 +7,11 @@ public class AddModUI : MonoBehaviour
     public CraftingDevice craftingTable;
     [SerializeField] TMPro.TextMeshPro buttonText;
 
-    private string formatedString = "[Add new modifier ->] {value} Cost";
+    //private string formatedString = "[Add new modifier ->] {value} Cost";
 
     void Start()
     {
-        buttonText.text = formatedString.Replace("{value}", "-");
+        //buttonText.text = formatedString.Replace("{value}", "-");
     }
 
     void OnCollisionEnter(Collision collision)
