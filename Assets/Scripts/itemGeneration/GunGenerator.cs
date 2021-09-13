@@ -8,8 +8,8 @@ using UnityEngine;
 
 public class GunGenerator : ModData
 {
-    
-    public int[] typeWeight = {50, 10, 10, 10};
+
+    public int[] typeWeight = { 50, 10, 10, 10 };
     public GunOfAType CreateWeapon(int maxLevel)
     {
         GunOfAType ret = new GunOfAType
@@ -30,7 +30,6 @@ public class GunGenerator : ModData
         ret = ret.ChangeType(ret, type);
 
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
-        int nextGrade;
         var newMod = new Mod();
 
 
@@ -42,7 +41,7 @@ public class GunGenerator : ModData
         return FinishWeaponText(ret);
     }
 
-    public  GunOfAType FinishWeaponText(GunOfAType ret)
+    public GunOfAType FinishWeaponText(GunOfAType ret)
     {
         ret.text = CreateGunText(ret);
         ret.finalFireRate = ret.GetFireRate();
@@ -119,8 +118,8 @@ public class GunGenerator : ModData
     }
     private GunType RandomiseGunType()
     {
-        var x = UnityEngine.Random.Range(0,3);
-        
+        var x = UnityEngine.Random.Range(0, 3);
+
         GunType ret = GunType.normal;
         switch (x)
         {
@@ -209,6 +208,7 @@ public class GunGenerator : ModData
 
     public string CreateModText(Mod mod)
     {
+        mod.basicText = mod.text;
         string ret = "";
         switch (mod.op)
         {
@@ -267,5 +267,48 @@ public class GunGenerator : ModData
         text += gun.GetBounces() + "\n";
 
         return text;
+    }
+
+    public void RemoveMod(GunOfAType gun, Mod mod)
+    {
+        gun.mods.Remove(mod);
+        switch (mod.grade.ToString())
+        {
+            case "interior":
+                gun.gradeWeight[0] += 100;
+                break;
+
+            case "exterior":
+                gun.gradeWeight[1] += 100;
+                break;
+
+            case "special":
+                gun.gradeWeight[2] += 1;
+                break;
+        }
+
+        switch (mod.basicText)
+        {
+            case "Weapon Damage":
+                gun.increasedDamage -= mod.upperBound;
+                break;
+
+            case "Bullet Ricochet":
+                gun.baseBounces -= mod.upperBound;
+                break;
+
+            case "Weapon Fire Rate":
+                gun.increasedFireRate -= mod.upperBound;
+                break;
+
+            case "Movement Speed":
+                gun.increasedSpeed -= mod.upperBound;
+                break;
+
+            case "Bullets per Shot":
+                gun.baseBulletsPerShot -= mod.upperBound;
+                break;
+
+        }
     }
 }

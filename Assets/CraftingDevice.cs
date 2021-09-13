@@ -15,6 +15,8 @@ public class CraftingDevice : GunGenerator
 
     public TMPro.TextMeshPro stats;
 
+    public Mod removedMod;
+
 
     public int zoneLevel = 1;
     // Start is called before the first frame update
@@ -24,7 +26,27 @@ public class CraftingDevice : GunGenerator
         
     }
 
+    internal void RemoveRandomMod()
+    {
+        int i = Random.Range(0, gun.mods.Count);
+        int a = 0;
+        foreach(Mod x in gun.mods)
+        {
+            if (i == a)
+            {
+                removedMod = x;
+                RemoveMod(gun, x);
 
+                break;
+            }
+            a++;
+        }
+        weaponStats.ResetUI();
+        FinishWeaponText(gun);
+        guntext.text = gun.text;
+        weaponStats.UpdateUI();
+        UpdateStats();
+    }
 
     public bool AddNewMod()
     {
@@ -39,12 +61,8 @@ public class CraftingDevice : GunGenerator
             weaponStats.gun = gun;
             weaponStats.UpdateUI();
             UpdateStats();
-        }
-        /*if (gradeWeight[0]+ gradeWeight[1]+ gradeWeight[2] <= 5)
-        {
-            Debug.Log("Yep");
 
-        }*/
+        }
         return worked;
     }
 

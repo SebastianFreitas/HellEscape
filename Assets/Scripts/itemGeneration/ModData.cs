@@ -105,6 +105,7 @@ public class Mod
     public int upperBound;
     public int lowerBound;
     public string text;
+    public string basicText;
     public Grade grade;
     public OperatorType op;
 

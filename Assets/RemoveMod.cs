@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddModUI : MonoBehaviour
+public class RemoveMod : MonoBehaviour
 {
     public CraftingDevice craftingTable;
     [SerializeField] TMPro.TextMeshPro buttonText;
@@ -18,8 +18,8 @@ public class AddModUI : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            craftingTable.AddNewMod();
-            
+            craftingTable.RemoveRandomMod();
+
             Destroy(collision.gameObject);
         }
     }
