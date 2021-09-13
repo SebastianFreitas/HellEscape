@@ -7,6 +7,8 @@ public class RemoveMod : MonoBehaviour
     public CraftingDevice craftingTable;
     [SerializeField] TMPro.TextMeshPro buttonText;
 
+    public MeshRenderer[] meshes;
+
     //private string formatedString = "[Add new modifier ->] {value} Cost";
 
     void Start()
@@ -18,7 +20,8 @@ public class RemoveMod : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            craftingTable.RemoveRandomMod();
+            if (craftingTable.RemoveRandomMod()) craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+            else craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
 
             Destroy(collision.gameObject);
         }

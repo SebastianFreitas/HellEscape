@@ -71,10 +71,10 @@ public class Gun : MonoBehaviour
             ++m_fired;
             //            Debug.Log("Rate of fire: " + (Time.time - m_start) / m_fired);
 
-            if (m_fired % 200 == 0)
+            /*if (m_fired % 200 == 0)
             {
                 Debug.Log("Next 200 in: " + (Time.time - m_start));
-            }
+            }*/
 
         }
         if (Input.GetButton("Fire1") && canShoot)

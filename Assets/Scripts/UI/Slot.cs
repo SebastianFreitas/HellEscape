@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     public GunOfAType gun;
-    public Text gunTypeText;
+    public TMPro.TextMeshProUGUI gunTypeText;
     public TextUI gunDescription;
 
     public GameObject ButtonGameObject;

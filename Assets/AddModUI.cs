@@ -7,10 +7,15 @@ public class AddModUI : MonoBehaviour
     public CraftingDevice craftingTable;
     [SerializeField] TMPro.TextMeshPro buttonText;
 
+
+
+    public MeshRenderer[] meshes;
+
     //private string formatedString = "[Add new modifier ->] {value} Cost";
 
     void Start()
     {
+        //currentMat = this.gameObject.GetComponentsInChildren<MeshRenderer>();
         //buttonText.text = formatedString.Replace("{value}", "-");
     }
 
@@ -18,9 +23,12 @@ public class AddModUI : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            craftingTable.AddNewMod();
+            if (craftingTable.AddNewMod()) craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+            else craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             
             Destroy(collision.gameObject);
         }
     }
+
+
 }

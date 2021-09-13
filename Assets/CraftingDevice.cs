@@ -17,6 +17,10 @@ public class CraftingDevice : GunGenerator
 
     public Mod removedMod;
 
+    public Material green;
+    public Material yellow;
+    public Material red;
+
 
     public int zoneLevel = 1;
     // Start is called before the first frame update
@@ -26,8 +30,9 @@ public class CraftingDevice : GunGenerator
         
     }
 
-    internal void RemoveRandomMod()
+    internal bool RemoveRandomMod()
     {
+        if (gun.mods.Count == 0) return false;
         int i = Random.Range(0, gun.mods.Count);
         int a = 0;
         foreach(Mod x in gun.mods)
@@ -46,6 +51,7 @@ public class CraftingDevice : GunGenerator
         guntext.text = gun.text;
         weaponStats.UpdateUI();
         UpdateStats();
+        return true;
     }
 
     public bool AddNewMod()
@@ -92,6 +98,20 @@ public class CraftingDevice : GunGenerator
         }
 
 
+    }
+
+    public IEnumerator HighLight(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = yellow;
+        yield return new WaitForSeconds(1f);
+        foreach (var x in materials) x.material = green;
+    }
+
+    public IEnumerator HighLightNot(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = red;
+        yield return new WaitForSeconds(1f);
+        foreach (var x in materials) x.material = green;
     }
 
 

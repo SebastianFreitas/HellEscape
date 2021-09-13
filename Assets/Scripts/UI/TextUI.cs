@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TextUI : MonoBehaviour
 {
-    public Text m_MyText;
+    public TMPro.TextMeshProUGUI m_MyText;
 
     public void UpdateText(string text)
     {

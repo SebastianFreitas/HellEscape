@@ -61,16 +61,17 @@ public class Inventory : MonoBehaviour
 
     private void EquipWeaponShortcut(int number)
     {
-        
-        slots[number-1].GetComponent<Slot>().EquipGun();
-        if (previousEquipedGun != -1)
+        if (number-1 != previousEquipedGun)
         {
-            var prevGun = slots[previousEquipedGun].GetComponent<Slot>();
-            prevGun.UnEquipGun();
-            prevGun.UpdateInventoryText();
+            slots[number-1].GetComponent<Slot>().EquipGun();
+            if (previousEquipedGun != -1)
+            {
+                var prevGun = slots[previousEquipedGun].GetComponent<Slot>();
+                prevGun.UnEquipGun();
+                //prevGun.UpdateInventoryText();
             
+            }
+            previousEquipedGun = number - 1;
         }
-        previousEquipedGun = number - 1;
-
     }
 }
