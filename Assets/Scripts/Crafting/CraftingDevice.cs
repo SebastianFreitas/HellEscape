@@ -21,13 +21,23 @@ public class CraftingDevice : GunGenerator
     public Material yellow;
     public Material red;
 
+    public int weaponParts;
+    public TMPro.TextMeshPro weaponPartsText;
+
 
     public int zoneLevel = 1;
     // Start is called before the first frame update
     void Start()
     {
         player = transform.GetComponentInParent<Room>().player;
-        
+    }
+
+    internal void DesassembleGun()
+    {
+        player.GetComponent<PlayerInventory>().gunParts += gun.level;
+        gun = null;
+        offline.SetActive(true);
+        online.SetActive(false);
     }
 
     internal bool RemoveRandomMod()

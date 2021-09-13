@@ -11,10 +11,14 @@ public class Inventory : MonoBehaviour
 
     private int previousEquipedGun = -1;
 
+    private GameMan manager;
+    private PlayerInventory playerInventory;
+
     void Start()
     {
+        playerInventory = manager.playerPrefab.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
-        UpdateFragments(fragments);
+        UpdateFragments(playerInventory.gunParts);
     }
 
     IEnumerator GiveGunToSlots()
@@ -55,7 +59,8 @@ public class Inventory : MonoBehaviour
 
     public void UpdateFragments(int level)
     {
-        fragments+= level;
+        playerInventory.gunParts+= level;
+        fragments += level;
         fragmentText.UpdateText(fragments.ToString());
     }
 
