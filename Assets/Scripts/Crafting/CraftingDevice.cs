@@ -24,18 +24,19 @@ public class CraftingDevice : GunGenerator
     public int weaponParts;
     public TMPro.TextMeshPro weaponPartsText;
 
+    private PlayerInventory playerInventory;
 
     public int zoneLevel = 1;
     // Start is called before the first frame update
     void Start()
     {
         player = transform.GetComponentInParent<Room>().player;
+        playerInventory = player.GetComponent<PlayerInventory>();
     }
 
-    internal void DesassembleGun()
+    internal void DisassembleGun()
     {
-        player.GetComponent<PlayerInventory>().gunParts += gun.level;
-        gun = null;
+        playerInventory.DisassembleGun(gun);
         offline.SetActive(true);
         online.SetActive(false);
     }
@@ -113,14 +114,14 @@ public class CraftingDevice : GunGenerator
     public IEnumerator HighLight(MeshRenderer[] materials)
     {
         foreach (var x in materials) x.material = yellow;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.3f);
         foreach (var x in materials) x.material = green;
     }
 
     public IEnumerator HighLightNot(MeshRenderer[] materials)
     {
         foreach (var x in materials) x.material = red;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.3f);
         foreach (var x in materials) x.material = green;
     }
 

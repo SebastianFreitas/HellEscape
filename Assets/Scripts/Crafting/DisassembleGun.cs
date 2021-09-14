@@ -23,13 +23,13 @@ public class DisassembleGun : MonoBehaviour
         {
             if (areYouSure)
             {
-                craftingTable.DesassembleGun();
+                craftingTable.DisassembleGun();
                 craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
                 areYouSure = false;
                 buttonText.text = "Desassemble gun";
-            }
+            } else StartCoroutine(AreYouSure());
 
-            StartCoroutine(AreYouSure());
+            
 
             Destroy(collision.gameObject);
         }
@@ -40,6 +40,11 @@ public class DisassembleGun : MonoBehaviour
         areYouSure = true;
         yield return new WaitForSeconds(3f);
         areYouSure = false;
+        buttonText.text = "Desassemble gun";
+    }
+
+    void OnEnable()
+    {
         buttonText.text = "Desassemble gun";
     }
 }

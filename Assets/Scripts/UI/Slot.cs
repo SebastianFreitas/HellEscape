@@ -40,7 +40,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         UpdateInventoryText();
     }
 
-    private void DismantleGun()
+    public void DismantleGun()
     {
         if (gun != null)
         {

@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
 
     private int previousEquipedGun = -1;
 
-    private GameMan manager;
+    public GameMan manager;
     private PlayerInventory playerInventory;
 
     void Start()
@@ -19,6 +19,16 @@ public class Inventory : MonoBehaviour
         playerInventory = manager.playerPrefab.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
         UpdateFragments(playerInventory.gunParts);
+    }
+
+    internal void RemoveWeapon(GunOfAType gun)
+    {
+        foreach(GameObject slot in slots)
+        {
+            var x = slot.GetComponent<Slot>();
+            if (x.gun == gun) x.DismantleGun();
+           
+        }
     }
 
     IEnumerator GiveGunToSlots()
@@ -57,11 +67,11 @@ public class Inventory : MonoBehaviour
         if (i == 4) UpdateFragments(gun.level);
     }
 
-    public void UpdateFragments(int level)
+    public void UpdateFragments(int gunParts)
     {
-        playerInventory.gunParts+= level;
-        fragments += level;
-        fragmentText.UpdateText(fragments.ToString());
+        //playerInventory.gunParts+= level;
+        //fragments += level;
+        fragmentText.UpdateText(gunParts.ToString());
     }
 
     private void EquipWeaponShortcut(int number)
