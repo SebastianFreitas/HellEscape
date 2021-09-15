@@ -26,10 +26,13 @@ public class Monster : MonoBehaviour
     public ParticleSystem AshesDamage;
     public ParticleSystem AshesDeath;
 
+    public int level;
+
 
 
     protected void Start()
     {
+        level = transform.parent.GetComponent<Room>().areaLevel;
         rigidBody = transform.GetComponent<Rigidbody>();
         monsterCollider = rigidBody.GetComponent<Collider>();
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
@@ -81,6 +84,8 @@ public class Monster : MonoBehaviour
         if (Random.Range(1,20) > 10)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
+            var y = x.GetComponent<Item>();
+            y.gun = y.CreateWeapon(level);
         }
     }
 

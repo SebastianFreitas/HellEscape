@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Item : GunGenerator 
 {
-    private GunOfAType gun;
+    public GunOfAType gun;
 
     private bool hasBeenCollected = false;
-    void Start()
-    {
-        gun = CreateWeapon(10);
-    }
 
     private void OnCollisionEnter(Collision collision)
     {

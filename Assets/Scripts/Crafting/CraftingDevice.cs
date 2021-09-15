@@ -65,19 +65,26 @@ public class CraftingDevice : GunGenerator
         return true;
     }
 
-    public bool AddNewMod()
+    public int AddNewMod()
     {
-        var worked = false;
+        var worked = 0;
         if (gun.mods.Count == 6) return worked;
         else
         {
-            gun.mods.Add(AddMod(zoneLevel, gun));
-            FinishWeaponText(gun);
-            guntext.text = gun.text;
-            worked = true;
-            weaponStats.gun = gun;
-            weaponStats.UpdateUI();
-            UpdateStats();
+            if (gun.level * (1 + gun.mods.Count) <= playerInventory.gunParts)
+            {
+                gun.mods.Add(AddMod(zoneLevel, gun));
+                FinishWeaponText(gun);
+                guntext.text = gun.text;
+                worked = 1;
+                weaponStats.gun = gun;
+                weaponStats.UpdateUI();
+                UpdateStats();
+                playerInventory.gunParts -= gun.level * (1 + gun.mods.Count);
+                
+            }
+            else return -1;
+
 
         }
         return worked;
@@ -125,5 +132,17 @@ public class CraftingDevice : GunGenerator
         foreach (var x in materials) x.material = green;
     }
 
+    public void TurnRed(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = red;
+    }
+    public void TurnGreen(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = green;
+    }
+    public void TurnYellow(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = yellow;
+    }
 
 }

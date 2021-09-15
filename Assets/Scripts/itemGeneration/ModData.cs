@@ -127,6 +127,24 @@ public class Mod
     }
 }
 
+public class CraftingHistory
+{
+    public int addModCounter;
+    public int removeModCounter;
+    public int value;
+    public string basicText;
+    public Grade grade;
+    public OperatorType op;
+
+    public int tier;
+    public int id;
+
+
+    public CraftingHistory()
+    {
+    }
+}
+
 public class GunOfAType
 {
     public float baseRate;
@@ -156,6 +174,13 @@ public class GunOfAType
     public float GetFireRate()
     {
         return baseRate * (1 + (increasedFireRate / 100));
+    }
+
+    public int GetPrice()
+    {
+        if (level != 0) return level * 10;
+        else return 100;
+        
     }
 
     public float GetDamage()

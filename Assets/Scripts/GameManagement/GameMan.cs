@@ -22,11 +22,14 @@ public class GameMan : MonoBehaviour
     public HealthBar hpBar;
     public GameObject playerPrefab;
 
+    private int currentLevel = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         
         currentRoom = Instantiate(startRoomPrefab);
+        currentRoom.areaLevel = currentLevel;
         currentRoom.transform.parent = this.transform;
         
         
@@ -44,6 +47,7 @@ public class GameMan : MonoBehaviour
     {
         // Instantiate room
         currentRoom = Instantiate(room);
+        currentRoom.areaLevel = currentLevel;
         currentRoom.transform.parent = this.transform;
         currentRoom.player = player;
         currentRoom.PickLayout();

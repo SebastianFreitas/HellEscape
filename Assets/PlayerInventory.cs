@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public int gunParts = 0;
+    internal int gunParts = 1000;
 
     public Inventory inventoryUI;
     void Start()

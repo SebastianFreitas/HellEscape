@@ -5,15 +5,23 @@ using UnityEngine;
 public class RemoveMod : MonoBehaviour
 {
     public CraftingDevice craftingTable;
-    [SerializeField] TMPro.TextMeshPro buttonText;
+    [SerializeField] TMPro.TextMeshPro price;
 
     public MeshRenderer[] meshes;
 
-    //private string formatedString = "[Add new modifier ->] {value} Cost";
+    private string formatedString = "{value} parts";
+
 
     void Start()
     {
-        //buttonText.text = formatedString.Replace("{value}", "-");
+        //price = this.gameObject.GetComponentsInChildren<MeshRenderer>();
+        price.text = formatedString.Replace("{value}", craftingTable.gun.GetPrice() * (craftingTable.gun.mods.Count + 1) + "");
+
+    }
+
+    private void OnEnable()
+    {
+        price.text = formatedString.Replace("{value}", craftingTable.gun.GetPrice().ToString());
     }
 
     void OnCollisionEnter(Collision collision)

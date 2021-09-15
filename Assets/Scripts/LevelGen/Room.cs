@@ -23,6 +23,8 @@ public class Room : MonoBehaviour
 
     public GameObject[] Layouts;
 
+    public int areaLevel;
+
     private void Start()
     {
         portal.SetActive(false);
