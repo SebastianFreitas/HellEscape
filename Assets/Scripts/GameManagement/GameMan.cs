@@ -22,7 +22,7 @@ public class GameMan : MonoBehaviour
     public HealthBar hpBar;
     public GameObject playerPrefab;
 
-    private int currentLevel = 0;
+    private int currentLevel = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -30,11 +30,13 @@ public class GameMan : MonoBehaviour
         
         currentRoom = Instantiate(startRoomPrefab);
         currentRoom.areaLevel = currentLevel;
+        currentLevel++;
         currentRoom.transform.parent = this.transform;
-        
-        
+
+
         InstantiatePlayerInRoom(startRoom);
         currentRoom.player = player;
+        currentRoom.PickLayout();
         //currentRoom.PickLayout();
         currentRoom.SpawnObjects(dificulty);
 
@@ -48,6 +50,7 @@ public class GameMan : MonoBehaviour
         // Instantiate room
         currentRoom = Instantiate(room);
         currentRoom.areaLevel = currentLevel;
+        currentLevel++;
         currentRoom.transform.parent = this.transform;
         currentRoom.player = player;
         currentRoom.PickLayout();

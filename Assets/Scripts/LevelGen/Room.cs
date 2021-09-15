@@ -23,7 +23,7 @@ public class Room : MonoBehaviour
 
     public GameObject[] Layouts;
 
-    public int areaLevel;
+    public int areaLevel = 1;
 
     private void Start()
     {

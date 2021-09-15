@@ -24,9 +24,13 @@ public class CraftingDevice : GunGenerator
     public int weaponParts;
     public TMPro.TextMeshPro weaponPartsText;
 
-    private PlayerInventory playerInventory;
+    public PlayerInventory playerInventory;
 
     public int zoneLevel = 1;
+
+
+    public AddModUI addMod;
+    public RemoveMod removeMod;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,9 +45,12 @@ public class CraftingDevice : GunGenerator
         online.SetActive(false);
     }
 
-    internal bool RemoveRandomMod()
+    internal int RemoveRandomMod(int timesUsed)
     {
-        if (gun.mods.Count == 0) return false;
+        if (gun.mods.Count == 0) return 1;
+        if ((gun.level * (1 + gun.mods.Count) * 2 )* timesUsed > playerInventory.gunParts) return 2;
+
+        playerInventory.gunParts -= (gun.level * (1 + gun.mods.Count) * 2) *timesUsed;
         int i = Random.Range(0, gun.mods.Count);
         int a = 0;
         foreach(Mod x in gun.mods)
@@ -62,17 +69,19 @@ public class CraftingDevice : GunGenerator
         guntext.text = gun.text;
         weaponStats.UpdateUI();
         UpdateStats();
-        return true;
+        return 0;
     }
 
-    public int AddNewMod()
+    public int AddNewMod(int timesUsed)
     {
         var worked = 0;
+        var price = (gun.level * (1 + gun.mods.Count)) * timesUsed;
         if (gun.mods.Count == 6) return worked;
         else
         {
-            if (gun.level * (1 + gun.mods.Count) <= playerInventory.gunParts)
+            if (price <= playerInventory.gunParts)
             {
+                playerInventory.gunParts -= price;
                 gun.mods.Add(AddMod(zoneLevel, gun));
                 FinishWeaponText(gun);
                 guntext.text = gun.text;
@@ -80,8 +89,6 @@ public class CraftingDevice : GunGenerator
                 weaponStats.gun = gun;
                 weaponStats.UpdateUI();
                 UpdateStats();
-                playerInventory.gunParts -= gun.level * (1 + gun.mods.Count);
-                
             }
             else return -1;
 
@@ -93,6 +100,12 @@ public class CraftingDevice : GunGenerator
     public void UpdateStats()
     {
         stats.text = CreateGunStats(gun);
+    }
+
+    public void UpdateCrafts()
+    {
+        addMod.UpdatePriceText();
+        removeMod.UpdatePricetext();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -144,5 +157,7 @@ public class CraftingDevice : GunGenerator
     {
         foreach (var x in materials) x.material = yellow;
     }
+
+
 
 }
