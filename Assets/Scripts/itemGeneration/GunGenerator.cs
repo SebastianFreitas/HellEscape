@@ -85,7 +85,7 @@ public class GunGenerator : ModData
                 break;
 
             case "Ricochet Speed":
-                ret.baseBounces += newMod.upperBound;
+                ret.increasedBounceSpeed += newMod.upperBound;
                 break;
 
             case "Weapon Fire Rate":

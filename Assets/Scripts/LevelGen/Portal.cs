@@ -8,6 +8,8 @@ public class Portal : MonoBehaviour
     public AudioClip openPortalSound;
 
     public Light[] lights;
+
+    public CraftingDevice craftDevice;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Dude"))
@@ -18,7 +20,10 @@ public class Portal : MonoBehaviour
     }
 
     void OnEnable()
-    {      
+    {
+        craftDevice.portalOnline = true;
+        craftDevice.offline.SetActive(true);
+
         foreach (var x in lights)
         {
             x.color = Color.red;

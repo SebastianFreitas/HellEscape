@@ -9,6 +9,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     [Header("Basic Movement")]
     public float speed = 12f;
+    public float increasedSpeed = 0;
     [SerializeField] private float slopeForce;
     [SerializeField] private float slopeForceRayLength;
 
@@ -105,8 +106,9 @@ public class PlayerBasicMovement : MonoBehaviour
 
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
+        speed = 12*(1 + increasedSpeed / 100);
 
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * speed  * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);
 
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);

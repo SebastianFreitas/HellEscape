@@ -6,15 +6,27 @@ public class DisassembleGun : MonoBehaviour
 {
     public CraftingDevice craftingTable;
     [SerializeField] TMPro.TextMeshPro buttonText;
+    [SerializeField] TMPro.TextMeshPro parts;
 
     public MeshRenderer[] meshes;
     private bool areYouSure = false;
 
-    //private string formatedString = "[Add new modifier ->] {value} Cost";
+    private string formatedString = "{value} parts";
 
     void Start()
     {
+        UpdatePriceText();
         //buttonText.text = formatedString.Replace("{value}", "-");
+    }
+
+    private void OnEnable()
+    {
+        buttonText.text = "Desassemble gun";
+        UpdatePriceText();
+    }
+    public void UpdatePriceText()
+    {
+        parts.text = formatedString.Replace("{value}", (craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) + "");
     }
 
     void OnCollisionEnter(Collision collision)
@@ -43,8 +55,5 @@ public class DisassembleGun : MonoBehaviour
         buttonText.text = "Desassemble gun";
     }
 
-    void OnEnable()
-    {
-        buttonText.text = "Desassemble gun";
-    }
+
 }

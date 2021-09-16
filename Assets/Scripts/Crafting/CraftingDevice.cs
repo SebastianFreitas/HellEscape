@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CraftingDevice : GunGenerator
 {
-    private GameObject player;
+    internal GameObject player;
     public WeaponStatsCrafting weaponStats;
     public TMPro.TextMeshPro guntext;
 
@@ -28,12 +28,15 @@ public class CraftingDevice : GunGenerator
 
     public int zoneLevel = 1;
 
+    public bool portalOnline = false;
+
 
     public AddModUI addMod;
     public RemoveMod removeMod;
     // Start is called before the first frame update
     void Start()
     {
+        if (portalOnline) offline.SetActive(true);
         player = transform.GetComponentInParent<Room>().player;
         playerInventory = player.GetComponent<PlayerInventory>();
     }
@@ -111,11 +114,9 @@ public class CraftingDevice : GunGenerator
     void OnCollisionEnter(Collision collision)
     {
         ContactPoint contact = collision.contacts[0];
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet") && portalOnline)
         {
             weaponStats.ResetUI();
-
-            
 
             gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
             guntext.text = gun.text;

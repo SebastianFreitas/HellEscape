@@ -77,6 +77,8 @@ public class PlayerProjectile : MonoBehaviour
         this.bounces = bounces;
         this.speed = bulletSpeed;
         this.bounceSpeed = bounceSpeed;
+        var x = 1 + increasedBulletSize / 100;
+        this.GetComponentInChildren<TrailRenderer>().widthMultiplier*=  x +1;
         /*var x = 50 + increasedBulletSize/100;
         var scaleChange = new Vector3(x, x, x);
         this.transform.localScale += scaleChange;

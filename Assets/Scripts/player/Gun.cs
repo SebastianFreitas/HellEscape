@@ -29,7 +29,7 @@ public class Gun : MonoBehaviour
     public AudioClip shoot;
     public float volume = .6f;
 
-    public PlayerMovement playerScript;
+    public PlayerBasicMovement playerScript;
     private Vector3 targetPoint ;
     private RaycastHit hit;
     private bool canShoot = true;
@@ -59,7 +59,7 @@ public class Gun : MonoBehaviour
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
 
-        playerScript.speed *= ((gun.increasedSpeed/100)+1);
+        //playerScript.speed *= ((gun.increasedSpeed/100)+1);
     }
 
     void Update()
@@ -153,5 +153,6 @@ public class Gun : MonoBehaviour
     public void SetGun(GunOfAType gun)
     {
         this.gun = gun;
+        playerScript.increasedSpeed = gun.increasedSpeed;
     }
 }
