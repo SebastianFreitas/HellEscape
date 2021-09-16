@@ -11,8 +11,10 @@ public class ExitCrafting : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Destroy(collision.gameObject);
+            craftingTable.UpdateCrafts();
             craftingTable.offline.SetActive(true);
             craftingTable.online.SetActive(false);
+            
             
         }
     }

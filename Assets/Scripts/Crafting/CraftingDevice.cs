@@ -114,18 +114,20 @@ public class CraftingDevice : GunGenerator
         if (collision.gameObject.CompareTag("Bullet"))
         {
             weaponStats.ResetUI();
+
             
 
             gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
             guntext.text = gun.text;
-
-            UpdateStats();
-
+            zoneLevel = gun.level;
             offline.SetActive(false);
             weaponStats.gun = this.gun;
             weaponStats.UpdateUI();
             online.SetActive(true);
-            
+
+            UpdateCrafts();
+            UpdateStats();
+
         }
 
 

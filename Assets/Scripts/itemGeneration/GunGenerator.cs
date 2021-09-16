@@ -18,13 +18,13 @@ public class GunGenerator : ModData
             baseRate = 0,
             baseDamage = 0,
             baseBounces = 0,
-            bounceSpeed = 0,
+            basebounceSpeed = 0,
             baseBulletsPerShot = 1,
             level = maxLevel,
             increasedFireRate = 0,
             increasedDamage = 0,
-            additionalBounces = 0,
-            increasedSpeed = 0
+            increasedBounces = 0,
+            increasedSpeed = 0,
         };
         var type = RandomiseGunType();
         ret = ret.ChangeType(ret, type);
@@ -80,7 +80,11 @@ public class GunGenerator : ModData
                 ret.increasedDamage += newMod.upperBound;
                 break;
 
-            case "Bullet Ricochet":
+            case "Ricochets":
+                ret.baseBounces += newMod.upperBound;
+                break;
+
+            case "Ricochet Speed":
                 ret.baseBounces += newMod.upperBound;
                 break;
 
@@ -93,7 +97,15 @@ public class GunGenerator : ModData
                 break;
 
             case "Bullets per Shot":
-                ret.baseBulletsPerShot += newMod.upperBound;
+                ret.increasedBounces += newMod.upperBound;
+                break;
+
+            case "Bullet Speed":
+                ret.increasedshotSpeed += newMod.upperBound;
+                break;
+
+            case "Bullet size":
+                ret.increasedBulletSize += newMod.upperBound;
                 break;
         }
         newMod.text = CreateModText(newMod);
@@ -148,7 +160,9 @@ public class GunGenerator : ModData
         int diference = mod.upperBound - mod.lowerBound;
         if (reverse < 0) return mod;
 
-        mod.tier = 1 + GetRandomWeightedIndex(modWeight);//
+        int[] x = Enumerable.Range(1, level).ToArray();
+
+        mod.tier = 1 + GetRandomWeightedIndex(x);//
         diference = diference * mod.tier;
         mod.upperBound += diference;
         mod.lowerBound += diference;

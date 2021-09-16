@@ -22,7 +22,7 @@ public class GameMan : MonoBehaviour
     public HealthBar hpBar;
     public GameObject playerPrefab;
 
-    private int currentLevel = 1;
+    private int currentLevel = 100;
 
     // Start is called before the first frame update
     void Start()

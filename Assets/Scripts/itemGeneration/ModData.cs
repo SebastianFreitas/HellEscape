@@ -6,33 +6,32 @@ public class ModData : MonoBehaviour
 {
     public static Mod[] modsInterior =
             new Mod[]{
-                new Mod(4,10,  "Weapon Damage",            Grade.interior, OperatorType.increased, 0, 1),
-                new Mod(1,2,   "Bullet Ricochet",          Grade.interior, OperatorType.plus, 0,2),
-                new Mod(2,3,   "Weapon Fire Rate",         Grade.interior, OperatorType.increased, 0,3),
+                new Mod(2,5,  "Weapon Damage",            Grade.interior, OperatorType.increased, 0, 1),
+                new Mod(1,3,   "Ricochets",          Grade.interior, OperatorType.increased, 0,2),
+                new Mod(2,5,   "Weapon Fire Rate",         Grade.interior, OperatorType.increased, 0,3),
+                new Mod(2,5,   "Bullet Speed",             Grade.interior, OperatorType.increased, 0,4),
+                new Mod(1,3,   "Bullet size",             Grade.interior, OperatorType.increased, 0,5),
+                new Mod(2,5,   "Ricochet Speed",             Grade.interior, OperatorType.increased, 0,6),
                 //new Mod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0)
-
-                new Mod(290,310,  "Weapon Damage",           Grade.interior, OperatorType.increased, 1,1),
-                new Mod(95,105,   "Weapon Fire Rate",         Grade.interior, OperatorType.increased, 1,3),
-                new Mod(8,9,   "Bullets per Shot",          Grade.interior, OperatorType.plus, 1,4)
 
             };
 
     public static Mod[] modsExterior =
         new Mod[]{
                 new Mod(1,3,  "Movement Speed",            Grade.exterior, OperatorType.increased, 0,101),
-                new Mod(1,3,   "Bullet Ricochet",          Grade.exterior, OperatorType.plus, 0,102),
+                new Mod(1,3,   "Ricochets",          Grade.exterior, OperatorType.plus, 0,102),
                 new Mod(2,3,   "Weapon Fire Rate",         Grade.exterior, OperatorType.increased, 0,103)
         };
 
     public static Mod[] modSpecial =
         new Mod[]{
                 new Mod(4,10,  "Weapon  Damage",           Grade.special, OperatorType.plus, 0,201),
-                new Mod(1,3,   "Bullet Ricochet",          Grade.special, OperatorType.plus, 0,202),
+                new Mod(1,3,   "Ricochets",          Grade.special, OperatorType.plus, 0,202),
                 new Mod(2,3,   "Weapon Fire Rate",         Grade.special, OperatorType.increased, 0,203)
         };
 
 
-    public static int[] InteriorWeight = { 10, 10, 10, 2, 2, 2 };
+    public static int[] InteriorWeight = { 10, 10, 10, 20, 20, 20};
 
     public static int[] ExteriorWeight = { 1, 1, 1 };  //
 
@@ -150,16 +149,20 @@ public class GunOfAType
     public float baseRate;
     public int baseDamage;
     public int baseBounces;
-    public int bounceSpeed;
+    public int basebounceSpeed;
     public int level;
     public int baseBulletsPerShot;
-    public int shotSpeed;
+    public int baseshotSpeed;
+    public int basebulletSize;
     public GunType type;
 
     public float increasedFireRate;
     public float increasedDamage;
-    public int additionalBounces;
+    public int increasedBounces;
     public float increasedSpeed;
+    public float increasedBulletSize;
+    public float increasedshotSpeed;
+    public float increasedBounceSpeed;
 
     public string text;
 
@@ -171,16 +174,14 @@ public class GunOfAType
     public int finalBounces;
     public float averageDamage;
 
+
+    public float GetShotSpeed()
+    {
+        return baseshotSpeed * (1 + (increasedshotSpeed / 100));
+    }
     public float GetFireRate()
     {
         return baseRate * (1 + (increasedFireRate / 100));
-    }
-
-    public int GetPrice()
-    {
-        if (level != 0) return level * 10;
-        else return 100;
-        
     }
 
     public float GetDamage()
@@ -192,7 +193,12 @@ public class GunOfAType
 
     public int GetBounces()
     {
-        return baseBounces + additionalBounces;
+        return baseBounces * (1 + (increasedBounces / 100));
+    }
+
+    public float GetBounceSpeed()
+    {
+        return basebounceSpeed * (1 + (increasedBounceSpeed / 100));
     }
 
     public float GetAverageDamage()
@@ -248,28 +254,28 @@ public class GunOfAType
             case GunType.normal:
                 baseRate = 2f;
                 baseDamage = 50;
-                baseBounces = 2;
+                baseBounces = 5;
                 baseBulletsPerShot = 1;
-                shotSpeed = 1500;
-                bounceSpeed = 250;
+                baseshotSpeed = 1500;
+                basebounceSpeed = 250;
                 break;
 
             case GunType.shotgun:
                 baseRate = 1f;
                 baseDamage = 20;
-                baseBounces = 1;
+                baseBounces = 5;
                 baseBulletsPerShot = 8;
-                shotSpeed = 1000;
-                bounceSpeed = 150;
+                baseshotSpeed = 1000;
+                basebounceSpeed = 150;
                 break;
 
             case GunType.machinegun:
                 baseRate = 5f;
                 baseDamage = 20;
-                baseBounces = 1;
+                baseBounces = 5;
                 baseBulletsPerShot = 1;
-                shotSpeed = 1000;
-                bounceSpeed = 150;
+                baseshotSpeed = 1000;
+                basebounceSpeed = 150;
                 break;
 
             case GunType.sniper:
@@ -277,8 +283,8 @@ public class GunOfAType
                 baseDamage = 200;
                 baseBounces = 10;
                 baseBulletsPerShot = 1;
-                shotSpeed = 3000;
-                bounceSpeed = 500;
+                baseshotSpeed = 3000;
+                basebounceSpeed = 500;
                 break;
         }
         return gun;

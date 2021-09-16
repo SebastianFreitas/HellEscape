@@ -34,6 +34,7 @@ public class PlayerProjectile : MonoBehaviour
 
     private GunOfAType gun;
 
+
     public GunOfAType Gun { get => gun; set => gun = value; }
 
     void Start()
@@ -70,12 +71,16 @@ public class PlayerProjectile : MonoBehaviour
         StartCoroutine(waiter(10f));
     }
 
-    public void SetStats(float damage, int bounces, int bulletSpeed, int bounceSpeed)
+    public void SetStats(float damage, int bounces, int bulletSpeed, int bounceSpeed, int increasedBulletSize)
     {
         this.damage = damage;
         this.bounces = bounces;
         this.speed = bulletSpeed;
         this.bounceSpeed = bounceSpeed;
+        /*var x = 50 + increasedBulletSize/100;
+        var scaleChange = new Vector3(x, x, x);
+        this.transform.localScale += scaleChange;
+        this.transform.localScale*/
     }
 
     void OnCollisionEnter(Collision collision)
