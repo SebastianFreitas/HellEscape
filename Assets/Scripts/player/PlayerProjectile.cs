@@ -34,6 +34,8 @@ public class PlayerProjectile : MonoBehaviour
 
     private GunOfAType gun;
 
+    public FadeTrailBullet trail;
+
 
     public GunOfAType Gun { get => gun; set => gun = value; }
 
@@ -77,8 +79,9 @@ public class PlayerProjectile : MonoBehaviour
         this.bounces = bounces;
         this.speed = bulletSpeed;
         this.bounceSpeed = bounceSpeed;
-        var x = 1 + increasedBulletSize / 100;
-        this.GetComponentInChildren<TrailRenderer>().widthMultiplier*=  x +1;
+        var x = 1+ increasedBulletSize / 100;
+        var scaleChange = new Vector3(x, x, x);
+        this.transform.localScale += scaleChange;
         /*var x = 50 + increasedBulletSize/100;
         var scaleChange = new Vector3(x, x, x);
         this.transform.localScale += scaleChange;
@@ -95,7 +98,7 @@ public class PlayerProjectile : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (bounces > 0 )
+        if (bounces > 0)
         {
             SetVisibility(true);
 
@@ -106,6 +109,22 @@ public class PlayerProjectile : MonoBehaviour
             rb.AddForce(contact.normal * bounceSpeed);
             bounces--;
         }
-        else Destroy(this.gameObject);
+        else
+        {
+            trail.StartCoroutine(trail.KillTrail());
+            trail.transform.parent = null;
+            Destroy(this.gameObject);
+            
+        }
+    }
+
+    private IEnumerator KillBullet()
+    {
+        
+        trail.StartCoroutine(trail.KillTrail());
+        trail.transform.parent = null;
+        //this.transform.GetComponent<MeshRenderer>().enabled = false;
+        yield return new WaitForSeconds(.5f);
+        Destroy(this.gameObject);
     }
 }

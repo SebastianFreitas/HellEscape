@@ -33,6 +33,7 @@ public class CraftingDevice : GunGenerator
 
     public AddModUI addMod;
     public RemoveMod removeMod;
+    public DisassembleGun deconstructGun;
     // Start is called before the first frame update
     void Start()
     {
@@ -109,6 +110,8 @@ public class CraftingDevice : GunGenerator
     {
         addMod.UpdatePriceText();
         removeMod.UpdatePricetext();
+        deconstructGun.UpdatePriceText();
+
     }
 
     void OnCollisionEnter(Collision collision)
