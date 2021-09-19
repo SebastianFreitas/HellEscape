@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
     {
         playerInventory = manager.playerPrefab.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
-        UpdateFragments(playerInventory.gunParts);
+        UpdateFragments(playerInventory.gunParts.ToString());
     }
 
     internal void RemoveWeapon(GunOfAType gun)
@@ -64,14 +64,11 @@ public class Inventory : MonoBehaviour
                 break;
             }
         }
-        if (i == 4) UpdateFragments(gun.level);
     }
 
-    public void UpdateFragments(int gunParts)
+    public void UpdateFragments(string z)
     {
-        //playerInventory.gunParts+= level;
-        //fragments += level;
-        fragmentText.UpdateText(gunParts.ToString());
+        fragmentText.UpdateText(z);
     }
 
     private void EquipWeaponShortcut(int number)

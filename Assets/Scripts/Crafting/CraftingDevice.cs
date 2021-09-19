@@ -54,7 +54,8 @@ public class CraftingDevice : GunGenerator
         if (gun.mods.Count == 0) return 1;
         if ((gun.level * (1 + gun.mods.Count) * 2 )* timesUsed > playerInventory.gunParts) return 2;
 
-        playerInventory.gunParts -= (gun.level * (1 + gun.mods.Count) * 2) *timesUsed;
+
+        playerInventory.UpdateGunParts(-(gun.level * (1 + gun.mods.Count) * 2) * timesUsed);
         int i = Random.Range(0, gun.mods.Count);
         int a = 0;
         foreach(Mod x in gun.mods)
@@ -85,7 +86,7 @@ public class CraftingDevice : GunGenerator
         {
             if (price <= playerInventory.gunParts)
             {
-                playerInventory.gunParts -= price;
+                playerInventory.UpdateGunParts(-price);
                 gun.mods.Add(AddMod(zoneLevel, gun));
                 FinishWeaponText(gun);
                 guntext.text = gun.text;

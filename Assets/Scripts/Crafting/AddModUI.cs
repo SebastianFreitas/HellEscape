@@ -40,7 +40,6 @@ public class AddModUI : MonoBehaviour
             if (x == 1)
             {
                 craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                craftingTable.playerInventory.inventoryUI.UpdateFragments(craftingTable.playerInventory.gunParts);
                 timesUsed++;
                 craftingTable.UpdateCrafts();
             }

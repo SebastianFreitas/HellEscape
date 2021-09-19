@@ -37,6 +37,7 @@ public class PlayerProjectile : MonoBehaviour
     public FadeTrailBullet trail;
 
 
+
     public GunOfAType Gun { get => gun; set => gun = value; }
 
     void Start()
@@ -46,6 +47,7 @@ public class PlayerProjectile : MonoBehaviour
 
         if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
         rb.AddForce(transform.forward * speed);
+        bounceSpeed = speed / 2;
         StartCoroutine(waiter(10f));
     }
 
@@ -73,12 +75,11 @@ public class PlayerProjectile : MonoBehaviour
         StartCoroutine(waiter(10f));
     }
 
-    public void SetStats(float damage, int bounces, int bulletSpeed, int bounceSpeed, int increasedBulletSize)
+    public void SetStats(float damage, int bounces, int bulletSpeed, int increasedBulletSize)
     {
         this.damage = damage;
         this.bounces = bounces;
         this.speed = bulletSpeed;
-        this.bounceSpeed = bounceSpeed;
         var x = 1+ increasedBulletSize / 100;
         var scaleChange = new Vector3(x, x, x);
         this.transform.localScale += scaleChange;

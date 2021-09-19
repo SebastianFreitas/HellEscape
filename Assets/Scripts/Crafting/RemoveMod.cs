@@ -41,8 +41,9 @@ public class RemoveMod : MonoBehaviour
             var x = craftingTable.RemoveRandomMod(timesUsed);
             if (x == 0)
             {
+              
                 craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                craftingTable.playerInventory.inventoryUI.UpdateFragments(craftingTable.playerInventory.gunParts);
+
                 timesUsed++;
                 craftingTable.UpdateCrafts();
             }

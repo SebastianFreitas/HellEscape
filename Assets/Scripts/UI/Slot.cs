@@ -44,7 +44,6 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         if (gun != null)
         {
-            inventory.UpdateFragments(gun.level);
             gun = null;
             gunTypeText.text = "-";
             gunType = null;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    internal int gunParts = 1000000000;
+    internal int gunParts = 10000;
 
     public Inventory inventoryUI;
     void Start()
@@ -21,7 +21,13 @@ public class PlayerInventory : MonoBehaviour
 
     internal void DisassembleGun(GunOfAType gun)
     {
-        gunParts += gun.level;
+        UpdateGunParts(gun.level * (gun.mods.Count + 1));
         inventoryUI.RemoveWeapon(gun); 
+    }
+
+    internal void UpdateGunParts(int x)
+    {
+        gunParts += x;
+        inventoryUI.UpdateFragments(gunParts.ToString());
     }
 }

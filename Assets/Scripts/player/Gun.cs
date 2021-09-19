@@ -113,7 +113,7 @@ public class Gun : MonoBehaviour
         var bulletscript = bullet.GetComponent<PlayerProjectile>();
         bulletscript.initialFade = true;
         bulletscript.Gun = gunx;
-        bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces(), (int) gunx.GetShotSpeed(), (int)gunx.GetBounceSpeed(), (int)gunx.increasedBulletSize);
+        bulletscript.SetStats( (float) gunx.GetDamage(), gunx.GetBounces(), (int) gunx.GetShotSpeed(), (int)gunx.increasedBulletSize);
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
@@ -126,7 +126,7 @@ public class Gun : MonoBehaviour
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.Gun = gunx;
             bulletscript.initialFade = true;
-            bulletscript.SetStats(gunx.GetDamage(), gunx.GetBounces(), (int)gunx.GetShotSpeed(), (int)gunx.GetBounceSpeed(), (int)gunx.increasedBulletSize);
+            bulletscript.SetStats((float)gunx.GetDamage(), gunx.GetBounces(), (int)gunx.GetShotSpeed(), (int)gunx.increasedBulletSize);
         }
 
 
