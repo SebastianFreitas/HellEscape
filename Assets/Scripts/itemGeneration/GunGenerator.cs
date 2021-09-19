@@ -16,7 +16,7 @@ public class GunGenerator : ModData
         {
             mods = new HashSet<Mod>(),
             baseRate = 0,
-            baseDamage = 0,
+            basePhysicalDamage = 0,
             baseBounces = 0,
             basebounceSpeed = 0,
             baseBulletsPerShot = 1,
@@ -37,7 +37,7 @@ public class GunGenerator : ModData
         {
             newMod = AddMod(maxLevel, ret);
         }
-
+        ret.GenerateTotalDamage();
         return FinishWeaponText(ret);
     }
 
@@ -74,21 +74,54 @@ public class GunGenerator : ModData
                 break;
         }
 
-        switch (newMod.text)
+        ModToStat(ret, newMod);
+        newMod.text = CreateModText(newMod);
+        ret.mods.Add(newMod);
+        ret.GenerateTotalDamage();
+        return newMod;
+    }
+
+    private static void ModToStat(GunOfAType ret, Mod newMod)
+    {
+        switch (newMod.basicText)
         {
-            case "Weapon Damage":
-                ret.increasedDamage += newMod.upperBound;
+            case "Physical Damage":
+                ret.increasedPhysicalDamage += newMod.upperBound;
+                break;
+
+            case "Fire Damage":
+                ret.increasedFireDamage += newMod.upperBound;
+                break;
+
+            case "Cold Damage":
+                ret.increasedColdDamage += newMod.upperBound;
+                break;
+
+            case "Lightning Damage":
+                ret.increasedLightningDamage += newMod.upperBound;
+                break;
+
+            case "Added Physical Damage":
+                ret.addedPhysicalDamage += newMod.upperBound;
+                break;
+
+            case "Added Fire Damage":
+                ret.addedFireDamage += newMod.upperBound;
+                break;
+
+            case "Added Cold Damage":
+                ret.addedColdDamage += newMod.upperBound;
+                break;
+
+            case "Added Lightning Damage":
+                ret.addedLightningDamage += newMod.upperBound;
                 break;
 
             case "Ricochets":
                 ret.baseBounces += newMod.upperBound;
                 break;
 
-            case "Ricochet Speed":
-                ret.increasedBounceSpeed += newMod.upperBound;
-                break;
-
-            case "Weapon Fire Rate":
+            case "Fire Rate":
                 ret.increasedFireRate += newMod.upperBound;
                 break;
 
@@ -108,9 +141,6 @@ public class GunGenerator : ModData
                 ret.increasedBulletSize += newMod.upperBound;
                 break;
         }
-        newMod.text = CreateModText(newMod);
-        ret.mods.Add(newMod);
-        return newMod;
     }
 
     public GunOfAType CreateWeaponEmpty()
@@ -300,29 +330,9 @@ public class GunGenerator : ModData
                 gun.gradeWeight[2] += 1;
                 break;
         }
+        mod.upperBound = -mod.upperBound;
+        ModToStat(gun, mod);
+        gun.GenerateTotalDamage();
 
-        switch (mod.basicText)
-        {
-            case "Weapon Damage":
-                gun.increasedDamage -= mod.upperBound;
-                break;
-
-            case "Bullet Ricochet":
-                gun.baseBounces -= mod.upperBound;
-                break;
-
-            case "Weapon Fire Rate":
-                gun.increasedFireRate -= mod.upperBound;
-                break;
-
-            case "Movement Speed":
-                gun.increasedSpeed -= mod.upperBound;
-                break;
-
-            case "Bullets per Shot":
-                gun.baseBulletsPerShot -= mod.upperBound;
-                break;
-
-        }
     }
 }
