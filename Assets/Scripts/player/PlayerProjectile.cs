@@ -32,7 +32,7 @@ public class PlayerProjectile : MonoBehaviour
 
     private GunOfAType gun;
 
-   // public FadeTrailBullet trail;
+    public FadeTrailBullet trail;
 
     public int fireDamage;
     public int coldDamage;
@@ -61,9 +61,13 @@ public class PlayerProjectile : MonoBehaviour
 
     private void ConfigureTrails()
     {
+        if (gun.type.Equals(GunType.normal))physicalTrail.GetComponent<TrailRenderer>().time = 0.2f;
+        if (gun.type.Equals(GunType.sniper)) physicalTrail.GetComponent<TrailRenderer>().time = 0.4f;
+        else physicalTrail.GetComponent<TrailRenderer>().time = 0.05f;
+
         if (fireDamage != 0) fireTrail.SetActive(true);
-        if (coldDamage != 0) fireTrail.SetActive(true);
-        if (poisonDamage != 0) fireTrail.SetActive(true);
+        if (coldDamage != 0) coldTrail.SetActive(true);
+        if (poisonDamage != 0) poisonTrail.SetActive(true);
     }
 
     private void SetVisibility(bool onOff)
@@ -121,19 +125,21 @@ public class PlayerProjectile : MonoBehaviour
         }
         else
         {
-            //trail.StartCoroutine(trail.KillTrail());
-            //trail.transform.parent = null;
-            Destroy(this.gameObject);
+            //StartCoroutine(KillBullet());
             
         }
     }
 
     private IEnumerator KillBullet()
     {
-        
+
         //trail.StartCoroutine(trail.KillTrail());
-        //trail.transform.parent = null;
-        //this.transform.GetComponent<MeshRenderer>().enabled = false;
+        physicalTrail.transform.parent = null;
+        fireTrail.transform.parent = null;
+        coldTrail.transform.parent = null;
+        poisonTrail.transform.parent = null;
+        trail.transform.parent = null;
+        this.transform.GetComponent<MeshRenderer>().enabled = false;
         yield return new WaitForSeconds(.5f);
         Destroy(this.gameObject);
     }
