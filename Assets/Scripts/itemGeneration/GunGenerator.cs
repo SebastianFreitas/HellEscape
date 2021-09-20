@@ -25,6 +25,9 @@ public class GunGenerator : ModData
             increasedDamage = 0,
             increasedBounces = 0,
             increasedSpeed = 0,
+            baseFireDamage = 0,
+            baseColdDamage =0,
+            basePoisonDamage = 0,
         };
         var type = RandomiseGunType();
         ret = ret.ChangeType(ret, type);
@@ -89,32 +92,20 @@ public class GunGenerator : ModData
                 ret.increasedPhysicalDamage += newMod.upperBound;
                 break;
 
-            case "Fire Damage":
-                ret.increasedFireDamage += newMod.upperBound;
-                break;
-
-            case "Cold Damage":
-                ret.increasedColdDamage += newMod.upperBound;
-                break;
-
-            case "Lightning Damage":
-                ret.increasedLightningDamage += newMod.upperBound;
-                break;
-
             case "Added Physical Damage":
                 ret.addedPhysicalDamage += newMod.upperBound;
                 break;
 
-            case "Added Fire Damage":
+            case "Fire Damage":
                 ret.addedFireDamage += newMod.upperBound;
                 break;
 
-            case "Added Cold Damage":
+            case "Cold Damage":
                 ret.addedColdDamage += newMod.upperBound;
                 break;
 
-            case "Added Lightning Damage":
-                ret.addedLightningDamage += newMod.upperBound;
+            case "Poison Damage":
+                ret.addedPoisonDamage += newMod.upperBound;
                 break;
 
             case "Ricochets":

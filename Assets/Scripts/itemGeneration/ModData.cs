@@ -6,13 +6,10 @@ public class ModData : MonoBehaviour
 {
     public static Mod[] modsInterior =
             new Mod[]{
-                new Mod(2,5,   "Added Fire Damage",               Grade.interior, OperatorType.plus, 0,1),
-                new Mod(2,5,   "Added Cold Damage",               Grade.interior, OperatorType.plus, 0,2),
-                new Mod(2,5,   "Added Lightning Damage",          Grade.interior, OperatorType.plus, 0,3),
-                new Mod(2,5,   "Added Physical Damage",           Grade.interior, OperatorType.plus, 0,3),
-                new Mod(2,5,   "Fire Damage",               Grade.interior, OperatorType.increased, 0,4),
-                new Mod(2,5,   "Cold Damage",               Grade.interior, OperatorType.increased, 0,5),
-                new Mod(2,5,   "Lightning Damage",          Grade.interior, OperatorType.increased, 0,6),
+                new Mod(2,5,   "Fire Damage",               Grade.interior, OperatorType.plus, 0,1),
+                new Mod(2,5,   "Cold Damage",               Grade.interior, OperatorType.plus, 0,2),
+                new Mod(2,5,   "Poison Damage",             Grade.interior, OperatorType.plus, 0,3),
+                new Mod(2,5,   "Added Physical Damage",     Grade.interior, OperatorType.plus, 0,3),
                 new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.increased, 0,7),
                
                 //new Mod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0)
@@ -40,7 +37,7 @@ public class ModData : MonoBehaviour
         };
 
 
-    public static int[] InteriorWeight = { 10, 10, 10, 20, 20, 20};
+    public static int[] InteriorWeight = { 10, 10, 10, 20, 20};
 
     public static int[] ExteriorWeight = { 1, 1, 1, 1, 1 };  //
 
@@ -169,19 +166,19 @@ public class GunOfAType
 
     public int baseFireDamage;
     public int baseColdDamage;
-    public int baseLightningDamage;
+    public int basePoisonDamage;
 
     public GunType type;
 
     public int addedPhysicalDamage;
     public int addedFireDamage;
-    public int addedLightningDamage;
+    public int addedPoisonDamage;
     public int addedColdDamage;
 
     public float increasedPhysicalDamage;
     public float increasedFireDamage;
     public float increasedColdDamage;
-    public float increasedLightningDamage;
+    public float increasedPoisonDamage;
 
     public float increasedFireRate;
     public float increasedDamage;
@@ -213,7 +210,7 @@ public class GunOfAType
 
     public float GetDamage()
     {
-        return GetPhysicalDamage() + GetFireDamage() + GetColdDamage() + GetLightningDamage();
+        return GetPhysicalDamage() + GetFireDamage() + GetColdDamage() + GetPoisonDamage();
     }
 
     public void GenerateTotalDamage()
@@ -221,7 +218,7 @@ public class GunOfAType
         totalDamage[0] += GetPhysicalDamage();
         totalDamage[1] += GetFireDamage();
         totalDamage[2] += GetColdDamage();
-        totalDamage[3] += GetLightningDamage();
+        totalDamage[3] += GetPoisonDamage();
     }
 
     public float GetPhysicalDamage()
@@ -245,10 +242,10 @@ public class GunOfAType
 
     }
 
-    public float GetLightningDamage()
+    public float GetPoisonDamage()
     {
 
-        return (float)(baseLightningDamage + addedLightningDamage) * (1 + (increasedLightningDamage / 100));
+        return (float)(basePoisonDamage + addedPoisonDamage) * (1 + (increasedPoisonDamage / 100));
 
     }
 

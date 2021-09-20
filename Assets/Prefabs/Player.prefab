@@ -12243,6 +12243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 0}
+  playerGun: {fileID: 245452745338377796}
 --- !u!1 &6049056961728924806
 GameObject:
   m_ObjectHideFlags: 0
@@ -12641,7 +12642,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   gunGen: {fileID: 0}
-  damage: 10
   range: 100
   timeBtwShots: 0.5
   fpsCam: {fileID: 4277711486013876564}
@@ -12657,6 +12657,12 @@ MonoBehaviour:
   volume: 0.09
   playerScript: {fileID: 8082080043408529685}
   inventory: {fileID: 5343407416357737760, guid: d06648e3a78beb640ac93548001c4515, type: 3}
+  bounces: 0
+  bulletSpeed: 0
+  fireDamage: 0
+  coldDamage: 0
+  poisonDamage: 0
+  physicalDamage: 0
 --- !u!198 &8793565190359536335
 ParticleSystem:
   m_ObjectHideFlags: 0

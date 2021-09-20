@@ -49,23 +49,24 @@ public class Monster : MonoBehaviour
         }
     }
 
-  public void TakeDamage(float amount)
-  {  
-    health -= amount;
+  public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
+  {
+        var amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
+        health -= amount;
 
-    if (health <= 0f )
-    {
-        transform.parent.GetComponent<Room>().killMonster();
-        Die();
-    } 
-    else
-    {
-        var rep = player.transform;
-        rep.LookAt(transform.position);
-        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
-        var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
-        bloodSplat.Play();
-    }
+        if (health <= 0f )
+        {
+            transform.parent.GetComponent<Room>().killMonster();
+            Die();
+        } 
+        else
+        {
+            var rep = player.transform;
+            rep.LookAt(transform.position);
+            audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+            var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
+            bloodSplat.Play();
+        }
   }
 
   void Die()

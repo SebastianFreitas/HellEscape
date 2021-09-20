@@ -12,11 +12,9 @@ public struct convergion
 public class PlayerProjectile : MonoBehaviour
 {
     public GameObject damagePopup;
-    public convergion totalConvergion;
     public float bounceSpeed = 1000f;
     private float speed;
 
-    private float damage = 0;
     public Vector3 playerSpeed;
     public AudioClip ricochet;
     public AudioSource source;
@@ -34,8 +32,17 @@ public class PlayerProjectile : MonoBehaviour
 
     private GunOfAType gun;
 
-    public FadeTrailBullet trail;
+   // public FadeTrailBullet trail;
 
+    public int fireDamage;
+    public int coldDamage;
+    public int poisonDamage;
+    public int physicalDamage;
+
+    public GameObject physicalTrail;
+    public GameObject fireTrail;
+    public GameObject coldTrail;
+    public GameObject poisonTrail;
 
 
     public GunOfAType Gun { get => gun; set => gun = value; }
@@ -44,6 +51,7 @@ public class PlayerProjectile : MonoBehaviour
     {
         SetVisibility(false);
         rb = GetComponent<Rigidbody>();
+        ConfigureTrails();
 
         if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
         rb.AddForce(transform.forward * speed);
@@ -51,11 +59,16 @@ public class PlayerProjectile : MonoBehaviour
         StartCoroutine(waiter(10f));
     }
 
+    private void ConfigureTrails()
+    {
+        if (fireDamage != 0) fireTrail.SetActive(true);
+        if (coldDamage != 0) fireTrail.SetActive(true);
+        if (poisonDamage != 0) fireTrail.SetActive(true);
+    }
 
     private void SetVisibility(bool onOff)
     {
-    //this.GetComponent<Renderer>().enabled = onOff;
-    this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
+        //this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
     }
 
     IEnumerator waiter(float a){
@@ -75,18 +88,14 @@ public class PlayerProjectile : MonoBehaviour
         StartCoroutine(waiter(10f));
     }
 
-    public void SetStats(float damage, int bounces, int bulletSpeed, int increasedBulletSize)
+    public void SetStats( int bounces, int bulletSpeed, int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
     {
-        this.damage = damage;
         this.bounces = bounces;
         this.speed = bulletSpeed;
-        var x = 1+ increasedBulletSize / 100;
-        var scaleChange = new Vector3(x, x, x);
-        this.transform.localScale += scaleChange;
-        /*var x = 50 + increasedBulletSize/100;
-        var scaleChange = new Vector3(x, x, x);
-        this.transform.localScale += scaleChange;
-        this.transform.localScale*/
+        this.fireDamage = fireDamage;
+        this.coldDamage = coldDamage;
+        this.poisonDamage = poisonDamage;
+        this.physicalDamage = physicalDamage;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -94,7 +103,7 @@ public class PlayerProjectile : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage(damage);
+            collision.transform.GetComponent<Monster>().TakeDamage(fireDamage, coldDamage, poisonDamage, physicalDamage);
 
             Destroy(this.gameObject);
         }
@@ -107,13 +116,13 @@ public class PlayerProjectile : MonoBehaviour
             sparkBounce.Play();
 
             AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
-            rb.AddForce(contact.normal * bounceSpeed);
+            rb.AddForce(contact.normal * speed);
             bounces--;
         }
         else
         {
-            trail.StartCoroutine(trail.KillTrail());
-            trail.transform.parent = null;
+            //trail.StartCoroutine(trail.KillTrail());
+            //trail.transform.parent = null;
             Destroy(this.gameObject);
             
         }
@@ -122,8 +131,8 @@ public class PlayerProjectile : MonoBehaviour
     private IEnumerator KillBullet()
     {
         
-        trail.StartCoroutine(trail.KillTrail());
-        trail.transform.parent = null;
+        //trail.StartCoroutine(trail.KillTrail());
+        //trail.transform.parent = null;
         //this.transform.GetComponent<MeshRenderer>().enabled = false;
         yield return new WaitForSeconds(.5f);
         Destroy(this.gameObject);

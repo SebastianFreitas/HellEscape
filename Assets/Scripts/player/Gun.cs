@@ -11,7 +11,6 @@ public class Gun : MonoBehaviour
     public GunOfAType gun;
 
     public convergion totalConvergion;
-    public float damage = 50f;
     public float range = 100f;
     public float timeBtwShots = .5f;
 
@@ -39,6 +38,15 @@ public class Gun : MonoBehaviour
 
     public GunOfAType gunText;
 
+    public int bounces;
+    public int bulletSpeed;
+
+    public int fireDamage;
+    public int coldDamage;
+    public int poisonDamage;
+    public int physicalDamage;
+
+
     float m_start, m_time;
     int m_fired = 0;
     void OnEnable()
@@ -53,7 +61,7 @@ public class Gun : MonoBehaviour
     void Start()
     {
         gunGen = new GunGenerator();
-        gun = gunGen.CreateWeaponEmpty();
+        EquipBaseGun();
         lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
         muzzleFlashFront.transform.parent = transform.parent;
@@ -86,6 +94,19 @@ public class Gun : MonoBehaviour
     internal void EquipBaseGun()
     {
         gun = gunGen.CreateWeaponEmpty();
+
+        SetBulletStats();
+
+    }
+
+    public void SetBulletStats()
+    {
+        fireDamage = (int)gun.GetFireDamage();
+        coldDamage = (int)gun.GetColdDamage();
+        poisonDamage = (int)gun.GetPoisonDamage();
+        physicalDamage = (int)gun.GetPhysicalDamage();
+        bounces = (int)gun.GetBounces();
+        bulletSpeed = (int)gun.GetShotSpeed();
     }
 
     void Shoot(float attackRate, int gun)
@@ -113,7 +134,7 @@ public class Gun : MonoBehaviour
         var bulletscript = bullet.GetComponent<PlayerProjectile>();
         bulletscript.initialFade = true;
         bulletscript.Gun = gunx;
-        bulletscript.SetStats( (float) gunx.GetDamage(), gunx.GetBounces(), (int) gunx.GetShotSpeed(), (int)gunx.increasedBulletSize);
+        bulletscript.SetStats(bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
@@ -126,7 +147,7 @@ public class Gun : MonoBehaviour
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.Gun = gunx;
             bulletscript.initialFade = true;
-            bulletscript.SetStats((float)gunx.GetDamage(), gunx.GetBounces(), (int)gunx.GetShotSpeed(), (int)gunx.increasedBulletSize);
+            bulletscript.SetStats(bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
         }
 
 
@@ -153,6 +174,7 @@ public class Gun : MonoBehaviour
     public void SetGun(GunOfAType gun)
     {
         this.gun = gun;
+        SetBulletStats();
         playerScript.increasedSpeed = gun.increasedSpeed;
     }
 }

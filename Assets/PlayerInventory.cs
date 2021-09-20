@@ -8,6 +8,8 @@ public class PlayerInventory : MonoBehaviour
     internal int gunParts = 100000000;
 
     public Inventory inventoryUI;
+
+    public Gun playerGun;
     void Start()
     {
         inventoryUI = FindObjectOfType<Inventory>(); 
@@ -29,5 +31,10 @@ public class PlayerInventory : MonoBehaviour
     {
         gunParts += x;
         inventoryUI.UpdateFragments(gunParts.ToString());
+    }
+
+    internal void UpdateEquipedGun()
+    {
+        playerGun.SetBulletStats();
     }
 }
