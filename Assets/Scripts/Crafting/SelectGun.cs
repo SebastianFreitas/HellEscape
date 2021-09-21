@@ -6,7 +6,9 @@ public class SelectGun : MonoBehaviour
 {
     public CraftingDevice craftingTable;
     public GunOfAType gun;
-    public TMPro.TextMeshProUGUI gunTypeText;
+    public TMPro.TextMeshPro gunTypeText;
+
+    public int position;
 
     void OnCollisionEnter(Collision collision)
     {
@@ -14,6 +16,7 @@ public class SelectGun : MonoBehaviour
         {
 
             craftingTable.ReadWeapon(collision);
+            craftingTable.EquipGun(gun, position);
 
             Destroy(collision.gameObject);
         }

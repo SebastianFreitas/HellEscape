@@ -5,16 +5,16 @@ using UnityEngine;
 public class GeneratedGuns : MonoBehaviour
 {
     public CraftingDevice craftingTable;
-    public GameObject[] guns;
+    public GameObject[] slots;
     public SelectGun[] generatedGuns;
     void Start()
     {
         int i = 0;
-       guns = craftingTable.playerInventory.inventoryUI.slots;
+        slots = craftingTable.playerInventory.inventoryUI.slots;
        foreach(SelectGun x in generatedGuns)
        {
-            x.gun = guns[i].GetComponent<Slot>().gun;
-            x.gunTypeText.text = "select "+ guns[i].GetComponent<Slot>().gunTypeText.text;
+            x.gun = slots[i].GetComponent<Slot>().gun;
+            x.gunTypeText.text = "Equip "+ slots[i].GetComponent<Slot>().gun.type.ToString();
             i++;
        } 
 

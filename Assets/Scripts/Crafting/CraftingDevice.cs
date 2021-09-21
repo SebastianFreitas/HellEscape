@@ -17,6 +17,12 @@ public class CraftingDevice : GunGenerator
     public GameObject craftingRecipes;
 
     public GameObject move;
+
+    internal void EquipGun(GunOfAType gun, int position)
+    {
+        if (position > 0) playerInventory.inventoryUI.EquipWeaponShortcut(position);
+    }
+
     public GameObject craft;
     public GameObject generate;
     public GameObject deconstruct;
@@ -156,14 +162,13 @@ public class CraftingDevice : GunGenerator
 
     internal void ReadWeapon(Collision collision)
     {
-        
-       gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
-        
+        gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
         zoneLevel = gun.level;
        
         weaponStats.gun = this.gun; 
         weaponStats.ResetUI();
         weaponStats.UpdateUI();
+
         guntext.text = gun.text;
         UpdateCrafts();
         UpdateStats();

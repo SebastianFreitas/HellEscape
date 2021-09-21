@@ -71,7 +71,7 @@ public class Inventory : MonoBehaviour
         fragmentText.UpdateText(z);
     }
 
-    private void EquipWeaponShortcut(int number)
+    public void EquipWeaponShortcut(int number)
     {
         if (number-1 != previousEquipedGun)
         {
