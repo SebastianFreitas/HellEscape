@@ -13,6 +13,15 @@ public class CraftingDevice : GunGenerator
     public GameObject online;
     public GameObject offline;
 
+    public GameObject iventoryDevice;
+    public GameObject craftingRecipes;
+
+    public GameObject move;
+    public GameObject craft;
+    public GameObject generate;
+    public GameObject deconstruct;
+    public GameObject destroy;
+
     public TMPro.TextMeshPro stats;
 
     public Mod removedMod;
@@ -78,6 +87,19 @@ public class CraftingDevice : GunGenerator
         return 0;
     }
 
+    public void GoToInventory()
+    {
+        craftingRecipes.SetActive(false);
+        iventoryDevice.SetActive(true);
+
+    }
+
+    public void GoToCrafting()
+    {
+        iventoryDevice.SetActive(false);
+        craftingRecipes.SetActive(true);
+    }
+
     public int AddNewMod(int timesUsed)
     {
         var worked = 0;
@@ -123,22 +145,28 @@ public class CraftingDevice : GunGenerator
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Bullet") && portalOnline)
         {
-            weaponStats.ResetUI();
+            ReadWeapon(collision);
 
-            gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
-            guntext.text = gun.text;
-            zoneLevel = gun.level;
             offline.SetActive(false);
-            weaponStats.gun = this.gun;
-            weaponStats.UpdateUI();
             online.SetActive(true);
-
-            UpdateCrafts();
-            UpdateStats();
-
         }
 
 
+    }
+
+    internal void ReadWeapon(Collision collision)
+    {
+        
+        gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
+        
+        zoneLevel = gun.level;
+       
+        weaponStats.gun = this.gun; 
+        weaponStats.ResetUI();
+        weaponStats.UpdateUI();
+        guntext.text = gun.text;
+        UpdateCrafts();
+        UpdateStats();
     }
 
     public IEnumerator HighLight(MeshRenderer[] materials)

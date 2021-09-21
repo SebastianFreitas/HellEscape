@@ -34,7 +34,7 @@ public class ModData : MonoBehaviour
     public static Mod[] modSpecial =
         new Mod[]{
                 new Mod(1,10,  "Ricochets follow enemies",           Grade.special, OperatorType.plus, 0,201),
-                new Mod(1,3,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,205),
+                new Mod(1,3,   "Bullet Speed",              Grade.special, OperatorType.increased, 0,205),
 
         };
 
