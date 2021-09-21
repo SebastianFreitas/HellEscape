@@ -157,7 +157,7 @@ public class CraftingDevice : GunGenerator
     internal void ReadWeapon(Collision collision)
     {
         
-        gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
+       gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
         
         zoneLevel = gun.level;
        

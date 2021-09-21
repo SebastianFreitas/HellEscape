@@ -82,7 +82,7 @@ public class Monster : MonoBehaviour
 
     private void Drop()
     {
-        if (Random.Range(1,20) > 10)
+        if (Random.Range(1,20) > 1)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
             var y = x.GetComponent<Item>();

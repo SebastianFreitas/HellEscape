@@ -5,6 +5,8 @@ using UnityEngine;
 public class SelectGun : MonoBehaviour
 {
     public CraftingDevice craftingTable;
+    public GunOfAType gun;
+    public TMPro.TextMeshProUGUI gunTypeText;
 
     void OnCollisionEnter(Collision collision)
     {
