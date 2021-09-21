@@ -25,6 +25,8 @@ public class Room : MonoBehaviour
 
     public int areaLevel = 1;
 
+    private Transform[] enemies;
+
     private void Start()
     {
         portal.SetActive(false);
@@ -38,12 +40,14 @@ public class Room : MonoBehaviour
         var x = Random.Range(0, Layouts.Length);
         Layouts[x].SetActive(true);
         var y = Layouts[x].GetComponentsInChildren<Monster>();
-
+        int i = 0;
         foreach ( Monster z in y)
         {
+
             z.player = this.player;
             z.transform.parent = transform;
             monstersAlive++;
+            //enemies[i] = z.transform;
         }
 
     }
@@ -118,4 +122,8 @@ public class Room : MonoBehaviour
         portal.SetActive(true);
     }
 
+    internal Transform[] GetEnemies()
+    {
+        return enemies;
+    }
 }

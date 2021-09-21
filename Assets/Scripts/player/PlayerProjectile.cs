@@ -26,7 +26,7 @@ public class PlayerProjectile : MonoBehaviour
     public bool visual = false;
 
     public bool initialFade = false;
-
+    private int bulletGuided;
     public int bounces = 2;
     Rigidbody rb;
 
@@ -44,8 +44,12 @@ public class PlayerProjectile : MonoBehaviour
     public GameObject coldTrail;
     public GameObject poisonTrail;
 
+  
+
 
     public GunOfAType Gun { get => gun; set => gun = value; }
+
+    internal Transform[] enemies;
 
     void Start()
     {
@@ -92,8 +96,9 @@ public class PlayerProjectile : MonoBehaviour
         StartCoroutine(waiter(10f));
     }
 
-    public void SetStats( int bounces, int bulletSpeed, int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
+    public void SetStats(int bulletguided,  int bounces, int bulletSpeed, int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
     {
+        this.bulletGuided = bulletguided;
         this.bounces = bounces;
         this.speed = bulletSpeed;
         this.fireDamage = fireDamage;
@@ -120,7 +125,29 @@ public class PlayerProjectile : MonoBehaviour
             sparkBounce.Play();
 
             AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
-            rb.AddForce(contact.normal * speed);
+
+
+            if (bulletGuided > 0)
+            {
+                var foundEnemy = false;
+                Collider[] hitColliders = Physics.OverlapSphere(rb.position, 10f);
+                foreach (var hitCollider in hitColliders)
+                {
+
+                    if (hitCollider.CompareTag("Monster"))
+                    {
+                        foundEnemy = true;
+                        var direction = hitCollider.transform.position - transform.position;
+                        rb.AddForce(direction * speed);
+                        break;
+                    }
+                }
+                 if (!foundEnemy) rb.AddForce(contact.normal * speed);
+                //if (hitColliders.Length >0) rb.AddForce(hitColliders[0].transform.position - transform.localPosition * speed);
+                //else rb.AddForce(contact.normal * speed);
+            } 
+            else rb.AddForce(contact.normal * speed);
+            
             bounces--;
         }
         else

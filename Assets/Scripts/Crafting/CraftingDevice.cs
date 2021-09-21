@@ -93,9 +93,10 @@ public class CraftingDevice : GunGenerator
                 guntext.text = gun.text;
                 worked = 1;
                 weaponStats.gun = gun;
-                weaponStats.UpdateUI();
                 UpdateStats();
                 playerInventory.UpdateEquipedGun();
+                weaponStats.UpdateUI();
+
             }
             else return -1;
 

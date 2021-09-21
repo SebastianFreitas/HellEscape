@@ -89,11 +89,12 @@ public class GunGenerator : ModData
         switch (newMod.basicText)
         {
             case "Physical Damage":
-                ret.increasedPhysicalDamage += newMod.upperBound;
+                if (newMod.op.Equals(OperatorType.plus)) ret.addedPhysicalDamage += newMod.upperBound;
+                else ret.increasedPhysicalDamage += newMod.upperBound;
                 break;
 
-            case "Added Physical Damage":
-                ret.addedPhysicalDamage += newMod.upperBound;
+            case "Critical Damage":
+                ret.increasedCriticalDamage += newMod.upperBound;
                 break;
 
             case "Fire Damage":
@@ -128,8 +129,8 @@ public class GunGenerator : ModData
                 ret.increasedshotSpeed += newMod.upperBound;
                 break;
 
-            case "Bullet size":
-                ret.increasedBulletSize += newMod.upperBound;
+            case "Ricochets follow enemies":
+                ret.increasedRicochetGuide += newMod.upperBound;
                 break;
         }
     }

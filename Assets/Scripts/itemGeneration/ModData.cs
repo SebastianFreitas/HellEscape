@@ -6,11 +6,13 @@ public class ModData : MonoBehaviour
 {
     public static Mod[] modsInterior =
             new Mod[]{
-                new Mod(2,5,   "Fire Damage",               Grade.interior, OperatorType.plus, 0,1),
-                new Mod(2,5,   "Cold Damage",               Grade.interior, OperatorType.plus, 0,2),
-                new Mod(2,5,   "Poison Damage",             Grade.interior, OperatorType.plus, 0,3),
-                new Mod(2,5,   "Added Physical Damage",     Grade.interior, OperatorType.plus, 0,3),
-                new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.increased, 0,7),
+                new Mod(2,5,   "Fire Damage",               Grade.interior, OperatorType.plus,      0,1),
+                new Mod(2,5,   "Cold Damage",               Grade.interior, OperatorType.plus,      0,2),
+                new Mod(2,5,   "Poison Damage",             Grade.interior, OperatorType.plus,      0,3),
+                new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.plus,      0,3),
+                new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.increased, 0,4),
+                new Mod(2,5,   "Critical damage",           Grade.interior, OperatorType.increased, 0,5),
+                
                
                 //new Mod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0)
 
@@ -22,7 +24,7 @@ public class ModData : MonoBehaviour
                 new Mod(1,3,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,103),
                 new Mod(1,3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,104),
                 new Mod(1,3,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,105),
-                new Mod(1,3,   "Bullet size",               Grade.exterior, OperatorType.increased, 0,106),
+               
             //grande damage
             //grenade area
             //grenade throwing speed
@@ -31,17 +33,17 @@ public class ModData : MonoBehaviour
 
     public static Mod[] modSpecial =
         new Mod[]{
-                new Mod(4,10,  "Weapon  Damage",           Grade.special, OperatorType.plus, 0,201),
-                new Mod(1,3,   "Ricochets",          Grade.special, OperatorType.plus, 0,202),
-                new Mod(2,3,   "Weapon Fire Rate",         Grade.special, OperatorType.increased, 0,203)
+                new Mod(1,10,  "Ricochets follow enemies",           Grade.special, OperatorType.plus, 0,201),
+                new Mod(1,3,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,205),
+
         };
 
 
-    public static int[] InteriorWeight = { 10, 10, 10, 20, 20};
+    public static int[] InteriorWeight = { 10, 10, 10, 10, 10, 10};
 
-    public static int[] ExteriorWeight = { 1, 1, 1, 1, 1 };  //
+    public static int[] ExteriorWeight = { 1, 1, 1, 1};  //
 
-    public static int[] SpecialWeight = { 1, 1, 1 };
+    public static int[] SpecialWeight = { 1, 1};
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 
@@ -186,7 +188,9 @@ public class GunOfAType
     public float increasedSpeed;
     public float increasedBulletSize;
     public float increasedshotSpeed;
+    public float increasedCriticalDamage;
 
+    public float increasedRicochetGuide;
 
     public string text;
 
@@ -213,6 +217,10 @@ public class GunOfAType
         return GetPhysicalDamage() + GetFireDamage() + GetColdDamage() + GetPoisonDamage();
     }
 
+    public float GetCriticalDamage()
+    {
+        return GetDamage() * 2 * (1 + increasedCriticalDamage/100);
+    }
     public void GenerateTotalDamage()
     {
         totalDamage[0] += GetPhysicalDamage();

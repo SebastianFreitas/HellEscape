@@ -46,6 +46,8 @@ public class Gun : MonoBehaviour
     public int poisonDamage;
     public int physicalDamage;
 
+    private Transform[] enemies;
+
 
     float m_start, m_time;
     int m_fired = 0;
@@ -111,6 +113,8 @@ public class Gun : MonoBehaviour
 
     void Shoot(float attackRate, int gun)
     {
+        //if (this.gun.increasedRicochetGuide < 0) enemies = playerScript.transform.parent.GetComponent<Room>().GetEnemies();
+
         canShoot = false;
         StartCoroutine(waiterFlash());
 
@@ -134,7 +138,8 @@ public class Gun : MonoBehaviour
         var bulletscript = bullet.GetComponent<PlayerProjectile>();
         bulletscript.initialFade = true;
         bulletscript.Gun = gunx;
-        bulletscript.SetStats(bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
+
+        bulletscript.SetStats((int)gunx.increasedRicochetGuide,bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
@@ -147,7 +152,7 @@ public class Gun : MonoBehaviour
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.Gun = gunx;
             bulletscript.initialFade = true;
-            bulletscript.SetStats(bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
+            bulletscript.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
         }
 
 
@@ -176,5 +181,6 @@ public class Gun : MonoBehaviour
         this.gun = gun;
         SetBulletStats();
         playerScript.increasedSpeed = gun.increasedSpeed;
+        //playerScript.gameObject.transform.parent.GetComponent<Room>().GetEnemies();
     }
 }
