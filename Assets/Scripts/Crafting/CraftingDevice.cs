@@ -35,6 +35,7 @@ public class CraftingDevice : GunGenerator
     public Material green;
     public Material yellow;
     public Material red;
+    public Material blue;
 
     public int weaponParts;
     public TMPro.TextMeshPro weaponPartsText;
@@ -56,6 +57,8 @@ public class CraftingDevice : GunGenerator
         player = transform.GetComponentInParent<Room>().player;
         playerInventory = player.GetComponent<PlayerInventory>();
     }
+
+
 
     internal void DisassembleGun()
     {
@@ -212,6 +215,11 @@ public class CraftingDevice : GunGenerator
     public void TurnYellow(MeshRenderer[] materials)
     {
         foreach (var x in materials) x.material = yellow;
+    }
+
+    internal void TurnBlue(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = blue;
     }
 
 

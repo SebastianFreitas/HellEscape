@@ -7,16 +7,27 @@ public class SelectGun : MonoBehaviour
     public CraftingDevice craftingTable;
     public GunOfAType gun;
     public TMPro.TextMeshPro gunTypeText;
+    public GeneratedGuns generatedGuns;
+    public MeshRenderer[] meshes;
 
     public int position;
+
+    public bool isSelected;
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            if ( gun != null)
+            {
+                craftingTable.ReadWeapon(collision, gun);
+                craftingTable.EquipGun(gun, position);
+                generatedGuns.SelectSlot(position);
+                craftingTable.TurnGreen(meshes);
 
-            craftingTable.ReadWeapon(collision, gun);
-            craftingTable.EquipGun(gun, position);
+                isSelected = true;
+            }
+
 
             Destroy(collision.gameObject);
         }

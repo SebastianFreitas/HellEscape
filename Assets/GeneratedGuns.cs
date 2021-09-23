@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GeneratedGuns : MonoBehaviour
 {
+
     public CraftingDevice craftingTable;
     public GameObject[] slots;
     public SelectGun[] generatedGuns;
     public SelectGun[] gunLayout;
+
+
     void Start()
     {
         GetGeneratedGuns();
@@ -46,9 +50,23 @@ public class GeneratedGuns : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SelectSlot(int position)
     {
-        
+        foreach(SelectGun x in generatedGuns)
+        {
+            if (x.isSelected && x.position != position)
+            {
+                x.isSelected = false;
+                x.craftingTable.TurnBlue(x.meshes);
+            }
+        }
+        foreach (SelectGun x in gunLayout)
+        {
+            if (x.isSelected && x.position != position)
+            {
+                x.isSelected = false;
+                x.craftingTable.TurnBlue(x.meshes);
+            }
+        }
     }
 }

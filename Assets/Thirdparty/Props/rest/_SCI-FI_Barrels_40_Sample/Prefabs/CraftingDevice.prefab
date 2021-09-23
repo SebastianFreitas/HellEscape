@@ -125,6 +125,7 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 3ee344dfeab32194fa9cfa2c55bfbb0a, type: 2}
   yellow: {fileID: 2100000, guid: 3ee344dfeab32194fa9cfa2c55bfbb0a, type: 2}
   red: {fileID: 2100000, guid: db3881944885a5f45b69b1a0f2b9a215, type: 2}
+  blue: {fileID: 2100000, guid: 0a2f42d6bbee2124f89171209272b143, type: 2}
   weaponParts: 0
   weaponPartsText: {fileID: 0}
   playerInventory: {fileID: 0}
@@ -1134,7 +1135,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 3178041852857639134}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 8567342988601899502}
+  - {fileID: 4970774605758596911}
+  position: 11
+  isSelected: 0
 --- !u!1 &924319953877940701
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,8 +1526,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367105853889354127}
-  m_LocalRotation: {x: 1.7763568e-15, y: 0.5, z: -1.7763568e-15, w: 0.86602545}
-  m_LocalPosition: {x: 0, y: 0, z: 0.6410729}
+  m_LocalRotation: {x: 9.643714e-16, y: 0.50000006, z: -3.0324298e-15, w: 0.8660253}
+  m_LocalPosition: {x: 0, y: 0, z: 0.6410727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8253496417636720250}
@@ -5080,7 +5086,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 3178041852857639134}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 4889041674672864548}
+  - {fileID: 3105362975061262990}
+  position: 7
+  isSelected: 0
 --- !u!1 &3111211658653799461
 GameObject:
   m_ObjectHideFlags: 0
@@ -5575,7 +5586,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 6354935683024614289}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 4994226832330618222}
+  - {fileID: 6329747725876902886}
+  position: 10
+  isSelected: 0
 --- !u!1 &3427870726424420004
 GameObject:
   m_ObjectHideFlags: 0
@@ -7053,7 +7069,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 3775964223065250576}
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 7563819873723293876}
+  - {fileID: 4596786229083653116}
   position: 1
+  isSelected: 0
 --- !u!1 &3890757200771361720
 GameObject:
   m_ObjectHideFlags: 0
@@ -9649,7 +9670,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 3342385743529020438}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 7714873703570618909}
+  - {fileID: 2381989637633991280}
+  position: 5
+  isSelected: 0
 --- !u!1 &5177829999085091427
 GameObject:
   m_ObjectHideFlags: 0
@@ -9851,7 +9877,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 8225073618584547295}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 8442325070641399458}
+  - {fileID: 2711759272727285380}
+  position: 12
+  isSelected: 0
 --- !u!1 &5377297866317855204
 GameObject:
   m_ObjectHideFlags: 0
@@ -10154,7 +10185,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 7950982766093146002}
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 4543007317722903670}
+  - {fileID: 571175851013107115}
   position: 4
+  isSelected: 0
 --- !u!1 &5455436318068479497
 GameObject:
   m_ObjectHideFlags: 0
@@ -12251,7 +12287,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 6812488686896341999}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 1215027883580088933}
+  - {fileID: 5363491759924901799}
+  position: 9
+  isSelected: 0
 --- !u!1 &6570864970105211881
 GameObject:
   m_ObjectHideFlags: 0
@@ -13400,7 +13441,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 2452759172625112714}
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 7753911205694122991}
+  - {fileID: 2355629574860668780}
   position: 3
+  isSelected: 0
 --- !u!1 &7456803142358341344
 GameObject:
   m_ObjectHideFlags: 0
@@ -13947,7 +13993,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 5692053747523503819}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 7609807430785989718}
+  - {fileID: 7959458583609812187}
+  position: 8
+  isSelected: 0
 --- !u!1 &7593970848811118455
 GameObject:
   m_ObjectHideFlags: 0
@@ -15821,7 +15872,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 8251816492766046590}
-  position: 0
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 9113426733771322537}
+  - {fileID: 3314826897699067584}
+  position: 13
+  isSelected: 0
 --- !u!1 &8694442170292399849
 GameObject:
   m_ObjectHideFlags: 0
@@ -16193,7 +16249,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   gunTypeText: {fileID: 3030606379338834951}
+  generatedGuns: {fileID: 3709995227532516419}
+  meshes:
+  - {fileID: 9084036245928415064}
+  - {fileID: 812135735677852428}
   position: 2
+  isSelected: 0
 --- !u!1 &8908098095326271261
 GameObject:
   m_ObjectHideFlags: 0
