@@ -15,7 +15,7 @@ public class SelectGun : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
 
-            craftingTable.ReadWeapon(collision);
+            craftingTable.ReadWeapon(collision, gun);
             craftingTable.EquipGun(gun, position);
 
             Destroy(collision.gameObject);

@@ -11,10 +11,16 @@ public class GeneratedGuns : MonoBehaviour
     {
         int i = 0;
         slots = craftingTable.playerInventory.inventoryUI.slots;
-       foreach(SelectGun x in generatedGuns)
+       foreach(SelectGun selectX in generatedGuns)
        {
-            x.gun = slots[i].GetComponent<Slot>().gun;
-            x.gunTypeText.text = "Equip "+ slots[i].GetComponent<Slot>().gun.type.ToString();
+            var currentGun = slots[i].GetComponent<Slot>().gun;
+            if (currentGun != null)
+            {
+                selectX.gun = currentGun;
+                selectX.gunTypeText.text = "Equip " + slots[i].GetComponent<Slot>().gun.type.ToString();
+            }
+            else selectX.gunTypeText.text = "EMpty Slot ";
+            
             i++;
        } 
 

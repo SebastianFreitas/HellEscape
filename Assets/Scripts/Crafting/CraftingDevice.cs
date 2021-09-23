@@ -151,7 +151,7 @@ public class CraftingDevice : GunGenerator
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Bullet") && portalOnline)
         {
-            ReadWeapon(collision);
+            ReadWeapon(collision, null);
 
             offline.SetActive(false);
             online.SetActive(true);
@@ -160,8 +160,21 @@ public class CraftingDevice : GunGenerator
 
     }
 
-    internal void ReadWeapon(Collision collision)
+    internal void ReadWeapon(Collision collision, GunOfAType gunA)
     {
+        if (gunA != null)
+        {
+            gun = gunA;
+            zoneLevel = gun.level;
+
+            weaponStats.gun = gunA;
+            weaponStats.ResetUI();
+            weaponStats.UpdateUI();
+
+            guntext.text = gun.text;
+            UpdateCrafts();
+            UpdateStats();
+        } else
         gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
         zoneLevel = gun.level;
        
