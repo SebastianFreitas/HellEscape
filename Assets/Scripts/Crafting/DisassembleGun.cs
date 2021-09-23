@@ -11,6 +11,10 @@ public class DisassembleGun : MonoBehaviour
     public MeshRenderer[] meshes;
     private bool areYouSure = false;
 
+
+    public bool isDestroy;
+    private string labelText;
+
     private string formatedString = "{value} parts";
 
     void Start()
@@ -21,12 +25,22 @@ public class DisassembleGun : MonoBehaviour
 
     private void OnEnable()
     {
-        buttonText.text = "Desassemble gun";
+        StartLabel();
         UpdatePriceText();
     }
+
+    private void StartLabel()
+    {
+        if (isDestroy) labelText = "Destroy";
+        else labelText = "Remove Layout";
+        buttonText.text = labelText;
+    }
+
     public void UpdatePriceText()
     {
-        parts.text = formatedString.Replace("{value}", (craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) + "");
+        var destroy = 1;
+        if (isDestroy) destroy = 2; 
+        parts.text = formatedString.Replace("{value}", (destroy * craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) + "");
     }
 
     void OnCollisionEnter(Collision collision)
@@ -38,7 +52,7 @@ public class DisassembleGun : MonoBehaviour
                 craftingTable.DisassembleGun();
                 craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
                 areYouSure = false;
-                buttonText.text = "Desassemble gun";
+                buttonText.text = labelText;
             } else StartCoroutine(AreYouSure());
 
             
@@ -52,7 +66,7 @@ public class DisassembleGun : MonoBehaviour
         areYouSure = true;
         yield return new WaitForSeconds(3f);
         areYouSure = false;
-        buttonText.text = "Desassemble gun";
+        buttonText.text = labelText;
     }
 
 
