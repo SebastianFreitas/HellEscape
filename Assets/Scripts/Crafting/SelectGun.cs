@@ -20,12 +20,9 @@ public class SelectGun : MonoBehaviour
         {
             if ( gun != null)
             {
-                craftingTable.ReadWeapon(collision, gun);
+                craftingTable.ReadWeapon(null, gun);
                 craftingTable.EquipGun(gun, position);
                 generatedGuns.SelectSlot(position);
-                craftingTable.TurnGreen(meshes);
-
-                isSelected = true;
             }
 
 

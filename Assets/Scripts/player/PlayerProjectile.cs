@@ -142,7 +142,7 @@ public class PlayerProjectile : MonoBehaviour
                         break;
                     }
                 }
-                 if (!foundEnemy) rb.AddForce(contact.normal * speed);
+                 if (!foundEnemy) rb.AddForce(contact.normal * bounceSpeed);
                 //if (hitColliders.Length >0) rb.AddForce(hitColliders[0].transform.position - transform.localPosition * speed);
                 //else rb.AddForce(contact.normal * speed);
             } 

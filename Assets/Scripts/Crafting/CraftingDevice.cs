@@ -50,6 +50,7 @@ public class CraftingDevice : GunGenerator
     public AddModUI addMod;
     public RemoveMod removeMod;
     public DisassembleGun deconstructGun;
+    public GeneratedGuns slotGuns;
     // Start is called before the first frame update
     void Start()
     {
@@ -165,8 +166,22 @@ public class CraftingDevice : GunGenerator
 
     internal void ReadWeapon(Collision collision, GunOfAType gunA)
     {
+
+
+
+
+
         if (gunA != null)
         {
+
+            foreach (var currenGun in slotGuns.generatedGuns)
+            {
+                if (currenGun.gun == gunA)
+                {
+                    slotGuns.SelectSlot(currenGun.position);
+                }
+            }
+
             gun = gunA;
             zoneLevel = gun.level;
 
@@ -179,6 +194,14 @@ public class CraftingDevice : GunGenerator
             UpdateStats();
         } else
         gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
+
+        foreach (var currenGun in slotGuns.generatedGuns)
+        {
+            if (currenGun.gun == gun)
+            {
+                slotGuns.SelectSlot(currenGun.position);
+            }
+        }
         zoneLevel = gun.level;
        
         weaponStats.gun = this.gun; 
@@ -216,7 +239,6 @@ public class CraftingDevice : GunGenerator
     {
         foreach (var x in materials) x.material = yellow;
     }
-
     internal void TurnBlue(MeshRenderer[] materials)
     {
         foreach (var x in materials) x.material = blue;

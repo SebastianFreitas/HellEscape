@@ -300,6 +300,7 @@ public class GunGenerator : ModData
         text += gun.GetAverageDamage() + "\n";
         text += gun.GetDamage() + "\n";
         text += gun.GetFireRate() + "\n";
+        text += gun.GetShotSpeed() + "\n";
         text += gun.GetBounces() + "\n";
 
         return text;
