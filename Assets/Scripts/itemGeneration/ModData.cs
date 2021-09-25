@@ -356,6 +356,6 @@ public class GunOfAType
                level == g.level &&
                this.type == g.type &&
                EqualityComparer<HashSet<Mod>>.Default.Equals(mods, g.mods);
-;
+
     }
 }

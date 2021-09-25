@@ -49,20 +49,39 @@ public class DisassembleGun : MonoBehaviour
         {
             if (areYouSure)
             {
-                craftingTable.DisassembleGun();
-                craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                areYouSure = false;
-                buttonText.text = labelText;
-            } else StartCoroutine(AreYouSure());
+                if (isDestroy)
+                {
+                    craftingTable.DestroyGun();
+                    craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+                    areYouSure = false;
+                    buttonText.text = labelText;
+                }
+                else
+                {
+                    if (craftingTable.DisassembleGun())
+                    {
+                        craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+                        areYouSure = false;
+                        buttonText.text = labelText;
+                    } 
+                    else
+                    {
+                        craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+                        StartCoroutine(ChangeText("Full Capacity"));
+                    }
+                }
+
+
+            } else StartCoroutine(ChangeText("Are you sure ?"));
 
             
 
             Destroy(collision.gameObject);
         }
     }
-    private IEnumerator AreYouSure()
+    private IEnumerator ChangeText(string x)
     {
-        buttonText.text = "Are you sure?";
+        buttonText.text = x;
         areYouSure = true;
         yield return new WaitForSeconds(3f);
         areYouSure = false;

@@ -15,16 +15,17 @@ public class PlayerInventory : MonoBehaviour
         inventoryUI = FindObjectOfType<Inventory>(); 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     internal void DisassembleGun(GunOfAType gun)
     {
         UpdateGunParts(gun.level * (gun.mods.Count + 1));
         inventoryUI.RemoveWeapon(gun); 
+    }
+
+    internal void DestroyGun(GunOfAType gun)
+    {
+        UpdateGunParts(gun.level * (gun.mods.Count + 1) * 2);
+        inventoryUI.RemoveWeapon(gun);
     }
 
     internal void UpdateGunParts(int x)

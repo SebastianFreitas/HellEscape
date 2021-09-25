@@ -45,7 +45,11 @@ public class GeneratedGuns : MonoBehaviour
         int i = 0;
         foreach (SelectGun inventorySlot in gunLayout)
         {
-            if (inventorySlot != null)  inventorySlot.gunTypeText.text = "- ";
+            if (inventorySlot != null)
+            {
+                inventorySlot.gun = null;
+                inventorySlot.gunTypeText.text = "- ";
+            }
 
 
             i++;
@@ -55,16 +59,20 @@ public class GeneratedGuns : MonoBehaviour
     public void GetGeneratedGuns()
     {
         int i = 0;
-         slots = craftingTable.playerInventory.inventoryUI.slots;
+        slots = craftingTable.playerInventory.inventoryUI.slots;
         foreach (SelectGun selectX in generatedGuns)
         {
             var currentGun = slots[i].GetComponent<Slot>().gun;
             if (currentGun != null)
             {
                 selectX.gun = currentGun;
-                selectX.gunTypeText.text =  slots[i].GetComponent<Slot>().gun.type.ToString();
+                selectX.gunTypeText.text = slots[i].GetComponent<Slot>().gun.type.ToString();
             }
-            else selectX.gunTypeText.text = "- ";
+            else
+            {
+                selectX.gunTypeText.text = "- ";
+                selectX.gun = null;
+            }
 
             i++;
         }
@@ -100,6 +108,35 @@ public class GeneratedGuns : MonoBehaviour
             }
         }
 
+
+    }
+
+    public void SelectRandomGun()
+    {
+        int i = 1;
+        foreach (SelectGun x in generatedGuns)
+        {
+            if (x.gun != null) SelectSlot(i);
+            break;
+            i++;
+        }
+
+    }
+
+    public bool AddGunToLayouts(GunOfAType gun)
+    {
+        bool worked = false;
+        foreach(SelectGun select in gunLayout)
+        {
+            if (select.gun == null)
+            {
+                select.gun = gun;
+                worked = true;
+                break;
+            }
+        }
+
+        return worked;
 
     }
 }

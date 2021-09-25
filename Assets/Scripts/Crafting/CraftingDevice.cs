@@ -62,11 +62,34 @@ public class CraftingDevice : GunGenerator
         //slotGuns.GetGunLayout();
     }
 
-    internal void DisassembleGun()
+    internal void DestroyGun()
     {
-        playerInventory.DisassembleGun(gun);
-        offline.SetActive(true);
-        online.SetActive(false);
+        playerInventory.DestroyGun(this.gun);
+        slotGuns.SelectRandomGun();
+    }
+
+    public bool DisassembleGun()
+    {
+        var worked = slotGuns.AddGunToLayouts(this.gun);
+
+        if (worked)
+        {
+            //slotGuns.RemoveGun(gun.pos);
+
+            playerInventory.DisassembleGun(gun);
+
+            slotGuns.GetGunLayout();
+            slotGuns.GetGeneratedGuns();
+
+            slotGuns.SelectRandomGun();
+
+            slotGuns.GetGunLayout();
+            slotGuns.GetGeneratedGuns();
+
+
+        }
+
+        return worked;
     }
 
     internal int RemoveRandomMod(int timesUsed)
@@ -172,7 +195,7 @@ public class CraftingDevice : GunGenerator
 
             foreach (var currenGun in slotGuns.generatedGuns)
             {
-                if (currenGun.gun.Equals(gunA))
+                if (currenGun.gun ==gunA)
                 {
                     slotGuns.SelectSlot(currenGun.position);
                 }
@@ -195,7 +218,7 @@ public class CraftingDevice : GunGenerator
 
             foreach (var currenGun in slotGuns.generatedGuns)
             {
-                if (gun.Equals(currenGun.gun))
+                if (currenGun.gun == gun)
                 {
                     slotGuns.SelectSlot(currenGun.position);
                     //break;

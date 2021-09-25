@@ -40,7 +40,6 @@ public class Room : MonoBehaviour
         var x = Random.Range(0, Layouts.Length);
         Layouts[x].SetActive(true);
         var y = Layouts[x].GetComponentsInChildren<Monster>();
-        int i = 0;
         foreach ( Monster z in y)
         {
 
