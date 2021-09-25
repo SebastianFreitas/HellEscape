@@ -49,8 +49,8 @@ public class Monster : MonoBehaviour
         }
     }
 
-  public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
-  {
+    public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
+    {
         var amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
         health -= amount;
 
@@ -61,16 +61,23 @@ public class Monster : MonoBehaviour
         } 
         else
         {
-            var rep = player.transform;
-            rep.LookAt(transform.position);
-            audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
-            var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
-            bloodSplat.Play();
-        }
-  }
+            Bleed();
 
-  void Die()
-   {
+        }
+    }
+
+    private void Bleed()
+    {
+        var rep = player.transform;
+        rep.LookAt(transform.position);
+        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+        var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
+        bloodSplat.Play();
+    }
+
+    void Die()
+    {
+        Bleed();
         var rep = player.transform;
         rep.LookAt(transform.position);
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
@@ -78,7 +85,7 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
         Drop();
         Destroy(gameObject);
-   }
+    }
 
     private void Drop()
     {
@@ -87,43 +94,12 @@ public class Monster : MonoBehaviour
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
             var y = x.GetComponent<Item>();
             y.gun = y.CreateWeapon(level);
+
         }
     }
 
 
 
-    /*
-      IEnumerator fireRateCycle()
-      {
-        yield return new WaitForSeconds(timeBtwShots);
-        canShoot= true;
-      }
 
-          //transform.LookAt(player);
-          //transform.Rotate(new Vector3(-80,0,0));
-
-          if (Vector3.Distance(transform.position, player.position) > stoppingDistance)
-          {
-              transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-          }     
-          else 
-          if(Vector3.Distance(transform.position, player.position) < stoppingDistance && Vector3.Distance(transform.position, player.position) > retreatDistance)
-          {
-              transform.position = transform.position;
-          } 
-          else 
-          if(Vector3.Distance(transform.position, player.position) < retreatDistance)
-          {
-              transform.position = Vector3.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-          }
-
-          if (canShoot)
-          {
-            bullet = Instantiate(projectile, spawn.transform.position, Quaternion.identity);
-            bullet.GetComponent<EnemyProjectile>().damage = damage;
-            bullet.transform.LookAt(player, Vector3.up);
-            canShoot = false;
-            StartCoroutine(fireRateCycle());
-          }*/
 
 }

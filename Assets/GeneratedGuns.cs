@@ -20,6 +20,26 @@ public class GeneratedGuns : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        GetGeneratedGuns();
+
+        GetGunLayout();
+
+        foreach (var currenGun in generatedGuns)
+        {
+            if (currenGun.gun != null)
+            {
+                if (currenGun.gun.Equals(craftingTable.gun))
+                {
+                    SelectSlot(currenGun.position);
+                }
+            }
+
+        }
+
+    }
+
     public void GetGunLayout()
     {
         int i = 0;
@@ -35,7 +55,7 @@ public class GeneratedGuns : MonoBehaviour
     public void GetGeneratedGuns()
     {
         int i = 0;
-        slots = craftingTable.playerInventory.inventoryUI.slots;
+         slots = craftingTable.playerInventory.inventoryUI.slots;
         foreach (SelectGun selectX in generatedGuns)
         {
             var currentGun = slots[i].GetComponent<Slot>().gun;

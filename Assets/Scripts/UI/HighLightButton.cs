@@ -9,20 +9,26 @@ public class HighLightButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
 {
     [SerializeField] TMPro.TextMeshProUGUI buttonText;
 
-    private string formatedString = "{value}";
+    private string labeltext;
+
+    private string unselected;
+    private string selected;
 
     private void Start()
     {
-        formatedString += buttonText.text;
+        labeltext = buttonText.text;
+        unselected = " " + labeltext;
+        selected = "<" + labeltext + ">";
+        buttonText.text = unselected;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        buttonText.text = formatedString.Replace("{value}", "-");
+        buttonText.text = selected;// formatedString.Replace("{value}", "-");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        buttonText.text = formatedString.Replace("{value}", "");
+        buttonText.text = unselected;//formatedString.Replace("{value}", "");
     }
 }

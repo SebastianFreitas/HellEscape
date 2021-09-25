@@ -114,6 +114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   damage: 10
+  player: {fileID: 0}
+  playerMovement: {fileID: 0}
+  rigidBody: {fileID: 0}
   audioSource: {fileID: -7233556720816331346}
   die: {fileID: 8300000, guid: 854803da0d9e3ad4aaa5b54bf747fa4d, type: 3}
   hurts:
@@ -126,6 +129,7 @@ MonoBehaviour:
   drop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
   AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
   AshesDeath: {fileID: 6949414622727591476, guid: 3951fdba16877ec4c869d44b800da58c, type: 3}
+  level: 0
   maxAltitudeJumpDistance: 2
   minAltitudeJumpDistance: 0
   maxWaitingTime: 2.5

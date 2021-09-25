@@ -57,9 +57,10 @@ public class CraftingDevice : GunGenerator
         if (portalOnline) offline.SetActive(true);
         player = transform.GetComponentInParent<Room>().player;
         playerInventory = player.GetComponent<PlayerInventory>();
+
+        //slotGuns.GetGeneratedGuns();
+        //slotGuns.GetGunLayout();
     }
-
-
 
     internal void DisassembleGun()
     {
@@ -166,17 +167,12 @@ public class CraftingDevice : GunGenerator
 
     internal void ReadWeapon(Collision collision, GunOfAType gunA)
     {
-
-
-
-
-
         if (gunA != null)
         {
 
             foreach (var currenGun in slotGuns.generatedGuns)
             {
-                if (currenGun.gun == gunA)
+                if (currenGun.gun.Equals(gunA))
                 {
                     slotGuns.SelectSlot(currenGun.position);
                 }
@@ -192,25 +188,30 @@ public class CraftingDevice : GunGenerator
             guntext.text = gun.text;
             UpdateCrafts();
             UpdateStats();
-        } else
-        gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
-
-        foreach (var currenGun in slotGuns.generatedGuns)
-        {
-            if (currenGun.gun == gun)
-            {
-                slotGuns.SelectSlot(currenGun.position);
-            }
         }
-        zoneLevel = gun.level;
-       
-        weaponStats.gun = this.gun; 
-        weaponStats.ResetUI();
-        weaponStats.UpdateUI();
+        else
+        {
+            gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
 
-        guntext.text = gun.text;
-        UpdateCrafts();
-        UpdateStats();
+            foreach (var currenGun in slotGuns.generatedGuns)
+            {
+                if (gun.Equals(currenGun.gun))
+                {
+                    slotGuns.SelectSlot(currenGun.position);
+                    //break;
+                }
+            }
+            zoneLevel = gun.level;
+       
+            weaponStats.gun = this.gun; 
+            weaponStats.ResetUI();
+            weaponStats.UpdateUI();
+
+            guntext.text = gun.text;
+            UpdateCrafts();
+            UpdateStats();
+        }
+
     }
 
     public IEnumerator HighLight(MeshRenderer[] materials)

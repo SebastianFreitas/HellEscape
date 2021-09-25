@@ -202,7 +202,6 @@ public class GunOfAType
     public int finalBounces;
     public float averageDamage;
 
-
     public float GetShotSpeed()
     {
         return baseshotSpeed * (1 + (increasedshotSpeed / 100));
@@ -349,5 +348,14 @@ public class GunOfAType
                 break;
         }
         return gun;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is GunOfAType g &&
+               level == g.level &&
+               this.type == g.type &&
+               EqualityComparer<HashSet<Mod>>.Default.Equals(mods, g.mods);
+;
     }
 }
