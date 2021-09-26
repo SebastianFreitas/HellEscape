@@ -117,8 +117,9 @@ public class GeneratedGuns : MonoBehaviour
         foreach (SelectGun x in generatedGuns)
         {
             if (x.gun != null) SelectSlot(i);
-            break;
             i++;
+            break;
+            
         }
 
     }
