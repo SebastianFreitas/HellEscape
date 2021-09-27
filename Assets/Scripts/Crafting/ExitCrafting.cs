@@ -12,8 +12,9 @@ public class ExitCrafting : MonoBehaviour
         {
             Destroy(collision.gameObject);
             craftingTable.UpdateCrafts();
-            craftingTable.offline.SetActive(true);
             craftingTable.online.SetActive(false);
+            craftingTable.offline.SetActive(true);
+            
             
             
         }

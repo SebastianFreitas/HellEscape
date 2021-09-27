@@ -142,6 +142,7 @@ public class GunGenerator : ModData
 
         ret.mods = new HashSet<Mod>();
 
+        ret.isBase = true;
         ret.text = CreateGunText(ret);
         ret.finalFireRate = ret.GetFireRate();
         ret.finalDamage = ret.GetDamage();

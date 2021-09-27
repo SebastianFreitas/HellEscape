@@ -202,6 +202,8 @@ public class GunOfAType
     public int finalBounces;
     public float averageDamage;
 
+    public bool isBase = false;
+
     public float GetShotSpeed()
     {
         return baseshotSpeed * (1 + (increasedshotSpeed / 100));

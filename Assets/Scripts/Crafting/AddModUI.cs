@@ -24,7 +24,8 @@ public class AddModUI : MonoBehaviour
 
     public void UpdatePriceText()
     {
-        price.text = formatedString.Replace("{value}", (craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) * timesUsed + "");
+        if (craftingTable.gun.isBase) price.text = formatedString.Replace("{value}", 1000 +"");
+        else price.text = formatedString.Replace("{value}", (craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) * timesUsed + "");
     }
 
     private void OnEnable()

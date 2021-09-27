@@ -17,6 +17,8 @@ public class DisassembleGun : MonoBehaviour
 
     private string formatedString = "{value} parts";
 
+    private bool isCoroutine;
+
     void Start()
     {
         UpdatePriceText();
@@ -38,9 +40,14 @@ public class DisassembleGun : MonoBehaviour
 
     public void UpdatePriceText()
     {
-        var destroy = 1;
-        if (isDestroy) destroy = 2; 
-        parts.text = formatedString.Replace("{value}", (destroy * craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) + "");
+        if (craftingTable.gun.isBase) formatedString.Replace("{value}", 0+ "");
+        else
+        {
+            var destroy = 1;
+            if (isDestroy) destroy = 2; 
+            parts.text = formatedString.Replace("{value}", (destroy * craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) + "");
+        }
+       
     }
 
     void OnCollisionEnter(Collision collision)
@@ -53,37 +60,50 @@ public class DisassembleGun : MonoBehaviour
                 {
                     craftingTable.DestroyGun();
                     craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                    areYouSure = false;
                     buttonText.text = labelText;
                 }
                 else
                 {
-                    if (craftingTable.DisassembleGun())
+                    var result = craftingTable.DisassembleGun();
+                    if (result == 0)
                     {
                         craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                        areYouSure = false;
                         buttonText.text = labelText;
                     } 
-                    else
+                    else if (result == 1)
                     {
                         craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                        StartCoroutine(ChangeText("Full Capacity"));
+                        StartCoroutine(ExceptionMessage("Full Capacity"));
+                    }
+                    else if (result == 2)
+                    {
+                        craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+                        StartCoroutine(ExceptionMessage("Cannot do"));
                     }
                 }
+                areYouSure = false;
 
-
-            } else StartCoroutine(ChangeText("Are you sure ?"));
+            } else if (!isCoroutine) StartCoroutine(ChangeText("Are you sure?"));
 
             
 
             Destroy(collision.gameObject);
         }
     }
+    private IEnumerator ExceptionMessage(string message)
+    {
+        buttonText.text = message;
+        yield return new WaitForSeconds(.3f);
+        buttonText.text = labelText;
+    }
+
     private IEnumerator ChangeText(string x)
     {
         buttonText.text = x;
         areYouSure = true;
-        yield return new WaitForSeconds(3f);
+        isCoroutine = true;
+        yield return new WaitForSecondsRealtime(3f);
+        isCoroutine = false;
         areYouSure = false;
         buttonText.text = labelText;
     }

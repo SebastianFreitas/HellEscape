@@ -46,6 +46,7 @@ public class CraftingDevice : GunGenerator
 
     public bool portalOnline = false;
 
+    internal int pos;
 
     public AddModUI addMod;
     public RemoveMod removeMod;
@@ -68,28 +69,34 @@ public class CraftingDevice : GunGenerator
         slotGuns.SelectRandomGun();
     }
 
-    public bool DisassembleGun()
+    public int DisassembleGun()
     {
+        var x = 0;
+        if (gun.isBase) return 2;
         var worked = slotGuns.AddGunToLayouts(this.gun);
 
         if (worked)
         {
-            //slotGuns.RemoveGun(gun.pos);
-
             playerInventory.DisassembleGun(gun);
 
-            slotGuns.GetGunLayout();
-            slotGuns.GetGeneratedGuns();
-
-            slotGuns.SelectRandomGun();
+            gun = null;
+            slotGuns.generatedGuns[pos].gun = null;
 
             slotGuns.GetGunLayout();
             slotGuns.GetGeneratedGuns();
 
+            if (!(slotGuns.SelectRandomGun()))
+            {
+                slotGuns.SelectSlot(0);
+                Gun y = player.GetComponentInChildren<Gun>();
+                y.EquipBaseGun();
+                ReadWeapon(null, y.gun);
 
-        }
-
-        return worked;
+            }
+            slotGuns.GetGunLayout();
+            slotGuns.GetGeneratedGuns();
+        } else x = 1;
+        return x;
     }
 
     internal int RemoveRandomMod(int timesUsed)
@@ -192,12 +199,12 @@ public class CraftingDevice : GunGenerator
     {
         if (gunA != null)
         {
-
             foreach (var currenGun in slotGuns.generatedGuns)
             {
-                if (currenGun.gun ==gunA)
+                if (currenGun.gun == gunA)
                 {
                     slotGuns.SelectSlot(currenGun.position);
+                    pos = currenGun.position;
                 }
             }
 
@@ -221,7 +228,7 @@ public class CraftingDevice : GunGenerator
                 if (currenGun.gun == gun)
                 {
                     slotGuns.SelectSlot(currenGun.position);
-                    //break;
+                    pos = currenGun.position;
                 }
             }
             zoneLevel = gun.level;

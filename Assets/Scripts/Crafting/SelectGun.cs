@@ -22,7 +22,7 @@ public class SelectGun : MonoBehaviour
             {
                 craftingTable.ReadWeapon(null, gun);
                 craftingTable.EquipGun(gun, position);
-                generatedGuns.SelectSlot(position);
+                //generatedGuns.SelectSlot(position);
             }
 
 

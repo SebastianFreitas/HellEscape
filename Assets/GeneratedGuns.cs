@@ -86,22 +86,23 @@ public class GeneratedGuns : MonoBehaviour
             {
                 x.isSelected = true;
                 craftingTable.TurnGreen(x.meshes);
-            }else
-            if (x.isSelected)
+            }
+            else if (x.isSelected)
             {
                 x.isSelected = false;
                 x.craftingTable.TurnBlue(x.meshes);
                 
             }
         }
+
         foreach (SelectGun x in gunLayout)
         {
             if (x.position == position)
             {
                 x.isSelected = true;
                 craftingTable.TurnGreen(x.meshes);
-            }else
-            if (x.isSelected)
+            }
+            else if (x.isSelected)
             {
                 x.isSelected = false;
                 x.craftingTable.TurnBlue(x.meshes);
@@ -111,16 +112,22 @@ public class GeneratedGuns : MonoBehaviour
 
     }
 
-    public void SelectRandomGun()
+    public bool SelectRandomGun()
     {
         int i = 1;
         foreach (SelectGun x in generatedGuns)
         {
-            if (x.gun != null) SelectSlot(i);
+            if (x.gun != null)
+            {
+                craftingTable.ReadWeapon(null, x.gun);
+                craftingTable.EquipGun(x.gun, i);
+                return true;
+            }
             i++;
-            break;
-            
+           
         }
+
+        return false;
 
     }
 
