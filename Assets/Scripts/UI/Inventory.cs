@@ -6,6 +6,9 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public GameObject[] slots;
+    public GunOfAType[] layouts = new GunOfAType[8];
+
+
     public TextUI fragmentText;
     public int fragments = 0;
 
@@ -14,11 +17,13 @@ public class Inventory : MonoBehaviour
     public GameMan manager;
     private PlayerInventory playerInventory;
 
+    
+
     void Start()
     {
         playerInventory = manager.playerPrefab.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
-        UpdateFragments(playerInventory.gunParts.ToString());
+        SetGunParts(playerInventory.gunParts.ToString());
     }
 
     internal void RemoveWeapon(GunOfAType gun)
@@ -53,7 +58,7 @@ public class Inventory : MonoBehaviour
         else if (Input.GetKeyDown("4")) EquipWeaponShortcut(4);
     }
 
-    public void AddWeapon(GunOfAType gun)
+    public bool AddWeapon(GunOfAType gun)
     {
         var i = 0;
         for (; i < 4; i++)
@@ -61,12 +66,27 @@ public class Inventory : MonoBehaviour
             if (slots[i].GetComponent<Slot>().gun == null)
             {
                 slots[i].GetComponent<Slot>().AddWeapon(gun);
-                break;
+                return true;
             }
         }
+
+        return AddGunLayout(gun);
     }
 
-    public void UpdateFragments(string z)
+    public bool AddGunLayout(GunOfAType gun)
+    {
+        for (int a = 0; a < 8; a++)
+        {
+            if (layouts[a] == null)
+            {
+                layouts[a] = gun;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void SetGunParts(string z)
     {
         fragmentText.UpdateText(z);
     }

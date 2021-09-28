@@ -14,8 +14,8 @@ public class Item : GunGenerator
         {
             hasBeenCollected = true;
             var x = GameObject.FindGameObjectWithTag("Inventory").transform;
-            x.GetComponent<Inventory>().AddWeapon(gun);
-            Destroy(this.gameObject);
+            if (x.GetComponent<Inventory>().AddWeapon(gun)) Destroy(this.gameObject);
+            else hasBeenCollected = false;
         }
     }
 }

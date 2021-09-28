@@ -7,9 +7,12 @@ public class GeneratedGuns : MonoBehaviour
 {
 
     public CraftingDevice craftingTable;
+
     public GameObject[] slots;
+    public GunOfAType[] layoutSlots;
+
     public SelectGun[] generatedGuns;
-    public SelectGun[] gunLayout;
+    public SelectGun[] gunLayouts;
 
 
     void Start()
@@ -43,14 +46,20 @@ public class GeneratedGuns : MonoBehaviour
     public void GetGunLayout()
     {
         int i = 0;
-        foreach (SelectGun inventorySlot in gunLayout)
+        layoutSlots = craftingTable.playerInventory.inventoryUI.layouts;
+        foreach (SelectGun selectX in gunLayouts)
         {
-            if (inventorySlot != null)
+            var currentGun = layoutSlots[i];
+            if (currentGun != null)
             {
-                inventorySlot.gun = null;
-                inventorySlot.gunTypeText.text = "- ";
+                selectX.gun = currentGun;
+                selectX.gunTypeText.text = currentGun.type.ToString();
             }
-
+            else
+            {
+                selectX.gunTypeText.text = "- ";
+                selectX.gun = null;
+            }
 
             i++;
         }
@@ -95,7 +104,7 @@ public class GeneratedGuns : MonoBehaviour
             }
         }
 
-        foreach (SelectGun x in gunLayout)
+        foreach (SelectGun x in gunLayouts)
         {
             if (x.position == position)
             {
@@ -134,7 +143,7 @@ public class GeneratedGuns : MonoBehaviour
     public bool AddGunToLayouts(GunOfAType gun)
     {
         bool worked = false;
-        foreach(SelectGun select in gunLayout)
+        foreach(SelectGun select in gunLayouts)
         {
             if (select.gun == null)
             {

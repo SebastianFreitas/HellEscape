@@ -31,7 +31,7 @@ public class PlayerInventory : MonoBehaviour
     internal void UpdateGunParts(int x)
     {
         gunParts += x;
-        inventoryUI.UpdateFragments(gunParts.ToString());
+        inventoryUI.SetGunParts(gunParts.ToString());
     }
 
     internal void UpdateEquipedGun()
