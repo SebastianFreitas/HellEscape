@@ -208,16 +208,7 @@ public class CraftingDevice : GunGenerator
                 }
             }
 
-            gun = gunA;
-            zoneLevel = gun.level;
-
-            weaponStats.gun = gunA;
-            weaponStats.ResetUI();
-            weaponStats.UpdateUI();
-
-            guntext.text = gun.text;
-            UpdateCrafts();
-            UpdateStats();
+            InsertGun(gunA);
         }
         else
         {
@@ -231,17 +222,25 @@ public class CraftingDevice : GunGenerator
                     pos = currenGun.position;
                 }
             }
-            zoneLevel = gun.level;
-       
-            weaponStats.gun = this.gun; 
-            weaponStats.ResetUI();
-            weaponStats.UpdateUI();
-
-            guntext.text = gun.text;
-            UpdateCrafts();
-            UpdateStats();
+            InsertGun(gun);
         }
 
+    }
+
+    private void InsertGun(GunOfAType gunA)
+    {
+        gun = gunA;
+        zoneLevel = gun.level;
+
+        weaponStats.gun = gunA;
+        weaponStats.ResetUI();
+        weaponStats.UpdateUI();
+
+        guntext.text = gun.text;
+        UpdateCrafts();
+        UpdateStats();
+        slotGuns.GetGunLayout();
+        slotGuns.GetGeneratedGuns();
     }
 
     public IEnumerator HighLight(MeshRenderer[] materials)

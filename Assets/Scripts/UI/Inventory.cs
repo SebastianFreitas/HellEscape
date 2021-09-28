@@ -93,7 +93,7 @@ public class Inventory : MonoBehaviour
 
     public void EquipWeaponShortcut(int number)
     {
-        if (number-1 != previousEquipedGun)
+        if (number-1 != previousEquipedGun && number <5)
         {
             slots[number-1].GetComponent<Slot>().EquipGun();
             if (previousEquipedGun != -1)
