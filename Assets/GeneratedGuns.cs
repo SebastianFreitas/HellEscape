@@ -52,7 +52,6 @@ public class GeneratedGuns : MonoBehaviour
             var currentGun = layoutSlots[i];
             if (currentGun != null)
             {
-                Debug.Log("enfiou");
                 selectX.gun = currentGun;
                 selectX.gunTypeText.text = currentGun.type.ToString();
             }
