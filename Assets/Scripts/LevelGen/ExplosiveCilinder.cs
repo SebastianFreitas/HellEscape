@@ -9,6 +9,14 @@ public class ExplosiveCilinder : PropBehaviour
     public AudioSource audioSource;
     public AudioClip kaboom;
 
+    void Explode()
+    {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        ParticleSystem exp = GetComponent<ParticleSystem>();
+        exp.Play();
+        Destroy(gameObject, exp.main.duration);
+    }
 
     void OnCollisionEnter(Collision other)
     {
@@ -20,7 +28,7 @@ public class ExplosiveCilinder : PropBehaviour
 
     void Explode(Vector3 center, float radius)
     {
-        transform.GetChild(0).GetComponent<ParticleSystem>().Play(true);
+        Explode();
 
         audioSource.PlayOneShot(kaboom,.05f);
 
