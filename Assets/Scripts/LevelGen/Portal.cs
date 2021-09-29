@@ -12,6 +12,9 @@ public class Portal : MonoBehaviour
     public CraftingDevice craftDevice;
 
     public ParticleSystem exp;
+    public GravityPuller gravPull;
+
+    public bool isVoid = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Dude"))
@@ -23,6 +26,11 @@ public class Portal : MonoBehaviour
 
     void OnEnable()
     {
+        if (isVoid)
+        {
+            gravPull.gameObject.SetActive(true);
+        }
+
         if (exp != null)
         {
             exp.gameObject.SetActive(true);
