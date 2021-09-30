@@ -44,6 +44,8 @@ public class PlayerProjectile : MonoBehaviour
     public GameObject coldTrail;
     public GameObject poisonTrail;
 
+
+    public PlayerBasicMovement playerMov;
   
 
 
@@ -109,6 +111,11 @@ public class PlayerProjectile : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (fireDamage > 0)
+        {
+            FireExplode();
+        }
+
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
@@ -117,44 +124,84 @@ public class PlayerProjectile : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (bounces > 0)
+        if (fireDamage > 0)
         {
-            SetVisibility(true);
-
-            var sparkBounce = Instantiate(spark, transform.position, Quaternion.Inverse(transform.rotation));
-            sparkBounce.Play();
-
-            AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
-
-
-            if (bulletGuided > 0)
+            FireExplode();
+        }
+        else 
+        {
+            if (bounces > 0)
             {
-                var foundEnemy = false;
-                Collider[] hitColliders = Physics.OverlapSphere(rb.position, 10f);
-                foreach (var hitCollider in hitColliders)
-                {
+                SetVisibility(true);
 
-                    if (hitCollider.CompareTag("Monster"))
-                    {
-                        foundEnemy = true;
-                        var direction = hitCollider.transform.position - transform.position;
-                        rb.AddForce(direction * speed);
-                        break;
-                    }
+                RicochetSparkAndSound();
+
+                if (bulletGuided > 0)
+                {
+                    bool foundEnemy = GuidedBullet();
+                    if (!foundEnemy) rb.AddForce(contact.normal * bounceSpeed);
                 }
-                 if (!foundEnemy) rb.AddForce(contact.normal * bounceSpeed);
-                //if (hitColliders.Length >0) rb.AddForce(hitColliders[0].transform.position - transform.localPosition * speed);
-                //else rb.AddForce(contact.normal * speed);
-            } 
-            else rb.AddForce(contact.normal * speed);
-            
-            bounces--;
+                else rb.AddForce(contact.normal * bounceSpeed);
+
+                bounces--;
+            }
+        //StartCoroutine(KillBullet());
+
         }
-        else
+    }
+
+    private void FireExplode()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3);
+        foreach (var hitCollider in hitColliders)
         {
-            //StartCoroutine(KillBullet());
-            
+            if (hitCollider.CompareTag("Dude"))
+            {
+                playerMov.AddImpact(hitCollider.transform.position - transform.position, fireDamage);
+                playerMov.StartCoroutine(playerMov.GainSpeed(3));
+               
+                //Destroy(this.gameObject);
+            }
+
+            ExplodeParticule();
         }
+    }
+
+    void ExplodeParticule()
+    {
+        ParticleSystem exp = GetComponent<ParticleSystem>();
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        exp.Play();
+        Destroy(gameObject, exp.main.duration);
+
+    }
+
+
+    private bool GuidedBullet()
+    {
+        var foundEnemy = false;
+        Collider[] hitColliders = Physics.OverlapSphere(rb.position, 10f);
+        foreach (var hitCollider in hitColliders)
+        {
+
+            if (hitCollider.CompareTag("Monster"))
+            {
+                foundEnemy = true;
+                var direction = hitCollider.transform.position - transform.position;
+                rb.AddForce(direction * bounceSpeed);
+                break;
+            }
+        }
+
+        return foundEnemy;
+    }
+
+    private void RicochetSparkAndSound()
+    {
+        var sparkBounce = Instantiate(spark, transform.position, Quaternion.Inverse(transform.rotation));
+        sparkBounce.Play();
+        AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
     }
 
     private IEnumerator KillBullet()

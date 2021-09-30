@@ -46,9 +46,8 @@ public class PlayerBasicMovement : MonoBehaviour
     private bool groundLag;//used to give the player a few frames where he can still jump right after leaving the floor
     private bool fallingAtSomeSpeed = false;
     private bool isGroundedOlder;
+    private float currentSpeed;
 
-
-    
     private void Start()
     {
         if (playerView == null)
@@ -106,9 +105,9 @@ public class PlayerBasicMovement : MonoBehaviour
 
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
-        speed = 12*(1 + increasedSpeed / 100);
+        currentSpeed = speed*(1 + increasedSpeed / 100);
 
-        controller.Move(move * speed  * Time.deltaTime);
+        controller.Move(move * currentSpeed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);
 
         if (impact.magnitude > 0.2) controller.Move(impact * Time.deltaTime);
@@ -137,6 +136,13 @@ public class PlayerBasicMovement : MonoBehaviour
                 inputLocked = false;
             }
         }
+    }
+
+    public IEnumerator GainSpeed(int v)
+    {
+        speed += v;
+        yield return new WaitForSecondsRealtime(3);
+        speed -= v;
     }
 
     void GroundMove()
@@ -248,13 +254,6 @@ public class PlayerBasicMovement : MonoBehaviour
         dir.Normalize();
         if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
         impact += dir.normalized * force / mass;
-    }
-
-    public void AddHighImpact(Vector3 dir)
-    {
-        dir.Normalize();
-        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
-        impact += dir.normalized * 400f / mass;
     }
 
     private void GetInputWASD()

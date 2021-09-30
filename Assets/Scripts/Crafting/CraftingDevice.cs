@@ -80,7 +80,8 @@ public class CraftingDevice : GunGenerator
             playerInventory.DisassembleGun(gun);
 
             gun = null;
-            slotGuns.generatedGuns[pos].gun = null;
+            //slotGuns.generatedGuns[pos].gun = null;
+            
 
             slotGuns.GetGunLayout();
             slotGuns.GetGeneratedGuns();
@@ -199,32 +200,42 @@ public class CraftingDevice : GunGenerator
     {
         if (gunA != null)
         {
-            foreach (var currenGun in slotGuns.generatedGuns)
-            {
-                if (currenGun.gun == gunA)
-                {
-                    slotGuns.SelectSlot(currenGun.position);
-                    pos = currenGun.position;
-                }
-            }
-
-            InsertGun(gunA);
+            ReadPlayerLayouts(gunA);
         }
         else
         {
             gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
 
-            foreach (var currenGun in slotGuns.generatedGuns)
-            {
-                if (currenGun.gun == gun)
-                {
-                    slotGuns.SelectSlot(currenGun.position);
-                    pos = currenGun.position;
-                }
-            }
-            InsertGun(gun);
+            ReadPlayerSlots();
         }
 
+    }
+
+    private void ReadPlayerSlots()
+    {
+        foreach (var currenGun in slotGuns.generatedGuns)
+        {
+            if (currenGun.gun == gun)
+            {
+                slotGuns.SelectSlot(currenGun.position);
+                pos = currenGun.position;
+            }
+        }
+        InsertGun(gun);
+    }
+
+    private void ReadPlayerLayouts(GunOfAType gunA)
+    {
+        foreach (var currenGun in slotGuns.gunLayouts)
+        {
+            if (currenGun.gun == gunA)
+            {
+                slotGuns.SelectSlot(currenGun.position);
+                pos = currenGun.position;
+            }
+        }
+
+        InsertGun(gunA);
     }
 
     private void InsertGun(GunOfAType gunA)

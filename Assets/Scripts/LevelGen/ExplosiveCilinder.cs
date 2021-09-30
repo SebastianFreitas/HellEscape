@@ -9,7 +9,7 @@ public class ExplosiveCilinder : PropBehaviour
     public AudioSource audioSource;
     public AudioClip kaboom;
 
-    void Explode()
+    void ExplodeParticule()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
@@ -28,7 +28,7 @@ public class ExplosiveCilinder : PropBehaviour
 
     void Explode(Vector3 center, float radius)
     {
-        Explode();
+        ExplodeParticule();
 
         audioSource.PlayOneShot(kaboom,.05f);
 

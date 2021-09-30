@@ -140,7 +140,7 @@ public class Gun : MonoBehaviour
         bulletscript.Gun = gunx;
 
         bulletscript.SetStats((int)gunx.increasedRicochetGuide,bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
-
+        bulletscript.playerMov = playerScript;
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
             var pelletRot = realpos;
