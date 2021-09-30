@@ -138,15 +138,14 @@ public class PlayerBasicMovement : MonoBehaviour
         }
     }
 
-    public IEnumerator GainSpeed(int v)
+    public void GainSpeed(int v)
     {
         speed += v;
-        yield return new WaitForSecondsRealtime(3);
-        speed -= v;
     }
 
     void GroundMove()
     {
+        speed = 12;
 
         if (isSideDashing) inputLocked = true;
         else inputLocked = false;

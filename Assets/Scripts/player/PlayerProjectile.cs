@@ -158,7 +158,7 @@ public class PlayerProjectile : MonoBehaviour
             if (hitCollider.CompareTag("Dude"))
             {
                 playerMov.AddImpact(hitCollider.transform.position - transform.position, fireDamage);
-                playerMov.StartCoroutine(playerMov.GainSpeed(3));
+                playerMov.GainSpeed(2);
                
                 //Destroy(this.gameObject);
             }
