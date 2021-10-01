@@ -27,7 +27,7 @@ public class GravityPuller : MonoBehaviour
     {
         var x = Random.Range(.5f,1.5f);
         yield return new WaitForSeconds(.05f);
-        player.AddImpact(new Vector3(0,0.1f,1), 800);
+        player.AddImpact(new Vector3(0,0.1f,1), 1500);
         StartCoroutine(PullPlayer());
     }
 }
