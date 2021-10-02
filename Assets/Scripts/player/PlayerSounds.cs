@@ -8,8 +8,10 @@ public class PlayerSounds : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip dash;
     public AudioClip land;
+    public AudioClip teleportSound;
     public AudioClip[] steps;
     public AudioClip[] hurts;
+    
     public float volume = 0.5f;
     public float nextFootstep = 0;
     public float footstepDelay = .3f;
@@ -28,6 +30,11 @@ public class PlayerSounds : MonoBehaviour
     public void PlayTakeDamageSound()
     {
         audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume + 1);
+    }
+
+    internal void PlayTeleportSound()
+    {
+        audioSource.PlayOneShot(teleportSound, volume*2);
     }
 
     public void PlayFootStepsSound(bool isGrounded, Vector3 moveRaw, bool isSideDashing)

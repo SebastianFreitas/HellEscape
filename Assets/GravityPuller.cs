@@ -16,7 +16,6 @@ public class GravityPuller : MonoBehaviour
     {
         if (other.CompareTag("Dude") && !hasBeen)
         {
-            Debug.Log("yea");
             hasBeen = true;
             StartCoroutine(PullPlayer());
 

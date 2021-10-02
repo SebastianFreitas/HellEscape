@@ -6,6 +6,7 @@ public class Portal : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip openPortalSound;
+    
 
     public Light[] lights;
 
@@ -15,12 +16,17 @@ public class Portal : MonoBehaviour
     public GravityPuller gravPull;
 
     public bool isVoid = false;
+
+    private bool passed = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Dude"))
+        if (other.CompareTag("Dude") && !passed)
         {
-            transform.parent.GetComponent<Room>().UseDoor();
-
+            passed = true;
+            //other.transform.GetComponent<PlayerSounds>().PlayTeleportSound();
+            var room = transform.parent.GetComponent<Room>();
+            room.player.GetComponent<PlayerSounds>().PlayTeleportSound();
+            room.UseDoor();
         }        
     }
 

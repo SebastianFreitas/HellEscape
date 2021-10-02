@@ -10402,7 +10402,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 48
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -12017,7 +12017,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1275545970634226239}
-  - component: {fileID: 7982863085990141627}
   - component: {fileID: 222201175276132240}
   - component: {fileID: 1209158473306384404}
   - component: {fileID: 2646470129748338497}
@@ -12048,68 +12047,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7982863085990141627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5867200448926568734}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6c5b103c6b162c47a45841a9fd48dd0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  controller: {fileID: 222201175276132240}
-  head: {fileID: 5301819808457710860}
-  speed: 12
-  currentSpeed: 12
-  maxSpeed: 30
-  speedModifier: 1
-  speedCounter: 0
-  slopeForce: 6
-  slopeForceRayLength: 1.5
-  gravity: -20
-  jumpHeight: 2.5
-  mass: 3
-  dashForce: 100
-  dashParticleSystem: {fileID: 532060775139320946}
-  JumpDashForce: 50
-  velocity: {x: 0, y: 0, z: 0}
-  dashCooldown: 1
-  inputLocked: 0
-  playerView: {fileID: 8152985570990004033}
-  x: 0
-  z: 0
-  groundCheck: {fileID: 8675176734593606968}
-  groundDistance: 0.3
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
-  isGrounded: 0
-  groundLag: 0
-  fallingAtSomeSpeed: 0
-  audioSource: {fileID: 0}
-  dash: {fileID: 8300000, guid: daafefecf599ce74e97ef78352d14f32, type: 3}
-  jump: {fileID: 8300000, guid: f7722b7efebcc4a4b88f23ed41363cce, type: 3}
-  land: {fileID: 8300000, guid: 55d011fcf523e65459872cf652fb3400, type: 3}
-  teleport: {fileID: 8300000, guid: 9090be79b4d7c9047bccd762aa65b3a2, type: 3}
-  steps:
-  - {fileID: 8300000, guid: 8d538955452150545934ad7cca51303e, type: 3}
-  - {fileID: 8300000, guid: 2a3530962eeb12f49927e2a0241b79cb, type: 3}
-  - {fileID: 8300000, guid: 68d170d18625272438ad1d88b27e40e7, type: 3}
-  - {fileID: 8300000, guid: 7b9c6cf78b2a342499aecd381328b438, type: 3}
-  - {fileID: 8300000, guid: 157cb5e39375a8e46a6c3b8bc37c2eac, type: 3}
-  - {fileID: 8300000, guid: bb7fb057e5d64434e84b6731439b90a7, type: 3}
-  hurts:
-  - {fileID: 8300000, guid: 21404a914667ea141adaa6695bb409ea, type: 3}
-  - {fileID: 8300000, guid: c750501f42b0ede429612cda6d3b6f54, type: 3}
-  - {fileID: 8300000, guid: e609d74c89085d541978a6294aab205b, type: 3}
-  - {fileID: 8300000, guid: de15f1741479ab24ca8804faadee11ec, type: 3}
-  volume: 0.3
-  footstepDelay: 0.35
-  hp: {fileID: 0}
 --- !u!143 &222201175276132240
 CharacterController:
   m_ObjectHideFlags: 0
@@ -12218,6 +12155,7 @@ MonoBehaviour:
   audioSource: {fileID: 6562166649976190261}
   dash: {fileID: 8300000, guid: daafefecf599ce74e97ef78352d14f32, type: 3}
   land: {fileID: 8300000, guid: 55d011fcf523e65459872cf652fb3400, type: 3}
+  teleportSound: {fileID: 8300000, guid: 91ba0721026837045b94cf0569955af4, type: 3}
   steps:
   - {fileID: 8300000, guid: 8d538955452150545934ad7cca51303e, type: 3}
   - {fileID: 8300000, guid: 2a3530962eeb12f49927e2a0241b79cb, type: 3}

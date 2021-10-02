@@ -105,6 +105,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
+
         currentSpeed = speed*(1 + increasedSpeed / 100);
 
         controller.Move(move * currentSpeed * Time.deltaTime);
@@ -152,7 +153,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            Jump();
+            JumpDash(false);//Jump();
             inputLocked = true;
             desiredDirection = new Vector3(xRaw, 0, zRaw);
             groundLag = false;
@@ -191,7 +192,7 @@ public class PlayerBasicMovement : MonoBehaviour
             if (groundLag)
             { //jump normally even while not touched the ground
                 inputLocked = false;
-                Jump();
+                JumpDash(false);//Jump();
                 inputLocked = true;
                 desiredDirection = new Vector3(xRaw, 0, zRaw);
                 groundLag = false;
@@ -199,7 +200,7 @@ public class PlayerBasicMovement : MonoBehaviour
             else if (canDash) //dashJump
             {
                 inputLocked = false; //remove input lock if player dashes/jumps
-                JumpDash();
+                JumpDash(true);
                 inputLocked = true;
             }
         }
@@ -222,17 +223,22 @@ public class PlayerBasicMovement : MonoBehaviour
 
     public void Jump() { velocity.y = Mathf.Sqrt(jumpHeight * -3f * gravity); }
 
-    private void JumpDash()
+    private void JumpDash(bool isDash)
     {
         //dashParticleSystem.Play();
-        playerSound.PlayDashSound();
+        //playerSound.PlayDashSound();
 
         AddImpact(Vector3.up, JumpDashForce);
         JumpInput(3f);
 
-        canDash = false;
-        StartCoroutine(waiterDashCD());
-        StartCoroutine(waiterDashDuration());
+        if (isDash)
+        {
+            playerSound.PlayDashSound();
+            canDash = false;
+            StartCoroutine(waiterDashCD());
+            StartCoroutine(waiterDashDuration());
+        }
+
     }
 
     private void Dash()
