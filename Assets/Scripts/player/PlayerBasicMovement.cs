@@ -67,10 +67,17 @@ public class PlayerBasicMovement : MonoBehaviour
         }
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        
+
         if ((controller.collisionFlags & CollisionFlags.Below) != 0)
         {
             isGrounded = true;// second check to see if its grounded dependign on collisions
             inputLocked = false;
+        }
+        else
+        {
+            inputLocked = true;
+            isGrounded = false;
         }
 
         if (velocity.y < -15) fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
@@ -91,6 +98,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
         MoveState();
         playerSound.PlayFootStepsSound(isGrounded, moveRaw, isSideDashing);
+        if (isGrounded) inputLocked = false;
         isGroundedOlder = isGrounded;
     }
 
@@ -146,6 +154,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void GroundMove()
     {
+        Debug.Log("gounded");
         speed = 12;
 
         if (isSideDashing) inputLocked = true;
@@ -175,6 +184,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void AirMove()
     {
+        Debug.Log("airtime");
         if (!isSideDashing)
         {
             //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
