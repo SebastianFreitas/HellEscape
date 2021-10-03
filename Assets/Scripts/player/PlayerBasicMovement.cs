@@ -66,19 +66,9 @@ public class PlayerBasicMovement : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
         }
 
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        
 
-        if ((controller.collisionFlags & CollisionFlags.Below) != 0)
-        {
-            isGrounded = true;// second check to see if its grounded dependign on collisions
-            inputLocked = false;
-        }
-        else
-        {
-            inputLocked = true;
-            isGrounded = false;
-        }
+        IsGrounded();
+
 
         if (velocity.y < -15) fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
 
@@ -89,6 +79,8 @@ public class PlayerBasicMovement : MonoBehaviour
         }
         else if (isGroundedOlder && !isGrounded) StartCoroutine(waiterGroundLag());
 
+        
+
         GetInputWASD();
 
         if (isGrounded)
@@ -98,7 +90,8 @@ public class PlayerBasicMovement : MonoBehaviour
 
         MoveState();
         playerSound.PlayFootStepsSound(isGrounded, moveRaw, isSideDashing);
-        if (isGrounded) inputLocked = false;
+
+        //if (isGrounded) inputLocked = false;
         isGroundedOlder = isGrounded;
     }
 
@@ -129,8 +122,10 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void Inertia()
     {
+        Debug.Log(inputLocked);
         if (inputLocked)
         {
+            
             if (desiredDirection.z > 0 && zRaw != -1) z = 1f;
             else if (desiredDirection.z < 0 && zRaw != 1) z = -1f;
             else if (desiredDirection.x > 0 && xRaw != -1) x = 1f;
@@ -140,10 +135,11 @@ public class PlayerBasicMovement : MonoBehaviour
               (desiredDirection.z > 0 && zRaw == -1) ||
               (desiredDirection.z < 0 && zRaw == 1) ||
               (desiredDirection.x > 0 && xRaw == -1) ||
-              (desiredDirection.x < 0 && xRaw == 1)) && !isSideDashing)
-            {
-                inputLocked = false;
-            }
+              (desiredDirection.x < 0 && xRaw == 1)) && !isSideDashing) inputLocked = false;
+            
+                
+
+            //if ((desiredDirection.z - zRaw == 0) || (desiredDirection.x - xRaw == 0)) inputLocked = false;
         }
     }
 
@@ -154,11 +150,10 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void GroundMove()
     {
-        Debug.Log("gounded");
         speed = 12;
 
         if (isSideDashing) inputLocked = true;
-        else inputLocked = false;
+        //else inputLocked = false;
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -184,7 +179,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void AirMove()
     {
-        Debug.Log("airtime");
+        
         if (!isSideDashing)
         {
             //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
@@ -194,7 +189,7 @@ public class PlayerBasicMovement : MonoBehaviour
         else
         {
             velocity.y = 0f;//while sidedashing no gravity is applied
-            inputLocked = true;
+            //inputLocked = true;
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -273,13 +268,13 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void GetInputWASD()
     {
-        if (!isSideDashing) //prevents modifiyng movement while Dashing
-        {
+
             x = Input.GetAxis("Horizontal");
             z = Input.GetAxis("Vertical");
+
+
             xRaw = Input.GetAxisRaw("Horizontal");
             zRaw = Input.GetAxisRaw("Vertical");
-        }
     }
 
     private bool OnSlope()
@@ -292,6 +287,25 @@ public class PlayerBasicMovement : MonoBehaviour
         return false;
     }
 
+    private void IsGrounded()
+    {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+
+        if ((controller.collisionFlags & CollisionFlags.Below) != 0)
+        {
+            isGrounded = true;// second check to see if its grounded dependign on collisions
+            //inputLocked = false;
+        }
+        else
+        {
+            //inputLocked = true;
+            isGrounded = false;
+        }
+        if (Physics.Raycast(transform.position, Vector3.down, controller.height / 2 +0.4f))
+            isGrounded = true;
+    }
+
     IEnumerator waiterDashCD()
     {
         yield return new WaitForSeconds(dashCooldown);
@@ -299,7 +313,7 @@ public class PlayerBasicMovement : MonoBehaviour
     }
     IEnumerator waiterDashDuration()
     {
-        yield return new WaitForSeconds(.15f);
+        yield return new WaitForSeconds(.3f);
         isSideDashing = false;
         inputLocked = false;
     }
