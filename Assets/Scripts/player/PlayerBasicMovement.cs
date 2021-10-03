@@ -122,7 +122,6 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void Inertia()
     {
-        Debug.Log(inputLocked);
         if (inputLocked)
         {
             

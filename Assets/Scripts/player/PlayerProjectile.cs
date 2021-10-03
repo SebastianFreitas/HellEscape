@@ -111,10 +111,6 @@ public class PlayerProjectile : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (fireDamage > 0)
-        {
-            FireExplode();
-        }
 
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
@@ -144,8 +140,8 @@ public class PlayerProjectile : MonoBehaviour
                 else rb.AddForce(contact.normal * bounceSpeed);
 
                 bounces--;
-            }
-        //StartCoroutine(KillBullet());
+            } else StartCoroutine(KillBullet());
+        
 
         }
     }

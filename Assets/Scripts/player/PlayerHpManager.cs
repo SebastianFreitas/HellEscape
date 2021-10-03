@@ -42,7 +42,7 @@ public class PlayerHpManager : MonoBehaviour
     {
         canTakeDamage = false;
         
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(.5f);
         canTakeDamage = true;
         
        
