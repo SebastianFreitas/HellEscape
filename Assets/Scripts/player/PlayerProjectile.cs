@@ -32,7 +32,6 @@ public class PlayerProjectile : MonoBehaviour
 
     private GunOfAType gun;
 
-    public FadeTrailBullet trail;
 
     public int fireDamage;
     public int coldDamage;
@@ -46,12 +45,15 @@ public class PlayerProjectile : MonoBehaviour
 
 
     public PlayerBasicMovement playerMov;
+
+    public KillObject exp;
   
 
 
     public GunOfAType Gun { get => gun; set => gun = value; }
 
     internal Transform[] enemies;
+
 
     void Start()
     {
@@ -117,12 +119,14 @@ public class PlayerProjectile : MonoBehaviour
         {
             collision.transform.GetComponent<Monster>().TakeDamage(fireDamage, coldDamage, poisonDamage, physicalDamage);
 
-            Destroy(this.gameObject);
+            StartCoroutine(KillBullet());
         }
 
         if (fireDamage > 0)
         {
+            StartCoroutine(KillBullet());
             FireExplode();
+            
         }
         else 
         {
@@ -165,11 +169,12 @@ public class PlayerProjectile : MonoBehaviour
 
     void ExplodeParticule()
     {
-        ParticleSystem exp = GetComponent<ParticleSystem>();
+        exp.gameObject.SetActive(true);
+        var explode = exp.GetComponent<ParticleSystem>();
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        exp.Play();
-        Destroy(gameObject, exp.main.duration);
+        explode.Play();
+        Destroy(gameObject, explode.main.duration);
 
     }
 
@@ -204,12 +209,23 @@ public class PlayerProjectile : MonoBehaviour
     {
 
         //trail.StartCoroutine(trail.KillTrail());
+        StartCoroutine(physicalTrail.GetComponent<KillObject>().WaitDie(3f));
+        exp.transform.parent = null;
+        
         physicalTrail.transform.parent = null;
+        StartCoroutine(physicalTrail.GetComponent<KillObject>().WaitDie(3f));
+
         fireTrail.transform.parent = null;
+        StartCoroutine(fireTrail.GetComponent<KillObject>().WaitDie(3f));
+
         coldTrail.transform.parent = null;
+        StartCoroutine(coldTrail.GetComponent<KillObject>().WaitDie(3f));
+
         poisonTrail.transform.parent = null;
-        trail.transform.parent = null;
-        this.transform.GetComponent<MeshRenderer>().enabled = false;
+        StartCoroutine(poisonTrail.GetComponent<KillObject>().WaitDie(3f));
+
+
+
         yield return new WaitForSeconds(.5f);
         Destroy(this.gameObject);
     }

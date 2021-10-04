@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class KillObject : MonoBehaviour
 {
-    public float timer; 
+    public float timer;
+    public bool dieOnStart = true;
     void Start()
     {
-        StartCoroutine(WaitDie(timer));
+        if (dieOnStart) StartCoroutine(WaitDie(timer));
     }
 
-    IEnumerator WaitDie(float time)
+    public IEnumerator WaitDie(float time)
     {
         yield return new WaitForSeconds(time);
         Destroy(this.gameObject);
