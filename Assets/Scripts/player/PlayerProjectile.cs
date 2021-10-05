@@ -47,7 +47,8 @@ public class PlayerProjectile : MonoBehaviour
     public PlayerBasicMovement playerMov;
 
     public KillObject exp;
-  
+
+    public GameObject trails;
 
 
     public GunOfAType Gun { get => gun; set => gun = value; }
@@ -209,21 +210,10 @@ public class PlayerProjectile : MonoBehaviour
     {
 
         //trail.StartCoroutine(trail.KillTrail());
-        StartCoroutine(physicalTrail.GetComponent<KillObject>().WaitDie(3f));
-        exp.transform.parent = null;
+        StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
+        if (fireDamage != 0 ) exp.transform.parent = null;
         
-        physicalTrail.transform.parent = null;
-        StartCoroutine(physicalTrail.GetComponent<KillObject>().WaitDie(3f));
-
-        fireTrail.transform.parent = null;
-        StartCoroutine(fireTrail.GetComponent<KillObject>().WaitDie(3f));
-
-        coldTrail.transform.parent = null;
-        StartCoroutine(coldTrail.GetComponent<KillObject>().WaitDie(3f));
-
-        poisonTrail.transform.parent = null;
-        StartCoroutine(poisonTrail.GetComponent<KillObject>().WaitDie(3f));
-
+        trails.transform.parent = null;
 
 
         yield return new WaitForSeconds(.5f);
