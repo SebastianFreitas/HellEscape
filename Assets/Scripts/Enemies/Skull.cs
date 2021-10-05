@@ -25,6 +25,8 @@ public class Skull : Monster
 
     IEnumerator randomJump()
     {
+       // audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+
         action.Play();
         StartCoroutine(AshesWaiter());
 
