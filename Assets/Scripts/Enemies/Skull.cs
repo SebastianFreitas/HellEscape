@@ -30,13 +30,13 @@ public class Skull : Monster
         action.Play();
         StartCoroutine(AshesWaiter());
 
-        Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y - 10f, base.player.transform.position.z);
+        Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
-        Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
+        Vector3 direction_to_player = (playerPos - this.transform.position).normalized; //randomHeight +
 
-        Vector3 randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
+         Vector3 randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
 
-        base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
+        base.rigidBody.AddForce(( direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
 
         var a = Random.Range(minWaitingTime, maxWaitingTime);
         yield return new WaitForSeconds(a);

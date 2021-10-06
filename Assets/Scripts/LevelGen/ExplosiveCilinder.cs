@@ -40,6 +40,8 @@ public class ExplosiveCilinder : PropBehaviour
                 hitCollider.SendMessage("TakeDamage", 50);
                 var direction = hitCollider.transform.position - transform.position;
                 hitCollider.SendMessage("AddHighImpact", direction);
+
+                //hitCollider.GetComponent<>
             }
             else
             if (hitCollider.CompareTag("Monster"))
