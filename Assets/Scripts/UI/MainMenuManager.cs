@@ -16,10 +16,17 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
+        
         if (PlayerPrefs.HasKey("Volume"))
         {
             SetVolume(PlayerPrefs.GetFloat("Volume"));
             volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        }
+
+        if (PlayerPrefs.HasKey("Sensitivity"))
+        {
+            SetSensitivity(PlayerPrefs.GetFloat("Sensitivity"));
+            sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         }
 
         for (int x = 0; x < widths.Count; x++)
@@ -90,10 +97,22 @@ public class MainMenuManager : MonoBehaviour
     }
 
     [SerializeField] Slider volumeSlider;
+    [SerializeField] TMPro.TextMeshProUGUI volumeValue;
 
     public void SetVolume(float volume)
     {
         AudioListener.volume = volume;
         PlayerPrefs.SetFloat("Volume", volume);
+        volumeValue.text = volume.ToString("F2");
+    }
+
+    [SerializeField] Slider sensitivitySlider;
+    [SerializeField] TMPro.TextMeshProUGUI sensitivityValue;
+
+    public void SetSensitivity(float sensitivity)
+    {
+        //AudioListener.volume = sense;
+        PlayerPrefs.SetFloat("Sensitivity", sensitivity);
+        sensitivityValue.text = sensitivity.ToString("F2") ;
     }
 }

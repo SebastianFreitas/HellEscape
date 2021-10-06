@@ -45,12 +45,18 @@ public class MouseLook : MonoBehaviour
       [Header("Smoothing")]
      public    bool        byPassSmoothing    = false;
      public    float        mLambda            = 20F;    //higher = less latency but also less smoothing
-      [Header("Sensitivity")]
-     public    float        hSens            =  4F;
-     public    float        vSens            =  4F;
-     public    BufferV2    mouseBuffer        = new BufferV2();
+    [Header("Sensitivity")]
+    public float hSens;//            = PlayerPrefs.GetFloat("Sensitivity");
+    public float vSens;//            = PlayerPrefs.GetFloat("Sensitivity");
+    public    BufferV2    mouseBuffer        = new BufferV2();
 
-     void Update ()
+    private void Awake()
+    {
+        hSens = PlayerPrefs.GetFloat("Sensitivity");
+        vSens = PlayerPrefs.GetFloat("Sensitivity");
+    }
+
+    void Update ()
      {
          if(controlCursor){    //Cursor Control
              if(  inputActive && Cursor.lockState != CursorLockMode.Locked)  { Cursor.lockState = CursorLockMode.Locked;  }
