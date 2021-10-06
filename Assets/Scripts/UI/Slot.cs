@@ -20,6 +20,8 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     private String gunType;
     private bool equiped = false;
 
+    public int slotNumber;
+
 
     public void Update()
     {
@@ -108,17 +110,20 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     public void OnSelect(BaseEventData eventData)
     {
         ShowGun();
-        UpdateSelectedGunUI();
+        //EquipGun();
+        //UpdateSelectedGunUI();
+        inventory.EquipWeaponShortcut(slotNumber);
     }
 
     public void OnDeselect(BaseEventData eventData)
     {
-        UpdateDeselectedGunUI();
+        //UpdateDeselectedGunUI();
+        //UnEquipGun();
     }
 
     IEnumerator FadeGunText()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         gunDescription.gameObject.SetActive(false);
     }
 }
