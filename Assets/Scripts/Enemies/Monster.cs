@@ -39,6 +39,8 @@ public class Monster : MonoBehaviour
     }
 
 
+
+
     void Update(){
         if (monsterCollider.bounds.Intersects(playerCollider.bounds))
         {

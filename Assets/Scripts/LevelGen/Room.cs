@@ -34,6 +34,11 @@ public class Room : MonoBehaviour
         StartCoroutine(TimerPortalUnlock());
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(WatchEnemies());
+        StartCoroutine(TimerPortalUnlock());
+    }
 
     public void PickLayout()
     {
@@ -98,7 +103,7 @@ public class Room : MonoBehaviour
 
     public void UseDoor()
     {
-        if (!locked) transform.parent.GetComponent<GameMan>().Next(roomType);
+        if (!locked) transform.parent.parent.GetComponent<GameMan>().Next(roomType);
     }
 
     private IEnumerator WatchEnemies()

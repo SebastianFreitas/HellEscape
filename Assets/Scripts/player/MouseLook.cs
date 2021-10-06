@@ -56,6 +56,12 @@ public class MouseLook : MonoBehaviour
         vSens = PlayerPrefs.GetFloat("Sensitivity");
     }
 
+    private void OnEnable()
+    {
+        hSens = PlayerPrefs.GetFloat("Sensitivity");
+        vSens = PlayerPrefs.GetFloat("Sensitivity");
+    }
+
     void Update ()
      {
          if(controlCursor){    //Cursor Control

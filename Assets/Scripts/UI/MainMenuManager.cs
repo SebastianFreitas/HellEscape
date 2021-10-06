@@ -14,9 +14,22 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject canvasGame;
     [SerializeField] GameMan gameManager;
 
+    [SerializeField] GameObject runningGame;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GoToPauseScreen();
+        }
+    }
+
     private void Awake()
     {
-        
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+
         if (PlayerPrefs.HasKey("Volume"))
         {
             SetVolume(PlayerPrefs.GetFloat("Volume"));
@@ -60,13 +73,27 @@ public class MainMenuManager : MonoBehaviour
         mainPanel.SetActive(false);
     }
 
+    public void GoToPauseScreen()
+    {
+
+
+        canvasMenu.SetActive(true);
+        canvasGame.SetActive(false);
+      runningGame.SetActive(false);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 
     public void StartGame()
     {
+
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         canvasMenu.SetActive(false);
         canvasGame.SetActive(true);
+        runningGame.SetActive(true);
         gameManager.enabled = true;
 
     }
@@ -111,8 +138,17 @@ public class MainMenuManager : MonoBehaviour
 
     public void SetSensitivity(float sensitivity)
     {
-        //AudioListener.volume = sense;
         PlayerPrefs.SetFloat("Sensitivity", sensitivity);
         sensitivityValue.text = sensitivity.ToString("F2") ;
+    }
+
+    void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    void ResumeGame()
+    {
+        Time.timeScale = 1;
     }
 }

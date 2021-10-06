@@ -51,11 +51,23 @@ public class Gun : MonoBehaviour
 
     float m_start, m_time;
     int m_fired = 0;
+
     void OnEnable()
     {
         m_start = m_time = Time.time;
         m_time +=0.2f;
 
+
+      StartCoroutine(waiter(1));
+        
+        
+
+    }
+
+    private void OnDisable()
+    {
+        //animator.Update(0f);
+        animator.Rebind();
     }
 
 
@@ -71,6 +83,8 @@ public class Gun : MonoBehaviour
 
         //playerScript.speed *= ((gun.increasedSpeed/100)+1);
     }
+
+
 
     void Update()
     {

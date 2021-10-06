@@ -14,6 +14,11 @@ public class PlayerHpManager : MonoBehaviour
         //hp = GameObject.FindGameObjectsWithTag("HealthBar")[0].transform.GetComponent<HealthBar>();
         hp.SetMaxHealth((int)health);
     }
+
+    private void OnEnable()
+    {
+        StartCoroutine(waiterImmunity());
+    }
     public void TakeDamage(float amount)
     {
         if (canTakeDamage)
@@ -33,7 +38,7 @@ public class PlayerHpManager : MonoBehaviour
 
     void Die()
     {
-        transform.parent.GetComponent<GameMan>().RestartGame();
+        transform.parent.parent.GetComponent<GameMan>().RestartGame();
         Destroy(gameObject);
 
     }

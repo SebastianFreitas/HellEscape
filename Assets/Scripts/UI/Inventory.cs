@@ -25,6 +25,12 @@ public class Inventory : MonoBehaviour
         StartCoroutine(GiveGunToSlots());
         SetGunParts(playerInventory.gunParts.ToString());
     }
+    private void OnEnable()
+    {
+        playerInventory = manager.playerPrefab.GetComponent<PlayerInventory>();
+        StartCoroutine(GiveGunToSlots());
+        SetGunParts(playerInventory.gunParts.ToString());
+    }
 
     internal void RemoveWeapon(GunOfAType gun)
     {

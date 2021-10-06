@@ -57,6 +57,12 @@ public class PlayerBasicMovement : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(waiterDashCD());
+        StartCoroutine(waiterDashDuration());
+    }
+
     void Update()
     {
         /* Ensure that the cursor is locked into the screen */

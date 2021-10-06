@@ -18,9 +18,14 @@ public class Skull : Monster
     {
         base.Start();
         action.Stop();
-        StartCoroutine(waiterStart());
+        
     }
 
+
+    private void OnEnable()
+    {
+        StartCoroutine(waiterStart());
+    }
 
 
     IEnumerator randomJump()
