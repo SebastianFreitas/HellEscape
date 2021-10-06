@@ -82,11 +82,17 @@ public class GameMan : MonoBehaviour
 
         if (type == 1 || type == 2)
         {
-            PlaceRoomAndPlayer(GenerateRoom());
+            StartCoroutine(LoadingScreen());//PlaceRoomAndPlayer(GenerateRoom());
         }
         else PlaceRoomAndPlayer(endRoom);
 
 
+    }
+
+    private IEnumerator LoadingScreen()
+    {
+        yield return new WaitForSeconds(1f);
+        PlaceRoomAndPlayer(GenerateRoom());
     }
 
     public void UnlockDoor()
