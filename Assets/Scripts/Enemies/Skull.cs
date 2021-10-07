@@ -12,12 +12,14 @@ public class Skull : Monster
     [SerializeField] float maxJumpForce;
     [SerializeField] float minJumpForce;
 
-    public ParticleSystem action;
+    public ParticleSystem attack;
 
     new void Start()
     {
+        var x = Random.Range(-2,3);
+        rigidBody.angularVelocity = new Vector3(x,x,x);
         base.Start();
-        action.Stop();
+
         
     }
 
@@ -30,18 +32,15 @@ public class Skull : Monster
 
     IEnumerator randomJump()
     {
-       // audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
-
-        action.Play();
-        StartCoroutine(AshesWaiter());
+        // audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
 
         Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized; //randomHeight +
 
-         Vector3 randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
-
-        base.rigidBody.AddForce(( direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
+         Vector3 randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance));
+        if (Approximately(playerPos, this.transform.position, 2)) StartCoroutine(Attack(direction_to_player, playerPos));
+        else base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
 
         var a = Random.Range(minWaitingTime, maxWaitingTime);
         yield return new WaitForSeconds(a);
@@ -50,16 +49,54 @@ public class Skull : Monster
 
 
     }
-    IEnumerator AshesWaiter()
+
+    private IEnumerator Attack(Vector3 direction_to_player, Vector3 playerPos)
     {
-        yield return new WaitForSeconds(.5f);
-        action.Stop();
+        var x = Random.Range(-10, 10);
+        rigidBody.angularVelocity = new Vector3(x, x, x);
+
+        rigidBody.velocity = Vector3.zero;
+        var rep = player.transform;
+        rep.LookAt(transform.position);
+        //var fury = Instantiate(attack, transform.position, rep.rotation, transform);
+        //fury.Play();
+
+        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume/4);
+        yield return new WaitForSeconds(1f);
+
+        Vector3 playerPoss = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
+
+        Vector3 direction_to_players = (playerPoss - this.transform.position).normalized; //randomHeight +
+        
+        base.rigidBody.AddForce((direction_to_players) * maxJumpForce *3);
+
+        //StartCoroutine(EndFury(fury));
     }
 
+    private IEnumerator EndFury(ParticleSystem fury)
+    {
+        yield return new WaitForSeconds(1f);
+        fury.Stop();
+    }
 
     IEnumerator waiterStart()
     {
         yield return new WaitForSeconds(Random.Range(1, 3));
         StartCoroutine(randomJump());
+    }
+
+    public bool Approximately(Vector3 me, Vector3 other, float allowedDifference)
+    {
+        var dx = me.x - other.x;
+        if (Mathf.Abs(dx) > allowedDifference)
+            return false;
+
+        var dy = me.y - other.y;
+        if (Mathf.Abs(dy) > allowedDifference)
+            return false;
+
+        var dz = me.z - other.z;
+
+        return Mathf.Abs(dz) >= allowedDifference;
     }
 }
