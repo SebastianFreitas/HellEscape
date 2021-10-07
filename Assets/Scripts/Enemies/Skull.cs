@@ -14,13 +14,15 @@ public class Skull : Monster
 
     public ParticleSystem attack;
 
+    bool isLeft;
+
     new void Start()
     {
         var x = Random.Range(-2,3);
         rigidBody.angularVelocity = new Vector3(x,x,x);
         base.Start();
 
-        
+        if (Random.Range(1, 2) == 2) isLeft = true;
     }
 
 
@@ -38,7 +40,10 @@ public class Skull : Monster
 
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized; //randomHeight +
 
-         Vector3 randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance));
+        Vector3 randomHeight;
+        if (isLeft) randomHeight = new Vector3(0, 0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance));
+        else randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
+
         if (Approximately(playerPos, this.transform.position, 2)) StartCoroutine(Attack(direction_to_player, playerPos));
         else base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
 
