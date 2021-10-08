@@ -161,11 +161,12 @@ public class PlayerProjectile : MonoBehaviour
                 playerMov.AddImpact(hitCollider.transform.position - transform.position, fireDamage);
                 playerMov.GainSpeed(2);
                
-                //Destroy(this.gameObject);
+                //
             }
 
             ExplodeParticule();
         }
+        Destroy(this.gameObject);
     }
 
     void ExplodeParticule()
