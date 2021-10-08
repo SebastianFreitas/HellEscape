@@ -47,11 +47,9 @@ public class Room : MonoBehaviour
         var y = Layouts[x].GetComponentsInChildren<Monster>();
         foreach ( Monster z in y)
         {
-
             z.player = this.player;
             z.transform.parent = transform;
             monstersAlive++;
-            //enemies[i] = z.transform;
         }
 
     }
