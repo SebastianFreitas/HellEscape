@@ -34,7 +34,7 @@ public class Skull : Monster
 
     IEnumerator randomJump()
     {
-        // audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+
 
         Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
