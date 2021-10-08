@@ -28,32 +28,7 @@ public class PropBehaviour : MonoBehaviour
     }
 
 
-/*void OnCollisionEnter(Collision other)
-  {
-        //ContactPoint contact = other.contacts[0];
-        if (other.gameObject.CompareTag("Dude"))
-        {
-            Debug.Log("should be working");
-            oldTransform = other.transform.parent;
-            other.transform.parent = transform;
 
-        }
-
-
-  }
-
-  
-void OnCollisionExit(Collision other)
-  {
-        //ContactPoint contact = other.contacts[0];
-        if (other.gameObject.CompareTag("Dude"))
-        {
-            Debug.Log("Out");
-            //other.transform.parent = oldTransform;
-        }
-
-
-  }*/
 
 
 
