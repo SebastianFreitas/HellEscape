@@ -194,7 +194,7 @@ public class PlayerBasicMovement : MonoBehaviour
         else
         {
             velocity.y = 0f;//while sidedashing no gravity is applied
-            //inputLocked = true;
+
         }
 
         if (Input.GetButtonDown("Jump"))
@@ -235,9 +235,6 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void JumpDash(bool isDash)
     {
-        //dashParticleSystem.Play();
-        //playerSound.PlayDashSound();
-
         AddImpact(Vector3.up, JumpDashForce);
         JumpInput(3f);
 
@@ -253,7 +250,6 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void Dash()
     {
-        //dashParticleSystem.Play();
         playerSound.PlayDashSound();
         if (moveRaw == Vector3.zero) AddImpact(transform.forward, 250);
         else AddImpact(moveRaw, 250);
@@ -273,10 +269,8 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void GetInputWASD()
     {
-
             x = Input.GetAxis("Horizontal");
             z = Input.GetAxis("Vertical");
-
 
             xRaw = Input.GetAxisRaw("Horizontal");
             zRaw = Input.GetAxisRaw("Vertical");
