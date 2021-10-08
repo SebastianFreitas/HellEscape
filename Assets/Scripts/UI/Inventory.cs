@@ -106,7 +106,6 @@ public class Inventory : MonoBehaviour
             {
                 var prevGun = slots[previousEquipedGun].GetComponent<Slot>();
                 prevGun.UnEquipGun();
-                //prevGun.UpdateInventoryText();
             
             }
             previousEquipedGun = number - 1;
