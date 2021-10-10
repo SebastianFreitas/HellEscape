@@ -70,9 +70,9 @@ public class PlayerProjectile : MonoBehaviour
 
     private void ConfigureTrails()
     {
-        if (gun.type.Equals(GunType.normal))physicalTrail.GetComponent<TrailRenderer>().time = 0.4f;
+        if (gun.type.Equals(GunType.normal))physicalTrail.GetComponent<TrailRenderer>().time = 0.5f;
         if (gun.type.Equals(GunType.sniper)) physicalTrail.GetComponent<TrailRenderer>().time = 1f;
-        else physicalTrail.GetComponent<TrailRenderer>().time = 0.03f;
+        else physicalTrail.GetComponent<TrailRenderer>().time = 0.1f;
 
         if (fireDamage != 0) fireTrail.SetActive(true);
         if (coldDamage != 0) coldTrail.SetActive(true);

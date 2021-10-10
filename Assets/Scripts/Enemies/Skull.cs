@@ -15,6 +15,7 @@ public class Skull : Monster
     public ParticleSystem attack;
 
     bool isLeft;
+    Vector3 randomHeight;
 
     new void Start()
     {
@@ -22,7 +23,7 @@ public class Skull : Monster
         rigidBody.angularVelocity = new Vector3(x,x,x);
         base.Start();
 
-        if (Random.Range(1, 2) == 2) isLeft = true;
+        //if (Random.Range(1, 2) == 2) isLeft = true;
     }
 
 
@@ -31,7 +32,7 @@ public class Skull : Monster
         StartCoroutine(waiterStart());
     }
 
-
+    
     IEnumerator randomJump()
     {
 
@@ -40,12 +41,12 @@ public class Skull : Monster
 
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized; //randomHeight +
 
-        Vector3 randomHeight;
-        if (isLeft) randomHeight = new Vector3(0, 0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance));
-        else randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
+        
+    randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
 
-        if (Approximately(playerPos, this.transform.position, 2)) StartCoroutine(Attack(direction_to_player, playerPos));
-        else base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
+        //if (Approximately(playerPos, this.transform.position, 2)) StartCoroutine(Attack(direction_to_player, playerPos));
+        //else
+        base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
 
         var a = Random.Range(minWaitingTime, maxWaitingTime);
         yield return new WaitForSeconds(a);
