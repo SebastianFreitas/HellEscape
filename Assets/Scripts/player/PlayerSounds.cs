@@ -32,12 +32,12 @@ public class PlayerSounds : MonoBehaviour
 
     public void PlayTakeDamageSound()
     {
-        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume + 1);
+        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume + .5f);
     }
 
     internal void PlayTeleportSound()
     {
-        audioSource.PlayOneShot(teleportSound, volume*2);
+        audioSource.PlayOneShot(teleportSound, volume + .5f);
     }
 
     public void PlayFootStepsSound(bool isGrounded, Vector3 moveRaw, bool isSideDashing)

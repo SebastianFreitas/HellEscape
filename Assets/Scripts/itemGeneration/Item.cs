@@ -23,11 +23,16 @@ public class Item : GunGenerator
     {
         if (other.CompareTag("Dude") && !hasBeenCollected)
         {
-            AudioSource.PlayClipAtPoint(collected, transform.position, volume+.25f);
-            hasBeenCollected = true;
-            var x = GameObject.FindGameObjectWithTag("Inventory").transform;
-            if (x.GetComponent<Inventory>().AddWeapon(gun)) Destroy(this.gameObject);
-            else hasBeenCollected = false;
+            CollectItem();
         }
+    }
+
+    public void CollectItem()
+    {
+        AudioSource.PlayClipAtPoint(collected, transform.position, volume + .25f);
+        hasBeenCollected = true;
+        var x = GameObject.FindGameObjectWithTag("Inventory").transform;
+        if (x.GetComponent<Inventory>().AddWeapon(gun)) Destroy(this.gameObject);
+        else hasBeenCollected = false;
     }
 }

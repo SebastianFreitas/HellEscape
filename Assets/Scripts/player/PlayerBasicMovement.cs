@@ -47,6 +47,7 @@ public class PlayerBasicMovement : MonoBehaviour
     private bool fallingAtSomeSpeed = false;
     private bool isGroundedOlder;
     private float currentSpeed;
+    private bool isWaiting;
 
     private void Start()
     {
@@ -59,8 +60,12 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine(waiterDashCD());
-        StartCoroutine(waiterDashDuration());
+        if (isWaiting)
+        {
+            StartCoroutine(waiterDashCD());
+            StartCoroutine(waiterDashDuration());
+        }
+
     }
 
     void Update()
@@ -307,8 +312,10 @@ public class PlayerBasicMovement : MonoBehaviour
 
     IEnumerator waiterDashCD()
     {
+        isWaiting = true;
         yield return new WaitForSecondsRealtime(dashCooldown);
         canDash = true;
+        isWaiting = false;
     }
     IEnumerator waiterDashDuration()
     {

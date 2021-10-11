@@ -51,22 +51,18 @@ public class Gun : MonoBehaviour
 
     float m_start, m_time;
     int m_fired = 0;
+    private bool isWaiting;
 
     void OnEnable()
     {
         m_start = m_time = Time.time;
         m_time +=0.2f;
 
-
-      StartCoroutine(waiter(1));
-        
-        
-
+        if (isWaiting) StartCoroutine(waiter(1));
     }
 
     private void OnDisable()
     {
-        //animator.Update(0f);
         animator.Rebind();
     }
 
@@ -176,8 +172,10 @@ public class Gun : MonoBehaviour
     }
 
     IEnumerator waiter(float attackRate){
+        isWaiting = true;
       yield return new WaitForSeconds(attackRate);
       canShoot = true;
+        isWaiting = false;
     }
 
     IEnumerator waiterFlash(){
