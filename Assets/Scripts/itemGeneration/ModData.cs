@@ -9,12 +9,9 @@ public class ModData : MonoBehaviour
                 new Mod(2,5,   "Fire Damage",               Grade.interior, OperatorType.plus,      0,1),
                 new Mod(2,5,   "Cold Damage",               Grade.interior, OperatorType.plus,      0,2),
                 new Mod(2,5,   "Poison Damage",             Grade.interior, OperatorType.plus,      0,3),
-                new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.plus,      0,3),
                 new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.increased, 0,4),
                 new Mod(2,5,   "Critical damage",           Grade.interior, OperatorType.increased, 0,5),
                 
-               
-                //new Mod(5,10,  "Headshot Damage",          grade.interior, operatorType.increased, 0)
 
             };
 
@@ -318,7 +315,7 @@ public class GunOfAType
                 basePhysicalDamage = 50;
                 baseBounces = 5;
                 baseBulletsPerShot = 1;
-                baseshotSpeed = 1500;
+                baseshotSpeed = 3000;
                 basebounceSpeed = 250;
                 break;
 
@@ -327,7 +324,7 @@ public class GunOfAType
                 basePhysicalDamage = 20;
                 baseBounces = 5;
                 baseBulletsPerShot = 8;
-                baseshotSpeed = 1000;
+                baseshotSpeed = 1500;
                 basebounceSpeed = 150;
                 break;
 
@@ -336,7 +333,7 @@ public class GunOfAType
                 basePhysicalDamage = 20;
                 baseBounces = 5;
                 baseBulletsPerShot = 1;
-                baseshotSpeed = 1000;
+                baseshotSpeed = 1500;
                 basebounceSpeed = 150;
                 break;
 
@@ -345,7 +342,7 @@ public class GunOfAType
                 basePhysicalDamage = 200;
                 baseBounces = 10;
                 baseBulletsPerShot = 1;
-                baseshotSpeed = 3000;
+                baseshotSpeed = 6000;
                 basebounceSpeed = 500;
                 break;
         }

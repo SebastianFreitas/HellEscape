@@ -167,6 +167,7 @@ public class Gun : MonoBehaviour
             bulletscript.Gun = gunx;
             bulletscript.initialFade = true;
             bulletscript.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
+            bulletscript.playerMov = playerScript;
         }
 
 
