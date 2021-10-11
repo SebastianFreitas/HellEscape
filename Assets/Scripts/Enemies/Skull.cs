@@ -39,13 +39,12 @@ public class Skull : Monster
 
         Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
-        Vector3 direction_to_player = (playerPos - this.transform.position).normalized; //randomHeight +
+        Vector3 direction_to_player = (playerPos - this.transform.position).normalized; 
 
         
-    randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
+        randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
 
-        //if (Approximately(playerPos, this.transform.position, 2)) StartCoroutine(Attack(direction_to_player, playerPos));
-        //else
+
         base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
 
         var a = Random.Range(minWaitingTime, maxWaitingTime);

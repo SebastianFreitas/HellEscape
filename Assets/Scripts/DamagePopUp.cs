@@ -12,7 +12,8 @@ public class DamagePopUp : MonoBehaviour
     Vector3 targetPoint;
     void Start()
     {
-        GetComponent<Rigidbody>().AddForce(Vector3.up * 30);
+        var x = new Vector3(Random.Range(-.75f,.75f),1,0);
+        GetComponent<Rigidbody>().AddForce(x * 30);
     }
 
 }
