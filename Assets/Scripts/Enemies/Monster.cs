@@ -77,6 +77,7 @@ public class Monster : MonoBehaviour
         var x = Instantiate(dmgPopUp, transform.position, rep.rotation, null);
         //x.gameObject.transform.parent = null;
         x.damageLabel.text = amount.ToString("F0");
+        x.player = rep;
     }
 
     private void Bleed()
