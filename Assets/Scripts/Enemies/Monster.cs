@@ -28,6 +28,8 @@ public class Monster : MonoBehaviour
 
     public int level;
 
+    public DamagePopUp dmgPopUp;
+
 
 
     protected void Start()
@@ -55,7 +57,7 @@ public class Monster : MonoBehaviour
     {
         var amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
         health -= amount;
-
+        DmgPopUp(amount);
         if (health <= 0f )
         {
             transform.parent.GetComponent<Room>().killMonster();
@@ -66,6 +68,15 @@ public class Monster : MonoBehaviour
             Bleed();
 
         }
+    }
+
+    private void DmgPopUp(int amount)
+    {
+        var rep = player.transform;
+        rep.LookAt(transform.position);
+        var x = Instantiate(dmgPopUp, transform.position, rep.rotation, null);
+        //x.gameObject.transform.parent = null;
+        x.damageLabel.text = amount.ToString("F0");
     }
 
     private void Bleed()

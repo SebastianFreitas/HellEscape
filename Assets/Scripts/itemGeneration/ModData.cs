@@ -36,7 +36,7 @@ public class ModData : MonoBehaviour
         };
 
 
-    public static int[] InteriorWeight = { 10, 10, 10, 10, 10, 10};
+    public static int[] InteriorWeight = { 10, 10, 10, 10, 10};
 
     public static int[] ExteriorWeight = { 1, 1, 1, 1};  //
 

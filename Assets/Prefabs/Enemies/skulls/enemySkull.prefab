@@ -130,13 +130,14 @@ MonoBehaviour:
   AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
   AshesDeath: {fileID: 6949414622727591476, guid: 3951fdba16877ec4c869d44b800da58c, type: 3}
   level: 0
+  dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   maxAltitudeJumpDistance: 2
   minAltitudeJumpDistance: 0
   maxWaitingTime: 2.5
   minWaitingTime: 0.75
   maxJumpForce: 1000
   minJumpForce: 450
-  action: {fileID: 2652884577632712213}
+  attack: {fileID: 0}
 --- !u!82 &-7233556720816331346
 AudioSource:
   m_ObjectHideFlags: 0
@@ -651,10 +652,5 @@ PrefabInstance:
 --- !u!4 &5060400832478022441 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 187902203154672392, guid: 1652cce96dbdba04b888303c67371683, type: 3}
-  m_PrefabInstance: {fileID: 4945435832899969057}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2652884577632712213 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6949414622727591476, guid: 1652cce96dbdba04b888303c67371683, type: 3}
   m_PrefabInstance: {fileID: 4945435832899969057}
   m_PrefabAsset: {fileID: 0}
