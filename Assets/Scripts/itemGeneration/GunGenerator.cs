@@ -153,7 +153,7 @@ public class GunGenerator : ModData
     }
     private GunType RandomiseGunType()
     {
-        var x = UnityEngine.Random.Range(0, 3);
+        var x = UnityEngine.Random.Range(0, 4);
 
         GunType ret = GunType.normal;
         switch (x)
