@@ -8,9 +8,9 @@ public class Item : GunGenerator
 
     private bool hasBeenCollected = false;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Bullet") && !hasBeenCollected)
+        if (other.CompareTag("Dude") && !hasBeenCollected)
         {
             hasBeenCollected = true;
             var x = GameObject.FindGameObjectWithTag("Inventory").transform;

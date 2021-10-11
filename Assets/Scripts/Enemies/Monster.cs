@@ -106,6 +106,7 @@ public class Monster : MonoBehaviour
         if (Random.Range(1,20) > 1)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
+            x.transform.parent = transform.parent;
             var y = x.GetComponent<Item>();
             y.gun = y.CreateWeapon(level);
 
