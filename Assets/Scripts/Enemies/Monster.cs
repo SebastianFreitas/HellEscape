@@ -17,7 +17,7 @@ public class Monster : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip die;
     public AudioClip[] hurts;
-    public float volume = 0.5f;
+    public float volume;
 
     public GameObject drop;
 
@@ -34,6 +34,8 @@ public class Monster : MonoBehaviour
 
     protected void Start()
     {
+        volume = PlayerPrefs.GetFloat("Volume");
+
         level = transform.parent.GetComponent<Room>().areaLevel;
         rigidBody = transform.GetComponent<Rigidbody>();
         monsterCollider = rigidBody.GetComponent<Collider>();

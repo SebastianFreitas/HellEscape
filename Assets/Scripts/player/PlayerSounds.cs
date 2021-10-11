@@ -12,10 +12,13 @@ public class PlayerSounds : MonoBehaviour
     public AudioClip[] steps;
     public AudioClip[] hurts;
     
-    public float volume = 0.5f;
+    public float volume;
     public float nextFootstep = 0;
     public float footstepDelay = .3f;
-
+    void Start()
+    {
+        volume = PlayerPrefs.GetFloat("Volume");
+    }
 
     public void PlayDashSound()
     {
