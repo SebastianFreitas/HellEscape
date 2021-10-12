@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour
         SetGunParts(playerInventory.gunParts.ToString());
     }
 
-    internal void RemoveWeapon(GunOfAType gun)
+    internal void RemoveWeapon(GunOfAType gun, bool isAdded)
     {
         foreach(GameObject slot in slots)
         {
@@ -40,6 +40,24 @@ public class Inventory : MonoBehaviour
             if (x.gun == gun) x.DismantleGun();
            
         }
+
+        if (isAdded) AddGunLayout(gun);
+    }
+
+    internal int GetLayoutLength()
+    {
+        int x = 0;
+        foreach (var y in layouts) if (y != null) x++;
+
+        return x;
+    }
+
+    internal int GetSlotsLength()
+    {
+        int x = 0;
+        foreach (var y in slots) if (y.GetComponent<Slot>().gun != null) x++;
+
+        return x;
     }
 
     IEnumerator GiveGunToSlots()

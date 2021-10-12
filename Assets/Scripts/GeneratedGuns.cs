@@ -129,31 +129,11 @@ public class GeneratedGuns : MonoBehaviour
             if (x.gun != null)
             {
                 craftingTable.ReadWeapon(null, x.gun);
-                craftingTable.EquipGun(x.gun, i);
                 return true;
             }
             i++;
-           
         }
-
         return false;
-
     }
 
-    public bool AddGunToLayouts(GunOfAType gun)
-    {
-        bool worked = false;
-        foreach(SelectGun select in gunLayouts)
-        {
-            if (select.gun == null)
-            {
-                select.gun = gun;
-                worked = true;
-                break;
-            }
-        }
-
-        return worked;
-
-    }
 }

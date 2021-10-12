@@ -15,13 +15,13 @@ public class PlayerInventory : MonoBehaviour
     internal void DisassembleGun(GunOfAType gun)
     {
         UpdateGunParts(gun.level * (gun.mods.Count + 1));
-        inventoryUI.RemoveWeapon(gun); 
+        inventoryUI.RemoveWeapon(gun, true); 
     }
 
     internal void DestroyGun(GunOfAType gun)
     {
         UpdateGunParts(gun.level * (gun.mods.Count + 1) * 2);
-        inventoryUI.RemoveWeapon(gun);
+        inventoryUI.RemoveWeapon(gun, false);
     }
 
     internal void UpdateGunParts(int x)
@@ -33,5 +33,10 @@ public class PlayerInventory : MonoBehaviour
     internal void UpdateEquipedGun()
     {
         playerGun.SetBulletStats();
+    }
+
+    internal int GetLayoutLength()
+    {
+        return inventoryUI.GetLayoutLength();
     }
 }

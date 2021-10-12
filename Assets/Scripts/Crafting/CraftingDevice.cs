@@ -67,25 +67,24 @@ public class CraftingDevice : GunGenerator
     internal void DestroyGun()
     {
         playerInventory.DestroyGun(this.gun);
+
+        slotGuns.GetGunLayout();
+        slotGuns.GetGeneratedGuns();
         slotGuns.SelectRandomGun();
     }
 
     public int DisassembleGun()
     {
-        var x = 0;
         if (gun.isBase) return 2;
-        var worked = slotGuns.AddGunToLayouts(this.gun);
 
-        if (worked)
+        if (playerInventory.GetLayoutLength() < 8)
         {
             playerInventory.DisassembleGun(gun);
 
-            gun = null;
-            //slotGuns.generatedGuns[pos].gun = null;
-            
-
             slotGuns.GetGunLayout();
             slotGuns.GetGeneratedGuns();
+
+            gun = null;
 
             if (!(slotGuns.SelectRandomGun()))
             {
@@ -95,10 +94,9 @@ public class CraftingDevice : GunGenerator
                 ReadWeapon(null, y.gun);
 
             }
-            slotGuns.GetGunLayout();
-            slotGuns.GetGeneratedGuns();
-        } else x = 1;
-        return x;
+
+        } else return 1;
+        return 0;
     }
 
     internal int RemoveRandomMod(int timesUsed)

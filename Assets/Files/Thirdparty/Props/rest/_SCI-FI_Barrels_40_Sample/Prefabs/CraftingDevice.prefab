@@ -2856,7 +2856,6 @@ GameObject:
   - component: {fileID: 632325126043384488}
   - component: {fileID: 7485883093929576658}
   - component: {fileID: 2952644299665150485}
-  - component: {fileID: 1255933059632912959}
   m_Layer: 8
   m_Name: DestroyGunPrice
   m_TagString: Untagged
@@ -2878,7 +2877,7 @@ RectTransform:
   - {fileID: 9013791712855806275}
   - {fileID: 5864565761537003109}
   m_Father: {fileID: 2450970534627440196}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 120, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3031,25 +3030,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.42750955, y: 0.2493283, z: 0}
   m_Center: {x: -1.0640923, y: 0.9005835, z: 0.000009946576}
---- !u!114 &1255933059632912959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791862815742837665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a821dd85f5009449a8e33d216d0e35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  craftingTable: {fileID: 9184077425738397379}
-  buttonText: {fileID: 17977399255224524}
-  parts: {fileID: 7485883093929576658}
-  meshes:
-  - {fileID: 2981205068251572503}
-  - {fileID: 9119625217840034947}
-  isDestroy: 1
 --- !u!1 &1927918601442671336
 GameObject:
   m_ObjectHideFlags: 0
@@ -12019,7 +11999,7 @@ RectTransform:
   m_LocalScale: {x: 0.78811854, y: 0.259675, z: 1}
   m_Children: []
   m_Father: {fileID: 2450970534627440196}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14014,6 +13994,7 @@ GameObject:
   - component: {fileID: 6330662350160867078}
   - component: {fileID: 17977399255224524}
   - component: {fileID: 9222761724019862282}
+  - component: {fileID: 75926085632884414}
   m_Layer: 8
   m_Name: DestroyCrafting
   m_TagString: Untagged
@@ -14032,9 +14013,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -2.133}
   m_LocalScale: {x: 0.8006301, y: 0.55018437, z: 1}
   m_Children:
-  - {fileID: 6306456647868972555}
   - {fileID: 4112664901897007451}
   - {fileID: 2918913268308215654}
+  - {fileID: 6306456647868972555}
   m_Father: {fileID: 8706849134538910212}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 120, z: 0}
@@ -14189,6 +14170,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.79671067, y: 0.2493283, z: 0}
   m_Center: {x: -1.3878046, y: 0.9005835, z: 0.000004458178}
+--- !u!114 &75926085632884414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7593970848811118455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a821dd85f5009449a8e33d216d0e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingTable: {fileID: 9184077425738397379}
+  buttonText: {fileID: 17977399255224524}
+  parts: {fileID: 7485883093929576658}
+  meshes:
+  - {fileID: 2209058347563032379}
+  - {fileID: 3208943456137728850}
+  isDestroy: 1
 --- !u!1 &7659279952825708815
 GameObject:
   m_ObjectHideFlags: 0
@@ -15348,7 +15348,7 @@ RectTransform:
   m_LocalScale: {x: 0.78811854, y: 0.259675, z: 1}
   m_Children: []
   m_Father: {fileID: 2450970534627440196}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
