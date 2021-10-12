@@ -20,7 +20,6 @@ public class PlayerInventory : MonoBehaviour
 
     internal void DestroyGun(GunOfAType gun)
     {
-        UpdateGunParts(gun.level * (gun.mods.Count + 1) * 2);
         inventoryUI.RemoveWeapon(gun, false);
     }
 

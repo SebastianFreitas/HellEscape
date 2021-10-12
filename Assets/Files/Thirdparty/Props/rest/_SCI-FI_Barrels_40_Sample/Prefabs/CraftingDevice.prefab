@@ -133,7 +133,7 @@ MonoBehaviour:
   portalOnline: 0
   addMod: {fileID: 5391608549214992405}
   removeMod: {fileID: 1376540095071678778}
-  deconstructGun: {fileID: 6680893626824655316}
+  destroyGun: {fileID: 8519844995350356043}
   slotGuns: {fileID: 3709995227532516419}
 --- !u!1 &137416797050911401
 GameObject:
@@ -1929,9 +1929,9 @@ GameObject:
   - component: {fileID: 519416318681464036}
   - component: {fileID: 6402931723293817877}
   - component: {fileID: 5019887651321923317}
-  - component: {fileID: 6680893626824655316}
+  - component: {fileID: 8519844995350356043}
   m_Layer: 8
-  m_Name: RemoveLayout
+  m_Name: Destroy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2020,7 +2020,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: remove layout
+  m_text: Destroy GUN
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d3961683cf2a4f4285b6b6328e3d6b5, type: 2}
   m_sharedMaterial: {fileID: 4523335791939737096, guid: 6d3961683cf2a4f4285b6b6328e3d6b5, type: 2}
@@ -2105,7 +2105,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7963828, y: 0.2493283, z: 0}
   m_Center: {x: -1.3906094, y: 0.9005835, z: 0.0000044278218}
---- !u!114 &6680893626824655316
+--- !u!114 &8519844995350356043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2114,7 +2114,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1537848446041999720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a821dd85f5009449a8e33d216d0e35, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf0843a0235f9f40ad833f640c48dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
@@ -2123,7 +2123,6 @@ MonoBehaviour:
   meshes:
   - {fileID: 7981646252741859837}
   - {fileID: 5768505443049740174}
-  isDestroy: 0
 --- !u!1 &1558710979405796100
 GameObject:
   m_ObjectHideFlags: 0
@@ -11282,8 +11281,9 @@ GameObject:
   - component: {fileID: 6689687621094722886}
   - component: {fileID: 4450388692957631298}
   - component: {fileID: 919325514617991820}
+  - component: {fileID: 1369240631775960339}
   m_Layer: 8
-  m_Name: Destroy
+  m_Name: Deconstruct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11371,7 +11371,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Destroy
+  m_text: Deconstruct
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d3961683cf2a4f4285b6b6328e3d6b5, type: 2}
   m_sharedMaterial: {fileID: 4523335791939737096, guid: 6d3961683cf2a4f4285b6b6328e3d6b5, type: 2}
@@ -11456,6 +11456,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.42750955, y: 0.2493283, z: 0}
   m_Center: {x: -1.0640923, y: 0.9005835, z: 0.000009946576}
+--- !u!114 &1369240631775960339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288255639358651389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a821dd85f5009449a8e33d216d0e35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingTable: {fileID: 9184077425738397379}
+  buttonText: {fileID: 4450388692957631298}
+  meshes:
+  - {fileID: 8591257470721147029}
+  - {fileID: 5464601886843265006}
 --- !u!1 &6340772907118742428
 GameObject:
   m_ObjectHideFlags: 0
@@ -14001,7 +14018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 65
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2450970534627440196
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14184,11 +14201,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   craftingTable: {fileID: 9184077425738397379}
   buttonText: {fileID: 17977399255224524}
-  parts: {fileID: 7485883093929576658}
   meshes:
   - {fileID: 2209058347563032379}
   - {fileID: 3208943456137728850}
-  isDestroy: 1
 --- !u!1 &7659279952825708815
 GameObject:
   m_ObjectHideFlags: 0

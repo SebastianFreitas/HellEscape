@@ -2,20 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisassembleGun : MonoBehaviour
+public class Destroy : MonoBehaviour
 {
     public CraftingDevice craftingTable;
     [SerializeField] TMPro.TextMeshPro buttonText;
-
+    [SerializeField] TMPro.TextMeshPro parts;
 
     public MeshRenderer[] meshes;
     private bool areYouSure = false;
 
+    private string labelText;
 
-
-    private string labelText = "Deconstruct";
+    private string formatedString = "{value} parts";
 
     private bool isCoroutine;
+
+    void Start()
+    {
+        UpdatePriceText();
+    }
+
+    private void OnEnable()
+    {
+        UpdatePriceText();
+    }
+
+
+
+    public void UpdatePriceText()
+    {
+        if (craftingTable.gun.isBase) formatedString.Replace("{value}", 0 + "");
+        else
+        {
+            parts.text = formatedString.Replace("{value}", (2 * craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) + "");
+        }
+
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -24,37 +46,19 @@ public class DisassembleGun : MonoBehaviour
             if (areYouSure)
             {
 
-                var result = craftingTable.DisassembleGun();
-                if (result == 0)
-                {
+                    craftingTable.DestroyGun();
                     craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
                     buttonText.text = labelText;
-                } 
-                else if (result == 1)
-                {
-                    craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                    StartCoroutine(ExceptionMessage("Full Capacity"));
-                }
-                else if (result == 2)
-                {
-                    craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                    StartCoroutine(ExceptionMessage("Cannot do"));
-                }
-                
+              
                 areYouSure = false;
 
-            } else if (!isCoroutine) StartCoroutine(ChangeText("Are you sure?"));
+            }
+            else if (!isCoroutine) StartCoroutine(ChangeText("Are you sure?"));
 
-            
+
 
             Destroy(collision.gameObject);
         }
-    }
-    private IEnumerator ExceptionMessage(string message)
-    {
-        buttonText.text = message;
-        yield return new WaitForSeconds(.3f);
-        buttonText.text = labelText;
     }
 
     private IEnumerator ChangeText(string x)
