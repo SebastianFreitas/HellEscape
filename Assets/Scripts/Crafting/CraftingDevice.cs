@@ -18,10 +18,7 @@ public class CraftingDevice : GunGenerator
 
     public GameObject move;
 
-    internal void EquipGun(GunOfAType gun, int position)
-    {
-        if (position > 0) playerInventory.inventoryUI.EquipWeaponShortcut(position);
-    }
+
 
     public GameObject craft;
     public GameObject generate;
@@ -72,6 +69,13 @@ public class CraftingDevice : GunGenerator
         slotGuns.SelectRandomGun();
     }
 
+    internal bool GenerateGun()
+    {
+        if (playerInventory.GetGeneratedGunsLength() == 4) return false;
+
+
+        return true;
+    }
     public int DisassembleGun()
     {
         if (gun.isBase) return 2;

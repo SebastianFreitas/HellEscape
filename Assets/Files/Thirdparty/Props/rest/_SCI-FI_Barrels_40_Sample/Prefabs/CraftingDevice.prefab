@@ -14377,6 +14377,7 @@ GameObject:
   - component: {fileID: 5413472201792850391}
   - component: {fileID: 30949631449493307}
   - component: {fileID: 5995472191893473201}
+  - component: {fileID: 5308792606513291078}
   m_Layer: 8
   m_Name: generate
   m_TagString: Untagged
@@ -14551,6 +14552,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.42750955, y: 0.2493283, z: 0}
   m_Center: {x: -1.0640923, y: 0.9005835, z: 0.000009946576}
+--- !u!114 &5308792606513291078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8282471451731761888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29974466a73e967448e26ce48857df80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingTable: {fileID: 9184077425738397379}
+  labelText: {fileID: 30949631449493307}
+  meshes:
+  - {fileID: 3019596061572042238}
+  - {fileID: 3688183107521651008}
 --- !u!1 &8297481636982213510
 GameObject:
   m_ObjectHideFlags: 0

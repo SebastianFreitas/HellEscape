@@ -38,4 +38,9 @@ public class PlayerInventory : MonoBehaviour
     {
         return inventoryUI.GetLayoutLength();
     }
+
+    internal int GetGeneratedGunsLength()
+    {
+        return inventoryUI.GetSlotsLength();
+    }
 }
