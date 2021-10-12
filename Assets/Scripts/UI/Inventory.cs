@@ -21,13 +21,13 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        playerInventory = manager.playerPrefab.GetComponent<PlayerInventory>();
+        playerInventory = manager.player.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
         SetGunParts(playerInventory.gunParts.ToString());
     }
     private void OnEnable()
     {
-        playerInventory = manager.playerPrefab.GetComponent<PlayerInventory>();
+        playerInventory = manager.player.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
         SetGunParts(playerInventory.gunParts.ToString());
     }
@@ -45,13 +45,12 @@ public class Inventory : MonoBehaviour
     IEnumerator GiveGunToSlots()
     {
         yield return new WaitForSeconds(1f);
-        var gun = GameObject.FindWithTag("PlayerGun").transform.GetComponent<Gun>();
-
+       
         for (int i = 0; i < 4; i++)
         {
             var currentSlot = slots[i].GetComponent<Slot>();
             if (currentSlot.gun != null) slots[i].SetActive(true);
-            currentSlot.playerGun = gun;
+
             
         }
     }

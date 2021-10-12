@@ -12,10 +12,16 @@ public class PropBehaviour : MonoBehaviour
 
     void Start()
     {
-        if (trown) transform.Rotate(Random.Range(0,180), Random.Range(0, 180), Random.Range(0, 180));
-        
         rb = GetComponent<Rigidbody>();
-        StartCoroutine(waiterGravity());
+        if (trown)
+        {
+            transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
+
+            rb.AddForce(new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1) * Random.Range(1, 100)));
+        }
+
+
+        //StartCoroutine(waiterGravity());
 
     }
 

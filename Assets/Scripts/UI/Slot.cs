@@ -14,7 +14,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
     public GameObject ButtonGameObject;
 
     public Inventory inventory;
-
+    public GameObject player;
     public Gun playerGun;
 
     private String gunType;
@@ -22,6 +22,10 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public int slotNumber;
 
+    private void OnEnable()
+    {
+        playerGun = player.GetComponentInChildren<Gun>();
+    }
 
     public void Update()
     {

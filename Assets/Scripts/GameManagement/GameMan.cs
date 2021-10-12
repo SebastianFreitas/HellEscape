@@ -13,14 +13,14 @@ public class GameMan : MonoBehaviour
     EndRoom endRoom;
     public Room currentRoom;
 
-    private GameObject player;
+    //private GameObject player;
     private int dificulty = 1;
 
     public string startScene;
 
     [Header("References")]
     public HealthBar hpBar;
-    public GameObject playerPrefab;
+    public GameObject player;
 
     private int currentLevel = 50;
 
@@ -33,10 +33,11 @@ public class GameMan : MonoBehaviour
         currentRoom = Instantiate(startRoomPrefab, runningGame);
         currentRoom.areaLevel = currentLevel;
         currentLevel++;
-     // currentRoom.transform.parent = this.transform;
+        // currentRoom.transform.parent = this.transform;
 
 
-        InstantiatePlayerInRoom(startRoom);
+        PlacePlayerInCurrentRoom();
+
         currentRoom.player = player;
         currentRoom.PickLayout();
         currentRoom.SpawnObjects(dificulty);
@@ -57,20 +58,25 @@ public class GameMan : MonoBehaviour
         currentRoom.PickLayout();
         currentRoom.SpawnObjects(dificulty);
 
+        PlacePlayerInCurrentRoom();
+
+    }
+
+    private void PlacePlayerInCurrentRoom()
+    {
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = currentRoom.playerStart.position;
         player.transform.rotation = currentRoom.playerStart.rotation;
         player.GetComponent<CharacterController>().enabled = true;
-
     }
 
     void InstantiatePlayerInRoom(Room room)
     {
         // Place Player
-        player = Instantiate(playerPrefab, currentRoom.playerStart.position, currentRoom.playerStart.rotation) as GameObject;
-        player.transform.SetParent(runningGame);
-        player.GetComponent<PlayerHpManager>().hp = hpBar;
+        //player = Instantiate(player, currentRoom.playerStart.position, currentRoom.playerStart.rotation) as GameObject;
+        //player.transform.SetParent(runningGame);
+       // player.GetComponent<PlayerHpManager>().hp = hpBar;
     }
 
     public void Next(int type)
