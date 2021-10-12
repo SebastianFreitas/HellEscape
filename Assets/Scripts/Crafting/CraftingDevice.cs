@@ -47,7 +47,6 @@ public class CraftingDevice : GunGenerator
     public bool portalOnline = false;
 
     internal int pos;
-    internal bool isCraftable = true;
 
     public AddModUI addMod;
     public RemoveMod removeMod;
@@ -217,7 +216,8 @@ public class CraftingDevice : GunGenerator
             {
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
-                isCraftable = true;
+                craftingRecipes.SetActive(true);
+                deconstruct.SetActive(true);
             }
         }
         InsertGun(gun);
@@ -232,7 +232,8 @@ public class CraftingDevice : GunGenerator
             {
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
-                isCraftable = true;
+                craftingRecipes.SetActive(true);
+                deconstruct.SetActive(true);
                 break;
             }
         }
@@ -243,7 +244,8 @@ public class CraftingDevice : GunGenerator
             {
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
-                isCraftable = false;
+                craftingRecipes.SetActive(false);
+                deconstruct.SetActive(false);
                 break;
             }
         }

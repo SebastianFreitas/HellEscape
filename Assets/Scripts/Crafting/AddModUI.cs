@@ -35,7 +35,7 @@ public class AddModUI : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet") && craftingTable.isCraftable)
+        if (collision.gameObject.CompareTag("Bullet") )
         {
             var x = craftingTable.AddNewMod(timesUsed);
             if (x == 1)

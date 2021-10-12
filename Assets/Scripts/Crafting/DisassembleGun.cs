@@ -19,7 +19,7 @@ public class DisassembleGun : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet") && craftingTable.isCraftable)
+        if (collision.gameObject.CompareTag("Bullet") )
         {
             if (areYouSure)
             {
