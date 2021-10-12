@@ -10,10 +10,6 @@ public class PlayerInventory : MonoBehaviour
     public Inventory inventoryUI;
 
     public Gun playerGun;
-    void Start()
-    {
-        inventoryUI = FindObjectOfType<Inventory>(); 
-    }
 
 
     internal void DisassembleGun(GunOfAType gun)

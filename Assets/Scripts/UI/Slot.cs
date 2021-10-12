@@ -22,20 +22,18 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public int slotNumber;
 
-    private void OnEnable()
-    {
-        playerGun = player.GetComponentInChildren<Gun>();
-    }
 
     public void Update()
     {
         // Compare selected gameObject with referenced Button gameObject
-        if (EventSystem.current.currentSelectedGameObject == ButtonGameObject)
-        {
-            if (Input.GetKeyDown("e")) GetComponent<Button>().onClick.Invoke();
-            if (Input.GetKeyDown("f")) DismantleGun();
-            if (!gunDescription.isActiveAndEnabled) gunDescription.gameObject.SetActive(true);
-        }
+        //if (EventSystem.current.currentSelectedGameObject == ButtonGameObject)
+        //{
+        //    if (Input.GetKeyDown("e")) GetComponent<Button>().onClick.Invoke();
+        //    if (Input.GetKeyDown("f")) DismantleGun();
+        //    if (!gunDescription.isActiveAndEnabled) gunDescription.gameObject.SetActive(true);
+        //}
+
+        if (equiped && Input.GetKeyDown("v")) ShowGun();
     }
 
 
@@ -88,20 +86,11 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         gunType = gun.type.ToString();
     }
 
-    private void UpdateSelectedGunUI()
-    {
-        if (gun != null) gunTypeText.text = "-> " + gunType;
-        else gunTypeText.text = "-> ";
-    }
 
-    private void UpdateDeselectedGunUI()
-    {
-        if (gun != null) gunTypeText.text = gunType;
-        else gunTypeText.text = "-";
-    }
 
     public void ShowGun()
     {
+
         if (gun != null)
         {
             gunDescription.UpdateText(gun.text);
@@ -127,6 +116,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     IEnumerator FadeGunText()
     {
+        gunDescription.gameObject.SetActive(true);
         yield return new WaitForSeconds(5f);
         gunDescription.gameObject.SetActive(false);
     }
