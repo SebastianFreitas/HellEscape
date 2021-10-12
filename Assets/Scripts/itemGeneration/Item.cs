@@ -29,10 +29,14 @@ public class Item : GunGenerator
 
     public void CollectItem()
     {
-        AudioSource.PlayClipAtPoint(collected, transform.position, volume + .25f);
-        hasBeenCollected = true;
+        
         var x = GameObject.FindGameObjectWithTag("Inventory").transform;
-        if (x.GetComponent<Inventory>().AddWeapon(gun)) Destroy(this.gameObject);
+        if (x.GetComponent<Inventory>().AddWeapon(gun))
+        {
+            AudioSource.PlayClipAtPoint(collected, transform.position, volume + .25f);
+            hasBeenCollected = true;
+            Destroy(this.gameObject);
+        }
         else hasBeenCollected = false;
     }
 }

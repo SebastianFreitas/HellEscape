@@ -18,15 +18,19 @@ public class SelectGun : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            if ( gun != null)
-            {
-                craftingTable.ReadWeapon(null, gun);
-                craftingTable.EquipGun(gun, position);
-                //generatedGuns.SelectSlot(position);
-            }
-
+            Select();
 
             Destroy(collision.gameObject);
+        }
+    }
+
+    public void Select()
+    {
+        if (gun != null)
+        {
+            craftingTable.ReadWeapon(null, gun);
+            //craftingTable.EquipGun(gun, position);
+            //generatedGuns.SelectSlot(position);
         }
     }
 }

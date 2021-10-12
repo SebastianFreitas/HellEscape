@@ -18,7 +18,11 @@ public class InteractBehaviour : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 10f) )
             {
                 //if (hit.transform.CompareTag("Button")) hit.collider.transform.GetComponent<ButtonDoor>().UseDoor();
-                if (hit.transform.CompareTag("Item"))  hit.collider.transform.GetComponent<Item>().CollectItem();
+                if (hit.transform.CompareTag("Item")) hit.collider.transform.GetComponent<Item>().CollectItem();
+                else if (hit.transform.CompareTag("Button"))
+                {
+                    hit.collider.transform.GetComponent<SelectGun>().Select();
+                }
             }
             
         }

@@ -47,6 +47,7 @@ public class CraftingDevice : GunGenerator
     public bool portalOnline = false;
 
     internal int pos;
+    internal bool isCraftable = true;
 
     public AddModUI addMod;
     public RemoveMod removeMod;
@@ -204,9 +205,8 @@ public class CraftingDevice : GunGenerator
         }
         else
         {
-            gun = collision.transform.GetComponent<PlayerProjectile>().Gun;
+            ReadPlayerLayouts(collision.transform.GetComponent<PlayerProjectile>().Gun);
 
-            ReadPlayerSlots();
         }
 
     }
@@ -219,6 +219,7 @@ public class CraftingDevice : GunGenerator
             {
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
+                isCraftable = true;
             }
         }
         InsertGun(gun);
@@ -226,12 +227,26 @@ public class CraftingDevice : GunGenerator
 
     private void ReadPlayerLayouts(GunOfAType gunA)
     {
+
+        foreach (var currenGun in slotGuns.generatedGuns)
+        {
+            if (currenGun.gun == gunA)
+            {
+                slotGuns.SelectSlot(currenGun.position);
+                pos = currenGun.position;
+                isCraftable = true;
+                break;
+            }
+        }
+
         foreach (var currenGun in slotGuns.gunLayouts)
         {
             if (currenGun.gun == gunA)
             {
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
+                isCraftable = false;
+                break;
             }
         }
 

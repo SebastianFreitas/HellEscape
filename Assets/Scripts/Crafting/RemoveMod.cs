@@ -35,7 +35,7 @@ public class RemoveMod : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet") && craftingTable.isCraftable)
         {
 
             var x = craftingTable.RemoveRandomMod(timesUsed);
