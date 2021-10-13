@@ -15,9 +15,9 @@ public class MenuProP : MonoBehaviour
 
     private void StartProp()
     {
-        
-        
 
+
+        //transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
         x = Random.Range(-1f, 1f);
         y = Random.Range(-1f, 1f);
         z = Random.Range(-1f, 1f);
