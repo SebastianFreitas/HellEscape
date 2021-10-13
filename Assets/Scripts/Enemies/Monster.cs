@@ -58,6 +58,7 @@ public class Monster : MonoBehaviour
     public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
     {
         var amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
+        amount +=(int) Random.Range(-amount*.1f, amount * .1f);
         health -= amount;
         DmgPopUp(amount);
         if (health <= 0f )

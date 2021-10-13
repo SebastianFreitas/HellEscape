@@ -6,9 +6,9 @@ public class ModData : MonoBehaviour
 {
     public static Mod[] modsInterior =
             new Mod[]{
-                new Mod(2,5,   "Fire Damage",               Grade.interior, OperatorType.plus,      0,1),
-                new Mod(2,5,   "Cold Damage",               Grade.interior, OperatorType.plus,      0,2),
-                new Mod(2,5,   "Poison Damage",             Grade.interior, OperatorType.plus,      0,3),
+                new Mod(1,3,   "Fire Damage",               Grade.interior, OperatorType.plus,      0,1),
+                new Mod(1,3,   "Cold Damage",               Grade.interior, OperatorType.plus,      0,2),
+                new Mod(1,3,   "Poison Damage",             Grade.interior, OperatorType.plus,      0,3),
                 new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.increased, 0,4),
                 new Mod(2,5,   "Critical damage",           Grade.interior, OperatorType.increased, 0,5),
                 
@@ -17,10 +17,10 @@ public class ModData : MonoBehaviour
 
     public static Mod[] modsExterior =
         new Mod[]{
-                new Mod(1,3,   "Movement Speed",            Grade.exterior, OperatorType.increased, 0,101),
-                new Mod(1,3,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,103),
-                new Mod(1,3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,104),
-                new Mod(1,3,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,105),
+                new Mod(1, 3,   "Movement Speed",            Grade.exterior, OperatorType.increased, 0,101),
+                new Mod(5,10,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,103),
+                new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,104),
+                new Mod(5,10,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,105),
                
             //grande damage
             //grenade area
