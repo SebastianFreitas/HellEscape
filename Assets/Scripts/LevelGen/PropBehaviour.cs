@@ -13,8 +13,8 @@ public class PropBehaviour : MonoBehaviour
         if (trown)
         {
             transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
-
-            transform.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1) * Random.Range(1, 11100)));
+            GetComponent<Rigidbody>().velocity = Random.onUnitSphere * Random.Range(1,30);
+            //transform.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1) * Random.Range(1, 11100)));
         }
 
 
