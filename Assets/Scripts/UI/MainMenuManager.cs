@@ -35,19 +35,27 @@ public class MainMenuManager : MonoBehaviour
             SetVolume(PlayerPrefs.GetFloat("Volume"));
             volumeSlider.value = PlayerPrefs.GetFloat("Volume");
         }
+        else SetVolume(1);
 
         if (PlayerPrefs.HasKey("Sensitivity"))
         {
             SetSensitivity(PlayerPrefs.GetFloat("Sensitivity"));
             sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         }
+        else SetSensitivity(1);
 
         if (PlayerPrefs.HasKey("FOV"))
         {
             SetFov(PlayerPrefs.GetFloat("FOV"));
             fovSlider.value = PlayerPrefs.GetFloat("FOV");
         }
+        else SetFov(90);
 
+        ReadResolution();
+    }
+
+    private void ReadResolution()
+    {
         for (int x = 0; x < widths.Count; x++)
         {
             if (Screen.width == widths[x])
@@ -67,6 +75,7 @@ public class MainMenuManager : MonoBehaviour
             }
         }
     }
+
     public void GoToMain()
     {
         mainPanel.SetActive(true);
