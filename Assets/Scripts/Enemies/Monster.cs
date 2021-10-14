@@ -58,10 +58,10 @@ public class Monster : MonoBehaviour
     public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage, bool isCrit,float critMulti)
     {
         float amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
-        amount +=(int) Random.Range(-amount*.1f, amount * .1f);
+        amount +=(int) Random.Range(-amount*.15f, amount * .15f);
         if (isCrit) amount *= 2+ critMulti/100;
         health -= amount;
-        DmgPopUp(amount);
+        DmgPopUp(amount, isCrit);
         if (health <= 0f )
         {
             transform.parent.GetComponent<Room>().killMonster();
@@ -74,14 +74,16 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void DmgPopUp(float amount)
+    private void DmgPopUp(float amount, bool isCrit)
     {
+        
         var rep = player.transform;
         rep.LookAt(transform.position);
         var x = Instantiate(dmgPopUp, transform.position, rep.rotation, null);
         //x.gameObject.transform.parent = null;
         x.damageLabel.text = amount.ToString("F0");
         x.player = rep;
+        //if (isCrit) x.damageLabel.color = new Color(255f, 0f, 255f, 255f);
     }
 
     private void Bleed()
