@@ -404,7 +404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 113.400024, y: 32.6}
+  m_AnchoredPosition: {x: 113.400024, y: 22.9}
   m_SizeDelta: {x: 174.30591, y: 29.006409}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &75502562
@@ -2541,7 +2541,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1155394516}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: ReturnToMain
         m_Mode: 1
@@ -23060,7 +23060,7 @@ MonoBehaviour:
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
-  m_ClearDepth: 1
+  m_ClearDepth: 0
   m_AllowXRRendering: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
@@ -24163,7 +24163,6 @@ GameObject:
   - component: {fileID: 1155394519}
   - component: {fileID: 1155394518}
   - component: {fileID: 1155394517}
-  - component: {fileID: 1155394516}
   m_Layer: 5
   m_Name: CanvasGame
   m_TagString: Untagged
@@ -24171,23 +24170,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1155394516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1155394515}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bd38fc83a3401e4098a9520d760b96d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainMenuScene: MainMenu
-  pauseMenu: {fileID: 84171576}
-  textureRender: {fileID: 136759970}
-  game: {fileID: 0}
-  isPaused: 0
 --- !u!114 &1155394517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27743,7 +27725,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1155394516}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
