@@ -17,6 +17,7 @@ public class Generate : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        Destroy(collision.gameObject);
         if (collision.gameObject.CompareTag("Bullet"))
         {
 
@@ -29,7 +30,7 @@ public class Generate : MonoBehaviour
             else
             {
                 craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("No modifiers"));
+                StartCoroutine(ExceptionMessage("No Space"));
             }
 
 

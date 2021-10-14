@@ -31,7 +31,7 @@ public class Item : GunGenerator
     {
         
         var x = GameObject.FindGameObjectWithTag("Inventory").transform;
-        if (x.GetComponent<Inventory>().AddWeapon(gun))
+        if (x.GetComponent<Inventory>().AddWeapon(gun, true))
         {
             AudioSource.PlayClipAtPoint(collected, transform.position, volume + .25f);
             hasBeenCollected = true;

@@ -43,4 +43,9 @@ public class PlayerInventory : MonoBehaviour
     {
         return inventoryUI.GetSlotsLength();
     }
+
+    internal void GenerateGun(GunOfAType gun)
+    {
+        inventoryUI.AddWeapon(gun, true);
+    }
 }

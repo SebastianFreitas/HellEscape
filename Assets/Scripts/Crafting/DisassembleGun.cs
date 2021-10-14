@@ -21,31 +21,22 @@ public class DisassembleGun : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet") )
         {
-            if (areYouSure)
+            var result = craftingTable.DisassembleGun();
+            if (result == 0)
             {
-
-                var result = craftingTable.DisassembleGun();
-                if (result == 0)
-                {
-                    craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                    buttonText.text = labelText;
-                } 
-                else if (result == 1)
-                {
-                    craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                    StartCoroutine(ExceptionMessage("Full Capacity"));
-                }
-                else if (result == 2)
-                {
-                    craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                    StartCoroutine(ExceptionMessage("Cannot do"));
-                }
-                
-                areYouSure = false;
-
-            } else if (!isCoroutine) StartCoroutine(ChangeText("Are you sure?"));
-
-            
+                craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+                buttonText.text = labelText;
+            } 
+            else if (result == 1)
+            {
+                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+                StartCoroutine(ExceptionMessage("Full Capacity"));
+            }
+            else if (result == 2)
+            {
+                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+                StartCoroutine(ExceptionMessage("Cannot do"));
+            }
 
             Destroy(collision.gameObject);
         }
@@ -56,17 +47,5 @@ public class DisassembleGun : MonoBehaviour
         yield return new WaitForSeconds(.3f);
         buttonText.text = labelText;
     }
-
-    private IEnumerator ChangeText(string x)
-    {
-        buttonText.text = x;
-        areYouSure = true;
-        isCoroutine = true;
-        yield return new WaitForSecondsRealtime(3f);
-        isCoroutine = false;
-        areYouSure = false;
-        buttonText.text = labelText;
-    }
-
 
 }

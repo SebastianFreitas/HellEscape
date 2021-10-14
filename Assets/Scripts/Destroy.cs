@@ -11,7 +11,7 @@ public class Destroy : MonoBehaviour
     public MeshRenderer[] meshes;
     private bool areYouSure = false;
 
-    private string labelText;
+    private string labelText = "destroy";
 
     private string formatedString = "{value} parts";
 

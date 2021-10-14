@@ -41,6 +41,12 @@ public class Inventory : MonoBehaviour
            
         }
 
+        int i = 0;
+        while (layouts[i] != gun && layouts[i] != null) i++;
+
+        if (i < 8) layouts[i] = null;
+
+
         if (isAdded) AddGunLayout(gun);
     }
 
@@ -81,7 +87,7 @@ public class Inventory : MonoBehaviour
         else if (Input.GetKeyDown("4")) EquipWeaponShortcut(4);
     }
 
-    public bool AddWeapon(GunOfAType gun)
+    public bool AddWeapon(GunOfAType gun, bool canBeLayout)
     {
         var i = 0;
         for (; i < 4; i++)
@@ -93,7 +99,8 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        return AddGunLayout(gun);
+        if (canBeLayout) return AddGunLayout(gun);
+        else return true;
     }
 
     public bool AddGunLayout(GunOfAType gun)

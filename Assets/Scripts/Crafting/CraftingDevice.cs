@@ -73,9 +73,24 @@ public class CraftingDevice : GunGenerator
     {
         if (playerInventory.GetGeneratedGunsLength() == 4) return false;
 
+        DestroyGun();
+
+
+        playerInventory.GenerateGun(gun);
+
+        UpdateInventory();
+
+        slotGuns.SelectRandomGun();
 
         return true;
     }
+
+    private void UpdateInventory()
+    {
+        slotGuns.GetGunLayout();
+        slotGuns.GetGeneratedGuns();
+    }
+
     public int DisassembleGun()
     {
         if (gun.isBase) return 2;
@@ -224,7 +239,7 @@ public class CraftingDevice : GunGenerator
                 deconstruct.SetActive(true);
             }
         }
-        InsertGun(gun);
+        SetGun(gun);
     }
 
     private void ReadPlayerLayouts(GunOfAType gunA)
@@ -238,6 +253,7 @@ public class CraftingDevice : GunGenerator
                 pos = currenGun.position;
                 craftingRecipes.SetActive(true);
                 deconstruct.SetActive(true);
+                generate.SetActive(false);
                 break;
             }
         }
@@ -250,14 +266,15 @@ public class CraftingDevice : GunGenerator
                 pos = currenGun.position;
                 craftingRecipes.SetActive(false);
                 deconstruct.SetActive(false);
+                generate.SetActive(true);
                 break;
             }
         }
 
-        InsertGun(gunA);
+        SetGun(gunA);
     }
 
-    private void InsertGun(GunOfAType gunA)
+    private void SetGun(GunOfAType gunA)
     {
         gun = gunA;
         zoneLevel = gun.level;
