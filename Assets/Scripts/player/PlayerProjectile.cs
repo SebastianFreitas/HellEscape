@@ -37,7 +37,7 @@ public class PlayerProjectile : MonoBehaviour
     public int coldDamage;
     public int poisonDamage;
     public int physicalDamage;
-
+    private float critMulti;
     public GameObject physicalTrail;
     public GameObject fireTrail;
     public GameObject coldTrail;
@@ -101,7 +101,7 @@ public class PlayerProjectile : MonoBehaviour
         StartCoroutine(waiter(10f));
     }
 
-    public void SetStats(int bulletguided,  int bounces, int bulletSpeed, int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
+    public void SetStats(int bulletguided,  int bounces, int bulletSpeed, int fireDamage, int coldDamage, int poisonDamage, int physicalDamage, float critMulti)
     {
         this.bulletGuided = bulletguided;
         this.bounces = bounces;
@@ -110,6 +110,7 @@ public class PlayerProjectile : MonoBehaviour
         this.coldDamage = coldDamage;
         this.poisonDamage = poisonDamage;
         this.physicalDamage = physicalDamage;
+        this.critMulti = critMulti;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -118,7 +119,13 @@ public class PlayerProjectile : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage(fireDamage, coldDamage, poisonDamage, physicalDamage);
+            collision.transform.GetComponent<Monster>().TakeDamage(fireDamage, coldDamage, poisonDamage, physicalDamage, false, critMulti);
+
+            StartCoroutine(KillBullet());
+        }
+        else if (collision.gameObject.CompareTag("MonsterHead"))
+        {
+            collision.transform.GetComponent<Monster>().TakeDamage(fireDamage, coldDamage, poisonDamage, physicalDamage, true, critMulti);
 
             StartCoroutine(KillBullet());
         }

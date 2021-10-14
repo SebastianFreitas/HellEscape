@@ -98,7 +98,7 @@ public class Gun : MonoBehaviour
         }
         if (Input.GetButton("Fire1") && canShoot)
         {
-            
+            canShoot = false;
             Shoot(1 / gun.finalFireRate, 1);
         }
     }
@@ -149,7 +149,7 @@ public class Gun : MonoBehaviour
         bulletscript.initialFade = true;
         bulletscript.Gun = gunx;
 
-        bulletscript.SetStats((int)gunx.increasedRicochetGuide,bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
+        bulletscript.SetStats((int)gunx.increasedRicochetGuide,bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
         bulletscript.playerMov = playerScript;
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
@@ -162,7 +162,7 @@ public class Gun : MonoBehaviour
             bulletscript = bullet.GetComponent<PlayerProjectile>();
             bulletscript.Gun = gunx;
             bulletscript.initialFade = true;
-            bulletscript.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage);
+            bulletscript.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
             bulletscript.playerMov = playerScript;
         }
 

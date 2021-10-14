@@ -55,10 +55,11 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage)
+    public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage, bool isCrit,float critMulti)
     {
-        var amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
+        float amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
         amount +=(int) Random.Range(-amount*.1f, amount * .1f);
+        if (isCrit) amount *= 2+ critMulti/100;
         health -= amount;
         DmgPopUp(amount);
         if (health <= 0f )
@@ -73,7 +74,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void DmgPopUp(int amount)
+    private void DmgPopUp(float amount)
     {
         var rep = player.transform;
         rep.LookAt(transform.position);
