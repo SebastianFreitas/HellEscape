@@ -42,6 +42,12 @@ public class MainMenuManager : MonoBehaviour
             sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         }
 
+        if (PlayerPrefs.HasKey("FOV"))
+        {
+            SetFov(PlayerPrefs.GetFloat("FOV"));
+            fovSlider.value = PlayerPrefs.GetFloat("FOV");
+        }
+
         for (int x = 0; x < widths.Count; x++)
         {
             if (Screen.width == widths[x])
@@ -140,6 +146,15 @@ public class MainMenuManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("Sensitivity", sensitivity);
         sensitivityValue.text = sensitivity.ToString("F2") ;
+    }
+
+    [SerializeField] Slider fovSlider;
+    [SerializeField] TMPro.TextMeshProUGUI fovValue;
+
+    public void SetFov(float valueFov)
+    {
+        PlayerPrefs.SetFloat("FOV", valueFov);
+        fovValue.text = valueFov.ToString("F0");
     }
 
     void PauseGame()

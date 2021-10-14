@@ -54,12 +54,16 @@ public class MouseLook : MonoBehaviour
     {
         hSens = PlayerPrefs.GetFloat("Sensitivity");
         vSens = PlayerPrefs.GetFloat("Sensitivity");
+
+        targetTrans.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
     }
 
     private void OnEnable()
     {
         hSens = PlayerPrefs.GetFloat("Sensitivity");
         vSens = PlayerPrefs.GetFloat("Sensitivity");
+
+        targetTrans.GetComponent<Camera>().fieldOfView = PlayerPrefs.GetFloat("FOV");
     }
 
     void Update ()
@@ -76,7 +80,7 @@ public class MouseLook : MonoBehaviour
      }
 
      //consider late Update for applying the rotation if your game needs it (e.g. if camera parents are rotated in Update for some reason)
-     void LateUpdate() 
+     void LateUpdate()
      {
          targetTrans.rotation        = Quaternion.Euler( mouseBuffer.curAbs );
      }
