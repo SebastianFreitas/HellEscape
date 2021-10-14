@@ -119,13 +119,13 @@ public class PlayerProjectile : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage(fireDamage, coldDamage, poisonDamage, physicalDamage, false, critMulti);
+            collision.transform.GetComponent<Monster>().TakeDamage( physicalDamage, false, critMulti);
 
             StartCoroutine(KillBullet());
         }
         else if (collision.gameObject.CompareTag("MonsterHead"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage(fireDamage, coldDamage, poisonDamage, physicalDamage, true, critMulti);
+            collision.transform.GetComponent<Monster>().TakeDamage( physicalDamage, true, critMulti);
 
             StartCoroutine(KillBullet());
         }
@@ -166,9 +166,12 @@ public class PlayerProjectile : MonoBehaviour
             if (hitCollider.CompareTag("Dude"))
             {
                 playerMov.AddImpact(hitCollider.transform.position - transform.position, fireDamage);
-                playerMov.GainSpeed(2);
+                //playerMov.GainSpeed(2);
                
                 //
+            }else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
+            {
+                hitCollider.GetComponent<Monster>().TakeDamage(fireDamage, false, 0);
             }
 
             ExplodeParticule();

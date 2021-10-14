@@ -55,9 +55,9 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int fireDamage, int coldDamage, int poisonDamage, int physicalDamage, bool isCrit,float critMulti)
+    public void TakeDamage(int damage, bool isCrit,float critMulti)
     {
-        float amount = fireDamage + coldDamage + poisonDamage + physicalDamage;
+        float amount = damage;
         amount +=(int) Random.Range(-amount*.15f, amount * .15f);
         if (isCrit) amount *= 2+ critMulti/100;
         health -= amount;
