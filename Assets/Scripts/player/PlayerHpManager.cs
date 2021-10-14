@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHpManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerHpManager : MonoBehaviour
     public HealthBar hp;
     private bool canTakeDamage = true;
     public PlayerSounds playerSounds;
+
+    public GameObject bloodScreen;
 
     void Start()
     {
@@ -23,6 +26,7 @@ public class PlayerHpManager : MonoBehaviour
     {
         if (canTakeDamage)
         {
+            StartCoroutine(BloodScreen());
             StartCoroutine(waiterImmunity());
             playerSounds.PlayTakeDamageSound();
 
@@ -43,13 +47,20 @@ public class PlayerHpManager : MonoBehaviour
 
     }
 
+    IEnumerator BloodScreen()
+    {
+      bloodScreen.GetComponent<RawImage>().enabled = true;
+      yield return new WaitForSeconds(.2f);
+      bloodScreen.GetComponent<RawImage>().enabled = false;
+    }
+
     IEnumerator waiterImmunity()
     {
         canTakeDamage = false;
-        
+
         yield return new WaitForSeconds(.5f);
         canTakeDamage = true;
-        
-       
+
+
     }
 }
