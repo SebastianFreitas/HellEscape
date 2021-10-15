@@ -25,6 +25,8 @@ public class Destroy : MonoBehaviour
     private void OnEnable()
     {
         UpdatePriceText();
+        isCoroutine = false;
+        areYouSure = false;
     }
 
 
@@ -43,22 +45,23 @@ public class Destroy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            if (areYouSure)
-            {
-
-                    craftingTable.DestroyGun();
-                    craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                    buttonText.text = labelText;
-              
-                areYouSure = false;
-
-            }
-            else if (!isCoroutine) StartCoroutine(ChangeText("Are you sure?"));
-
-
+            Function();
 
             Destroy(collision.gameObject);
         }
+    }
+
+    public void Function()
+    {
+        if (areYouSure)
+        {
+            craftingTable.DestroyGun();
+            craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+            buttonText.text = labelText;
+            areYouSure = false;
+
+        }
+        else if (!isCoroutine) StartCoroutine(ChangeText("Are you sure?"));
     }
 
     private IEnumerator ChangeText(string x)

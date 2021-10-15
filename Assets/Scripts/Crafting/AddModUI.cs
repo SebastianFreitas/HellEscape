@@ -37,24 +37,30 @@ public class AddModUI : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet") )
         {
-            var x = craftingTable.AddNewMod(timesUsed);
-            if (x == 1)
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                timesUsed++;
-                craftingTable.UpdateCrafts();
-            }
-            else if (x == -1)
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("Not ENough parts"));
-
-            } else
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("full capacity"));
-            }
+            Function();
             Destroy(collision.gameObject);
+        }
+    }
+
+    public void Function()
+    {
+        var x = craftingTable.AddNewMod(timesUsed);
+        if (x == 1)
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+            timesUsed++;
+            craftingTable.UpdateCrafts();
+        }
+        else if (x == -1)
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+            StartCoroutine(ExceptionMessage("Not ENough parts"));
+
+        }
+        else
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+            StartCoroutine(ExceptionMessage("full capacity"));
         }
     }
 

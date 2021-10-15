@@ -23,6 +23,35 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponent<SelectGun>().Select();
                 }
+                else if (hit.transform.CompareTag("AddMod"))
+                {
+                    Debug.Log("ue");
+                    hit.collider.transform.GetComponent<AddModUI>().Function();
+                }
+                else if (hit.transform.CompareTag("RemoveMod"))
+                {
+                    hit.collider.transform.GetComponent<RemoveMod>().Function();
+                }
+                else if (hit.transform.CompareTag("DestroyGun"))
+                {
+                    hit.collider.transform.GetComponent<Destroy>().Function();
+                }
+                else if (hit.transform.CompareTag("Deconstruct"))
+                {
+                    hit.collider.transform.GetComponent<DisassembleGun>().Function();
+                }
+                else if (hit.transform.CompareTag("Generate"))
+                {
+                    hit.collider.transform.GetComponent<Generate>().Function();
+                }
+                else if (hit.transform.CompareTag("Exit"))
+                {
+                    hit.collider.transform.GetComponent<ExitCrafting>().Function();
+                }
+                else if (hit.transform.CompareTag("CraftingDevice"))
+                {
+                    hit.collider.transform.GetComponent<CraftingDevice>().TurnOn();
+                }
             }
             
         }

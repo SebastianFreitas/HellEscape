@@ -55,6 +55,7 @@ public class CraftingDevice : GunGenerator
         if (portalOnline) offline.SetActive(true);
         player = transform.GetComponentInParent<Room>().player;
         playerInventory = player.GetComponent<PlayerInventory>();
+        gun = CreateWeaponEmpty();
 
         //slotGuns.GetGeneratedGuns();
         //slotGuns.GetGunLayout();
@@ -73,7 +74,7 @@ public class CraftingDevice : GunGenerator
     {
         if (playerInventory.GetGeneratedGunsLength() == 4) return false;
 
-        DestroyGun();
+        playerInventory.inventoryUI.RemoveLayout(gun);
 
 
         playerInventory.GenerateGun(gun);
@@ -199,17 +200,26 @@ public class CraftingDevice : GunGenerator
 
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        ContactPoint contact = collision.contacts[0];
-        if (collision.gameObject.CompareTag("Bullet") && portalOnline)
-        {
-            ReadWeapon(collision, null);
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    ContactPoint contact = collision.contacts[0];
+    //    if (collision.gameObject.CompareTag("Bullet") && portalOnline)
+    //    {
+    //        ReadWeapon(collision, null);
 
+    //        TurnOn();
+    //    }
+
+
+    //}
+
+    public void TurnOn()
+    {
+        if (portalOnline)
+        {
             offline.SetActive(false);
             online.SetActive(true);
         }
-
 
     }
 

@@ -106,6 +106,7 @@ public class Gun : MonoBehaviour
     internal void EquipBaseGun()
     {
         gun = gunGen.CreateWeaponEmpty();
+        playerScript.increasedSpeed = gun.increasedSpeed;
 
         SetBulletStats();
 

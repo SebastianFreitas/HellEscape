@@ -167,11 +167,14 @@ public class PlayerProjectile : MonoBehaviour
             {
                 playerMov.AddImpact(hitCollider.transform.position - transform.position, fireDamage);
                 //playerMov.GainSpeed(2);
-               
-                //
-            }else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
+            }
+            else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
             {
                 hitCollider.GetComponent<Monster>().TakeDamage(fireDamage, false, 0);
+            }
+            else if (hitCollider.CompareTag("Prop"))
+            {
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
 
             ExplodeParticule();

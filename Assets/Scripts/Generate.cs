@@ -20,22 +20,24 @@ public class Generate : MonoBehaviour
         Destroy(collision.gameObject);
         if (collision.gameObject.CompareTag("Bullet"))
         {
-
-            if (craftingTable.GenerateGun())
-            {
-
-                craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                craftingTable.UpdateCrafts();
-            }
-            else
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("No Space"));
-            }
-
-
+            Function();
 
             Destroy(collision.gameObject);
+        }
+    }
+
+    public void Function()
+    {
+        if (craftingTable.GenerateGun())
+        {
+
+            craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+            craftingTable.UpdateCrafts();
+        }
+        else
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+            StartCoroutine(ExceptionMessage("No Space"));
         }
     }
 

@@ -21,26 +21,32 @@ public class DisassembleGun : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet") )
         {
-            var result = craftingTable.DisassembleGun();
-            if (result == 0)
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-                buttonText.text = labelText;
-            } 
-            else if (result == 1)
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("Full Capacity"));
-            }
-            else if (result == 2)
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("Cannot do"));
-            }
+            Function();
 
             Destroy(collision.gameObject);
         }
     }
+
+    public void Function()
+    {
+        var result = craftingTable.DisassembleGun();
+        if (result == 0)
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+            buttonText.text = labelText;
+        }
+        else if (result == 1)
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+            StartCoroutine(ExceptionMessage("Full Capacity"));
+        }
+        else if (result == 2)
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+            StartCoroutine(ExceptionMessage("Cannot do"));
+        }
+    }
+
     private IEnumerator ExceptionMessage(string message)
     {
         buttonText.text = message;

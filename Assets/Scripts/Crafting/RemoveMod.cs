@@ -37,31 +37,33 @@ public class RemoveMod : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet") )
         {
-
-            var x = craftingTable.RemoveRandomMod(timesUsed);
-            if (x == 0)
-            {
-              
-                craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
-
-                timesUsed++;
-                craftingTable.UpdateCrafts();
-            }
-            else if (x == 2)
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("Not ENough parts"));
-
-            }
-            else
-            {
-                craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-                StartCoroutine(ExceptionMessage("No modifiers"));
-            }
-
-          
+            Function();
 
             Destroy(collision.gameObject);
+        }
+    }
+
+    public void Function()
+    {
+        var x = craftingTable.RemoveRandomMod(timesUsed);
+        if (x == 0)
+        {
+
+            craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
+
+            timesUsed++;
+            craftingTable.UpdateCrafts();
+        }
+        else if (x == 2)
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+            StartCoroutine(ExceptionMessage("Not ENough parts"));
+
+        }
+        else
+        {
+            craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
+            StartCoroutine(ExceptionMessage("No modifiers"));
         }
     }
 

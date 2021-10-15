@@ -31,31 +31,42 @@ public class WeaponStatsCrafting : MonoBehaviour
         var i = 0;
         var e = 0;
         var s = 0;
-        foreach (Mod mod in gun.mods)
+        if (gun != null)
         {
-            if (mod.grade.Equals(Grade.interior))
-            {
-                valuesInterior[i].text = mod.text;
-                tiers[i].text = "tier "+mod.tier.ToString();
-                mods[i].SetActive(true);
-                i++;
-            }else if (mod.grade.Equals(Grade.exterior))
-            {
-                valuesExterior[e].text = mod.text;
-                tiers[e+2].text = "tier " + mod.tier.ToString();
-                mods[e+2].SetActive(true);
-                e++;
-            }
+            foreach (Mod mod in gun.mods)
+                    {
+                        if (mod.grade.Equals(Grade.interior))
+                        {
+                            valuesInterior[i].text = mod.text;
+                            tiers[i].text = "tier "+mod.tier.ToString();
+                            mods[i].SetActive(true);
+                            i++;
+                        }else if (mod.grade.Equals(Grade.exterior))
+                        {
+                            valuesExterior[e].text = mod.text;
+                            tiers[e+2].text = "tier " + mod.tier.ToString();
+                            mods[e+2].SetActive(true);
+                            e++;
+                        }
 
-            else if (mod.grade.Equals(Grade.special))
-            {
-                valuesSpecial[s].text = mod.text;
-                tiers[s+4].text = "tier " + mod.tier.ToString();
-                mods[s+4].SetActive(true);
-                s++;
-            }
+                        else if (mod.grade.Equals(Grade.special))
+                        {
+                            valuesSpecial[s].text = mod.text;
+                            tiers[s+4].text = "tier " + mod.tier.ToString();
+                            mods[s+4].SetActive(true);
+                            s++;
+                        }
 
+                    }
         }
+        else
+        {
+            foreach(var x in mods)
+            {
+                x.SetActive(false);
+            }
+        }
+        
     }
 
 }

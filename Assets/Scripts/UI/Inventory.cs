@@ -34,20 +34,27 @@ public class Inventory : MonoBehaviour
 
     internal void RemoveWeapon(GunOfAType gun, bool isAdded)
     {
-        foreach(GameObject slot in slots)
+        foreach (GameObject slot in slots)
         {
             var x = slot.GetComponent<Slot>();
             if (x.gun == gun) x.DismantleGun();
-           
+
         }
 
-        int i = 0;
-        while (layouts[i] != gun && layouts[i] != null) i++;
-
-        if (i < 8) layouts[i] = null;
-
-
         if (isAdded) AddGunLayout(gun);
+    }
+
+    public bool RemoveLayout(GunOfAType gun)
+    {
+        for (int a = 0; a < 8; a++)
+        {
+            if (layouts[a] == gun)
+            {
+                layouts[a] = null;
+                return true;
+            }
+        }
+        return false;
     }
 
     internal int GetLayoutLength()
