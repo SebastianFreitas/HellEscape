@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
 
 
     public TextUI fragmentText;
+    public TextUI layoutsText;
     public int fragments = 0;
 
     private int previousEquipedGun = -1;
@@ -24,12 +25,27 @@ public class Inventory : MonoBehaviour
         playerInventory = manager.player.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
         SetGunParts(playerInventory.gunParts.ToString());
+        SetGunLayouts();
     }
+
+    private void SetGunLayouts()
+    {
+        var x = "";
+        var i = GetLayoutLength();
+        while (i != 0)
+        {
+            x += "|";
+            i--;
+        }
+        layoutsText.UpdateText(x);
+    }
+
     private void OnEnable()
     {
         playerInventory = manager.player.GetComponent<PlayerInventory>();
         StartCoroutine(GiveGunToSlots());
         SetGunParts(playerInventory.gunParts.ToString());
+        SetGunLayouts();
     }
 
     internal void RemoveWeapon(GunOfAType gun, bool isAdded)
@@ -51,6 +67,7 @@ public class Inventory : MonoBehaviour
             if (layouts[a] == gun)
             {
                 layouts[a] = null;
+                SetGunLayouts();
                 return true;
             }
         }
@@ -117,6 +134,7 @@ public class Inventory : MonoBehaviour
             if (layouts[a] == null)
             {
                 layouts[a] = gun;
+                SetGunLayouts();
                 return true;
             }
         }

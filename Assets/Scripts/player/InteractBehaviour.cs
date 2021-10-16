@@ -26,7 +26,6 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("AddMod"))
                 {
-                    Debug.Log("ue");
                     hit.collider.transform.GetComponent<AddModUI>().Function();
                 }
                 else if (hit.transform.CompareTag("RemoveMod"))
