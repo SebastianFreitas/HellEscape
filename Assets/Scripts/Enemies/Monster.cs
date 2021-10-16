@@ -29,8 +29,7 @@ public class Monster : MonoBehaviour
     public int level;
 
     public DamagePopUp dmgPopUp;
-
-
+    private bool died = false;
 
     protected void Start()
     {
@@ -97,13 +96,15 @@ public class Monster : MonoBehaviour
 
     void Die()
     {
+        
         Bleed();
         var rep = player.transform;
         rep.LookAt(transform.position);
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         var bloodSplat = Instantiate(AshesDeath, transform.position, rep.rotation);
         bloodSplat.Play();
-        Drop();
+        if (!died) Drop();
+        died = true;
         Destroy(gameObject);
     }
 

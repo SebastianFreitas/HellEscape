@@ -108,7 +108,7 @@ public class Room : MonoBehaviour
     {
         
         yield return new WaitForSeconds(2f);
-        if (monstersAlive == 0)
+        if (monstersAlive <= 0)
         {
             locked = false;
             portal.SetActive(true);
