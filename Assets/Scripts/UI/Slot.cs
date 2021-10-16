@@ -33,7 +33,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
         //    if (!gunDescription.isActiveAndEnabled) gunDescription.gameObject.SetActive(true);
         //}
 
-        if (equiped && Input.GetKeyDown("v")) ShowGun();
+        if (equiped && Input.GetKeyDown("tab")) ShowGun();
     }
 
 
