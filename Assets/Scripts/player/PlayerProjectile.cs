@@ -54,10 +54,14 @@ public class PlayerProjectile : MonoBehaviour
     public GunOfAType Gun { get => gun; set => gun = value; }
 
     internal Transform[] enemies;
-
+    private float newSizeMulti;
 
     void Start()
     {
+        newSizeMulti  = (1 + gun.increasedBulletSize / 100);
+        //transform.localScale = new Vector3(newSizeMulti, newSizeMulti, newSizeMulti);
+        transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
+
         SetVisibility(false);
         rb = GetComponent<Rigidbody>();
         ConfigureTrails();
@@ -70,13 +74,27 @@ public class PlayerProjectile : MonoBehaviour
 
     private void ConfigureTrails()
     {
-        if (gun.type.Equals(GunType.normal))physicalTrail.GetComponent<TrailRenderer>().time = 0.5f;
-        if (gun.type.Equals(GunType.sniper)) physicalTrail.GetComponent<TrailRenderer>().time = 1f;
-        else physicalTrail.GetComponent<TrailRenderer>().time = 0.1f;
+        //if (gun.type.Equals(GunType.normal))physicalTrail.GetComponent<TrailRenderer>().time = 0.5f;
+        //if (gun.type.Equals(GunType.sniper)) physicalTrail.GetComponent<TrailRenderer>().time = 1f;
+        //else physicalTrail.GetComponent<TrailRenderer>().time = 0.1f;
 
-        if (fireDamage != 0) fireTrail.SetActive(true);
-        if (coldDamage != 0) coldTrail.SetActive(true);
-        if (poisonDamage != 0) poisonTrail.SetActive(true);
+        physicalTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
+
+        if (fireDamage != 0)
+        {
+            fireTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
+            fireTrail.SetActive(true);
+        }
+        if (coldDamage != 0) 
+        {
+            coldTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
+            coldTrail.SetActive(true);
+        }
+        if (poisonDamage != 0)
+        {
+            poisonTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
+            poisonTrail.SetActive(true);
+        }
     }
 
     private void SetVisibility(bool onOff)
@@ -228,7 +246,7 @@ public class PlayerProjectile : MonoBehaviour
         
         trails.transform.parent = null;
 
-
+        Debug.Log(transform.localScale);
         yield return new WaitForSeconds(.5f);
         Destroy(this.gameObject);
     }

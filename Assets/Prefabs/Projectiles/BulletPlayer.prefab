@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7691487182087920641}
   - component: {fileID: 4441181378661258463}
   - component: {fileID: 1033672427497998982}
-  - component: {fileID: 1605158293263861965}
+  - component: {fileID: 7899105574160987302}
   m_Layer: 11
   m_Name: BulletPlayer
   m_TagString: Bullet
@@ -31,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312125936527058168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.006, z: -0.0014}
+  m_LocalPosition: {x: 0.012, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 702625581204814086}
@@ -2217,7 +2217,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 653b6d9335ae4b547aa811147fc9c90b, type: 2}
+  - {fileID: 2100000, guid: c3ff567654e895b43a6aad40c1406303, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2392,7 +2392,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!135 &1605158293263861965
+--- !u!135 &7899105574160987302
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2403,8 +2403,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.05
-  m_Center: {x: 0, y: 0.05, z: 0}
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &394431594628725333
 GameObject:
   m_ObjectHideFlags: 0
@@ -2527,7 +2527,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2536,7 +2536,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.005153656
-        value: 0.109085575
+        value: 0.0011296421
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2544,8 +2544,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5051575
-        value: 0.038965404
+        time: 0.067503184
+        value: 0.21509764
         inSlope: -0.4008557
         outSlope: -0.4008557
         tangentMode: 0
@@ -2639,7 +2639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1966749029145872479}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.046000004, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 702625581204814086}
@@ -2686,7 +2686,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1
+  m_Time: 0.2
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2695,7 +2695,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.005153656
-        value: 0.109085575
+        value: 0.0011296421
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2703,22 +2703,22 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5051575
-        value: 0.038965404
-        inSlope: -0.4008557
-        outSlope: -0.4008557
+        time: 0.05478054
+        value: 0.22077946
+        inSlope: -0.08735844
+        outSlope: -0.08735844
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.50000286
-        outWeight: 0.45360827
+        outWeight: 0.12779252
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: 0
-        outSlope: 0
+        inSlope: -0.22329545
+        outSlope: -0.22329545
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0
+        inWeight: 0.13459992
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -17403,7 +17403,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -17412,7 +17412,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.005153656
-        value: 0.109085575
+        value: 0.0011296421
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -17420,8 +17420,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5051575
-        value: 0.038965404
+        time: 0.067503184
+        value: 0.21509764
         inSlope: -0.4008557
         outSlope: -0.4008557
         tangentMode: 0
@@ -17563,7 +17563,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.5
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -17572,7 +17572,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.005153656
-        value: 0.109085575
+        value: 0.0011296421
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -17580,8 +17580,8 @@ TrailRenderer:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.5051575
-        value: 0.038965404
+        time: 0.067503184
+        value: 0.21509764
         inSlope: -0.4008557
         outSlope: -0.4008557
         tangentMode: 0

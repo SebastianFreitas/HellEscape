@@ -96,6 +96,9 @@ public class GunGenerator : ModData
             case "Critical Damage":
                 ret.increasedCriticalDamage += newMod.upperBound;
                 break;
+            case "Bullet Size":
+                ret.increasedBulletSize += newMod.upperBound;
+                break;
 
             case "Fire Damage":
                 ret.addedFireDamage += newMod.upperBound;

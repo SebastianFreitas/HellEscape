@@ -49,6 +49,9 @@ public class Gun : MonoBehaviour
     private Transform[] enemies;
 
 
+    private float firerate;
+
+
     float m_start, m_time;
     int m_fired = 0;
     private bool isWaiting;
@@ -99,18 +102,11 @@ public class Gun : MonoBehaviour
         if (Input.GetButton("Fire1") && canShoot)
         {
             canShoot = false;
-            Shoot(1 / gun.finalFireRate, 1);
+            Shoot(firerate);
         }
     }
 
-    internal void EquipBaseGun()
-    {
-        gun = gunGen.CreateWeaponEmpty();
-        playerScript.increasedSpeed = gun.increasedSpeed;
 
-        SetBulletStats();
-
-    }
 
     public void SetBulletStats()
     {
@@ -122,7 +118,7 @@ public class Gun : MonoBehaviour
         bulletSpeed = (int)gun.GetShotSpeed();
     }
 
-    void Shoot(float attackRate, int gun)
+    void Shoot(float attackRate)
     {
         //if (this.gun.increasedRicochetGuide < 0) enemies = playerScript.transform.parent.GetComponent<Room>().GetEnemies();
 
@@ -190,11 +186,22 @@ public class Gun : MonoBehaviour
         lightFlash.SetActive(false);
     }
 
+    internal void EquipBaseGun()
+    {
+        gun = gunGen.CreateWeaponEmpty();
+        playerScript.increasedSpeed = gun.increasedSpeed;
+        firerate = 1 / gun.finalFireRate;
+
+        SetBulletStats();
+
+    }
+
     public void SetGun(GunOfAType gun)
     {
         this.gun = gun;
         SetBulletStats();
         playerScript.increasedSpeed = gun.increasedSpeed;
+        firerate = 1 / gun.finalFireRate;
         //playerScript.gameObject.transform.parent.GetComponent<Room>().GetEnemies();
     }
 }

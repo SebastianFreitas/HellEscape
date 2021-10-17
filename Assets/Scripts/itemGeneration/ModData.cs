@@ -21,6 +21,7 @@ public class ModData : MonoBehaviour
                 new Mod(5,10,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,103),
                 new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,104),
                 new Mod(5,10,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,105),
+                new Mod(1, 10,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,106),
                
             //grande damage
             //grenade area
@@ -36,9 +37,9 @@ public class ModData : MonoBehaviour
         };
 
 
-    public static int[] InteriorWeight = { 10, 10, 10, 10, 10};
+    public static int[] InteriorWeight = { 1, 1, 1, 10, 10};
 
-    public static int[] ExteriorWeight = { 1, 1, 1, 1};  //
+    public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
     public static int[] SpecialWeight = { 1, 1};
 
@@ -183,7 +184,7 @@ public class GunOfAType
     public float increasedDamage;
     public int   increasedBounces;
     public float increasedSpeed;
-    public float increasedBulletSize;
+    public float increasedBulletSize = 0;
     public float increasedshotSpeed;
     public float increasedCriticalDamage;
 
