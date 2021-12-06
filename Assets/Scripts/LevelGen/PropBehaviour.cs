@@ -7,21 +7,25 @@ public class PropBehaviour : MonoBehaviour
 {
 
     public bool trown = true;
+    public bool steady = false;
 
     void Start()
     {
-        
-        if (trown)
+        if (!steady)
         {
-            transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
-            GetComponent<Rigidbody>().velocity = Random.onUnitSphere * Random.Range(1,30);
-            //transform.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1) * Random.Range(1, 11100)));
+            if (trown)
+            {
+                transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
+                GetComponent<Rigidbody>().velocity = Random.onUnitSphere * Random.Range(1,30);
+                //transform.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1) * Random.Range(1, 11100)));
+            }
+            else
+            {
+                transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
+                GetComponent<Rigidbody>().velocity = Random.onUnitSphere * Random.Range(.6f, 2f);
+            }
         }
-        else
-        {
-            transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
-            GetComponent<Rigidbody>().velocity = Random.onUnitSphere * Random.Range(.6f, 2f);
-        }
+
 
 
         //StartCoroutine(waiterGravity());
