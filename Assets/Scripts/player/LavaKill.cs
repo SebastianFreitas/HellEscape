@@ -6,11 +6,5 @@ public class LavaKill : MonoBehaviour
 {
   private PlayerMovement playerMov;
 
-   void OnTriggerEnter(Collider other)
-  {
-      if (other.gameObject.tag == "Player")
-          playerMov = other.GetComponent<PlayerMovement>();
-          playerMov.JumpInput(5);
-          playerMov.TakeDamage(10);
-  }
+//
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CraftingDevice : GunGenerator
 {
-    internal GameObject player;
+    public GameObject player;
     public WeaponStatsCrafting weaponStats;
     public TMPro.TextMeshPro guntext;
 
@@ -49,12 +49,19 @@ public class CraftingDevice : GunGenerator
     public RemoveMod removeMod;
     public Destroy destroyGun;
     public GeneratedGuns slotGuns;
+    
+
+    public bool isHub;
     // Start is called before the first frame update
     void Start()
     {
-        if (portalOnline) offline.SetActive(true);
-        player = transform.GetComponentInParent<Room>().player;
-        playerInventory = player.GetComponent<PlayerInventory>();
+        if (portalOnline || isHub) offline.SetActive(true);
+        if (!isHub)
+        {
+            player = transform.GetComponentInParent<Room>().player;
+            playerInventory = player.GetComponent<PlayerInventory>();
+        }
+
         gun = CreateWeaponEmpty();
 
         //slotGuns.GetGeneratedGuns();
@@ -215,7 +222,7 @@ public class CraftingDevice : GunGenerator
 
     public void TurnOn()
     {
-        if (portalOnline)
+        if (portalOnline || isHub)
         {
             offline.SetActive(false);
             online.SetActive(true);

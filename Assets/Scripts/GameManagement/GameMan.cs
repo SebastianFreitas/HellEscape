@@ -25,22 +25,36 @@ public class GameMan : MonoBehaviour
     private int currentLevel = 50;
 
     public Transform runningGame;
+    public Hub hub;
+    public bool startAtHub;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (startAtHub)
+        {
+            hub.gameObject.SetActive(true);
+            player.GetComponent<CharacterController>().enabled = false;
+            player.transform.position = hub.statspos.position;
+            player.transform.rotation = hub.statspos.rotation;
+            player.GetComponent<CharacterController>().enabled = true;
 
-        currentRoom = Instantiate(startRoomPrefab, runningGame);
-        currentRoom.areaLevel = currentLevel;
-        currentLevel++;
-        // currentRoom.transform.parent = this.transform;
+        } 
+        else
+        {
+            currentRoom = Instantiate(startRoomPrefab, runningGame);
+            currentRoom.areaLevel = currentLevel;
+            currentLevel++;
+            // currentRoom.transform.parent = this.transform;
 
 
-        PlacePlayerInCurrentRoom();
+            PlacePlayerInCurrentRoom();
 
-        currentRoom.player = player;
-        currentRoom.PickLayout();
-        currentRoom.SpawnObjects(dificulty);
+            currentRoom.player = player;
+            currentRoom.PickLayout();
+            currentRoom.SpawnObjects(dificulty);
+        }
+
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("Bullet"));
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Lava"),LayerMask.NameToLayer("Room"));

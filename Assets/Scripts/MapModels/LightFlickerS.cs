@@ -1,0 +1,60 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class LightFlickerS : MonoBehaviour
+{
+    public List<GameObject> allObjects;
+    public float timeOff;
+    public float timeOn;
+   
+
+
+    void Start()
+    {
+        for(int i = 0; i<allObjects.Count;i++)
+        {
+            if (Random.value > .8) StartCoroutine(WaiterOn(timeOn, i));
+        }
+
+        //add a omega flashing constanly light
+    }
+
+    private IEnumerator WaiterOn(float time, int i)
+    {
+        var light = allObjects[i];
+
+        time += Random.Range(-7f,7f);//time += Random.Range(-10f,10f);
+        yield return new WaitForSeconds(time);
+
+        light.SetActive(false);
+
+        if (Random.Range(0, 1) > .6 && i - 1 > 0) StartCoroutine(WaiterNeighbor(1f, i - 1));
+
+        StartCoroutine(WaiterOff(timeOff, i));
+    }
+
+    private IEnumerator WaiterOff(float time,int i)
+    {
+        var light = allObjects[i];
+
+        time += Random.Range(-.5f,.5f);
+        yield return new WaitForSeconds(time);
+
+        light.SetActive(true);
+
+        StartCoroutine(WaiterOn(timeOn, i));
+    }
+
+    //theres a chance that when a ligh goes out another close to it might also
+    private IEnumerator WaiterNeighbor(float time, int i)
+    {
+        var lightneighbor = allObjects[i];
+
+        lightneighbor.SetActive(false);
+
+        yield return new WaitForSeconds(time);
+
+        lightneighbor.SetActive(true);
+    }
+}
