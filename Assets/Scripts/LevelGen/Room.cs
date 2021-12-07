@@ -49,6 +49,7 @@ public class Room : MonoBehaviour
         {
             z.player = this.player;
             z.transform.parent = transform;
+            z.level = areaLevel;
             monstersAlive++;
         }
 

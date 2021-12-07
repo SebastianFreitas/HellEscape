@@ -35,7 +35,7 @@ public class Monster : MonoBehaviour
     {
         volume = PlayerPrefs.GetFloat("Volume");
 
-        level = transform.parent.GetComponent<Room>().areaLevel;
+        //level = transform.parent.GetComponent<Room>().areaLevel;
         rigidBody = transform.GetComponent<Rigidbody>();
         monsterCollider = rigidBody.GetComponent<Collider>();
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();

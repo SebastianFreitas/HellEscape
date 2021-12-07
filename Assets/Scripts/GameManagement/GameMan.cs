@@ -52,7 +52,7 @@ public class GameMan : MonoBehaviour
 
             currentRoom.player = player;
             currentRoom.PickLayout();
-            currentRoom.SpawnObjects(dificulty);
+            //currentRoom.SpawnObjects(dificulty);
         }
 
 
@@ -81,7 +81,7 @@ public class GameMan : MonoBehaviour
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = currentRoom.playerStart.position;
-        player.transform.rotation = currentRoom.playerStart.rotation;
+        //player.transform.rotation = currentRoom.playerStart.rotation;
         player.GetComponent<CharacterController>().enabled = true;
     }
 
