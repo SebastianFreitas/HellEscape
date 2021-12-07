@@ -6,7 +6,8 @@ public class LightFlickerOne : MonoBehaviour
 {
     public GameObject lamp;
     public Light light_;
-    public MeshRenderer mesh;
+    public MeshRenderer meshON;
+    public MeshRenderer meshOFF;
 
     //public Material brightness;
 
@@ -62,14 +63,20 @@ public class LightFlickerOne : MonoBehaviour
     public void TurnOff()
     {
         light_.enabled = false;
-        mesh.enabled = false;
+        SwitchMeshRender(false, true);
         //brightness.DisableKeyword("_EMISSION");
+    }
+
+    private void SwitchMeshRender(bool on, bool off)
+    {
+        meshON.enabled = on;
+        meshOFF.enabled = off;
     }
 
     public void TurnOn()
     {
         light_.enabled = true;
-        mesh.enabled = true;
+        SwitchMeshRender(true, false);
         //brightness.EnableKeyword("_EMISSION");
     }
 
@@ -77,7 +84,7 @@ public class LightFlickerOne : MonoBehaviour
     {
         light_.enabled = true;
         light_.intensity = 0;
-        mesh.enabled = true;
+        SwitchMeshRender(true, false);
         StartCoroutine(TurnOnSlowly());
     }
 
