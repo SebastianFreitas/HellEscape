@@ -52,7 +52,7 @@ public class GameMan : MonoBehaviour
 
             currentRoom.player = player;
             currentRoom.PickLayout();
-            //currentRoom.SpawnObjects(dificulty);
+            currentRoom.SpawnObjects(dificulty);
         }
 
 
