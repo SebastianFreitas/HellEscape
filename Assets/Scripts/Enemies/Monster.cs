@@ -57,7 +57,7 @@ public class Monster : MonoBehaviour
     public void TakeDamage(int damage, bool isCrit,float critMulti)
     {
         float amount = damage;
-        amount +=(int) Random.Range(-amount*.15f, amount * .15f);
+        amount +=(int) Random.Range(-amount*.30f, amount * .30f);
         if (isCrit) amount *= 2+ critMulti/100;
         health -= amount;
         DmgPopUp(amount, isCrit);

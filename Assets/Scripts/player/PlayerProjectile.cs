@@ -246,7 +246,7 @@ public class PlayerProjectile : MonoBehaviour
         
         trails.transform.parent = null;
 
-        Debug.Log(transform.localScale);
+
         yield return new WaitForSeconds(.5f);
         Destroy(this.gameObject);
     }

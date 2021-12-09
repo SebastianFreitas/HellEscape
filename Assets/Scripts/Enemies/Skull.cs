@@ -14,6 +14,7 @@ public class Skull : Monster
 
     public ParticleSystem attack;
 
+
     bool isLeft;
     Vector3 randomHeight;
 
@@ -29,13 +30,13 @@ public class Skull : Monster
 
     private void OnEnable()
     {
+   
         StartCoroutine(waiterStart());
     }
 
     
     IEnumerator randomJump()
     {
-
 
         Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
