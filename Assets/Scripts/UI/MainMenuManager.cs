@@ -51,6 +51,13 @@ public class MainMenuManager : MonoBehaviour
         }
         else SetFov(90);
 
+        if (PlayerPrefs.HasKey("BRIGHT"))
+        {
+            SetBrightness(PlayerPrefs.GetFloat("BRIGHT"));
+            brightSlider.value = PlayerPrefs.GetFloat("BRIGHT");
+        }
+        else SetBrightness(1);
+
         ReadResolution();
     }
 
@@ -166,13 +173,15 @@ public class MainMenuManager : MonoBehaviour
         fovValue.text = valueFov.ToString("F0");
     }
 
-    void PauseGame()
+    [SerializeField] Slider brightSlider;
+    [SerializeField] TMPro.TextMeshProUGUI brightValue;
+    [SerializeField] PostProcessUpdater updater;
+
+    public void SetBrightness(float valueBrightness)
     {
-        Time.timeScale = 0;
+        PlayerPrefs.SetFloat("BRIGHT", valueBrightness);
+        brightValue.text = valueBrightness.ToString("F2");
+        updater.UpdateGamma();
     }
 
-    void ResumeGame()
-    {
-        Time.timeScale = 1;
-    }
 }
