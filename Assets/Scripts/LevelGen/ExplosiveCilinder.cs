@@ -21,13 +21,15 @@ public class ExplosiveCilinder : PropBehaviour
     void OnCollisionEnter(Collision other)
     {
         //ContactPoint contact = other.contacts[0];
-        if (other.gameObject.CompareTag("Bullet")) Explode(transform.position, 6f);
+        if (other.gameObject.CompareTag("Bullet") ) Explode(transform.position, 6f);
 
 
     }
 
     void Explode(Vector3 center, float radius)
     {
+        transform.GetComponent<BoxCollider>().enabled = false;
+
         ExplodeParticule();
 
         audioSource.PlayOneShot(kaboom,.05f);

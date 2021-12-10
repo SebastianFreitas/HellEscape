@@ -48,7 +48,7 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("CraftingDevice"))
                 {
-                    hit.collider.transform.GetComponent<CraftingDevice>().TurnOn();
+                    hit.collider.transform.parent.GetComponentInParent<CraftingDevice>().TurnOn();
                 }
             }
             

@@ -32,7 +32,8 @@ public class ModDataRoom : MonoBehaviour
         return index;
     }
 
-    public static int[] maxModsWeight = { 100, 90, 80, 70, 25, 10, 5, 2, 1};
+    public static int[] maxModsWeight = { 100, 90, 80, 70, 25, 10, 5, 2, 1 };
+    public static int[] modsWeight = { 10, 10, 10, 2,2,10 };
 
 
     public static Mod[] mods =
@@ -56,33 +57,146 @@ public class ModDataRoom : MonoBehaviour
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
 
 
-        for(int i = 0; i<totalMods; i++)
-        {
-            AddMod(result);
-        }
+        for(int i = 0; i<totalMods; i++) AddMod(result);
+
+        CreatePositives(result);
+
+        CreateMissionText(result);
+        
 
         return result;
     }
 
-    private void AddMod(GeneratedMission result)
+    private void CreatePositives(GeneratedMission result)
     {
-        throw new System.NotImplementedException();
+        var bonus = result.mods.Count ;
+        result.increasedChanceElite         += bonus + Random.Range(0, bonus);
+        result.increasedChanceSpecialRooms  += bonus + Random.Range(0, bonus); 
+        result.increasedMonsterDrops        += bonus + Random.Range(0, bonus);
+    }
+
+    private void CreateMissionText(GeneratedMission result)
+    {
+        string text = "";
+        text += result.increasedChanceElite + "% elite chance" + "\n";
+        text += result.increasedChanceSpecialRooms + "% to find special rooms" + "\n";
+        text += result.increasedMonsterDrops + "% more weapon drop chance" + "\n\n";
+        if (result.mods != null)
+        {
+            foreach(Mod mod in result.mods)
+            {
+                text += mod.text + "\n";
+            }
+        }
+
+
+
+        result.text = text;
+    }
+
+    private void AddMod(GeneratedMission mission)
+    {
+        while (true)
+        {
+            var x = mods[GetRandomWeightedIndex(modsWeight)];
+            if (!ContainsMod(mission, x))
+            {
+                
+                var value = Random.Range(x.lowerBound, x.upperBound);
+                x.upperBound = value;
+                x.text = CreateText(x);
+                mission.mods.Add(x);
+                ModToStat(mission, x, value);
+                break;
+            }
+        }
+
+    }
+
+    private string CreateText(Mod mod)
+    {
+        string ret = "";
+        switch (mod.op)
+        {
+            case OperatorType.plus:
+                ret = "+" + mod.upperBound + " " + mod.text;
+                break;
+
+            case OperatorType.increased:
+                ret = mod.upperBound + "% increased " + mod.text;
+                break;
+
+            case OperatorType.reduced:
+                ret = mod.upperBound + "% reduced " + mod.text;
+                break;
+            case OperatorType.decreased:
+                ret = mod.upperBound + "% decreased " + mod.text;
+                break;
+            case OperatorType.minus:
+                ret = mod.upperBound + " " + mod.text;
+                break;
+            case OperatorType.non:
+                ret = mod.text;
+                break;
+        }
+        return ret;
+    }
+
+    private void ModToStat(GeneratedMission mission, Mod x, int value)
+    {
+        switch (x.basicText)
+        {
+            case "Monster Max health":
+                mission.aditionalLife           = value;
+                break;
+
+            case "Monster Damage":
+                mission.aditionalDamage         = value;
+                break;                           
+                                                 
+            case "Monster Action Speed":         
+                mission.increasedActionSpeed    = value;
+                break;                           
+                                                 
+            case "Area Level":                   
+                mission.aditionalAreaLevel      = value;
+                break;                            
+                                                  
+            case "Mission Length":                
+                mission.aditionalLength         = value;
+                break;                            
+            case "Movement Speed":                
+                mission.reducedSpeed            = value;
+                break;
+        }
+    }
+
+    private bool ContainsMod(GeneratedMission mission, Mod mod)
+    {
+        if (mission.mods.Count == 0) return false;
+        foreach (Mod x in mission.mods)
+        {
+            if (x.id == mod.id) return true;
+        }
+        return false;
+
     }
 
     public class GeneratedMission
     {
-        int aditionalLife           = 0;
-        int aditionalDamage         = 0;
-        int increasedActionSpeed    = 0;
-        int aditionalAreaLevel      = 0;
-        int aditionalLength         = 0;
+       public int aditionalLife           = 0;
+       public int aditionalDamage         = 0;
+       public int increasedActionSpeed    = 0;
+       public int aditionalAreaLevel      = 0;
+       public int aditionalLength         = 0;
+       public int reducedSpeed            = 0;
 
-        int increasedMonsterDrops       = 0;
-        int increasedChanceSpecialRooms = 0;
-        int increasedChanceElite        = 0;
+       public int increasedMonsterDrops       = 0;
+       public int increasedChanceSpecialRooms = 0;
+       public int increasedChanceElite        = 0;
 
-        public HashSet<Mod> mods;
-        public string       text;
+        public HashSet<Mod> mods = new HashSet<Mod>();
+        public string       text = "";
 
         public void createPositives()
         {

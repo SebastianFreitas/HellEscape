@@ -782,7 +782,6 @@ GameObject:
   - component: {fileID: 8429865231615740692}
   - component: {fileID: 3568628872616989892}
   - component: {fileID: 1309563783402521831}
-  - component: {fileID: 8130861524653080310}
   - component: {fileID: 499412610320765424}
   - component: {fileID: 800729480262266809}
   m_Layer: 9
@@ -855,29 +854,7 @@ MonoBehaviour:
   AshesDeath: {fileID: 6949414622727591476, guid: cf3460ca370e1b741a7573fd351f9ab5, type: 3}
   level: 0
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
-  agent: {fileID: 8130861524653080310}
---- !u!195 &8130861524653080310
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4803014352389650695}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 4
-  m_Acceleration: 1000
-  avoidancePriority: 50
-  m_AngularSpeed: 10927.5
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  agent: {fileID: 0}
 --- !u!65 &499412610320765424
 BoxCollider:
   m_ObjectHideFlags: 0
