@@ -5279,7 +5279,7 @@ Transform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 8152985570990004033}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2258147376047180734
 GameObject:
@@ -5362,8 +5362,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.545, z: -0.023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4750694549192953351}
+  - {fileID: 3288600067036741744}
   - {fileID: 249388886286504353}
+  - {fileID: 4750694549192953351}
   - {fileID: 4399130703942176743}
   - {fileID: 3831391651665136469}
   - {fileID: 9113711220941106612}
@@ -5443,6 +5444,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -10353,6 +10355,55 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &3218586231972217103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3288600067036741744}
+  - component: {fileID: 3307804208464961644}
+  m_Layer: 0
+  m_Name: GrenadeHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3288600067036741744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218586231972217103}
+  m_LocalRotation: {x: -0.026160974, y: -0.03488763, z: -0.0009135668, w: 0.9990484}
+  m_LocalPosition: {x: 0.22899997, y: -0.37999994, z: 0.45000276}
+  m_LocalScale: {x: 0.10000001, y: 0.10000001, z: 0.10000001}
+  m_Children: []
+  m_Father: {fileID: 8152985570990004033}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3307804208464961644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218586231972217103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e92286c50bcc94ab296c049e599ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpsCam: {fileID: 4277711486013876564}
+  projectile1: {fileID: 2474501392609675474, guid: 9c9a468b38e532f40bd6f6d171a89659, type: 3}
+  projectile2: {fileID: 2474501392609675474, guid: 9c9a468b38e532f40bd6f6d171a89659, type: 3}
+  pnt: {fileID: 8787742557802746040}
+  realBulletHolder: {fileID: 2169046087924204963}
+  playerBasicMov: {fileID: 8082080043408529685}
 --- !u!1 &3722063269508476412
 GameObject:
   m_ObjectHideFlags: 0
@@ -11634,7 +11685,7 @@ Transform:
   m_Children:
   - {fileID: 7658253508712583443}
   m_Father: {fileID: 8152985570990004033}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3667152077016306360
 Camera:
@@ -11702,6 +11753,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 6400
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -12138,6 +12190,7 @@ MonoBehaviour:
   health: 50
   hp: {fileID: 0}
   playerSounds: {fileID: 996023129746047136}
+  bloodScreen: {fileID: 0}
 --- !u!114 &996023129746047136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17584,6 +17637,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
@@ -17623,7 +17677,7 @@ Transform:
   m_Children:
   - {fileID: 4343849568793530952}
   m_Father: {fileID: 8152985570990004033}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!1 &8466610299180959060
 GameObject:
@@ -17736,7 +17790,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8152985570990004033}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &6808401384358818538
 AudioSource:
