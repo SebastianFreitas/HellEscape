@@ -9,7 +9,6 @@ public class DisassembleGun : MonoBehaviour
 
 
     public MeshRenderer[] meshes;
-    private bool areYouSure = false;
 
 
 
