@@ -48,6 +48,7 @@ public class PlayerBasicMovement : MonoBehaviour
     private bool isGroundedOlder;
     private float currentSpeed;
     private bool isWaiting;
+    internal Transform lastPos;
 
     private void Start()
     {
@@ -160,6 +161,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void GroundMove()
     {
+        lastPos = transform;
         speed = 12;
 
         if (isSideDashing) inputLocked = true;

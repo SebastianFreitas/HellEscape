@@ -8,17 +8,14 @@ public class Hub : MonoBehaviour
     public Transform[] propSpawns;
     public Transform statspos;
     public int[] weight;
+    public GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         SpawnObjects(5);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 
     public void SpawnObjects(int more)
     {
@@ -30,6 +27,15 @@ public class Hub : MonoBehaviour
                 Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y + Random.Range(2, 6), propSpawns[i].position.z), transform.rotation, transform);
             }
         }
+    }
+
+    internal void VoidPlayer()
+    {
+        player.GetComponent<CharacterController>().enabled = false;
+        player.transform.position = player.GetComponent<PlayerBasicMovement>().lastPos.position;
+        player.transform.position = statspos.position;
+        player.GetComponent<CharacterController>().enabled = true;
+
     }
 
     public int GetRandomWeightedIndex(int[] weights)

@@ -10,6 +10,9 @@ public class Room : MonoBehaviour
     public Transform[] propSpawns;
     public GameObject[] objects;
     public Transform[] enemySpawns;
+
+
+
     public GameObject[] skulls;
     public GameObject portal;
 
@@ -38,6 +41,15 @@ public class Room : MonoBehaviour
     {
         StartCoroutine(WatchEnemies());
         StartCoroutine(TimerPortalUnlock());
+    }
+
+    internal void VoidPlayer()
+    {
+        player.GetComponent<CharacterController>().enabled = false;
+       // Vector3 mov = player.GetComponent<PlayerBasicMovement>().lastPos;
+        //player.transform.position = mov;
+        player.GetComponent<CharacterController>().enabled = true;
+
     }
 
     public void PickLayout()

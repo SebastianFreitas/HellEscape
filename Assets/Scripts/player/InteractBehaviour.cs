@@ -52,14 +52,14 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("SelectMusic"))
                 {
-                    var songName = hit.collider.gameObject.GetComponent<TMPro.TextMeshPro>().text;
+                    var songName = hit.collider.gameObject.GetComponentInParent<TMPro.TextMeshPro>().text;
                     MeshRenderer[] meshes = hit.collider.gameObject.GetComponentsInChildren<MeshRenderer>();
 
                     hit.collider.transform.parent.GetComponentInParent<SoundDevice>().playSong(songName, meshes);
                 }
                 else if (hit.transform.CompareTag("PauseMusic"))
                 {
-                    hit.collider.transform.parent.GetComponentInParent<SoundDevice>().audioSource.Pause();
+                    hit.collider.transform.parent.GetComponentInParent<SoundDevice>().PauseSong();
                 }
             }
             

@@ -12,23 +12,32 @@ public class SoundDevice : MonoBehaviour
 
     public GameObject[] uiSlots;
 
+    public GameObject[] objetcs;
+
     public TMPro.TextMeshPro[] names;
+
+
+    private float volume;
+    private bool isPlaying = false;
 
     private void Start()
     {
+
+        volume = PlayerPrefs.GetFloat("Volume");
+
         if (sounds != null)
         {
             var i = 0;
             foreach (AudioClip sound in sounds)
             {
-                
+                objetcs[i].SetActive(true);
 
                 if (uiSlots != null)
                 {
                     var thisSlot = uiSlots[i];
                     thisSlot.SetActive(true);
-                    TurnGreen(thisSlot.GetComponents<MeshRenderer>());
-                    thisSlot.GetComponent<TMPro.TextMeshPro>().text = sound.name+"";
+                    TurnBlue(thisSlot.GetComponentsInChildren<MeshRenderer>());
+                    thisSlot.GetComponentInParent<TMPro.TextMeshPro>().text = sound.name+"";
                 }
 
                 i++;
@@ -36,6 +45,11 @@ public class SoundDevice : MonoBehaviour
         }
 
         //StartCoroutine(RotateText());
+    }
+
+    private void OnEnable()
+    {
+        if (isPlaying) audioSource.Play();
     }
 
     IEnumerator RotateText()
@@ -68,7 +82,7 @@ public class SoundDevice : MonoBehaviour
         foreach(var ui in uiSlots)
         {
             var x = ui.gameObject.GetComponentsInChildren<MeshRenderer>();
-            TurnGreen(x);
+            TurnBlue(x);
         }
 
         foreach (AudioClip x in sounds) 
@@ -76,10 +90,23 @@ public class SoundDevice : MonoBehaviour
             if (x.name == songName)
             {
                 audioSource.clip = x;
+                audioSource.volume = volume;
                 audioSource.Play();
-                TurnBlue(materials);
+                TurnGreen(materials);
+                isPlaying = true;
             }
         }
 
+    }
+
+    internal void PauseSong()
+    {
+        audioSource.Stop();
+        isPlaying = false;
+        foreach (var ui in uiSlots)
+        {
+            var x = ui.gameObject.GetComponentsInChildren<MeshRenderer>();
+            TurnBlue(x);
+        }
     }
 }

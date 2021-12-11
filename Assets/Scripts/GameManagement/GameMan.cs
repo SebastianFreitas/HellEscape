@@ -34,6 +34,7 @@ public class GameMan : MonoBehaviour
         if (startAtHub)
         {
             hub.gameObject.SetActive(true);
+            //hub.player = player;
             player.GetComponent<CharacterController>().enabled = false;
             player.transform.position = hub.statspos.position;
             player.transform.rotation = hub.statspos.rotation;
