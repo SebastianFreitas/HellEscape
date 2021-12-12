@@ -35,7 +35,7 @@ public class PlayerBasicMovement : MonoBehaviour
     private float z = 0;
     private float xRaw = 0;
     private float zRaw = 0;
-    private Vector3 move;
+    public Vector3 move;
     private Vector3 moveRaw;
 
     [Header("Ground checks")]
@@ -49,6 +49,8 @@ public class PlayerBasicMovement : MonoBehaviour
     private float currentSpeed;
     private bool isWaiting;
     internal Transform lastPos;
+
+    public GrenadeCooldown cd;
 
     private void Start()
     {
@@ -91,7 +93,7 @@ public class PlayerBasicMovement : MonoBehaviour
         }
         else if (isGroundedOlder && !isGrounded) StartCoroutine(waiterGroundLag());
 
-        
+        if (cd.cdUI <= 0) canDash = true;
 
         GetInputWASD();
 
@@ -106,7 +108,7 @@ public class PlayerBasicMovement : MonoBehaviour
         //if (isGrounded) inputLocked = false;
         isGroundedOlder = isGrounded;
     }
-
+ 
     private void MoveState()
     {
         transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
@@ -176,6 +178,7 @@ public class PlayerBasicMovement : MonoBehaviour
         }
         else if (Input.GetButtonDown("Fire2") && canDash)
         {
+            canDash = false;
             Dash();
             inputLocked = true;
             desiredDirection = new Vector3(xRaw, 0, zRaw);
@@ -223,6 +226,7 @@ public class PlayerBasicMovement : MonoBehaviour
         }
         else if (Input.GetButtonDown("Fire2") && canDash)
         {
+            canDash = false;
             inputLocked = false;
             Dash();
             inputLocked = true;
@@ -242,11 +246,13 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void JumpDash(bool isDash)
     {
+        
         AddImpact(Vector3.up, JumpDashForce);
         JumpInput(3f);
 
         if (isDash)
         {
+            cd.startCD((int)dashCooldown);
             playerSound.PlayDashSound();
             canDash = false;
             StartCoroutine(waiterDashCD());
@@ -257,6 +263,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void Dash()
     {
+        cd.startCD((int)dashCooldown);
         playerSound.PlayDashSound();
         if (moveRaw == Vector3.zero) AddImpact(transform.forward, 250);
         else AddImpact(moveRaw, 250);
@@ -316,19 +323,19 @@ public class PlayerBasicMovement : MonoBehaviour
     {
         isWaiting = true;
         yield return new WaitForSecondsRealtime(dashCooldown);
-        canDash = true;
+        //canDash = true;
         isWaiting = false;
     }
     IEnumerator waiterDashDuration()
     {
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSecondsRealtime(.3f);
         isSideDashing = false;
         inputLocked = false;
     }
     IEnumerator waiterGroundLag()
     {
         groundLag = true;
-        yield return new WaitForSeconds(.1f);
+        yield return new WaitForSecondsRealtime(.2f);
         groundLag = false;
     }
 

@@ -14,15 +14,17 @@ public class GrenadeHolder : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-
+        canShoot1 = true;
+        canShoot2 = true;
     }
+    
 
     void Update()
     {
 
-        if (Input.GetKey("q") && canShoot1)
+        if (Input.GetKey("q") && (baseCD <=0) && canShoot1 )
         {
             canShoot1 = false;
             Shoot(true);
@@ -36,13 +38,9 @@ public class GrenadeHolder : MonoBehaviour
     public GameObject pnt;
     public GameObject realBulletHolder;
     public PlayerBasicMovement playerBasicMov;
+    public GrenadeCooldown cd;
     void Shoot(bool primary)
     {
-
-
-
-
-
 
         Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         if (Physics.Raycast(ray, out hit))
@@ -60,7 +58,12 @@ public class GrenadeHolder : MonoBehaviour
             projectile = Instantiate(projectile1, realBulletHolder.transform.position, realpos.rotation);
             var specificGrenade = projectile.GetComponent<GrenadeData>();
             specificGrenade.playerMov = playerBasicMov;
-            StartCoroutine(CoolDown1(specificGrenade.cooldown));
+            //StartCoroutine(CoolDown1(basecolldown));
+            var basecolldown = specificGrenade.cooldown;
+            cd.SetMaxCD(basecolldown);
+            cd.SetCD(basecolldown);
+            baseCD = basecolldown;
+            StartCoroutine(TimerDown());
 
         }
         else
@@ -69,11 +72,31 @@ public class GrenadeHolder : MonoBehaviour
             var specificGrenade = projectile.GetComponent<GrenadeData>();
             specificGrenade.playerMov = playerBasicMov;
             StartCoroutine(CoolDown2(specificGrenade.cooldown));
+
+            cd.SetMaxCD(specificGrenade.cooldown);
+            cd.SetCD(specificGrenade.cooldown);
+        }    
+    }
+
+    int baseCD =0;
+
+    IEnumerator TimerDown()
+    {
+        while (baseCD > 0)
+        {
+            baseCD -= 1;
+            cd.SetCD(baseCD);
+            yield return new WaitForSecondsRealtime(1);
+
         }
+        canShoot1 = true;
+    }
 
+    private void UpdateSlider()
+    {
+        cd.SetCD(baseCD);
+        StartCoroutine(TimerDown());
 
-
-        
     }
 
     IEnumerator CoolDown1(int cooldown)

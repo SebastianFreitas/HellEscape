@@ -18,7 +18,7 @@ public class NormalGrenade : GrenadeData
     private void Start()
     {
         
-        rb.AddForce(transform.forward * speed);
+        rb.AddForce(4*speed * transform.forward + playerMov.move );
         StartCoroutine(GrenadeTimer());
     }
     public IEnumerator GrenadeTimer()
@@ -62,10 +62,17 @@ public class NormalGrenade : GrenadeData
         //AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
     }
 
-    
+    private void OnDrawGizmosSelected()
+    {
+     Gizmos.color = Color.red;
+     //Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
+     Gizmos.DrawWireSphere(transform.position + transform.position, area);
+    }
 
+    public TrailRenderer trail;
     private void FireExplode()
     {
+        //OnDrawGizmosSelected();
         exploded = true;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, area);
         foreach (var hitCollider in hitColliders)
@@ -86,7 +93,9 @@ public class NormalGrenade : GrenadeData
             
         }
         ExplodeParticule();
-        //Destroy(this.gameObject);
+        transform.GetComponent<MeshRenderer>().enabled = false;
+        trail.enabled = false;
+        
     }
 
     void ExplodeParticule()

@@ -117,9 +117,10 @@ public class Gun : MonoBehaviour
         bounces = (int)gun.GetBounces();
         bulletSpeed = (int)gun.GetShotSpeed();
     }
-
+    public GrenadeCooldown cd;
     void Shoot(float attackRate)
     {
+        cd.startCD(timeBtwShots);
         //if (this.gun.increasedRicochetGuide < 0) enemies = playerScript.transform.parent.GetComponent<Room>().GetEnemies();
 
         canShoot = false;
