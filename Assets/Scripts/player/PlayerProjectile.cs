@@ -197,7 +197,7 @@ public class PlayerProjectile : MonoBehaviour
 
             ExplodeParticule();
         }
-        Destroy(this.gameObject);
+       // Destroy(this.gameObject);
     }
 
     void ExplodeParticule()

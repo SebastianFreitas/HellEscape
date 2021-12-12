@@ -195,6 +195,8 @@ public class ModDataRoom : MonoBehaviour
        public int increasedChanceSpecialRooms = 0;
        public int increasedChanceElite        = 0;
 
+        public int level = 0;
+
         public HashSet<Mod> mods = new HashSet<Mod>();
         public string       text = "";
 

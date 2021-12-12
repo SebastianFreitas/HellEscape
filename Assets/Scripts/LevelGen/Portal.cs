@@ -15,18 +15,30 @@ public class Portal : MonoBehaviour
     public ParticleSystem exp;
     public GravityPuller gravPull;
 
+    public MissionSelector selector;
+
     public bool isVoid = false;
 
     private bool passed = false;
+    public bool ishub = false;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Dude") && !passed)
         {
             passed = true;
-            //other.transform.GetComponent<PlayerSounds>().PlayTeleportSound();
-            var room = transform.parent.GetComponent<Room>();
-            room.player.GetComponent<PlayerSounds>().PlayTeleportSound();
-            room.UseDoor();
+            if (ishub)
+            {
+                selector.StartSelectedMission();
+            }
+            else
+            {
+                //other.transform.GetComponent<PlayerSounds>().PlayTeleportSound();
+                var room = transform.parent.GetComponent<Room>();
+                room.player.GetComponent<PlayerSounds>().PlayTeleportSound();
+                room.UseDoor();
+            }
+            
+
         }        
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameMan : MonoBehaviour
+public class GameMan : ModDataRoom
 {
     
     public Room startRoomPrefab, endRoomPrefab;
@@ -33,14 +33,9 @@ public class GameMan : MonoBehaviour
     {
         if (startAtHub)
         {
-            hub.gameObject.SetActive(true);
-            //hub.player = player;
-            player.GetComponent<CharacterController>().enabled = false;
-            player.transform.position = hub.statspos.position;
-            player.transform.rotation = hub.statspos.rotation;
-            player.GetComponent<CharacterController>().enabled = true;
+            GoToHub();
 
-        } 
+        }
         else
         {
             currentRoom = Instantiate(startRoomPrefab, runningGame);
@@ -62,12 +57,21 @@ public class GameMan : MonoBehaviour
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Bullet"), LayerMask.NameToLayer("Bullet"));
     }
 
+    private void GoToHub()
+    {
+        hub.gameObject.SetActive(true);
+        player.GetComponent<CharacterController>().enabled = false;
+        player.transform.position = hub.statspos.position;
+        player.transform.rotation = hub.statspos.rotation;
+        player.GetComponent<CharacterController>().enabled = true;
+    }
+
     void PlaceRoomAndPlayer(Room room)
     {
         // Instantiate room
         currentRoom = Instantiate(room, runningGame);
         currentRoom.areaLevel = currentLevel;
-        currentLevel++;
+
         currentRoom.transform.parent = runningGame;
         currentRoom.player = player;
         currentRoom.PickLayout();
@@ -82,38 +86,47 @@ public class GameMan : MonoBehaviour
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = currentRoom.playerStart.position;
-        //player.transform.rotation = currentRoom.playerStart.rotation;
         player.GetComponent<CharacterController>().enabled = true;
     }
 
-    void InstantiatePlayerInRoom(Room room)
+    private Room[] run;
+    private int runProgress = 0;
+    public void StartRun(int level, GeneratedMission mission)
     {
-        // Place Player
-        //player = Instantiate(player, currentRoom.playerStart.position, currentRoom.playerStart.rotation) as GameObject;
-        //player.transform.SetParent(runningGame);
-       // player.GetComponent<PlayerHpManager>().hp = hpBar;
+        hub.gameObject.SetActive(false);
+        currentLevel = level;
+        runProgress = 0;
+        run = new Room[30];
+        int i = 0;
+        for(; i < Random.Range(5, 10)+mission.aditionalLength; i++)
+        {
+            run[i] = GenerateRoom();
+        }
+        run[i] = null;
+
+        PlaceRoomAndPlayer(run[runProgress]);
     }
+
 
     public void Next(int type)
     {
         Destroy(currentRoom.gameObject);
         dificulty++;
 
-        
-
-        if (type == 1 || type == 2)
+        runProgress++;
+        if (run[runProgress] != null)
         {
-            StartCoroutine(LoadingScreen());//PlaceRoomAndPlayer(GenerateRoom());
+            StartCoroutine(LoadingScreen());
         }
-        else PlaceRoomAndPlayer(endRoom);
+        else GoToHub();
 
 
     }
 
-    private IEnumerator LoadingScreen()
+    public IEnumerator LoadingScreen()
     {
         yield return new WaitForSeconds(1f);
-        PlaceRoomAndPlayer(GenerateRoom());
+        PlaceRoomAndPlayer(run[runProgress]);
     }
 
     public void UnlockDoor()
