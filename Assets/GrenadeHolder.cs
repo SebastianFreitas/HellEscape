@@ -60,8 +60,8 @@ public class GrenadeHolder : MonoBehaviour
             specificGrenade.playerMov = playerBasicMov;
             //StartCoroutine(CoolDown1(basecolldown));
             var basecolldown = specificGrenade.cooldown;
-            cd.SetMaxCD(basecolldown);
-            cd.SetCD(basecolldown);
+            cd.startCDUP(basecolldown);
+ 
             baseCD = basecolldown;
             StartCoroutine(TimerDown());
 
@@ -85,19 +85,14 @@ public class GrenadeHolder : MonoBehaviour
         while (baseCD > 0)
         {
             baseCD -= 1;
-            cd.SetCD(baseCD);
+            //cd.SetCD(baseCD);
             yield return new WaitForSecondsRealtime(1);
 
         }
         canShoot1 = true;
     }
 
-    private void UpdateSlider()
-    {
-        cd.SetCD(baseCD);
-        StartCoroutine(TimerDown());
 
-    }
 
     IEnumerator CoolDown1(int cooldown)
     {

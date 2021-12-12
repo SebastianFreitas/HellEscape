@@ -10,6 +10,7 @@ public class GrenadeCooldown : MonoBehaviour
     public Slider slider;
 
     public float cdUI;
+    public float maxCd;
     public void startCD(float cd)
     {
         cdUI = cd;
@@ -17,13 +18,22 @@ public class GrenadeCooldown : MonoBehaviour
         StartCoroutine(TimerDown());
     }
 
+    public void startCDUP(float cd)
+    {
+        cdUI = 0;
+        SetMaxCD(cd);
+        StartCoroutine(TimerUp());
+    }
+
     public void SetCD(float health)
     {
         slider.value = health;
+        cdUI = health;
     }
 
     public void SetMaxCD(float health)
     {
+        maxCd = health;
         slider.maxValue = health;
         slider.value = health;
     }
@@ -41,5 +51,19 @@ public class GrenadeCooldown : MonoBehaviour
         counter--;
     }
 
+    private int counterUp = 0;
+    IEnumerator TimerUp()
+    {
+        counterUp++;
+        cdUI = 0;
+        while (cdUI < maxCd && counterUp == 1)
+        {
+            cdUI += .5f;
+            SetCD(cdUI);
+            yield return new WaitForSecondsRealtime(.5f);
+
+        }
+        counterUp--;
+    }
 
 }
