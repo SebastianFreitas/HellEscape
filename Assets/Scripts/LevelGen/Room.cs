@@ -71,6 +71,7 @@ public class Room : MonoBehaviour
     {
         for (int i = 0; i < propSpawns.Length; i++)
         {   
+            
             for (int j = 0; j<Random.Range(1,6); j++){
                 var x = GetRandomWeightedIndex(weight);
                 Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z ), transform.rotation, transform);

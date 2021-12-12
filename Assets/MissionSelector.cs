@@ -9,25 +9,42 @@ public class MissionSelector : ModDataRoom
 
 
 
+
     public Material green;
-    public Material yellow;
-    public Material red;
     public Material blue;
 
-    public TMPro.TextMeshPro test;
+    
 
-    private GeneratedMission mission;
+    internal GeneratedMission mission;
 
     public GameObject portal;
 
     public GameMan manager;
 
+    public GameObject[] monitors;
+    public MonitorMission[] missions;
+    public GeneratedMission currentMission;
+
     void Start()
     {
+        //GenerateMissions();
 
-        mission = CreateMission();
-        test.text = mission.text;
     }
+
+    private void GenerateMissions()
+    {
+        int i = 0;
+        foreach (var mon in monitors)
+        {
+            var mission = CreateMission();
+            mon.GetComponentInChildren<TMPro.TextMeshPro>().text = mission.text;
+            missions[i].mission = mission;
+            missions[i].UIUnselect();
+            i++;
+        }
+    }
+
+
 
     internal void OpenPortal()
     {
@@ -37,5 +54,23 @@ public class MissionSelector : ModDataRoom
     internal void StartSelectedMission()
     {
         manager.StartRun(0, mission);
+    }
+
+    internal void TurnBlue(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = blue;
+    }
+
+    public void TurnGreen(MeshRenderer[] materials)
+    {
+        foreach (var x in materials) x.material = green;
+    }
+
+    internal void UIUnselect(GeneratedMission mi)
+    {
+        foreach(MonitorMission mon in missions)
+        {
+            if (mon.mission != mi) mon.UIUnselect();
+        }
     }
 }

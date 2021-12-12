@@ -61,9 +61,19 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.parent.GetComponentInParent<SoundDevice>().PauseSong();
                 }
-                else if (hit.transform.CompareTag("SelectMission"))
+                else if (hit.transform.CompareTag("StartMission"))
                 {
                     hit.collider.transform.GetComponentInParent<MissionSelector>().OpenPortal();
+                }
+                else if (hit.transform.CompareTag("SelectMission"))
+                {
+                    var x = hit.collider.transform.GetComponentInParent<MonitorMission>();
+                    x.UISelect();
+                    var mi = x.mission;
+
+                    var selector = hit.collider.transform.parent.GetComponentInParent<MissionSelector>();
+                    selector.currentMission = mi;
+                    selector.UIUnselect(mi);
                 }
             }
             
