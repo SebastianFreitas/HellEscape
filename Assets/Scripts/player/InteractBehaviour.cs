@@ -6,7 +6,7 @@ public class InteractBehaviour : MonoBehaviour
 {
     public Camera fpsCam;
     private RaycastHit hit;
-
+    
     public AudioClip teleport;
 
 
