@@ -8,20 +8,22 @@ public class Monster : MonoBehaviour
     [SerializeField] float health = 50f;
     [SerializeField] public float damage = 10f;
 
-    public GameObject player;
+    internal GameObject player;
 
-    public PlayerMovement playerMovement;
+    internal PlayerMovement playerMovement;
+
     public Rigidbody rigidBody;
+    public Collider monsterCollider;
 
     [Header("Sound")]
     public AudioSource audioSource;
     public AudioClip die;
     public AudioClip[] hurts;
-    public float volume;
+    internal float volume;
 
     public GameObject drop;
 
-    private Collider monsterCollider;
+    
     private Collider playerCollider;
     public ParticleSystem AshesDamage;
     public ParticleSystem AshesDeath;
@@ -35,9 +37,9 @@ public class Monster : MonoBehaviour
     {
         volume = PlayerPrefs.GetFloat("Volume");
 
-        //level = transform.parent.GetComponent<Room>().areaLevel;
-        rigidBody = transform.GetComponent<Rigidbody>();
-        monsterCollider = rigidBody.GetComponent<Collider>();
+        if (rigidBody == null) rigidBody = transform.GetComponent<Rigidbody>();
+        if (monsterCollider == null) monsterCollider = rigidBody.GetComponent<Collider>();
+
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
     }
 
@@ -82,7 +84,7 @@ public class Monster : MonoBehaviour
         //x.gameObject.transform.parent = null;
         x.damageLabel.text = amount.ToString("F0");
         x.player = rep;
-        //if (isCrit) x.damageLabel.color = new Color(255f, 0f, 255f, 255f);
+        if (isCrit) x.damageLabel.color = new Color(255f, 0f, 255f, 255f);
     }
 
     private void Bleed()

@@ -9,7 +9,7 @@ public class Room : MonoBehaviour
     public int roomType;
     public Transform[] propSpawns;
     public GameObject[] objects;
-    public Transform[] enemySpawns;
+
 
 
 
@@ -57,7 +57,7 @@ public class Room : MonoBehaviour
         var x = Random.Range(0, Layouts.Length);
         Layouts[x].SetActive(true);
         var y = Layouts[x].GetComponentsInChildren<Monster>();
-        foreach ( Monster z in y)
+        foreach (Monster z in y)
         {
             z.player = this.player;
             z.transform.parent = transform;

@@ -5,42 +5,52 @@ using UnityEngine;
 public class SpikeSkull : Monster
 {
 
-    [SerializeField] float maxWaitingTime;
-    [SerializeField] float minWaitingTime;
+    [SerializeField] Transform shootPoint;
+
+    [SerializeField] GameObject turretBullet;
 
     private RaycastHit hit;
-
     private LayerMask mask;
+
+
+    [SerializeField] float speed;
+    new void Start()
+    {
+        mask = LayerMask.GetMask("Enemy");
+        base.Start();
+        StartCoroutine(Waiter());
+
+    }
     private void OnEnable()
     {
-        mask = LayerMask.GetMask("Dude");
-        StartCoroutine(Wait());
+        
+        
     }
 
-    private IEnumerator Attack()
+    private IEnumerator Waiter()
     {
-        Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
+        
 
-        Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
-
-        if (Physics.Linecast(transform.position, playerPos, mask))
+        while (true)
         {
-           
+            
+            shootPoint.transform.LookAt(player.transform);
+            transform.LookAt(player.transform);
+            
+            
+
+            if (Physics.Raycast(transform.position, shootPoint.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity,mask))
+            {
+
+                    var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
+                    var bulletScript = bullet.GetComponent<TurretBullet>();
+                    bulletScript.speed = 3;
+
+
+            }
+            yield return new WaitForSeconds(1f);
+
         }
-
-        var a = Random.Range(minWaitingTime, maxWaitingTime);
-        yield return new WaitForSeconds(a);
-
-    }
-
-    private IEnumerator Wait()
-    {
-
-
-
-
-        var a = Random.Range(minWaitingTime, maxWaitingTime);
-        yield return new WaitForSeconds(a);
 
     }
 }

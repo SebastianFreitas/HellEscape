@@ -6,7 +6,7 @@ public class TurretBullet : MonoBehaviour
 {
 
     Rigidbody rb;
-    private float speed;
+    internal float speed;
     void Start()
     {
 

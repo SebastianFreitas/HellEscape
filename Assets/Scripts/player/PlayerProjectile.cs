@@ -37,7 +37,7 @@ public class PlayerProjectile : MonoBehaviour
     public int coldDamage;
     public int poisonDamage;
     public int physicalDamage;
-    private float critMulti;
+    internal float critMulti;
     public GameObject physicalTrail;
     public GameObject fireTrail;
     public GameObject coldTrail;
@@ -143,6 +143,8 @@ public class PlayerProjectile : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("MonsterHead"))
         {
+
+            Debug.Log("shoot head");
             collision.transform.GetComponent<Monster>().TakeDamage( physicalDamage, true, critMulti);
 
             StartCoroutine(KillBullet());

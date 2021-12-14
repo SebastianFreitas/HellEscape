@@ -44,7 +44,7 @@ public class ExplosiveCilinder : PropBehaviour
 
                 //hitCollider.GetComponent<>
             }
-            else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
+            else if (hitCollider.CompareTag("Monster"))
             {
                 hitCollider.GetComponent<Monster>().TakeDamage(10, false, 0);
 
