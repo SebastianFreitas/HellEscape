@@ -40,20 +40,26 @@ public class ExplosiveCilinder : PropBehaviour
             if (hitCollider.CompareTag("Dude")){
                 hitCollider.transform.GetComponent<PlayerHpManager>().TakeDamage(10);
                 var direction = hitCollider.transform.position - transform.position;
-                hitCollider.GetComponent<PlayerBasicMovement>().AddImpact(direction, 10f );
+                hitCollider.GetComponent<PlayerBasicMovement>().AddImpact(direction, 50f );
 
                 //hitCollider.GetComponent<>
             }
             else if (hitCollider.CompareTag("Monster"))
             {
-                hitCollider.GetComponent<Monster>().TakeDamage(10, false, 0);
+                hitCollider.transform.parent.GetComponentInParent<Monster>().TakeDamage(10, false, 0);
 
                 var direction = hitCollider.transform.position - transform.position;
-                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 50f, ForceMode.Impulse);
+            }
+            else if (hitCollider.gameObject.CompareTag("MonsterHead"))
+            {
+
+                hitCollider.transform.GetComponent<Monster>().TakeDamage(10, false, 0);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 50f, ForceMode.Impulse);
             }
             else if (hitCollider.CompareTag("Prop"))
             {
-                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
+                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 50f, ForceMode.Impulse);
             }
         }
         StartCoroutine(Die());

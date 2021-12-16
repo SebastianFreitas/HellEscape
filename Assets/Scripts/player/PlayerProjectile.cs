@@ -137,14 +137,12 @@ public class PlayerProjectile : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage( physicalDamage, false, critMulti);
+            collision.transform.parent.GetComponentInParent<Monster>().TakeDamage( physicalDamage, false, critMulti);
 
             StartCoroutine(KillBullet());
         }
         else if (collision.gameObject.CompareTag("MonsterHead"))
         {
-
-            Debug.Log("shoot head");
             collision.transform.GetComponent<Monster>().TakeDamage( physicalDamage, true, critMulti);
 
             StartCoroutine(KillBullet());

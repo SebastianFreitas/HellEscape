@@ -8,6 +8,8 @@ public class SpikeSkull : Monster
     [SerializeField] Transform shootPoint;
 
     [SerializeField] GameObject turretBullet;
+    [SerializeField] Transform head;
+    [SerializeField] ParticleSystem explosionEffect;
 
     private RaycastHit hit;
     private LayerMask mask;
@@ -19,6 +21,9 @@ public class SpikeSkull : Monster
         mask = LayerMask.GetMask("Enemy");
         base.Start();
         StartCoroutine(Waiter());
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.angularVelocity = Vector3.zero;
+
 
     }
     private void OnEnable()
@@ -35,20 +40,16 @@ public class SpikeSkull : Monster
         {
             
             shootPoint.transform.LookAt(player.transform);
-            transform.LookAt(player.transform);
-            
-            
-
-            if (Physics.Raycast(transform.position, shootPoint.transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity,mask))
-            {
-
-                    var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
-                    var bulletScript = bullet.GetComponent<TurretBullet>();
-                    bulletScript.speed = 3;
+            head.LookAt(player.transform);
 
 
-            }
-            yield return new WaitForSeconds(1f);
+            var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
+            var bulletScript = bullet.GetComponent<TurretBullet>();
+            bulletScript.speed = 3;
+            explosionEffect.Play();
+
+
+            yield return new WaitForSecondsRealtime(1f);
 
         }
 
