@@ -28,6 +28,7 @@ public class GameMan : ModDataRoom
     public Hub hub;
     public bool startAtHub;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,7 +65,6 @@ public class GameMan : ModDataRoom
         hub.gameObject.SetActive(true);
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = hub.statspos.position;
-        player.transform.rotation = hub.statspos.rotation;
         player.GetComponent<CharacterController>().enabled = true;
     }
 

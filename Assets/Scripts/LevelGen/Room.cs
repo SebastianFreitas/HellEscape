@@ -55,7 +55,7 @@ public class Room : MonoBehaviour
     public void PickLayout()
     {
         var x = Random.Range(0, Layouts.Length);
-        Layouts[x].SetActive(true);
+
         var y = Layouts[x].GetComponentsInChildren<Monster>();
         foreach (Monster z in y)
         {
@@ -64,6 +64,8 @@ public class Room : MonoBehaviour
             z.level = areaLevel;
             monstersAlive++;
         }
+
+        Layouts[x].SetActive(true);
 
     }
 

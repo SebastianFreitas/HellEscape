@@ -29,50 +29,17 @@ public class NormalGrenade : GrenadeData
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!exploded)
-        {
-            ContactPoint contact = collision.contacts[0];
-            if (collision.gameObject.CompareTag("Monster"))
-            {
-                FireExplode();
-            }
-            else if (bounces > 0)
-            {
-
-                RicochetSparkAndSound();
-                rb.AddForce(contact.normal * speed/4);
-
-                bounces--;
-            }
-            else FireExplode();
-        }
-
-
-
+        if (!exploded)FireExplode();
     }
 
     public ParticleSystem spark;
     public AudioClip ricochet;
     public AudioClip explosionSound;
 
-    private void RicochetSparkAndSound()
-    {
-        var sparkBounce = Instantiate(spark, transform.position, Quaternion.Inverse(transform.rotation));
-        sparkBounce.Play();
-        //AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-     Gizmos.color = Color.red;
-     //Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
-     Gizmos.DrawWireSphere(transform.position + transform.position, area);
-    }
 
     public TrailRenderer trail;
     private void FireExplode()
     {
-        //OnDrawGizmosSelected();
         exploded = true;
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, area);
         foreach (var hitCollider in hitColliders)
@@ -87,6 +54,7 @@ public class NormalGrenade : GrenadeData
             }
             else if (hitCollider.CompareTag("Prop"))
             {
+                Debug.Log("hitcouch");
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
 

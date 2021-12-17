@@ -40,6 +40,7 @@ public class Monster : MonoBehaviour
         if (rigidBody == null) rigidBody = transform.GetComponent<Rigidbody>();
         if (monsterCollider == null) monsterCollider = rigidBody.GetComponent<Collider>();
 
+        if (player == null) player = transform.parent.parent.GetComponentInParent<Room>().player;
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
     }
 
@@ -84,7 +85,7 @@ public class Monster : MonoBehaviour
         //x.gameObject.transform.parent = null;
         x.damageLabel.text = amount.ToString("F0");
         x.player = rep;
-        if (isCrit) x.damageLabel.color = new Color(255f, 0f, 255f, 255f);
+        if (isCrit) x.damageLabel.color = Color.yellow;
     }
 
     private void Bleed()
