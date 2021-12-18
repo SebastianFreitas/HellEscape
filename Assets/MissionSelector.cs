@@ -31,20 +31,6 @@ public class MissionSelector : ModDataRoom
 
     }
 
-    private void GenerateMissions()
-    {
-        int i = 0;
-        foreach (var mon in monitors)
-        {
-            var mission = CreateMission();
-            mon.GetComponentInChildren<TMPro.TextMeshPro>().text = mission.text;
-            missions[i].mission = mission;
-            missions[i].UIUnselect();
-            i++;
-        }
-    }
-
-
 
     internal void OpenPortal()
     {

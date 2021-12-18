@@ -131,6 +131,18 @@ public class Mod
     public Mod()
     {
     }
+
+    public Mod(Mod a)
+    {
+        this.upperBound = a.upperBound;
+        this.lowerBound = a.lowerBound;
+        this.text = a.text;
+        this.basicText = a.basicText;
+        this.grade = a.grade;
+        this.op = a.op;
+        this.tier = a.tier;
+        this.id = a.id;
+    }
 }
 
 public class CraftingHistory

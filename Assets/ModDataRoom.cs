@@ -33,17 +33,17 @@ public class ModDataRoom : MonoBehaviour
     }
 
     public static int[] maxModsWeight = { 100, 90, 80, 70, 25, 10, 5, 2, 1 };
-    public static int[] modsWeight = { 10, 10, 10, 2,2,10 };
+    public static int[] modsWeight = { 10, 10, 10, 2, 2, 10 };
 
 
     public static Mod[] mods =
         new Mod[]{
-                new Mod(15,30, "Monster Max health",      Grade.interior, OperatorType.plus,      0,1),
-                new Mod(1,3,   "Monster Damage",            Grade.interior, OperatorType.plus,      0,2),
-                new Mod(1,3,   "Monster Action Speed",      Grade.interior, OperatorType.increased,      0,3),
-                new Mod(1,5,   "Area Level",        Grade.interior, OperatorType.plus, 0,4),
-                new Mod(1,5,   "Mission Length",    Grade.interior, OperatorType.increased, 0,5),
-                new Mod(1,5,   "Movement Speed",    Grade.interior, OperatorType.reduced, 0,6)
+                new Mod(15,30, "Monster Max health",        Grade.interior, OperatorType.plus,          0,1),
+                new Mod(1,3,   "Monster Damage",            Grade.interior, OperatorType.plus,          0,2),
+                new Mod(1,3,   "Monster Action Speed",      Grade.interior, OperatorType.increased,     0,3),
+                new Mod(1,5,   "Area Level",                Grade.interior, OperatorType.plus,          0,4),
+                new Mod(1,5,   "Mission Length",            Grade.interior, OperatorType.increased,     0,5),
+                new Mod(1,5,   "Movement Speed",            Grade.interior, OperatorType.reduced,       0,6)
 
         };
 
@@ -98,7 +98,7 @@ public class ModDataRoom : MonoBehaviour
     {
         while (true)
         {
-            var x = mods[GetRandomWeightedIndex(modsWeight)];
+            var x = new Mod(mods[GetRandomWeightedIndex(modsWeight)]);
             if (!ContainsMod(mission, x))
             {
                 
@@ -129,14 +129,13 @@ public class ModDataRoom : MonoBehaviour
             case OperatorType.reduced:
                 ret = mod.upperBound + "% reduced " + mod.text;
                 break;
+
             case OperatorType.decreased:
                 ret = mod.upperBound + "% decreased " + mod.text;
                 break;
+
             case OperatorType.minus:
                 ret = mod.upperBound + " " + mod.text;
-                break;
-            case OperatorType.non:
-                ret = mod.text;
                 break;
         }
         return ret;
@@ -174,10 +173,12 @@ public class ModDataRoom : MonoBehaviour
     private bool ContainsMod(GeneratedMission mission, Mod mod)
     {
         if (mission.mods.Count == 0) return false;
+
         foreach (Mod x in mission.mods)
         {
             if (x.id == mod.id) return true;
         }
+
         return false;
 
     }
