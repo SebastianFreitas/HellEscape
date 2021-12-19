@@ -56,7 +56,7 @@ public class Monster : MonoBehaviour
             player.GetComponent<PlayerHpManager>().TakeDamage((int)damage);
         }
     }
-
+    private bool dead = false;
     public void TakeDamage(int damage, bool isCrit,float critMulti)
     {
         float amount = damage;
@@ -66,7 +66,7 @@ public class Monster : MonoBehaviour
         DmgPopUp(amount, isCrit);
         if (health <= 0f )
         {
-            transform.parent.GetComponent<Room>().killMonster();
+            if (!dead) transform.parent.GetComponent<Room>().killMonster();
             Die();
         } 
         else
@@ -99,7 +99,7 @@ public class Monster : MonoBehaviour
 
     void Die()
     {
-        
+        dead = true;
         Bleed();
         var rep = player.transform;
         rep.LookAt(transform.position);

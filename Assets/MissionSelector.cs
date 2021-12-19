@@ -14,7 +14,7 @@ public class MissionSelector : ModDataRoom
 
     
 
-    internal GeneratedMission mission;
+    internal GeneratedMission mission = null;
 
     public GameObject portal;
 
@@ -27,12 +27,12 @@ public class MissionSelector : ModDataRoom
 
     internal void OpenPortal()
     {
-        portal.SetActive(true);
+        if (mission != null) portal.SetActive(true);
     }
 
     internal void StartSelectedMission()
     {
-        if (mission != null) manager.StartRun(0, mission);
+         manager.StartRun(0, mission);
     }
 
     internal void TurnBlue(MeshRenderer[] materials)
