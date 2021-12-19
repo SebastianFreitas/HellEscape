@@ -16,7 +16,6 @@ public class MoveCone : MonoBehaviour
 
     IEnumerator Waiter()
     {
-        var x = true;
         while (true)
         {
             transform.Rotate(Vector3.right * 500 * Time.deltaTime, Space.Self);

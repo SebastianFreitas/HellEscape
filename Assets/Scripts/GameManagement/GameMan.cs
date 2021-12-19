@@ -72,8 +72,9 @@ public class GameMan : ModDataRoom
     {
         // Instantiate room
         currentRoom = Instantiate(room, runningGame);
-        currentRoom.areaLevel = currentLevel;
+        currentRoom.areaLevel = currentLevel+mission.aditionalAreaLevel;
 
+        currentRoom.mission = mission;
         currentRoom.transform.parent = runningGame;
         currentRoom.player = player;
         currentRoom.PickLayout();
@@ -93,8 +94,10 @@ public class GameMan : ModDataRoom
 
     private Room[] run;
     private int runProgress = 0;
-    public void StartRun(int level, GeneratedMission mission)
+    private GeneratedMission mission;
+    public void StartRun(int level, GeneratedMission mis)
     {
+        mission = mis;
         hub.gameObject.SetActive(false);
         currentLevel = level;
         runProgress = 0;

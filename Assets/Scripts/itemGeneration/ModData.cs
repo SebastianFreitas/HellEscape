@@ -128,9 +128,6 @@ public class Mod
         this.tier = tier;
         this.id = id;
     }
-    public Mod()
-    {
-    }
 
     public Mod(Mod a)
     {
@@ -142,6 +139,18 @@ public class Mod
         this.op = a.op;
         this.tier = a.tier;
         this.id = a.id;
+    }
+
+    public Mod()
+    {
+        this.upperBound = 0;
+        this.lowerBound = 0;
+        this.text = "";
+        this.basicText = "";
+        this.grade = Grade.extra;
+        this.op = OperatorType.non;
+        this.tier = 1;
+        this.id = -1;
     }
 }
 

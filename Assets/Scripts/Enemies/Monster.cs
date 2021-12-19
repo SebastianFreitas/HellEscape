@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] float health = 50f;
-    [SerializeField] public float damage = 10f;
+    [SerializeField] internal float health = 50f;
+    [SerializeField] internal float damage = 10f;
 
     internal GameObject player;
 

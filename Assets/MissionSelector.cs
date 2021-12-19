@@ -9,7 +9,6 @@ public class MissionSelector : ModDataRoom
 
 
 
-
     public Material green;
     public Material blue;
 
@@ -25,12 +24,6 @@ public class MissionSelector : ModDataRoom
     public MonitorMission[] missions;
     public GeneratedMission currentMission;
 
-    void Start()
-    {
-        //GenerateMissions();
-
-    }
-
 
     internal void OpenPortal()
     {
@@ -39,7 +32,7 @@ public class MissionSelector : ModDataRoom
 
     internal void StartSelectedMission()
     {
-        manager.StartRun(0, mission);
+        if (mission != null) manager.StartRun(0, mission);
     }
 
     internal void TurnBlue(MeshRenderer[] materials)
@@ -59,4 +52,5 @@ public class MissionSelector : ModDataRoom
             if (mon.mission != mi) mon.UIUnselect();
         }
     }
+
 }

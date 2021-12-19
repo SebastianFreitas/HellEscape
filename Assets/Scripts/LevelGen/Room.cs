@@ -29,6 +29,7 @@ public class Room : MonoBehaviour
     public int areaLevel = 1;
 
     private Transform[] enemies;
+    internal ModDataRoom.GeneratedMission mission;
 
     private void Start()
     {
@@ -63,10 +64,17 @@ public class Room : MonoBehaviour
             z.transform.parent = transform;
             z.level = areaLevel;
             monstersAlive++;
+            ApplyMissionModsToMonster(z);
         }
 
         Layouts[x].SetActive(true);
 
+    }
+
+    private void ApplyMissionModsToMonster(Monster z)
+    {
+        z.health += mission.aditionalLife;
+        z.damage += mission.aditionalDamage;
     }
 
     public void SpawnObjects(int more)

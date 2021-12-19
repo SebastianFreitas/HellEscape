@@ -32,8 +32,8 @@ public class ModDataRoom : MonoBehaviour
         return index;
     }
 
-    public static int[] maxModsWeight = { 100, 90, 80, 70, 25, 10, 5, 2, 1 };
-    public static int[] modsWeight = { 10, 10, 10, 2, 2, 10 };
+    public static int[] maxModsWeight = { 0, 90, 90, 80, 55, 20, 10, 5, 1 };
+    public static int[] modsWeight = { 10, 10, 10, 2, 2};
 
 
     public static Mod[] mods =
@@ -42,8 +42,8 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,3,   "Monster Damage",            Grade.interior, OperatorType.plus,          0,2),
                 new Mod(1,3,   "Monster Action Speed",      Grade.interior, OperatorType.increased,     0,3),
                 new Mod(1,5,   "Area Level",                Grade.interior, OperatorType.plus,          0,4),
-                new Mod(1,5,   "Mission Length",            Grade.interior, OperatorType.increased,     0,5),
-                new Mod(1,5,   "Movement Speed",            Grade.interior, OperatorType.reduced,       0,6)
+                new Mod(1,5,   "Mission Length",            Grade.interior, OperatorType.increased,     0,5)
+               
 
         };
 
@@ -164,9 +164,7 @@ public class ModDataRoom : MonoBehaviour
             case "Mission Length":                
                 mission.aditionalLength         = value;
                 break;                            
-            case "Movement Speed":                
-                mission.reducedSpeed            = value;
-                break;
+
         }
     }
 
@@ -190,7 +188,7 @@ public class ModDataRoom : MonoBehaviour
        public int increasedActionSpeed    = 0;
        public int aditionalAreaLevel      = 0;
        public int aditionalLength         = 0;
-       public int reducedSpeed            = 0;
+
 
        public int increasedMonsterDrops       = 0;
        public int increasedChanceSpecialRooms = 0;
