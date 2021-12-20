@@ -47,8 +47,9 @@ public class Room : MonoBehaviour
     internal void VoidPlayer()
     {
         player.GetComponent<CharacterController>().enabled = false;
-       // Vector3 mov = player.GetComponent<PlayerBasicMovement>().lastPos;
-        //player.transform.position = mov;
+       
+        player.transform.position = playerStart.position;
+        player.GetComponent<PlayerHpManager>().TakeDamage(10);
         player.GetComponent<CharacterController>().enabled = true;
 
     }
