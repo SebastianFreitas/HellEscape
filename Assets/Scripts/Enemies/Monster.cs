@@ -80,9 +80,8 @@ public class Monster : MonoBehaviour
 
     internal void UpdateStatsToLevel()
     {
-        var x = 1f + (level / 100f);
-        health *= x;
-        actionSpeed *= x * .5f;
+        health *= 1f + (level / 100f);
+        actionSpeed *= 1f + (level / 100f/2);
 
     }
 
