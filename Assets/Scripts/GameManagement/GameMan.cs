@@ -22,7 +22,7 @@ public class GameMan : ModDataRoom
     public HealthBar hpBar;
     public GameObject player;
 
-    private int currentLevel = 50;
+    private int currentLevel = 90;
 
     public Transform runningGame;
     public Hub hub;
@@ -95,17 +95,18 @@ public class GameMan : ModDataRoom
     private Room[] run;
     private int runProgress = 0;
     private GeneratedMission mission;
-    public void StartRun(int level, GeneratedMission mis)
+    public void StartRun(GeneratedMission mis)
     {
+        currentLevel++;
         mission = mis;
         hub.gameObject.SetActive(false);
-        currentLevel = level;
         runProgress = 0;
         run = new Room[30];
         int i = 0;
-        for(; i < Random.Range(5, 10)+mission.aditionalLength; i++)
+        for(; i < Random.Range(5, 8)+mission.aditionalLength; i++)
         {
             run[i] = GenerateRoom();
+            run[i].areaLevel = currentLevel;
         }
         run[i] = null;
 

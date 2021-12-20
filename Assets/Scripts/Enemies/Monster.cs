@@ -28,7 +28,9 @@ public class Monster : MonoBehaviour
     public ParticleSystem AshesDamage;
     public ParticleSystem AshesDeath;
 
-    public int level;
+    public float level;
+
+    internal float actionSpeed = 1f;
 
     public DamagePopUp dmgPopUp;
     private bool died = false;
@@ -76,6 +78,14 @@ public class Monster : MonoBehaviour
         }
     }
 
+    internal void UpdateStatsToLevel()
+    {
+        var x = 1f + (level / 100f);
+        health *= x;
+        actionSpeed *= x * .5f;
+
+    }
+
     private void DmgPopUp(float amount, bool isCrit)
     {
         
@@ -113,12 +123,12 @@ public class Monster : MonoBehaviour
 
     private void Drop()
     {
-        if (Random.Range(1,20) > 1)
+        if (Random.Range(1,100) > 98)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
             x.transform.parent = transform.parent;
             var y = x.GetComponent<Item>();
-            y.gun = y.CreateWeapon(level);
+            y.gun = y.CreateWeapon((int)level);
 
         }
     }

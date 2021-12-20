@@ -24,6 +24,8 @@ public class MissionSelector : ModDataRoom
     public MonitorMission[] missions;
     public GeneratedMission currentMission;
 
+    internal int level = 1;
+
 
     internal void OpenPortal()
     {
@@ -32,7 +34,7 @@ public class MissionSelector : ModDataRoom
 
     internal void StartSelectedMission()
     {
-         manager.StartRun(0, mission);
+         manager.StartRun( mission);
     }
 
     internal void TurnBlue(MeshRenderer[] materials)

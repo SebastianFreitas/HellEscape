@@ -34,7 +34,6 @@ public class SpecialRoom : MonoBehaviour
     private void GenerateSpecialRoom()
     {
         var result = Random.Range(0, symbols.Length);
-        result = 2;
         switch (result)
         {
             case 0:
@@ -84,6 +83,6 @@ public class SpecialRoom : MonoBehaviour
     IEnumerator WaiterStart()
     {
         yield return new WaitForSecondsRealtime(1f);
-        if (Random.Range(1, 100) + room.mission.increasedChanceSpecialRooms > 0) GenerateSpecialRoom();
+        if (Random.Range(1, 100) + room.mission.increasedChanceSpecialRooms > 70) GenerateSpecialRoom();
     }
 }

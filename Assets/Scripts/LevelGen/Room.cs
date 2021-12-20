@@ -66,6 +66,7 @@ public class Room : MonoBehaviour
             z.level = areaLevel;
             monstersAlive++;
             ApplyMissionModsToMonster(z);
+            z.UpdateStatsToLevel();
         }
 
         Layouts[x].SetActive(true);
@@ -144,7 +145,7 @@ public class Room : MonoBehaviour
 
     private IEnumerator TimerPortalUnlock()
     {
-        yield return new WaitForSeconds(60f);
+        yield return new WaitForSecondsRealtime(500f);
         locked = false;
         portal.SetActive(true);
     }

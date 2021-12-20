@@ -7,8 +7,7 @@ public class Skull : Monster
 
     [SerializeField] float maxAltitudeJumpDistance;
     [SerializeField] float minAltitudeJumpDistance;
-    [SerializeField] float maxWaitingTime;
-    [SerializeField] float minWaitingTime;
+    [SerializeField] float waitingTime;
     [SerializeField] float maxJumpForce;
     [SerializeField] float minJumpForce;
 
@@ -18,6 +17,7 @@ public class Skull : Monster
     bool isLeft;
     Vector3 randomHeight;
 
+    private float finalWaitTime;
     new void Start()
     {
         var x = Random.Range(-2,3);
@@ -30,7 +30,7 @@ public class Skull : Monster
 
     private void OnEnable()
     {
-   
+        
         StartCoroutine(waiterStart());
     }
 
@@ -48,8 +48,8 @@ public class Skull : Monster
 
         base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
 
-        var a = Random.Range(minWaitingTime, maxWaitingTime);
-        yield return new WaitForSeconds(a);
+
+        yield return new WaitForSeconds(finalWaitTime);
         
         StartCoroutine(randomJump());
 
@@ -88,6 +88,8 @@ public class Skull : Monster
     IEnumerator waiterStart()
     {
         yield return new WaitForSeconds(Random.Range(1, 3));
+        finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
+        if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
         StartCoroutine(randomJump());
     }
 
