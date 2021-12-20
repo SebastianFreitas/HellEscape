@@ -48,7 +48,11 @@ public class NormalGrenade : GrenadeData
             {
                 playerMov.AddImpact(hitCollider.transform.position - transform.position, damage);
             }
-            else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
+            else if (hitCollider.CompareTag("Monster"))
+            {
+                hitCollider.GetComponentInParent<Monster>().TakeDamage(damage, false, 0);
+            }
+            else if (hitCollider.CompareTag("MonsterHead"))
             {
                 hitCollider.GetComponent<Monster>().TakeDamage(damage, false, 0);
             }

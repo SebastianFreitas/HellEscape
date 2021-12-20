@@ -34,7 +34,7 @@ public class ConeMonster : Monster
     private IEnumerator Waiter()
     {
         isRunning = true;
-
+        yield return new WaitForSecondsRealtime(1f);
         while (true)
         {
             shootPoint.transform.LookAt(player.transform);
