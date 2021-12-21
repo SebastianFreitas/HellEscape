@@ -18,11 +18,7 @@ public class MonitorMission : ModDataRoom
     private void Start()
     {
         selector = GetComponentInParent<MissionSelector>();
-        mission = CreateMission();
 
-        textGood.text = mission.goodText;
-
-       // textBad.text = mission.badText;
         UIUnselect();
     }
 
@@ -42,6 +38,6 @@ public class MonitorMission : ModDataRoom
     {
         mission = CreateMission();
         textGood.text = mission.goodText;
-        //textBad.text = mission.badText;
+        textBad.text = mission.badText;
     }
 }

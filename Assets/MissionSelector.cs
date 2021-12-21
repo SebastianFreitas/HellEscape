@@ -78,33 +78,42 @@ public class MissionSelector : ModDataRoom
     {
         if (beenLong)
         {
-            foreach(MonitorMission mis in missions)
-            {
-                mis.RefreshMission();
-            }
+            used = false;
+            beenLong = false;
+            StartCoroutine( SearchPath());
             StartCoroutine(BeenLong());
         }
 
 
     }
 
+    bool used = false;
     internal IEnumerator SearchPath()
     {
-
-        totalChance = 3;
-        foreach(MonitorMission mis in missions)
+        if (!used)
         {
-            if(totalChance > 0)
+            used = true;
+            TurnRed(meshSearchPath);
+            totalChance = 3;
+            foreach (MonitorMission mis in missions)
             {
-                mis.gameObject.SetActive(true);
-                mis.RefreshMission();
+                mis.gameObject.SetActive(false);
             }
+            foreach (MonitorMission mis in missions)
+            {
+                if (totalChance > 0)
+                {
+                    mis.gameObject.SetActive(true);
+                    mis.RefreshMission();
+                }
 
-            totalChance--;
-            yield return new WaitForSecondsRealtime(Random.Range(1f, 3f));
+                totalChance--;
+                yield return new WaitForSecondsRealtime(Random.Range(1f, 3f));
 
+            }
         }
-        TurnRed(meshSearchPath);
+
+        
     }
 
     IEnumerator ErrorWaiter(MeshRenderer[] materials)
@@ -117,7 +126,7 @@ public class MissionSelector : ModDataRoom
     IEnumerator BeenLong()
     {
         beenLong = false;
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(10f);
         beenLong = true;
     }
 

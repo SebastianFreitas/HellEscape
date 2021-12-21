@@ -32,7 +32,7 @@ public class ModDataRoom : MonoBehaviour
         return index;
     }
 
-    public static int[] maxModsWeight = { 0, 90, 90, 80, 55, 20, 10, 5, 1 };
+    public static int[] maxModsWeight = { 0, 90, 90, 80, 55 };
     public static int[] modsWeight = { 10, 10, 10, 2, 2};
 
 
