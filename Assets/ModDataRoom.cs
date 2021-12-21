@@ -77,21 +77,30 @@ public class ModDataRoom : MonoBehaviour
 
     private void CreateMissionText(GeneratedMission result)
     {
+        result.goodText = GetMissionGood(result);
+        result.badText = GetMissionBad(result);
+        result.text = result.badText + result.goodText;
+    }
+    internal string GetMissionGood(GeneratedMission result)
+    {
         string text = "";
         text += result.increasedChanceElite + "% elite chance" + "\n";
         text += result.increasedChanceSpecialRooms + "% to find special rooms" + "\n";
         text += result.increasedMonsterDrops + "% more weapon drop chance" + "\n\n";
+        return text;
+    }
+
+    internal string GetMissionBad(GeneratedMission result)
+    {
+        string text = "";
         if (result.mods != null)
         {
-            foreach(Mod mod in result.mods)
+            foreach (Mod mod in result.mods)
             {
                 text += mod.text + "\n";
             }
         }
-
-
-
-        result.text = text;
+        return text;
     }
 
     private void AddMod(GeneratedMission mission)
@@ -198,6 +207,8 @@ public class ModDataRoom : MonoBehaviour
 
         public HashSet<Mod> mods = new HashSet<Mod>();
         public string       text = "";
+        public string badText = "";
+        public string goodText = "";
 
         public void createPositives()
         {

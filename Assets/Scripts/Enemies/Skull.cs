@@ -43,7 +43,7 @@ public class Skull : Monster
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
 
         var x = false;
-        if (Random.Range(1, 100) > 98) x = true;
+        if (Random.Range(1, 100) > 95) x = true;
         if (x) randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
         else randomHeight = new Vector3(0,0,0);
 

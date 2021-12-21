@@ -20,6 +20,16 @@ public class MonsterSpawber : MonoBehaviour
         Spawn(pos, rot);
     }
 
+
+
+    internal void Error()
+    {
+        var pos = errorList[0].transform.position;
+        var rot = errorList[0].transform.rotation;
+        for (int i = 0; i < 300; i++) Spawn(pos, rot);
+
+    }
+
     private void Spawn(Vector3 pos, Quaternion rot)
     {
         pos.x += Random.Range(-5, +5);
@@ -31,13 +41,5 @@ public class MonsterSpawber : MonoBehaviour
         script.isHub = true;
         script.level = 1;
         script.UpdateStatsToLevel();
-    }
-
-    internal void Error()
-    {
-        var pos = errorList[0].transform.position;
-        var rot = errorList[0].transform.rotation;
-        for (int i = 0; i < 300; i++) Spawn(pos, rot);
-
     }
 }

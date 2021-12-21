@@ -9,33 +9,39 @@ public class MonitorMission : ModDataRoom
 
     internal MissionSelector selector;
 
-    public MeshRenderer[] meshes;
+    public MeshRenderer[] meshesGood;
+    public MeshRenderer[] meshesBad;
 
-    internal TMPro.TextMeshPro text;
+    public TMPro.TextMeshPro textGood;
+    public TMPro.TextMeshPro textBad;
 
     private void Start()
     {
         selector = GetComponentInParent<MissionSelector>();
         mission = CreateMission();
-        text = GetComponentInChildren<TMPro.TextMeshPro>();
-        text.text = mission.text;
+
+        textGood.text = mission.goodText;
+
+       // textBad.text = mission.badText;
         UIUnselect();
     }
 
     public void UISelect()
     {
-        selector.TurnGreen(meshes);
+        selector.TurnGreen(meshesGood);
+
         selector.mission = mission;
     }
 
     internal void UIUnselect()
     {
-        selector.TurnBlue(meshes);
+        selector.TurnBlue(meshesGood);
     }
 
     internal void RefreshMission()
     {
         mission = CreateMission();
-        text.text = mission.text;
+        textGood.text = mission.goodText;
+        //textBad.text = mission.badText;
     }
 }

@@ -75,6 +75,18 @@ public class InteractBehaviour : MonoBehaviour
                     selector.currentMission = mi;
                     selector.UIUnselect(mi);
                 }
+                else if (hit.transform.CompareTag("ReloadMissions"))
+                {
+
+                    hit.collider.transform.parent.GetComponentInParent<MissionSelector>().ReloadMissions();
+          
+                }
+                else if (hit.transform.CompareTag("SearchPath"))
+                {
+
+                    StartCoroutine(hit.collider.transform.parent.GetComponentInParent<MissionSelector>().SearchPath());
+
+                }
                 else if (hit.transform.CompareTag("Symbol"))
                 {
                     hit.collider.transform.GetComponentInParent<SpecialRoom>().OpenDoor();

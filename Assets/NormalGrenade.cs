@@ -46,7 +46,7 @@ public class NormalGrenade : GrenadeData
         {
             if (hitCollider.CompareTag("Dude"))
             {
-                playerMov.AddImpact(hitCollider.transform.position - transform.position, damage);
+                playerMov.AddImpact(hitCollider.transform.position - transform.position, 200);
             }
             else if (hitCollider.CompareTag("Monster"))
             {
@@ -58,7 +58,6 @@ public class NormalGrenade : GrenadeData
             }
             else if (hitCollider.CompareTag("Prop"))
             {
-                Debug.Log("hitcouch");
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
 
