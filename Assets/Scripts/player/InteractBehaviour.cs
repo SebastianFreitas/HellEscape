@@ -79,6 +79,14 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponentInParent<SpecialRoom>().OpenDoor();
                 }
+                else if (hit.transform.CompareTag("SpawnMonster"))
+                {
+                    hit.collider.transform.GetComponentInParent<MonsterSpawber>().SpawnMonster();
+                }
+                else if (hit.transform.CompareTag("Error"))
+                {
+                    hit.collider.transform.GetComponentInParent<MonsterSpawber>().Error();
+                }
             }
             
         }

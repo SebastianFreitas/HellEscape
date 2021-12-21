@@ -59,6 +59,8 @@ public class Monster : MonoBehaviour
         }
     }
     private bool dead = false;
+
+    [SerializeField] internal bool isHub;
     public void TakeDamage(int damage, bool isCrit,float critMulti)
     {
         float amount = damage;
@@ -68,7 +70,7 @@ public class Monster : MonoBehaviour
         DmgPopUp(amount, isCrit);
         if (health <= 0f )
         {
-            if (!dead) transform.parent.GetComponent<Room>().killMonster();
+            if (!dead && !isHub) transform.parent.GetComponent<Room>().killMonster();
             Die();
         } 
         else

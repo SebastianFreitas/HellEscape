@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: -7233556720816331346}
   m_Layer: 9
   m_Name: enemySkull
-  m_TagString: Monster
+  m_TagString: MonsterHead
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1412714010074994750}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0.5
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -114,9 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   damage: 10
-  player: {fileID: 0}
-  playerMovement: {fileID: 0}
-  rigidBody: {fileID: 0}
+  rigidBody: {fileID: 8490035148160077464}
+  monsterCollider: {fileID: 0}
   audioSource: {fileID: -7233556720816331346}
   die: {fileID: 8300000, guid: 854803da0d9e3ad4aaa5b54bf747fa4d, type: 3}
   hurts:
@@ -125,16 +124,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4dd8dca9dc9d3894eacd89a4394f0fe0, type: 3}
   - {fileID: 8300000, guid: 59de6c2039230d54183a449e8514331f, type: 3}
   - {fileID: 8300000, guid: 2c349fa9dbb93284e9f2b058631e2b48, type: 3}
-  volume: 0.5
   drop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
   AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
   AshesDeath: {fileID: 6949414622727591476, guid: 3951fdba16877ec4c869d44b800da58c, type: 3}
   level: 0
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
+  isHub: 0
   maxAltitudeJumpDistance: 2
   minAltitudeJumpDistance: 0
-  maxWaitingTime: 2.5
-  minWaitingTime: 0.75
+  waitingTime: 2
   maxJumpForce: 1000
   minJumpForce: 450
   attack: {fileID: 0}

@@ -40,11 +40,12 @@ public class Skull : Monster
 
         Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
-        Vector3 direction_to_player = (playerPos - this.transform.position).normalized; 
+        Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
 
-        
-        randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
-
+        var x = false;
+        if (Random.Range(1, 100) > 98) x = true;
+        if (x) randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
+        else randomHeight = new Vector3(0,0,0);
 
         base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
 
