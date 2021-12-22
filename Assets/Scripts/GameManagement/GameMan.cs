@@ -103,10 +103,13 @@ public class GameMan : ModDataRoom
         runProgress = 0;
         run = new Room[30];
         int i = 0;
-        for(; i < Random.Range(5, 8)+mission.aditionalLength; i++)
+        for(; i < mission.distance; i++)
         {
             run[i] = GenerateRoom();
             run[i].areaLevel = currentLevel;
+            run[i].mission = mission;
+            run[i].transform.parent = runningGame;
+            run[i].player = player;
         }
         run[i] = null;
 
