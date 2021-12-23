@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -70,7 +71,7 @@ public class MissionSelector : ModDataRoom
     {
         foreach(MonitorMission mon in missions)
         {
-            if (mon.mission != mi) mon.UIUnselect();
+            if (mon.mission != mi && mon.isActiveAndEnabled) mon.UIUnselect();
         }
     }
 
@@ -94,27 +95,31 @@ public class MissionSelector : ModDataRoom
         {
             used = true;
             TurnRed(meshSearchPath);
-            totalChance = 3;
+            totalChance = 9;
+
+
             foreach (MonitorMission mis in missions)
             {
+
                 mis.gameObject.SetActive(false);
             }
+
             foreach (MonitorMission mis in missions)
             {
-                if (totalChance > 0)
+                if (totalChance > 0 && Random.Range(1, 20) > 10)
                 {
+                    yield return new WaitForSecondsRealtime(2f);
                     mis.gameObject.SetActive(true);
                     mis.RefreshMission();
+                    totalChance--;
                 }
-
-                totalChance--;
-                yield return new WaitForSecondsRealtime(Random.Range(1f, 3f));
-
             }
-        }
 
-        
+
+        }  
     }
+
+
 
     IEnumerator ErrorWaiter(MeshRenderer[] materials)
     {
@@ -126,7 +131,7 @@ public class MissionSelector : ModDataRoom
     IEnumerator BeenLong()
     {
         beenLong = false;
-        yield return new WaitForSecondsRealtime(10f);
+        yield return new WaitForSecondsRealtime(5f);
         beenLong = true;
     }
 

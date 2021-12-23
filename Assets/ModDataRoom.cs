@@ -32,8 +32,8 @@ public class ModDataRoom : MonoBehaviour
         return index;
     }
 
-    public static int[] maxModsWeight = { 1,1,3,1,1,11,11,11,1,1,11,12 };
-    public static int[] modsWeight = { 10, 10, 10, 2, 2};
+    public static int[] maxModsWeight = { 0, 10, 20 ,10 ,4 ,1};
+    public static int[] modsWeight = { 80,50,2,50,20,6,5,20,20,100,100,100};
 
 
     public static Mod[] mods =
@@ -78,11 +78,12 @@ public class ModDataRoom : MonoBehaviour
 
     public int[] GetMaxModsWeight()
     {
-        int[] ret = new int[20];
+        int[] ret = new int[mods.Length];
         int i = 0;
         foreach(Mod mod in mods)
         {
             ret[i] = mod.tier;
+            i++;
         }
         return ret;
     }
@@ -104,7 +105,7 @@ public class ModDataRoom : MonoBehaviour
     internal string GetMissionGood(GeneratedMission result)
     {
         string text = "";
-        text += result.distance + "units away" + "\n";
+        text += result.distance + " units away" + "\n";
         text += result.increasedChanceElite + "% elite chance" + "\n";
         text += result.increasedChanceSpecialRooms + "% special room chance" + "\n";
         text += result.increasedMonsterDrops + "% weapon drop chance" + "\n\n";
@@ -128,11 +129,12 @@ public class ModDataRoom : MonoBehaviour
     {
         while (true)
         {
-            var i = mods[GetRandomWeightedIndex(GetMaxModsWeight())];
-            var x = new Mod(i);
+            var x = new Mod(mods[GetRandomWeightedIndex(modsWeight)]);
+            //var i = mods[GetRandomWeightedIndex(GetMaxModsWeight())];
+            //var x = new Mod(i);
             if (!ContainsMod(mission, x))
             {
-                i.tier -= 100;
+              //  i.tier -= 100;
                 var value = Random.Range(x.lowerBound, x.upperBound);
                 x.upperBound = value;
                 x.text = CreateText(x);
@@ -167,6 +169,9 @@ public class ModDataRoom : MonoBehaviour
 
             case OperatorType.minus:
                 ret = mod.upperBound + " " + mod.text;
+                break;
+            case OperatorType.non:
+                ret =  mod.text;
                 break;
         }
         return ret;
