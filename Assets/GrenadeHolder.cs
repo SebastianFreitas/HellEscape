@@ -32,14 +32,16 @@ public class GrenadeHolder : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKey("q") )
+        if (Input.GetKey("q"))
         {
             if ((baseCD <= 0) && canShoot1)
             {
                 canShoot1 = false;
                 Shoot(true);
             }
-            else if (beenLong) StartCoroutine( WaiterWrong());
+            else if (beenLong) {
+                StartCoroutine(WaiterWrong()); beenLong = false;
+            }
 
         }
         

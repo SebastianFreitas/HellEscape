@@ -100,10 +100,10 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("Error"))
                 {
                     hit.collider.transform.GetComponentInParent<MonsterSpawber>().Error();
-                }  else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+                }  else AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
             
         }
-            else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+            else AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
 
         }
     }
