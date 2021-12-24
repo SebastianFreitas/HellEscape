@@ -18,13 +18,19 @@ public class Skull : Monster
     Vector3 randomHeight;
 
     private float finalWaitTime;
+    [SerializeField]public bool isHive =false;
+    public Skull[] otherSkulls;
+
     new void Start()
     {
+
+        
         var x = Random.Range(-2,3);
         rigidBody.angularVelocity = new Vector3(x,x,x);
         base.Start();
+        
 
-        //if (Random.Range(1, 2) == 2) isLeft = true;
+
     }
 
 
@@ -52,6 +58,7 @@ public class Skull : Monster
 
         yield return new WaitForSeconds(finalWaitTime);
         
+
         StartCoroutine(randomJump());
 
 
@@ -65,33 +72,36 @@ public class Skull : Monster
         rigidBody.velocity = Vector3.zero;
         var rep = player.transform;
         rep.LookAt(transform.position);
-        //var fury = Instantiate(attack, transform.position, rep.rotation, transform);
-        //fury.Play();
+
 
         audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume/4);
         yield return new WaitForSeconds(1f);
 
         Vector3 playerPoss = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
-        Vector3 direction_to_players = (playerPoss - this.transform.position).normalized; //randomHeight +
+        Vector3 direction_to_players = (playerPoss - this.transform.position).normalized; 
         
-        base.rigidBody.AddForce((direction_to_players) * maxJumpForce *3);
-
-        //StartCoroutine(EndFury(fury));
+        base.rigidBody.AddForce((direction_to_players) * maxJumpForce * 3);
+         
     }
 
-    private IEnumerator EndFury(ParticleSystem fury)
-    {
-        yield return new WaitForSeconds(1f);
-        fury.Stop();
-    }
 
     IEnumerator waiterStart()
     {
         yield return new WaitForSeconds(Random.Range(1, 3));
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
+        NewMethod();
         StartCoroutine(randomJump());
+    }
+
+    private void NewMethod()
+    {
+        if (isHive)
+        {
+            base.rigidBody.AddForce(((otherSkulls[Random.Range(0, otherSkulls.Length)].transform.position - this.transform.position).normalized) * 150 * 3);
+            otherSkulls = transform.parent.GetComponentsInChildren<Skull>();
+        }
     }
 
     public bool Approximately(Vector3 me, Vector3 other, float allowedDifference)
