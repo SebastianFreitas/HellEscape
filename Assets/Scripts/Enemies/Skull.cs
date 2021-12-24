@@ -57,7 +57,7 @@ public class Skull : Monster
 
 
         yield return new WaitForSeconds(finalWaitTime);
-        
+        if (isHive) base.rigidBody.AddForce(((otherSkulls[Random.Range(0, otherSkulls.Length)].transform.position - this.transform.position).normalized) * 150 * 3);
 
         StartCoroutine(randomJump());
 
@@ -91,17 +91,8 @@ public class Skull : Monster
         yield return new WaitForSeconds(Random.Range(1, 3));
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
-        NewMethod();
+        if (isHive) otherSkulls = transform.parent.GetComponentsInChildren<Skull>();
         StartCoroutine(randomJump());
-    }
-
-    private void NewMethod()
-    {
-        if (isHive)
-        {
-            base.rigidBody.AddForce(((otherSkulls[Random.Range(0, otherSkulls.Length)].transform.position - this.transform.position).normalized) * 150 * 3);
-            otherSkulls = transform.parent.GetComponentsInChildren<Skull>();
-        }
     }
 
     public bool Approximately(Vector3 me, Vector3 other, float allowedDifference)
