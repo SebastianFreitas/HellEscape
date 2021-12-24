@@ -107,7 +107,12 @@ public class Gun : MonoBehaviour
     }
 
 
+    public void ShootBlank()
+    {
+        StartCoroutine(waiterFlash());
 
+        GetComponent<AudioSource>().PlayOneShot(shoot, volume / 2);
+    }
     public void SetBulletStats()
     {
         fireDamage = (int)gun.GetFireDamage();

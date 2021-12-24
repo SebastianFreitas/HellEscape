@@ -70,7 +70,7 @@ public class Monster : MonoBehaviour
         DmgPopUp(amount, isCrit);
         if (health <= 0f )
         {
-            if (!dead && !isHub) transform.parent.GetComponent<Room>().killMonster();
+            if (!dead && !isHub) transform.GetComponentInParent<Room>().killMonster();
             Die();
         } 
         else

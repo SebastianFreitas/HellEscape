@@ -10,7 +10,7 @@ public class Room : MonoBehaviour
     public Transform[] propSpawns;
     public GameObject[] objects;
 
-
+    public GameObject Explosive;
 
 
     public GameObject[] skulls;
@@ -67,10 +67,22 @@ public class Room : MonoBehaviour
             monstersAlive++;
             ApplyMissionModsToMonster(z);
             z.UpdateStatsToLevel();
+            if (mission.bloodline) BloodLine(z);
         }
 
         Layouts[x].SetActive(true);
 
+    }
+
+    private void BloodLine(Monster z)
+    {
+        Skull x = Instantiate(skull.GetComponent<Skull>(), z.transform.position, z.transform.rotation, transform) as Skull;
+        x.player = this.player;
+        x.transform.parent = transform;
+        x.level = areaLevel;
+        monstersAlive++;
+        ApplyMissionModsToMonster(x);
+        x.UpdateStatsToLevel();
     }
 
     private void ApplyMissionModsToMonster(Monster z)
@@ -82,13 +94,31 @@ public class Room : MonoBehaviour
     public void SpawnObjects(int more)
     {
         for (int i = 0; i < propSpawns.Length; i++)
-        {   
-            
-            for (int j = 0; j<Random.Range(1,6); j++){
-                var x = GetRandomWeightedIndex(weight);
-                Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z ), transform.rotation, transform);
-            }  
+        {
+            var x = GetRandomWeightedIndex(weight);
+            if (mission.doubleTrash)
+            {
+                for (int j = 0; j < 10; j++) SpawnSingleObject(i, GetRandomWeightedIndex(weight));
+
+            } else Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform);
+
         }
+    }
+
+    private void SpawnSingleObject(int i, int y)
+    {
+        if (mission.trashToSkulls)
+        {
+            Skull x = Instantiate(skull.GetComponent<Skull>(), new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform) as Skull;
+            x.player = this.player;
+            x.transform.parent = transform;
+            x.level = areaLevel;
+            monstersAlive++;
+            ApplyMissionModsToMonster(x);
+            x.UpdateStatsToLevel();
+        }
+        if (mission.explosiveTrash && Random.Range(1,20)> 3)Instantiate(Explosive, new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform);
+        else Instantiate(objects[y], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform);
     }
 
     public int GetRandomWeightedIndex(int[] weights)

@@ -12,24 +12,45 @@ public class GrenadeHolder : MonoBehaviour
     public GameObject projectile1;
     public GameObject projectile2;
 
+    public Gun guna;
+
 
     // Start is called before the first frame update
     void OnEnable()
     {
+
         canShoot1 = true;
         canShoot2 = true;
+        beenLong = true;
     }
-    
 
+    private void Start()
+    {
+        //lightFlash = transform.GetChild(0).gameObject;
+
+    }
     void Update()
     {
 
-        if (Input.GetKey("q") && (baseCD <=0) && canShoot1 )
+        if (Input.GetKey("q") )
         {
-            canShoot1 = false;
-            Shoot(true);
+            if ((baseCD <= 0) && canShoot1)
+            {
+                canShoot1 = false;
+                Shoot(true);
+            }
+            else if (beenLong) StartCoroutine( WaiterWrong());
+
         }
         
+    }
+
+    private IEnumerator WaiterWrong()
+    {
+        beenLong = false;
+        AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
+        yield return new WaitForSecondsRealtime(1f);
+        beenLong = true;
     }
 
 
@@ -41,6 +62,7 @@ public class GrenadeHolder : MonoBehaviour
     public GrenadeCooldown cd;
     void Shoot(bool primary)
     {
+        guna.ShootBlank();
 
         Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         if (Physics.Raycast(ray, out hit))
@@ -79,6 +101,9 @@ public class GrenadeHolder : MonoBehaviour
     }
 
     int baseCD =0;
+
+    public AudioClip wrong;
+    private bool beenLong = true;
 
     IEnumerator TimerDown()
     {

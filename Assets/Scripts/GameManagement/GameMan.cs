@@ -108,7 +108,6 @@ public class GameMan : ModDataRoom
             run[i] = GenerateRoom();
             run[i].areaLevel = currentLevel;
             run[i].mission = mission;
-            run[i].transform.parent = runningGame;
             run[i].player = player;
         }
         run[i] = null;

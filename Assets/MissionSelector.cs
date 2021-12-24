@@ -10,7 +10,12 @@ public class MissionSelector : ModDataRoom
     public PlayerInventory playerInventory;
 
 
+    public AudioSource source;
+    public AudioClip wrong;
+    public AudioClip poweringUP;
+    public AudioClip correct;
 
+    public float volume;
     public Material green;
     public Material blue;
 
@@ -35,6 +40,7 @@ public class MissionSelector : ModDataRoom
     public MeshRenderer[] meshSearchPath;
     public MeshRenderer[] meshReloadSearch;
     private bool beenLong = true;
+
 
 
     private void OnEnable()
@@ -91,28 +97,37 @@ public class MissionSelector : ModDataRoom
     bool used = false;
     internal IEnumerator SearchPath()
     {
+
         if (!used)
         {
+            source.PlayOneShot(poweringUP, .1f);
             used = true;
             TurnRed(meshSearchPath);
+
+
             totalChance = 9;
-
-
+            
             foreach (MonitorMission mis in missions)
             {
 
                 mis.gameObject.SetActive(false);
             }
-
+            yield return new WaitForSecondsRealtime(1f);
             foreach (MonitorMission mis in missions)
             {
-                if (totalChance > 0 && Random.Range(1, 20) > 10)
+                if (totalChance <= 0) break;
+                if (Random.Range(1, 20) > 13)
                 {
-                    yield return new WaitForSecondsRealtime(2f);
+                   
                     mis.gameObject.SetActive(true);
                     mis.RefreshMission();
                     totalChance--;
+                    AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
                 }
+                else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+                totalChance--;
+                yield return new WaitForSecondsRealtime(1f);
+                
             }
 
 

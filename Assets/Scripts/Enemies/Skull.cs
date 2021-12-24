@@ -64,27 +64,7 @@ public class Skull : Monster
 
     }
 
-    private IEnumerator Attack(Vector3 direction_to_player, Vector3 playerPos)
-    {
-        var x = Random.Range(-10, 10);
-        rigidBody.angularVelocity = new Vector3(x, x, x);
-
-        rigidBody.velocity = Vector3.zero;
-        var rep = player.transform;
-        rep.LookAt(transform.position);
-
-
-        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume/4);
-        yield return new WaitForSeconds(1f);
-
-        Vector3 playerPoss = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
-
-        Vector3 direction_to_players = (playerPoss - this.transform.position).normalized; 
-        
-        base.rigidBody.AddForce((direction_to_players) * maxJumpForce * 3);
-         
-    }
-
+  
 
     IEnumerator waiterStart()
     {

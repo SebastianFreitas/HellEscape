@@ -8,6 +8,7 @@ public class InteractBehaviour : MonoBehaviour
     private RaycastHit hit;
     
     public AudioClip teleport;
+    public AudioClip wrong;
 
 
     private void Update()
@@ -17,6 +18,7 @@ public class InteractBehaviour : MonoBehaviour
             Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
             if (Physics.Raycast(ray, out hit, 10f) )
             {
+                
                 if (hit.transform.CompareTag("Item")) hit.collider.transform.GetComponent<Item>().CollectItem();
                 else if (hit.transform.CompareTag("Button"))
                 {
@@ -98,9 +100,11 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("Error"))
                 {
                     hit.collider.transform.GetComponentInParent<MonsterSpawber>().Error();
-                }
-            }
+                }  else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
             
+        }
+            else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+
         }
     }
 
