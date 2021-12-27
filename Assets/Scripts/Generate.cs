@@ -25,7 +25,8 @@ public class Generate : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
+    public AudioClip wrong;
+    public AudioClip click;
     public void Function()
     {
         if (craftingTable.GenerateGun())
@@ -33,11 +34,13 @@ public class Generate : MonoBehaviour
 
             craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
             craftingTable.UpdateCrafts();
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
         }
         else
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             StartCoroutine(ExceptionMessage("No Space"));
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
     }
 

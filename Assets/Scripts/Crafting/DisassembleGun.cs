@@ -25,7 +25,8 @@ public class DisassembleGun : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
+    public AudioClip wrong;
+    public AudioClip click;
     public void Function()
     {
         var result = craftingTable.DisassembleGun();
@@ -33,16 +34,19 @@ public class DisassembleGun : MonoBehaviour
         {
             craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
             buttonText.text = labelText;
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
         }
         else if (result == 1)
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             StartCoroutine(ExceptionMessage("Full Capacity"));
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
         else if (result == 2)
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             StartCoroutine(ExceptionMessage("Cannot do"));
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
     }
 

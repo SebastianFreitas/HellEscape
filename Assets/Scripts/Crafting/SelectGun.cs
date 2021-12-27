@@ -13,6 +13,8 @@ public class SelectGun : MonoBehaviour
     public int position;
 
     public bool isSelected;
+    public AudioClip wrong;
+    public AudioClip click;
 
     void OnCollisionEnter(Collision collision)
     {
@@ -26,9 +28,11 @@ public class SelectGun : MonoBehaviour
 
     public void Select()
     {
+        AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         if (gun != null)
         {
             craftingTable.ReadWeapon(null, gun);
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
             //craftingTable.EquipGun(gun, position);
             //generatedGuns.SelectSlot(position);
         }

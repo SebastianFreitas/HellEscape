@@ -41,7 +41,7 @@ public class MissionSelector : ModDataRoom
     public MeshRenderer[] meshReloadSearch;
     private bool beenLong = true;
 
-
+    public AudioClip click;
 
     private void OnEnable()
     {
@@ -49,8 +49,16 @@ public class MissionSelector : ModDataRoom
     }
     internal void OpenPortal()
     {
-        if (mission != null) portal.SetActive(true);
-        else StartCoroutine(ErrorWaiter(meshEngagePath));
+        if (mission != null)
+        {
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+            portal.SetActive(true);
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+            StartCoroutine(ErrorWaiter(meshEngagePath));
+        }
     }
 
     internal void StartSelectedMission()
@@ -83,12 +91,15 @@ public class MissionSelector : ModDataRoom
 
     internal void ReloadMissions()
     {
+
         if (beenLong)
         {
+
             used = false;
             beenLong = false;
-            StartCoroutine( SearchPath());
+            StartCoroutine(SearchPath());
             StartCoroutine(BeenLong());
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
         }
 
 
@@ -100,12 +111,13 @@ public class MissionSelector : ModDataRoom
 
         if (!used)
         {
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
             source.PlayOneShot(poweringUP, .1f);
             used = true;
             TurnRed(meshSearchPath);
 
 
-            totalChance = 9;
+            totalChance = 9;//9
             
             foreach (MonitorMission mis in missions)
             {
@@ -115,23 +127,30 @@ public class MissionSelector : ModDataRoom
             yield return new WaitForSecondsRealtime(1f);
             foreach (MonitorMission mis in missions)
             {
-                if (totalChance <= 0) break;
-                if (Random.Range(1, 20) > 13)
+                var cantFind = true;
+                while (cantFind)
                 {
-                   
-                    mis.gameObject.SetActive(true);
-                    mis.RefreshMission();
+                    if (totalChance <= 0) break;
+                    if (Random.Range(1, 20) > 13)//13
+                    {
+
+                        mis.gameObject.SetActive(true);
+                        mis.RefreshMission();
+                        totalChance--;
+                        AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
+                        cantFind = false;
+                    }
+                    else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
                     totalChance--;
-                    AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
+                    yield return new WaitForSecondsRealtime(1f);
                 }
-                else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
-                totalChance--;
-                yield return new WaitForSecondsRealtime(1f);
+                
                 
             }
 
 
-        }  
+        }
+        else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
     }
 
 

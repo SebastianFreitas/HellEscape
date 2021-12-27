@@ -57,7 +57,7 @@ public class Skull : Monster
 
 
         yield return new WaitForSeconds(finalWaitTime);
-        if (isHive) base.rigidBody.AddForce(((otherSkulls[Random.Range(0, otherSkulls.Length)].transform.position - this.transform.position).normalized) * 150 * 3);
+       // if (isHive) base.rigidBody.AddForce(((otherSkulls[Random.Range(0, otherSkulls.Length)].transform.position - this.transform.position).normalized) * 150 * 3);
 
         StartCoroutine(randomJump());
 

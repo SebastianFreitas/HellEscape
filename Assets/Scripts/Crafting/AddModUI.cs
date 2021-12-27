@@ -41,7 +41,8 @@ public class AddModUI : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
+    public AudioClip wrong;
+    public AudioClip click;
     public void Function()
     {
         var x = craftingTable.AddNewMod(timesUsed);
@@ -50,17 +51,19 @@ public class AddModUI : MonoBehaviour
             craftingTable.StartCoroutine(craftingTable.HighLight(meshes));
             timesUsed++;
             craftingTable.UpdateCrafts();
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
         }
         else if (x == -1)
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             StartCoroutine(ExceptionMessage("Not ENough parts"));
-
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
         else
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             StartCoroutine(ExceptionMessage("full capacity"));
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
     }
 

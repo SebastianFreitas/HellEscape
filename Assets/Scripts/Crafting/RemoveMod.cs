@@ -42,7 +42,8 @@ public class RemoveMod : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
-
+    public AudioClip wrong;
+    public AudioClip click;
     public void Function()
     {
         var x = craftingTable.RemoveRandomMod(timesUsed);
@@ -53,17 +54,19 @@ public class RemoveMod : MonoBehaviour
 
             timesUsed++;
             craftingTable.UpdateCrafts();
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
         }
         else if (x == 2)
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             StartCoroutine(ExceptionMessage("Not ENough parts"));
-
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
         else
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
             StartCoroutine(ExceptionMessage("No modifiers"));
+            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
     }
 

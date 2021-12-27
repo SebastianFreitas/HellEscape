@@ -9,8 +9,14 @@ public class InteractBehaviour : MonoBehaviour
     
     public AudioClip teleport;
     public AudioClip wrong;
+    public AudioClip click;
 
+    private float volume = 1f;
 
+    void OnEnable()
+    {
+        volume = PlayerPrefs.GetFloat("Volume");
+    }
     private void Update()
     {
         if (Input.GetKeyDown("e"))
@@ -35,6 +41,7 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("DestroyGun"))
                 {
                     hit.collider.transform.GetComponent<Destroy>().Function();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else if (hit.transform.CompareTag("Deconstruct"))
                 {
@@ -47,13 +54,16 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("Exit"))
                 {
                     hit.collider.transform.GetComponent<ExitCrafting>().Function();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else if (hit.transform.CompareTag("CraftingDevice"))
                 {
                     hit.collider.transform.parent.GetComponentInParent<CraftingDevice>().TurnOn();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else if (hit.transform.CompareTag("SelectMusic"))
                 {
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                     var songName = hit.collider.gameObject.GetComponentInParent<TMPro.TextMeshPro>().text;
                     MeshRenderer[] meshes = hit.collider.gameObject.GetComponentsInChildren<MeshRenderer>();
 
@@ -62,6 +72,7 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("PauseMusic"))
                 {
                     hit.collider.transform.parent.GetComponentInParent<SoundDevice>().PauseSong();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else if (hit.transform.CompareTag("StartMission"))
                 {
@@ -69,6 +80,7 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("SelectMission"))
                 {
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                     var x = hit.collider.transform.GetComponentInParent<MonitorMission>();
                     x.UISelect();
                     var mi = x.mission;
@@ -92,10 +104,12 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("Symbol"))
                 {
                     hit.collider.transform.GetComponentInParent<SpecialRoom>().OpenDoor();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else if (hit.transform.CompareTag("SpawnMonster"))
                 {
                     hit.collider.transform.GetComponentInParent<MonsterSpawber>().SpawnMonster();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else if (hit.transform.CompareTag("Error"))
                 {
