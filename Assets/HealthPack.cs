@@ -22,13 +22,15 @@ public class HealthPack : MonoBehaviour
     {
         if (other.CompareTag("Dude") && !hasBeenCollected)
         {
-            CollectItem(other);
+            CollectItem();
             hasBeenCollected = true;
         }
     }
 
-    private void CollectItem(Collider other)
+    internal void CollectItem()
     {
-        other.GetComponent<PlayerHpManager>().TakeDamage(-50);
+        var x = GameObject.FindGameObjectWithTag("Inventory").transform;
+        x.GetComponent<PlayerHpManager>().TakeDamage(-50);
+        Destroy(this.transform.parent.gameObject);
     }
 }

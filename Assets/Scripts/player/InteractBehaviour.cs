@@ -26,6 +26,10 @@ public class InteractBehaviour : MonoBehaviour
             {
                 
                 if (hit.transform.CompareTag("Item")) hit.collider.transform.GetComponent<Item>().CollectItem();
+                else if (hit.transform.CompareTag("ItemLife"))
+                {
+                    hit.collider.transform.GetComponent<HealthPack>().CollectItem();
+                }
                 else if (hit.transform.CompareTag("Button"))
                 {
                     hit.collider.transform.GetComponent<SelectGun>().Select();

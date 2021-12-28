@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4426672102238918}
   - component: {fileID: 33337805546118386}
   - component: {fileID: 23022400605720262}
+  - component: {fileID: 4386113341101787955}
   m_Layer: 3
   m_Name: First_aid_kit
   m_TagString: Untagged
@@ -81,6 +82,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4386113341101787955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036968827518876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c719b1d71b358d54dbb269abf8c548a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1854425252707494
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,11 +104,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4689345990570408}
   - component: {fileID: 8432287453780184160}
-  - component: {fileID: 8865356246843058472}
   - component: {fileID: 2259105736982000820}
   m_Layer: 3
   m_Name: First_aid_kit_6_Mat
-  m_TagString: Untagged
+  m_TagString: ItemLife
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,18 +140,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 70.14622, y: 39.94729, z: 50.784866}
   m_Center: {x: -0.30327225, y: 19.778175, z: 0.71930695}
---- !u!114 &8865356246843058472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1854425252707494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c719b1d71b358d54dbb269abf8c548a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2259105736982000820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,3 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f7075f9ae2a624eb025a21bfdba6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
+  collected: {fileID: 0}
