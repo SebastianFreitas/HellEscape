@@ -49,7 +49,7 @@ public class PlayerSounds : MonoBehaviour
                 nextFootstep -= Time.deltaTime;
                 if (nextFootstep <= 0)
                 {
-                    audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], .5f);
+                    audioSource.PlayOneShot(steps[Random.Range(0, steps.Length)], .3f);
                     nextFootstep += footstepDelay;
                 }
             }

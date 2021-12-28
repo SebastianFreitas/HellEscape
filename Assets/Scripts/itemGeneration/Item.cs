@@ -17,6 +17,7 @@ public class Item : GunGenerator
     void Start()
     {
         volume = PlayerPrefs.GetFloat("Volume");
+        gun = CreateWeapon(transform.GetComponentInParent<Room>().areaLevel);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +30,6 @@ public class Item : GunGenerator
 
     public void CollectItem()
     {
-        
         var x = GameObject.FindGameObjectWithTag("Inventory").transform;
         if (x.GetComponent<Inventory>().AddWeapon(gun, true))
         {

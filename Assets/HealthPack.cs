@@ -29,7 +29,7 @@ public class HealthPack : MonoBehaviour
 
     internal void CollectItem()
     {
-        var x = GameObject.FindGameObjectWithTag("Inventory").transform;
+        var x = GameObject.FindGameObjectWithTag("Dude").transform;
         x.GetComponent<PlayerHpManager>().TakeDamage(-50);
         Destroy(this.transform.parent.gameObject);
     }
