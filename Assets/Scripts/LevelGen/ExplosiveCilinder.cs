@@ -59,6 +59,8 @@ public class ExplosiveCilinder : PropBehaviour
             }
             else if (hitCollider.CompareTag("Prop"))
             {
+                var x = hitCollider.GetComponent<ExplosiveCilinder>();
+                if (x != null) x.Explode(x.transform.position, 6f);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 50f, ForceMode.Impulse);
             }
         }
