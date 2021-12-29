@@ -19,7 +19,7 @@ public class PlayerBasicMovement : MonoBehaviour
     public float mass = 3f;
     public float dashForce;
     public float JumpDashForce;
-    private Vector3 velocity;
+    internal Vector3 velocity;
     private Vector3 impact = Vector3.zero;
     private bool canDash = true; //check to stop player from dashing instantly after dashing
     private bool isSideDashing = false;
@@ -36,7 +36,7 @@ public class PlayerBasicMovement : MonoBehaviour
     private float xRaw = 0;
     private float zRaw = 0;
     public Vector3 move;
-    private Vector3 moveRaw;
+    internal Vector3 moveRaw;
 
     [Header("Ground checks")]
     public Transform groundCheck;//GameObject from where we use checkSphere to see if player is grounded
@@ -108,7 +108,7 @@ public class PlayerBasicMovement : MonoBehaviour
         //if (isGrounded) inputLocked = false;
         isGroundedOlder = isGrounded;
     }
- 
+    public Animator animator;
     private void MoveState()
     {
         transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
@@ -120,6 +120,13 @@ public class PlayerBasicMovement : MonoBehaviour
 
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
+        //if (playerScript.move == Vector3.zero) animator.SetTrigger("Idle");
+        //else
+        //if (moveRaw.magnitude > 0)
+        //{
+        //    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Running")) animator.Play("Running");
+        //}
+        //else animator.SetTrigger("Idle");
 
         currentSpeed = speed*(1 + increasedSpeed / 100);
 

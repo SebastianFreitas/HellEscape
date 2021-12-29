@@ -87,6 +87,8 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+
+
         if (Time.time >= m_time)
         {
             m_time += 1 / gun.finalFireRate;
@@ -180,10 +182,14 @@ public class Gun : MonoBehaviour
       canShoot = true;
         isWaiting = false;
     }
-
+    public PlayerAnimations animators;
     IEnumerator waiterFlash(){
-        animator.SetTrigger("Shoot");
- 
+        //animator.Rebind();
+        //animator.ResetTrigger("Running");
+        //animator.SetBool("Running", false);
+        //animator.SetBool("Shoot", true);
+        //animator.Play("Shoot");
+        animators.justShot = true;
         muzzleFlashFront.SetActive(true);
         lightFlash.SetActive(true);
         

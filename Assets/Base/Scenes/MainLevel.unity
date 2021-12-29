@@ -4343,7 +4343,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23966
+  m_Name: pb_Mesh23558
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11217,7 +11217,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26952
+  m_Name: pb_Mesh26956
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -41840,6 +41840,7 @@ GameObject:
   - component: {fileID: 787810094}
   - component: {fileID: 787810093}
   - component: {fileID: 787810092}
+  - component: {fileID: 787810099}
   m_Layer: 10
   m_Name: Gun
   m_TagString: PlayerGun
@@ -41876,7 +41877,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787810090}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 569129d65c2811342a8db1e2873065d3, type: 2}
   m_CullingMode: 0
@@ -46684,7 +46685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00a84efc03fa054cb6f4eadf93a621b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 787810092}
   gunGen: {fileID: 0}
   range: 100
   timeBtwShots: 0.5
@@ -46708,6 +46709,7 @@ MonoBehaviour:
   poisonDamage: 0
   physicalDamage: 0
   cd: {fileID: 2079087704}
+  animators: {fileID: 1324834316}
 --- !u!82 &787810096
 AudioSource:
   m_ObjectHideFlags: 0
@@ -46854,6 +46856,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787810090}
   m_Mesh: {fileID: -3279533534570359355, guid: 88904045c95b7b64fb36b24f2834694e, type: 3}
+--- !u!111 &787810099
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787810090}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 73b093fdf5db4eb4d85da0de34a33784, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: a8fb4f58859528c4581797c3aef69e69, type: 2}
+  - {fileID: 7400000, guid: d0121146be994a24ab4b474eb5c066c9, type: 2}
+  - {fileID: 7400000, guid: 73b093fdf5db4eb4d85da0de34a33784, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 1
+  m_CullingType: 0
 --- !u!1001 &793083375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58163,7 +58183,7 @@ MonoBehaviour:
   startRoomPrefab: {fileID: 7498491}
   endRoomPrefab: {fileID: 5695339217603972193, guid: 3555bd60e5c027f46a57d8f4264fabd2, type: 3}
   roomPrefabs:
-  - {fileID: 5664542669306898293, guid: 8d2f12ab85e7a91418abf4bb64c746b8, type: 3}
+  - {fileID: 3631566884178730174, guid: 20939c05e87f8ff42b60217b2f335739, type: 3}
   currentRoom: {fileID: 0}
   startScene: MainLevel
   hpBar: {fileID: 75502562}
@@ -71463,6 +71483,7 @@ GameObject:
   - component: {fileID: 1324834313}
   - component: {fileID: 1324834310}
   - component: {fileID: 1324834312}
+  - component: {fileID: 1324834316}
   m_Layer: 7
   m_Name: Player
   m_TagString: Dude
@@ -71478,7 +71499,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324834307}
   m_LocalRotation: {x: -0.0014617818, y: -0.008215509, z: -0.017636722, w: 0.9998096}
-  m_LocalPosition: {x: -18.2, y: 2.89, z: 14}
+  m_LocalPosition: {x: -18.2, y: 26, z: -27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1542876896}
@@ -71518,6 +71539,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   cd: {fileID: 35687643}
+  animator: {fileID: 787810092}
 --- !u!114 &1324834310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71628,6 +71650,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 3
+--- !u!114 &1324834316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324834307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df7448a6d01f0514b80f27f270b1df43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunAnimation: {fileID: 787810099}
+  gunAnimator: {fileID: 0}
+  movement: {fileID: 1324834309}
+  gun: {fileID: 787810095}
 --- !u!1 &1328293101 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5414827899226342931, guid: 78f2873840cccd046adee8782efa45fb, type: 3}
@@ -89381,7 +89419,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23678
+  m_Name: pb_Mesh23316
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -93606,7 +93644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1776031506
 Transform:
   m_ObjectHideFlags: 0
@@ -111424,7 +111462,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh26364
+  m_Name: pb_Mesh26368
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -112020,7 +112058,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh25078
+  m_Name: pb_Mesh25080
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
