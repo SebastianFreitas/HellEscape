@@ -330,7 +330,7 @@ public class PlayerBasicMovement : MonoBehaviour
     {
         isWaiting = true;
         yield return new WaitForSecondsRealtime(dashCooldown);
-        //canDash = true;
+        canDash = true;
         isWaiting = false;
     }
     IEnumerator waiterDashDuration()

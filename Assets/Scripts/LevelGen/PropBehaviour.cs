@@ -9,8 +9,12 @@ public class PropBehaviour : MonoBehaviour
     public bool trown = true;
     public bool steady = false;
 
+    public bool constantRotating = false;
+
     void Start()
     {
+        if (constantRotating) GetComponent<Rigidbody>().angularVelocity = transform.InverseTransformDirection(Vector3.up) * 0.1f;
+
         if (!steady)
         {
             if (trown)

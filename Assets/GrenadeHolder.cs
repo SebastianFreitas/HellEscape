@@ -34,7 +34,7 @@ public class GrenadeHolder : MonoBehaviour
 
         if (Input.GetKey("q"))
         {
-            if ((baseCD <= 0) && canShoot1)
+            if (cd.CanShoot())//(baseCD <= 0) && 
             {
                 canShoot1 = false;
                 Shoot(true);

@@ -37,6 +37,13 @@ public class GrenadeCooldown : MonoBehaviour
         slider.maxValue = health;
         slider.value = health;
     }
+
+    internal bool CanShoot()
+    {
+        if (cdUI >= maxCd) return true;
+        return false;
+    }
+
     private int counter = 0;
     IEnumerator TimerDown()
     {
@@ -52,10 +59,12 @@ public class GrenadeCooldown : MonoBehaviour
     }
 
     private int counterUp = 0;
+
+
     IEnumerator TimerUp()
     {
         counterUp++;
-        cdUI = 0;
+        //cdUI = 0;
         while (cdUI < maxCd && counterUp == 1)
         {
             cdUI += .5f;
@@ -64,6 +73,17 @@ public class GrenadeCooldown : MonoBehaviour
 
         }
         counterUp--;
+    }
+
+    private void OnEnable()
+    {
+
+        StartCoroutine(TimerUp());
+    }
+    private void OnDisable()
+    {
+        counterUp = 0;
+        counter = 0;
     }
 
 }
