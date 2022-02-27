@@ -93,8 +93,6 @@ public class PlayerBasicMovement : MonoBehaviour
         }
         else if (isGroundedOlder && !isGrounded) StartCoroutine(waiterGroundLag());
 
-        if (cd.cdUI <= 0) canDash = true;
-
         GetInputWASD();
 
         if (isGrounded)
@@ -128,7 +126,7 @@ public class PlayerBasicMovement : MonoBehaviour
         //}
         //else animator.SetTrigger("Idle");
 
-        currentSpeed = speed*(1 + increasedSpeed / 100);
+        currentSpeed = (speed + SpeedIncrease()) *(1 + increasedSpeed / 100);
 
         controller.Move(move * currentSpeed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);
@@ -139,6 +137,36 @@ public class PlayerBasicMovement : MonoBehaviour
 
         if ((x != 0 || z != 0) && OnSlope())
             controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
+    }
+
+    [SerializeField] float holdTime;
+    [SerializeField]  float amountToIncrease;
+    int tier = 1;
+    float downTimeRight = 0f;
+    private float SpeedIncrease()
+    {
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+             downTimeRight = Time.time;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            if ((downTimeRight + holdTime * tier) <= Time.time)
+            {
+
+                tier++;
+                AddImpact(transform.forward, 50);
+
+            }
+            return amountToIncrease*(tier-1);
+        }
+        else
+        {
+            tier = 1;
+        }
+
+        return 1;
     }
 
     private void Inertia()
@@ -170,6 +198,8 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void GroundMove()
     {
+        if (cd.cdUI <= 0) canDash = true;
+
         lastPos = transform;
         speed = 12;
 
@@ -330,7 +360,7 @@ public class PlayerBasicMovement : MonoBehaviour
     {
         isWaiting = true;
         yield return new WaitForSecondsRealtime(dashCooldown);
-        canDash = true;
+        //canDash = true;
         isWaiting = false;
     }
     IEnumerator waiterDashDuration()
