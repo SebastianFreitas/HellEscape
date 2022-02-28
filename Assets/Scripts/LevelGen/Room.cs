@@ -30,7 +30,7 @@ public class Room : MonoBehaviour
 
     private Transform[] enemies;
     internal ModDataRoom.GeneratedMission mission;
-
+    /*
     private void Start()
     {
         portal.SetActive(false);
@@ -42,7 +42,7 @@ public class Room : MonoBehaviour
     {
         StartCoroutine(WatchEnemies());
         StartCoroutine(TimerPortalUnlock());
-    }
+    }*/
 
     internal void VoidPlayer()
     {

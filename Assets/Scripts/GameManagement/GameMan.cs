@@ -157,5 +157,9 @@ public class GameMan : ModDataRoom
         return returnRoom;
     }
 
+    Room CreateRoom()
+    {
 
+        return null;
+    }
 }
