@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
 {
-    [SerializeField] GameObject corridor1;
+    [SerializeField] Room corridor1;
+	[SerializeField] Room corridorLight;
 
-	public Room startRoomPrefab, endRoomPrefab;
-	public List<Room> roomPrefabs = new List<Room>();
-	public Vector2 iterationRange = new Vector2(3, 10);
+	[SerializeField] Room startRoomPrefab, endRoomPrefab;
+	[SerializeField] List<Room> roomPrefabs = new List<Room>();
+	[SerializeField] Vector2 iterationRange = new Vector2(3, 10);
 
 
 	List<Doorway> availableDoorways = new List<Doorway>();
-
 	StartRoom startRoom;
 	EndRoom endRoom;
 	List<Room> placedRooms = new List<Room>();
@@ -36,9 +36,19 @@ public class RoomGenerator : MonoBehaviour
 
 		yield return interval;
 
-		PlaceRoom();
+		PlaceCorridor(20);
 	}
-	void PlaceStartRoom()
+
+    private void PlaceCorridor(int length)
+    {
+        for(int i = 1; i <= length; i++)
+        {
+			if (i % 4 == 0 ) PlaceRoom(corridorLight);
+			else PlaceRoom(corridor1);
+        }
+    }
+
+    void PlaceStartRoom()
 	{
 		// Instantiate room
 		startRoom = Instantiate(startRoomPrefab) as StartRoom;
@@ -69,10 +79,10 @@ public class RoomGenerator : MonoBehaviour
 		Vector3 roomPositionOffset = roomDoorway.transform.position - room.transform.position;
 		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 	}
-	void PlaceRoom()
+	void PlaceRoom(Room room)
 	{
 		// Instantiate room
-		Room currentRoom = Instantiate(roomPrefabs[Random.Range(0, roomPrefabs.Count)]) as Room;
+		Room currentRoom = Instantiate(room) as Room;
 		currentRoom.transform.parent = this.transform;
 
 		// Create doorway lists to loop over
