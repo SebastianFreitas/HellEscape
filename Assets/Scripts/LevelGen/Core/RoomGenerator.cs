@@ -15,7 +15,9 @@ public class RoomGenerator : MonoBehaviour
 	List<Doorway> availableDoorways = new List<Doorway>();
 	StartRoom startRoom;
 	EndRoom endRoom;
-	List<Room> placedRooms = new List<Room>();
+	internal List<Room> placedRooms = new List<Room>();
+	internal Vector3 currentStartPos;
+
 
 	LayerMask roomLayerMask;
 	void OnEnable()
@@ -63,6 +65,8 @@ public class RoomGenerator : MonoBehaviour
 		// Position room
 		startRoom.transform.position = Vector3.zero;
 		startRoom.transform.rotation = Quaternion.identity;
+
+		currentStartPos = startRoom.playerStart.position;
 	}
 
 	void PositionRoomAtDoorway(ref Room room, Doorway roomDoorway, Doorway targetDoorway)

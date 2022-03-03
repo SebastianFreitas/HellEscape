@@ -152,11 +152,10 @@ public class PlayerBasicMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.W))
         {
-            if ((downTimeRight + holdTime * tier) <= Time.time)
+            if ((downTimeRight + holdTime * tier) <= Time.time && tier <= 4)
             {
-
                 tier++;
-                AddImpact(transform.forward, 50);
+                AddImpact(transform.forward, 20);
 
             }
             return amountToIncrease*(tier-1);

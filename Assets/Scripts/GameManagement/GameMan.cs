@@ -11,6 +11,9 @@ public class GameMan : ModDataRoom
 
     StartRoom startRoom;
     EndRoom endRoom;
+
+
+
     public Room currentRoom;
 
     //private GameObject player;
@@ -27,6 +30,9 @@ public class GameMan : ModDataRoom
     public Transform runningGame;
     public Hub hub;
     public bool startAtHub;
+
+    [SerializeField] RoomGenerator roomGen;
+    [SerializeField] Vector3 currentStartPos;
 
 
     // Start is called before the first frame update
@@ -66,6 +72,8 @@ public class GameMan : ModDataRoom
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = hub.statspos.position;
         player.GetComponent<CharacterController>().enabled = true;
+
+        currentStartPos = hub.statspos.position;
     }
 
     void PlaceRoomAndPlayer(Room room)
@@ -88,8 +96,10 @@ public class GameMan : ModDataRoom
     {
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;
-        player.transform.position = currentRoom.playerStart.position;
+        player.transform.position = roomGen.currentStartPos;
         player.GetComponent<CharacterController>().enabled = true;
+
+        currentStartPos = roomGen.currentStartPos;
     }
 
     private Room[] run;
@@ -111,8 +121,9 @@ public class GameMan : ModDataRoom
             run[i].player = player;
         }
         run[i] = null;
-
-        PlaceRoomAndPlayer(run[runProgress]);
+        roomGen.gameObject.SetActive(true);
+        StartCoroutine("LoadingScreen");
+        
     }
 
 
@@ -134,7 +145,7 @@ public class GameMan : ModDataRoom
     public IEnumerator LoadingScreen()
     {
         yield return new WaitForSeconds(1f);
-        PlaceRoomAndPlayer(run[runProgress]);
+        PlacePlayerInCurrentRoom();
     }
 
     public void UnlockDoor()
@@ -157,9 +168,12 @@ public class GameMan : ModDataRoom
         return returnRoom;
     }
 
-    Room CreateRoom()
+    internal void VoidPlayer()
     {
+        player.GetComponent<CharacterController>().enabled = false;
+        player.transform.position = currentStartPos;
+        player.GetComponent<CharacterController>().enabled = true;
 
-        return null;
     }
+
 }
