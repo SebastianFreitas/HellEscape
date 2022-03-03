@@ -35,8 +35,11 @@ public class RoomGenerator : MonoBehaviour
 		PlaceStartRoom();
 
 		yield return interval;
-
-		PlaceCorridor(20);
+		for (int i = 1; i <= 100; i++)
+		{
+			if (i % 2 == 0) PlaceCorridor(Random.Range(5, 15));
+			else PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+		}
 	}
 
     private void PlaceCorridor(int length)
