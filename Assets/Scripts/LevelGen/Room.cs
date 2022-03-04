@@ -6,30 +6,69 @@ public class Room : MonoBehaviour
 {
     public Doorway[] doorways;
     public Transform playerStart;
-    public int roomType;
-    public Transform[] propSpawns;
-    public GameObject[] objects;
+    internal int roomType;
+    internal Transform[] propSpawns;
+    internal GameObject[] objects;
+ 
+    internal GameObject Explosive;
 
-    public GameObject Explosive;
 
+    internal GameObject[] skulls;
+    internal GameObject portal;
 
-    public GameObject[] skulls;
-    public GameObject portal;
+    internal GameObject skull;
+    internal bool locked = true;
+    internal int monstersAlive = 0;
+    internal int[] weight;
 
-    public GameObject skull;
-    public bool locked = true;
-    public int monstersAlive = 0;
-    public int[] weight;
+    internal GameObject player;
+    internal PlayerMovement playerMovement;
 
-    public GameObject player;
-    public PlayerMovement playerMovement;
+    internal GameObject[] Layouts;
 
-    public GameObject[] Layouts;
-
-    public int areaLevel = 1;
+    internal int areaLevel = 1;
 
     private Transform[] enemies;
     internal ModDataRoom.GeneratedMission mission;
+
+    internal Bounds roomBounds;
+    private bool m_Started;
+
+
+    private void Start()
+    {
+        m_Started = true;
+        GetBounds();  
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        //Check that it is being run in Play Mode, so it doesn't try to draw this in Editor mode
+        if (m_Started)
+        {
+            //Draw a cube where the OverlapBox is (positioned where your GameObject is as well as a size)
+            
+            Gizmos.DrawWireCube(roomBounds.center, roomBounds.size );
+        }
+
+    }
+
+    public void GetBounds()
+    {
+        roomBounds = new Bounds(transform.position, Vector3.one);
+
+        var colliders = transform.GetComponentsInChildren<MeshRenderer>();
+        foreach (var col in colliders)
+        {
+            roomBounds.Encapsulate(col.bounds);
+        }
+        //roomBounds.Expand(-0.1f);
+        //roomBounds.size /= 2;
+
+    }
+
+
     /*
     private void Start()
     {

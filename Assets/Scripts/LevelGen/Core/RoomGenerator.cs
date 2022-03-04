@@ -39,8 +39,10 @@ public class RoomGenerator : MonoBehaviour
 		yield return interval;
 		for (int i = 1; i <= 100; i++)
 		{
-			if (i % 2 == 0) PlaceCorridor(Random.Range(5, 15));
-			else PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+            //if (i % 2 == 0) PlaceCorridor(Random.Range(5, 5));
+            //else PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+
+            PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
 		}
 	}
 
@@ -111,11 +113,11 @@ public class RoomGenerator : MonoBehaviour
 				// Position room
 				PositionRoomAtDoorway(ref currentRoom, currentDoorway, availableDoorway);
 
-				/*/ Check room overlaps
+				// Check room overlaps
 				if (CheckRoomOverlap(currentRoom))
 				{
 					continue;
-				}*/
+				} 
 
 				roomPlaced = true;
 
@@ -140,12 +142,14 @@ public class RoomGenerator : MonoBehaviour
 			}
 		}
 
-		/*// Room couldn't be placed. Restart generator and try again
+		// Room couldn't be placed. Restart generator and try again
 		if (!roomPlaced)
 		{
 			Destroy(currentRoom.gameObject);
 			ResetLevelGenerator();
-		}*/
+		} 
+
+
 	}
 	void AddDoorwaysToList(Room room, ref List<Doorway> list)
 	{
@@ -155,4 +159,80 @@ public class RoomGenerator : MonoBehaviour
 			list.Insert(r, doorway);
 		}
 	}
+
+	bool CheckRoomOverlap(Room room)
+	{
+		room.GetBounds();
+		Bounds bounds = room.roomBounds;
+		bounds.Expand(-0.1f);
+		bounds.size /= 1.5f;
+
+
+		foreach (Room currentRoom in placedRooms)
+        {
+			if (GameObject.ReferenceEquals(currentRoom.gameObject, room.gameObject))
+			{
+				Debug.Log("its the same room");
+				continue;
+			}
+			else if (bounds.Intersects(currentRoom.roomBounds))
+            {
+                Debug.LogError("Overlap detected");
+                return true;
+            }
+        }
+
+		//Collider[] colliders = Physics.OverlapBox(bounds.center, bounds.size , room.transform.rotation);
+		//if (colliders.Length > 0)
+		//{
+		//	// Ignore collisions with current room
+		//	foreach (Collider c in colliders)
+		//	{
+		//		if (c.transform.parent.gameObject.Equals(room.gameObject))
+		//		{
+		//			continue;
+		//		}
+		//		else
+		//		{
+		//			Debug.LogError("Overlap detected");
+		//			return true;
+		//		}
+		//	}
+		//}
+
+		return false;
+	}
+
+	void ResetLevelGenerator()
+    {
+        //Debug.LogError("Reset level generator");
+
+        StopCoroutine("GenerateLevel");
+
+        // Delete all rooms
+        if (startRoom)
+        {
+            Destroy(startRoom.gameObject);
+        }
+
+        if (endRoom)
+        {
+            Destroy(endRoom.gameObject);
+        }
+
+        foreach (Room room in placedRooms)
+        {
+            Destroy(room.gameObject);
+        }
+
+        // Clear lists
+        placedRooms.Clear();
+        availableDoorways.Clear();
+
+        // Reset coroutine
+        StartCoroutine("GenerateLevel");
+    }
+
+
 }
+
