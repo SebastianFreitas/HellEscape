@@ -21,9 +21,11 @@ public class Portal : MonoBehaviour
 
     private bool passed = false;
     public bool ishub = false;
+
+    internal bool isON = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Dude") && !passed)
+        if (other.CompareTag("Dude") && !passed && isON)
         {
             passed = true;
             if (ishub)
@@ -52,7 +54,7 @@ public class Portal : MonoBehaviour
         if (exp != null)
         {
             exp.gameObject.SetActive(true);
-            exp.Play();   
+            //exp.Play();   
         }
 
 
@@ -67,7 +69,7 @@ public class Portal : MonoBehaviour
         {
             x.color = Color.red;
         }
-        audioSource.PlayOneShot(openPortalSound);
+       
 
 
     }

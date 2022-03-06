@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.VFX;
 using Random = UnityEngine.Random;
 
 public class MissionSelector : ModDataRoom
@@ -53,6 +54,11 @@ public class MissionSelector : ModDataRoom
         {
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
             portal.SetActive(true);
+            var x = portal.GetComponent<Portal>();
+            x.isON = true;
+            x.audioSource.PlayOneShot(x.openPortalSound);
+            portal.GetComponent<VisualEffect>().enabled = true;
+            
         }
         else
         {
