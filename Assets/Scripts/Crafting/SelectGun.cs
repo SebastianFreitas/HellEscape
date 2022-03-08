@@ -16,19 +16,19 @@ public class SelectGun : MonoBehaviour
     public AudioClip wrong;
     public AudioClip click;
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            Select();
+    //void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Bullet"))
+    //    {
+    //        Select();
 
-            Destroy(collision.gameObject);
-        }
-    }
+    //        Destroy(collision.gameObject);
+    //    }
+    //}
 
     public void Select()
     {
-        AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+
         if (gun != null)
         {
             craftingTable.ReadWeapon(null, gun);
@@ -36,5 +36,6 @@ public class SelectGun : MonoBehaviour
             //craftingTable.EquipGun(gun, position);
             //generatedGuns.SelectSlot(position);
         }
+        else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
     }
 }

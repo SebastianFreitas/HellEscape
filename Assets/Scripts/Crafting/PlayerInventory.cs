@@ -14,12 +14,13 @@ public class PlayerInventory : MonoBehaviour
 
     internal void DisassembleGun(GunOfAType gun)
     {
-        UpdateGunParts(gun.level * (gun.mods.Count + 1));
+        //UpdateGunParts(gun.level * (gun.mods.Count + 1));
         inventoryUI.RemoveWeapon(gun, true); 
     }
 
     internal void DestroyGun(GunOfAType gun)
     {
+        UpdateGunParts(gun.level * (gun.mods.Count + 1));
         inventoryUI.RemoveWeapon(gun, false);
     }
 
