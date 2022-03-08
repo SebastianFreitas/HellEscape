@@ -58,13 +58,26 @@ public class MissionSelector : ModDataRoom
             x.isON = true;
             x.audioSource.PlayOneShot(x.openPortalSound);
             portal.GetComponent<VisualEffect>().enabled = true;
-            
+
+            DisableSelector();
+
         }
         else
         {
             AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
             StartCoroutine(ErrorWaiter(meshEngagePath));
         }
+    }
+
+    private void DisableSelector()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            var child = transform.GetChild(i).gameObject;
+            if (child != null)
+                child.SetActive(false);
+        }
+
     }
 
     internal void StartSelectedMission()

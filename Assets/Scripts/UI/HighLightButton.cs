@@ -14,7 +14,7 @@ public class HighLightButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private string unselected;
     private string selected;
 
-    private void Start()
+    private void Awake()
     {
         labeltext = buttonText.text;
         unselected = " " + labeltext;
@@ -30,5 +30,11 @@ public class HighLightButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         buttonText.text = unselected;//formatedString.Replace("{value}", "");
+    }
+
+    private void OnEnable()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        buttonText.text = unselected;
     }
 }
