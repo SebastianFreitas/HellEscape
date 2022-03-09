@@ -177,10 +177,10 @@ public class Gun : MonoBehaviour
     }
 
     IEnumerator waiter(float attackRate){
-        isWaiting = true;
-      yield return new WaitForSeconds(attackRate);
+      isWaiting = true;
+      yield return new WaitForSecondsRealtime(attackRate);
       canShoot = true;
-        isWaiting = false;
+      isWaiting = false;
     }
     public PlayerAnimations animators;
     IEnumerator waiterFlash(){
