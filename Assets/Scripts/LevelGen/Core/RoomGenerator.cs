@@ -35,21 +35,26 @@ public class RoomGenerator : MonoBehaviour
 		yield return startup;
 
 		// Place start room
-		PlaceStartRoom2();
+		PlaceStartRoom();
 
 		yield return interval;
-		for (int i = 1; i <= 2; i++)
+		for (int i = 1; i <=100; i++)
 		{
-			//if (i % 2 == 0) PlaceCorridor(Random.Range(5, 10));
-			//else PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+
 			int a = 0;
             while (true)
             {
 				a++;
 				var rando = Random.Range(0, roomPrefabs.Count);
 
-				if (PlaceRoom2(roomPrefabs[rando])) break;
-				if (a <= 10) break;
+				if (i % 2 == 0)
+				{
+					PlaceCorridor(Random.Range(5, 10));
+					break;
+				}
+				else if (PlaceRoom(roomPrefabs[rando])) break;
+
+				if (a >= 100) break;
             }
 
 		}
@@ -63,29 +68,9 @@ public class RoomGenerator : MonoBehaviour
 			else PlaceRoom(corridor1);
         }
     }
+
 	Doorway nextDoorway;
 	List<Doorway> otherDoorways = new List<Doorway>();
-
-	void PlaceStartRoom2()
-	{
-		// Instantiate room
-		startRoom = Instantiate(startRoomPrefab) as StartRoom;
-		startRoom.transform.parent = this.transform;
-
-		var rando = Random.Range(0, startRoom.doorways.Length);
-		var i = 0;
-		foreach(Doorway door in startRoom.doorways)
-        {
-			if (i == rando) nextDoorway = door;
-			else otherDoorways.Add(door);
-        }
-
-		// Position room
-		startRoom.transform.position = Vector3.zero;
-		startRoom.transform.rotation = Quaternion.identity;
-
-		currentStartPos = startRoom.playerStart.position;
-	}
 
 	void PlaceStartRoom()
 	{
@@ -93,9 +78,17 @@ public class RoomGenerator : MonoBehaviour
 		startRoom = Instantiate(startRoomPrefab) as StartRoom;
 		startRoom.transform.parent = this.transform;
 
-		// Get doorways from current room and add them randomly to the list of available doorways
-		AddDoorwaysToList(startRoom, ref availableDoorways);
+		//var rando = Random.Range(0, startRoom.doorways.Length);
+		//var i = 0;
+		//foreach(Doorway door in startRoom.doorways)
+		//      {
+		//	if (i == rando) nextDoorway = door;
+		//	else otherDoorways.Add(door);
 
+		//	i++;
+		//      }
+
+		nextDoorway = startRoom.doorways[0];
 		// Position room
 		startRoom.transform.position = Vector3.zero;
 		startRoom.transform.rotation = Quaternion.identity;
@@ -121,125 +114,65 @@ public class RoomGenerator : MonoBehaviour
 		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 	}
 
-	bool PlaceRoom2(Room room)
-	{
-		// Instantiate room
-		Room currentRoom = Instantiate(room) as Room;
-		currentRoom.transform.parent = this.transform;
+	bool PlaceRoom(Room room)
+    {
+        // Instantiate room
+        Room currentRoom = Instantiate(room) as Room;
+        currentRoom.transform.parent = this.transform;
 
-		var rando = 0;
+        ShuffleDoors(currentRoom);
 
-		int a = 0;
-		while (true)
+        int a = 0;
+        while (true)
         {
-			rando = Random.Range(0, currentRoom.doorways.Length);
-			PositionRoomAtDoorway(ref currentRoom, nextDoorway, currentRoom.doorways[rando]);
+            foreach (Doorway door in currentRoom.doorways)
+            {
+                PositionRoomAtDoorway(ref currentRoom, door, nextDoorway);
+                if (!CheckRoomOverlap(currentRoom))
+                {
+                    UpdateDoors(currentRoom, door);
+                    return true;
+                }
+            }
 
-			// Check room overlaps
-			if (CheckRoomOverlap(currentRoom))
-			{
-				// Add room to list
-				placedRooms.Add(currentRoom);
-
-				// Remove occupied doorways
-
-				var i = 0;
-				var nextDoorPicked = false;
-				foreach (Doorway door in startRoom.doorways)
-				{
-					if (i != rando)
-					{
-						if (!nextDoorPicked)
-						{
-							nextDoorPicked = true;
-							nextDoorway = door;
-						}
-						else otherDoorways.Add(door);
-					}
-				}
-				return true;
-			}
-
-			else a++;
-			if (a >= 5) return false;
-
+            a++;
+            if (a >= 5)
+            {
+                Destroy(currentRoom);
+                return false;
+            }
         }
-	}
-	void PlaceRoom(Room room)
-	{
-		// Instantiate room
-		Room currentRoom = Instantiate(room) as Room;
-		currentRoom.transform.parent = this.transform;
+    }
 
-		// Create doorway lists to loop over
-		List<Doorway> allAvailableDoorways = new List<Doorway>(availableDoorways);
-		List<Doorway> currentRoomDoorways = new List<Doorway>();
-		AddDoorwaysToList(currentRoom, ref currentRoomDoorways);
+    private static void ShuffleDoors(Room currentRoom)
+    {
+        var alpha = currentRoom.doorways;
+        for (int i = 0; i < alpha.Length; i++)
+        {
+            var temp = alpha[i];
+            int randomIndex = Random.Range(i, alpha.Length);
+            alpha[i] = alpha[randomIndex];
+            alpha[randomIndex] = temp;
+        }
+    }
 
-		// Get doorways from current room and add them randomly to the list of available doorways
-		AddDoorwaysToList(currentRoom, ref availableDoorways);
+    private void UpdateDoors(Room currentRoom, Doorway door)
+    {
+		bool nexDoorPicked = false;
 
-		//availableDoorways.Add(room.doorways[Random.Range(0, room.doorways.Length)]);
-		//AddDoorwayToList(currentRoom, ref availableDoorways);
-		bool roomPlaced = false;
-
-		// Try all available doorways
-		foreach (Doorway availableDoorway in allAvailableDoorways)
+		foreach (Doorway currentDoor in currentRoom.doorways)
 		{
-			// Try all available doorways in current room
-			foreach (Doorway currentDoorway in currentRoomDoorways)
+			if (!GameObject.ReferenceEquals(currentDoor.gameObject, door.gameObject))
 			{
-				// Position room
-				PositionRoomAtDoorway(ref currentRoom, currentDoorway, availableDoorway);
-
-				// Check room overlaps
-				if (CheckRoomOverlap(currentRoom))
+				if (nexDoorPicked) otherDoorways.Add(currentDoor);
+				else
 				{
-					continue;
-				} 
-
-				roomPlaced = true;
-
-				// Add room to list
-				placedRooms.Add(currentRoom);
-
-				// Remove occupied doorways
-				currentDoorway.gameObject.SetActive(false);
-				availableDoorways.Remove(currentDoorway);
-
-				availableDoorway.gameObject.SetActive(false);
-				availableDoorways.Remove(availableDoorway);
-
-				// Exit loop if room has been placed
-				break;
-			}
-
-			// Exit loop if room has been placed
-			if (roomPlaced)
-			{
-				break;
+					nextDoorway = currentDoor;
+					nexDoorPicked = true;
+				}
 			}
 		}
-
-		// Room couldn't be placed. Restart generator and try again
-		if (!roomPlaced)
-		{
-			Destroy(currentRoom.gameObject);
-			ResetLevelGenerator();
-		} 
-
-
-	}
-
-
-    void AddDoorwaysToList(Room room, ref List<Doorway> list)
-	{
-		foreach (Doorway doorway in room.doorways)
-		{
-			int r = Random.Range(0, list.Count);
-			list.Insert(r, doorway);
-		}
-	}
+    }
 
 	bool CheckRoomOverlap(Room room)
 	{
@@ -263,23 +196,6 @@ public class RoomGenerator : MonoBehaviour
             }
         }
 
-		//Collider[] colliders = Physics.OverlapBox(bounds.center, bounds.size , room.transform.rotation);
-		//if (colliders.Length > 0)
-		//{
-		//	// Ignore collisions with current room
-		//	foreach (Collider c in colliders)
-		//	{
-		//		if (c.transform.parent.gameObject.Equals(room.gameObject))
-		//		{
-		//			continue;
-		//		}
-		//		else
-		//		{
-		//			Debug.LogError("Overlap detected");
-		//			return true;
-		//		}
-		//	}
-		//}
 
 		return false;
 	}
@@ -313,7 +229,7 @@ public class RoomGenerator : MonoBehaviour
         // Reset coroutine
         StartCoroutine("GenerateLevel");
     }
-
-
 }
+
+
 
