@@ -25,6 +25,7 @@ public class RoomGenerator : MonoBehaviour
 		roomLayerMask = LayerMask.GetMask("Room");
 		StartCoroutine("GenerateLevel");
 	}
+
 	IEnumerator GenerateLevel()
     {
 
@@ -34,15 +35,23 @@ public class RoomGenerator : MonoBehaviour
 		yield return startup;
 
 		// Place start room
-		PlaceStartRoom();
+		PlaceStartRoom2();
 
 		yield return interval;
-		for (int i = 1; i <= 100; i++)
+		for (int i = 1; i <= 2; i++)
 		{
-            if (i % 2 == 0) PlaceCorridor(Random.Range(5, 10));
-            else PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+			//if (i % 2 == 0) PlaceCorridor(Random.Range(5, 10));
+			//else PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+			int a = 0;
+            while (true)
+            {
+				a++;
+				var rando = Random.Range(0, roomPrefabs.Count);
 
-            //PlaceRoom(roomPrefabs[Random.Range(0, roomPrefabs.Count)]);
+				if (PlaceRoom2(roomPrefabs[rando])) break;
+				if (a <= 10) break;
+            }
+
 		}
 	}
 
@@ -54,8 +63,31 @@ public class RoomGenerator : MonoBehaviour
 			else PlaceRoom(corridor1);
         }
     }
+	Doorway nextDoorway;
+	List<Doorway> otherDoorways = new List<Doorway>();
 
-    void PlaceStartRoom()
+	void PlaceStartRoom2()
+	{
+		// Instantiate room
+		startRoom = Instantiate(startRoomPrefab) as StartRoom;
+		startRoom.transform.parent = this.transform;
+
+		var rando = Random.Range(0, startRoom.doorways.Length);
+		var i = 0;
+		foreach(Doorway door in startRoom.doorways)
+        {
+			if (i == rando) nextDoorway = door;
+			else otherDoorways.Add(door);
+        }
+
+		// Position room
+		startRoom.transform.position = Vector3.zero;
+		startRoom.transform.rotation = Quaternion.identity;
+
+		currentStartPos = startRoom.playerStart.position;
+	}
+
+	void PlaceStartRoom()
 	{
 		// Instantiate room
 		startRoom = Instantiate(startRoomPrefab) as StartRoom;
@@ -88,6 +120,51 @@ public class RoomGenerator : MonoBehaviour
 		Vector3 roomPositionOffset = roomDoorway.transform.position - room.transform.position;
 		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 	}
+
+	bool PlaceRoom2(Room room)
+	{
+		// Instantiate room
+		Room currentRoom = Instantiate(room) as Room;
+		currentRoom.transform.parent = this.transform;
+
+		var rando = 0;
+
+		int a = 0;
+		while (true)
+        {
+			rando = Random.Range(0, currentRoom.doorways.Length);
+			PositionRoomAtDoorway(ref currentRoom, nextDoorway, currentRoom.doorways[rando]);
+
+			// Check room overlaps
+			if (CheckRoomOverlap(currentRoom))
+			{
+				// Add room to list
+				placedRooms.Add(currentRoom);
+
+				// Remove occupied doorways
+
+				var i = 0;
+				var nextDoorPicked = false;
+				foreach (Doorway door in startRoom.doorways)
+				{
+					if (i != rando)
+					{
+						if (!nextDoorPicked)
+						{
+							nextDoorPicked = true;
+							nextDoorway = door;
+						}
+						else otherDoorways.Add(door);
+					}
+				}
+				return true;
+			}
+
+			else a++;
+			if (a >= 5) return false;
+
+        }
+	}
 	void PlaceRoom(Room room)
 	{
 		// Instantiate room
@@ -102,6 +179,8 @@ public class RoomGenerator : MonoBehaviour
 		// Get doorways from current room and add them randomly to the list of available doorways
 		AddDoorwaysToList(currentRoom, ref availableDoorways);
 
+		//availableDoorways.Add(room.doorways[Random.Range(0, room.doorways.Length)]);
+		//AddDoorwayToList(currentRoom, ref availableDoorways);
 		bool roomPlaced = false;
 
 		// Try all available doorways
@@ -151,7 +230,9 @@ public class RoomGenerator : MonoBehaviour
 
 
 	}
-	void AddDoorwaysToList(Room room, ref List<Doorway> list)
+
+
+    void AddDoorwaysToList(Room room, ref List<Doorway> list)
 	{
 		foreach (Doorway doorway in room.doorways)
 		{

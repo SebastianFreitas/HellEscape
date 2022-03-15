@@ -54,7 +54,7 @@ public class Portal : MonoBehaviour
         if (exp != null)
         {
             exp.gameObject.SetActive(true);
-            //exp.Play();   
+            exp.Play();   
         }
 
 
