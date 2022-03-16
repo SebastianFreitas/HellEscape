@@ -89,7 +89,10 @@ public class RoomGenerator : MonoBehaviour
 				if (CheckRoomOverlap(room))
 				{
 					var wallRoom = Instantiate(wall) as Room;
+					wallRoom.transform.parent = this.transform;
+
 					PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
+
 					Destroy(room.gameObject);
 					break;
 				}
