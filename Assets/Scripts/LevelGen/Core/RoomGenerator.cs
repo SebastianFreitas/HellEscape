@@ -7,22 +7,26 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField] Room corridor1;
 	[SerializeField] Room corridorLight;
 
+	[SerializeField] Room wall;
+	[SerializeField] Room stairs;
+
 	[SerializeField] Room startRoomPrefab, endRoomPrefab;
 	[SerializeField] List<Room> roomPrefabs = new List<Room>();
-	[SerializeField] Vector2 iterationRange = new Vector2(3, 10);
+	[SerializeField] List<Room> SpecialRoomPrefabs = new List<Room>();
 
 
 	List<Doorway> availableDoorways = new List<Doorway>();
 	StartRoom startRoom;
-	EndRoom endRoom;
+	Room endRoom;
 	internal List<Room> placedRooms = new List<Room>();
 	internal Vector3 currentStartPos;
 
+	Doorway nextDoorway;
+	List<Doorway> otherDoorways = new List<Doorway>();
 
-	LayerMask roomLayerMask;
 	void OnEnable()
 	{
-		roomLayerMask = LayerMask.GetMask("Room");
+
 		StartCoroutine("GenerateLevel");
 	}
 
@@ -37,6 +41,8 @@ public class RoomGenerator : MonoBehaviour
 		// Place start room
 		PlaceStartRoom();
 
+
+		//place pathway
 		yield return interval;
 		for (int i = 1; i <=100; i++)
 		{
@@ -52,41 +58,76 @@ public class RoomGenerator : MonoBehaviour
 					PlaceCorridor(Random.Range(5, 10));
 					break;
 				}
-				else if (PlaceRoom(roomPrefabs[rando])) break;
+				else if (PlaceRoom(roomPrefabs[rando], true)) break;
 
-				if (a >= 100) break;
+				if (a >= 10) break;
             }
 
 		}
+
+		//fill the rest of the level
+		FillEmptyDoors();
+		//finish the level
+		PlaceCorridor(Random.Range(5, 10));
+		PlaceEndRoom();
 	}
+
+    private void FillEmptyDoors()
+    {
+        foreach(Doorway door in otherDoorways)
+        {
+            while (true)
+            {
+				var current = SpecialRoomPrefabs[Random.Range(0, SpecialRoomPrefabs.Count)];
+
+				// Instantiate room
+				var room = Instantiate(current) as Room;
+				room.transform.parent = this.transform;
+
+				PositionRoomAtDoorway(ref room, room.doorways[0], door);
+
+				if (CheckRoomOverlap(room))
+				{
+					var wallRoom = Instantiate(wall) as Room;
+					PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
+					Destroy(room.gameObject);
+					break;
+				}
+				else
+                {
+					placedRooms.Add(room);
+					break;
+                }
+            }
+
+		}
+    }
 
     private void PlaceCorridor(int length)
     {
-        for(int i = 1; i <= length; i++)
-        {
-			if (i % 4 == 0 ) PlaceRoom(corridorLight);
-			else PlaceRoom(corridor1);
-        }
-    }
+		if (Random.Range(0, 9) > 2) PlaceRoom(stairs, false);
+		for (int i = 1; i <= length; i++)
+		{
+			if (i % 4 == 0) PlaceRoom(corridorLight, true);
+			else PlaceRoom(corridor1, true);
+		}
+	}
 
-	Doorway nextDoorway;
-	List<Doorway> otherDoorways = new List<Doorway>();
+    private void PlaceEndRoom()
+    {
+		// Instantiate room
+		endRoom = Instantiate(endRoomPrefab) as Room;
+		endRoom.transform.parent = this.transform;
+
+		PositionRoomAtDoorway(ref endRoom, endRoom.doorways[0], nextDoorway);
+	}
+
 
 	void PlaceStartRoom()
 	{
 		// Instantiate room
 		startRoom = Instantiate(startRoomPrefab) as StartRoom;
 		startRoom.transform.parent = this.transform;
-
-		//var rando = Random.Range(0, startRoom.doorways.Length);
-		//var i = 0;
-		//foreach(Doorway door in startRoom.doorways)
-		//      {
-		//	if (i == rando) nextDoorway = door;
-		//	else otherDoorways.Add(door);
-
-		//	i++;
-		//      }
 
 		nextDoorway = startRoom.doorways[0];
 		// Position room
@@ -114,13 +155,14 @@ public class RoomGenerator : MonoBehaviour
 		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 	}
 
-	bool PlaceRoom(Room room)
+	bool PlaceRoom(Room room, bool shuffle)
     {
         // Instantiate room
         Room currentRoom = Instantiate(room) as Room;
         currentRoom.transform.parent = this.transform;
 
-        ShuffleDoors(currentRoom);
+        if (shuffle && currentRoom.doorways.Length > 2) ShuffleDoors(currentRoom);
+
 
         int a = 0;
         while (true)
@@ -130,7 +172,8 @@ public class RoomGenerator : MonoBehaviour
                 PositionRoomAtDoorway(ref currentRoom, door, nextDoorway);
                 if (!CheckRoomOverlap(currentRoom))
                 {
-                    UpdateDoors(currentRoom, door);
+					UpdateDoors(currentRoom, door);
+					placedRooms.Add(currentRoom);
                     return true;
                 }
             }
@@ -138,7 +181,7 @@ public class RoomGenerator : MonoBehaviour
             a++;
             if (a >= 5)
             {
-                Destroy(currentRoom);
+                Destroy(currentRoom.gameObject);
                 return false;
             }
         }
