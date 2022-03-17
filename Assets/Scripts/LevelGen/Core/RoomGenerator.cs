@@ -44,7 +44,7 @@ public class RoomGenerator : MonoBehaviour
 
 		//place pathway
 		yield return interval;
-		for (int i = 1; i <=100; i++)
+		for (int i = 1; i <=25; i++)
 		{
 
 			int a = 0;
@@ -108,7 +108,8 @@ public class RoomGenerator : MonoBehaviour
 
     private void PlaceCorridor(int length)
     {
-		if (Random.Range(0, 9) > 2) PlaceRoom(stairs, false);
+		PlaceRoom(stairs, false);
+		
 		for (int i = 1; i <= length; i++)
 		{
 			if (i % 4 == 0) PlaceRoom(corridorLight, true);
