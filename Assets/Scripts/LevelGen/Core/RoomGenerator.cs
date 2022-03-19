@@ -44,7 +44,7 @@ public class RoomGenerator : MonoBehaviour
 
 		//place pathway
 		yield return interval;
-		for (int i = 1; i <=25; i++)
+		for (int i = 1; i <=50; i++)
 		{
 
 			int a = 0;
