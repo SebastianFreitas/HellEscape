@@ -24,10 +24,12 @@ public class RoomGenerator : MonoBehaviour
 	Doorway nextDoorway;
 	List<Doorway> otherDoorways = new List<Doorway>();
 
+	private bool isGenerated = false;
+
 	void OnEnable()
 	{
-
-		StartCoroutine("GenerateLevel");
+		if (!isGenerated)
+			StartCoroutine("GenerateLevel");
 	}
 
 	IEnumerator GenerateLevel()
@@ -61,15 +63,21 @@ public class RoomGenerator : MonoBehaviour
 				else if (PlaceRoom(roomPrefabs[rando], true)) break;
 
 				if (a >= 10) break;
-            }
+				yield return interval;
+			}
 
 		}
 
 		//fill the rest of the level
 		FillEmptyDoors();
+		yield return interval;
 		//finish the level
 		PlaceCorridor(Random.Range(5, 10));
+		yield return interval;
 		PlaceEndRoom();
+
+
+		isGenerated = true;
 	}
 
     private void FillEmptyDoors()
@@ -126,7 +134,6 @@ public class RoomGenerator : MonoBehaviour
 		PositionRoomAtDoorway(ref endRoom, endRoom.doorways[0], nextDoorway);
 	}
 
-
 	void PlaceStartRoom()
 	{
 		// Instantiate room
@@ -135,7 +142,7 @@ public class RoomGenerator : MonoBehaviour
 
 		nextDoorway = startRoom.doorways[0];
 		// Position room
-		startRoom.transform.position = Vector3.zero;
+		startRoom.transform.localPosition = Vector3.zero;
 		startRoom.transform.rotation = Quaternion.identity;
 
 		currentStartPos = startRoom.playerStart.position;

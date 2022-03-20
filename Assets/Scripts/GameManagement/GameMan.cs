@@ -66,6 +66,12 @@ public class GameMan : ModDataRoom
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
     }
 
+    internal void PreloadRun()
+    {
+        roomGen.gameObject.SetActive(true);
+        roomGen.gameObject.transform.position = roomGen.gameObject.transform.position + new Vector3(0, -10000, 0);
+    }
+
     private void GoToHub()
     {
         hub.gameObject.SetActive(true);
@@ -121,7 +127,11 @@ public class GameMan : ModDataRoom
             run[i].player = player;
         }
         run[i] = null;
+
+
         roomGen.gameObject.SetActive(true);
+
+
         StartCoroutine("LoadingScreen");
         
     }
@@ -144,7 +154,7 @@ public class GameMan : ModDataRoom
 
     public IEnumerator LoadingScreen()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(3f);
         PlacePlayerInCurrentRoom();
     }
 

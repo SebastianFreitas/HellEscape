@@ -9,7 +9,7 @@ public class PropSpawn : MonoBehaviour
 
     private void OnEnable()
     {
-        for(int i = 0; i <= Random.Range(0, 3); i++)
+        for(int i = 0; i <= Random.Range(0, 2); i++)
         {
             var x = GetRandomWeightedIndex(weight);
             Instantiate(objects[x], transform.position, transform.rotation, transform);

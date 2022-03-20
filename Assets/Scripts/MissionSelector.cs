@@ -61,6 +61,8 @@ public class MissionSelector : ModDataRoom
 
             DisableSelector();
 
+            //manager.PreloadRun();
+
         }
         else
         {
