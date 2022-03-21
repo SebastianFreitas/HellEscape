@@ -63,11 +63,10 @@ public class Room : MonoBehaviour
         {
             roomBounds.Encapsulate(col.bounds);
         }
-        //roomBounds.Expand(-0.1f);
-        //roomBounds.size /= 2;
 
     }
 
+    
 
     /*
     private void Start()

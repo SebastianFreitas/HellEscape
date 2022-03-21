@@ -42,12 +42,9 @@ public class Monster : MonoBehaviour
         if (rigidBody == null) rigidBody = transform.GetComponent<Rigidbody>();
         if (monsterCollider == null) monsterCollider = rigidBody.GetComponent<Collider>();
 
-        if (player == null) player = transform.parent.parent.GetComponentInParent<Room>().player;
+        if (player == null) player = GameObject.FindGameObjectsWithTag("Dude")[0];
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
     }
-
-
-
 
     void Update(){
         if (monsterCollider.bounds.Intersects(playerCollider.bounds))
@@ -124,7 +121,7 @@ public class Monster : MonoBehaviour
 
     private void Drop()
     {
-        if (Random.Range(1,100) > 98)
+        if (Random.Range(1f,100f) > 99f)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
             x.transform.parent = transform.parent;
