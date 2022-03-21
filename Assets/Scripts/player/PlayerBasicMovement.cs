@@ -22,7 +22,7 @@ public class PlayerBasicMovement : MonoBehaviour
     internal Vector3 velocity;
     private Vector3 impact = Vector3.zero;
     private bool canDash = true; //check to stop player from dashing instantly after dashing
-    private bool isSideDashing = false;
+    internal bool isSideDashing = false;
     public float dashCooldown; //ammount of time player needs to wait until dashing again right after dashing
     private Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash to simulate inertia
     private bool inputLocked = false;// in this state we are going to lock Horizontal and Vertical input to simulate inertia
@@ -364,9 +364,11 @@ public class PlayerBasicMovement : MonoBehaviour
     }
     IEnumerator waiterDashDuration()
     {
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Prop"));
         yield return new WaitForSecondsRealtime(.3f);
         isSideDashing = false;
         inputLocked = false;
+        //Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Prop"), false);
     }
     IEnumerator waiterGroundLag()
     {
@@ -374,6 +376,5 @@ public class PlayerBasicMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(.2f);
         groundLag = false;
     }
-
 
 }

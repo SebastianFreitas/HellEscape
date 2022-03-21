@@ -7,6 +7,7 @@ public class PropSpawn : MonoBehaviour
     [SerializeField] int[] weight;
     [SerializeField] GameObject[] objects;
 
+
     private void OnEnable()
     {
         for(int i = 0; i <= Random.Range(0, 2); i++)
@@ -16,6 +17,8 @@ public class PropSpawn : MonoBehaviour
         }
 
     }
+
+
 
     public int GetRandomWeightedIndex(int[] weights)
     {

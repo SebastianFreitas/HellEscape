@@ -28,16 +28,6 @@ public class MenuProP : MonoBehaviour
         m_EulerAngleVelocity = new Vector3(x, y, z);
     }
 
-    // Update is called once per frame
-    /*
-    void Update()
-    {
-
-        Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
-        body.MoveRotation(body.rotation * deltaRotation);
-        body.transform.Rotate(x, y, z);
-        //transform.position += Vector3.back * 0.0001f;
-    }*/
 
     private void OnCollisionEnter(Collision collision)
     {

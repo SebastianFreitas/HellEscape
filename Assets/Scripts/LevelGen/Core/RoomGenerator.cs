@@ -55,14 +55,16 @@ public class RoomGenerator : MonoBehaviour
 				a++;
 				var rando = Random.Range(0, roomPrefabs.Count);
 
-				if (i % 2 == 0)
+				var x = Random.Range(1, 3);
+
+				if (x ==2)
 				{
 					PlaceCorridor(Random.Range(5, 10));
 					break;
 				}
 				else if (PlaceRoom(roomPrefabs[rando], true)) break;
 
-				if (a >= 10) break;
+				if (a >= 10) ResetLevelGenerator();
 				yield return interval;
 			}
 
@@ -84,31 +86,43 @@ public class RoomGenerator : MonoBehaviour
     {
         foreach(Doorway door in otherDoorways)
         {
-            while (true)
+			var x = Random.Range(1, 3);
+
+			if (x == 2)
+			{
+				var wallRoom = Instantiate(wall) as Room;
+				wallRoom.transform.parent = this.transform;
+
+				PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
+			}
+			else
             {
-				var current = SpecialRoomPrefabs[Random.Range(0, SpecialRoomPrefabs.Count)];
-
-				// Instantiate room
-				var room = Instantiate(current) as Room;
-				room.transform.parent = this.transform;
-
-				PositionRoomAtDoorway(ref room, room.doorways[0], door);
-
-				if (CheckRoomOverlap(room))
+				while (true)
 				{
-					var wallRoom = Instantiate(wall) as Room;
-					wallRoom.transform.parent = this.transform;
+					var current = SpecialRoomPrefabs[Random.Range(0, SpecialRoomPrefabs.Count)];
 
-					PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
+					// Instantiate room
+					var room = Instantiate(current) as Room;
+					room.transform.parent = this.transform;
 
-					Destroy(room.gameObject);
-					break;
+					PositionRoomAtDoorway(ref room, room.doorways[0], door);
+
+					if (CheckRoomOverlap(room))
+					{
+						var wallRoom = Instantiate(wall) as Room;
+						wallRoom.transform.parent = this.transform;
+
+						PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
+
+						Destroy(room.gameObject);
+						break;
+					}
+					else
+					{
+						placedRooms.Add(room);
+						break;
+					}
 				}
-				else
-                {
-					placedRooms.Add(room);
-					break;
-                }
             }
 
 		}

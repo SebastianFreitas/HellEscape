@@ -43,7 +43,7 @@ public class Room : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.green;
         //Check that it is being run in Play Mode, so it doesn't try to draw this in Editor mode
         if (m_Started)
         {

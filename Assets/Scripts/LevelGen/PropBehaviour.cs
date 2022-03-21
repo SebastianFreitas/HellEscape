@@ -11,8 +11,12 @@ public class PropBehaviour : MonoBehaviour
 
     public bool constantRotating = false;
 
+
+
     void Start()
     {
+
+
         if (constantRotating) GetComponent<Rigidbody>().angularVelocity = transform.InverseTransformDirection(Vector3.up) * 0.1f;
 
         if (!steady)
@@ -31,11 +35,6 @@ public class PropBehaviour : MonoBehaviour
         }
 
     }
-
-
-
-
-
 
 
 
