@@ -114,7 +114,11 @@ public class Monster : MonoBehaviour
         AudioSource.PlayClipAtPoint(die, transform.position, volume+0.5f);
         var bloodSplat = Instantiate(AshesDeath, transform.position, rep.rotation);
         bloodSplat.Play();
-        if (!died) Drop();
+        if (!died)
+        {
+            transform.GetComponentInParent<MobSpawner>().IsEncounterDone();
+            Drop();
+        }
         died = true;
         Destroy(gameObject);
     }
