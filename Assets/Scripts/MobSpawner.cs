@@ -9,7 +9,9 @@ public class MobSpawner : MonoBehaviour
     [SerializeField] Monster[] monsters;
     [SerializeField] GameObject lights;
 
-    private int numberOfEnemies = 0;
+    [SerializeField] bool isBoss = false;
+
+    internal int numberOfEnemies = 0;
     private BoxCollider[] boxColliders;
     private Light[] lightsComponent;
 
@@ -27,7 +29,10 @@ public class MobSpawner : MonoBehaviour
     {
         if (other.CompareTag("Dude"))
         {
-            for(int i = 0; i < 4; i++)
+            var x = 4;
+            if (isBoss) x = 1;
+
+            for(int i = 0; i < x; i++)
             {
                 var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
