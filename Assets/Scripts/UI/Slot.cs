@@ -25,14 +25,6 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void Update()
     {
-        // Compare selected gameObject with referenced Button gameObject
-        //if (EventSystem.current.currentSelectedGameObject == ButtonGameObject)
-        //{
-        //    if (Input.GetKeyDown("e")) GetComponent<Button>().onClick.Invoke();
-        //    if (Input.GetKeyDown("f")) DismantleGun();
-        //    if (!gunDescription.isActiveAndEnabled) gunDescription.gameObject.SetActive(true);
-        //}
-
         if (equiped && Input.GetKeyDown("tab")) ShowGun();
     }
 

@@ -130,7 +130,7 @@ public class Monster : MonoBehaviour
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
             x.transform.parent = transform.parent;
             var y = x.GetComponent<Item>();
-            y.gun = y.CreateWeapon((int)level);
+            y.gun = y.CreateWeapon((int)level, false);
 
         }
     }

@@ -102,9 +102,18 @@ public class CraftingDevice : GunGenerator
     public int DisassembleGun()
     {
         if (gun.isBase) return 2;
-
+        if (playerInventory.GetGeneratedGunsLength() == 1) return 2;
         if (playerInventory.GetLayoutLength() < 8)
         {
+            //if (!(slotGuns.SelectRandomGun()))
+            //{
+            //    //slotGuns.SelectSlot(0);
+            //    //Gun y = player.GetComponentInChildren<Gun>();
+            //    //y.EquipBaseGun();
+            //    //ReadWeapon(null, y.gun);
+            //    return 2;
+
+            //}
             playerInventory.DisassembleGun(gun);
 
             slotGuns.GetGunLayout();
@@ -112,14 +121,7 @@ public class CraftingDevice : GunGenerator
 
             gun = null;
 
-            if (!(slotGuns.SelectRandomGun()))
-            {
-                slotGuns.SelectSlot(0);
-                Gun y = player.GetComponentInChildren<Gun>();
-                y.EquipBaseGun();
-                ReadWeapon(null, y.gun);
 
-            }
 
         } else return 1;
         return 0;

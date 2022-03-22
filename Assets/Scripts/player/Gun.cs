@@ -200,12 +200,16 @@ public class Gun : MonoBehaviour
 
     internal void EquipBaseGun()
     {
-        gun = gunGen.CreateWeaponEmpty();
+        gun = gunGen.CreateWeapon(10,true);
         playerScript.increasedSpeed = gun.increasedSpeed;
         firerate = 1 / gun.finalFireRate;
 
         SetBulletStats();
 
+        var x = GameObject.FindGameObjectWithTag("Inventory").transform;
+        x.GetComponent<Inventory>().AddWeapon(gun, true);
+
+        GameObject.FindGameObjectWithTag("Slot").GetComponent<Slot>().EquipGun();
     }
 
     public void SetGun(GunOfAType gun)

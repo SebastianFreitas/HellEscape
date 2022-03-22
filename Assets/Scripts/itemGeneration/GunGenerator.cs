@@ -10,7 +10,7 @@ public class GunGenerator : ModData
 {
 
     public int[] typeWeight = { 50, 10, 10, 10 };
-    public GunOfAType CreateWeapon(int maxLevel)
+    public GunOfAType CreateWeapon(int maxLevel, bool isBase)
     {
         GunOfAType ret = new GunOfAType
         {
@@ -30,6 +30,7 @@ public class GunGenerator : ModData
             basePoisonDamage = 0,
         };
         var type = RandomiseGunType();
+        if (isBase) type = GunType.normal;
         ret = ret.ChangeType(ret, type);
 
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
