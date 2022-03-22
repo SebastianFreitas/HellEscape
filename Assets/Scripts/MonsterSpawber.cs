@@ -54,6 +54,6 @@ public class MonsterSpawber : MonoBehaviour
         script.isHub = true;
         script.level = 1;
         script.UpdateStatsToLevel();
-        if (ishive) script.transform.GetComponent<Skull>().isHive = true;
+
     }
 }

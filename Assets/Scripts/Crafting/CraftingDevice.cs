@@ -58,7 +58,7 @@ public class CraftingDevice : GunGenerator
         if (portalOnline || isHub) offline.SetActive(true);
         if (!isHub)
         {
-            player = transform.GetComponentInParent<Room>().player;
+            player = GameObject.FindGameObjectsWithTag("Dude")[0];
             playerInventory = player.GetComponent<PlayerInventory>();
         }
 
@@ -207,27 +207,10 @@ public class CraftingDevice : GunGenerator
 
     }
 
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    ContactPoint contact = collision.contacts[0];
-    //    if (collision.gameObject.CompareTag("Bullet") && portalOnline)
-    //    {
-    //        ReadWeapon(collision, null);
-
-    //        TurnOn();
-    //    }
-
-
-    //}
-
     public void TurnOn()
     {
-        if (portalOnline || isHub)
-        {
-            offline.SetActive(false);
-            online.SetActive(true);
-        }
-
+        offline.SetActive(false);
+        online.SetActive(true);
     }
 
     internal void ReadWeapon(Collision collision, GunOfAType gunA)

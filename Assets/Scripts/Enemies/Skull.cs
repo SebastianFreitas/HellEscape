@@ -13,12 +13,10 @@ public class Skull : Monster
 
     public ParticleSystem attack;
 
-
-    bool isLeft;
     Vector3 randomHeight;
 
     private float finalWaitTime;
-    [SerializeField]public bool isHive =false;
+
     public Skull[] otherSkulls;
 
     new void Start()
@@ -49,7 +47,7 @@ public class Skull : Monster
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
 
         var x = false;
-        if (Random.Range(1, 100) > 95) x = true;
+        if (Random.Range(1, 100) > 75) x = true;
         if (x) randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
         else randomHeight = new Vector3(0,0,0);
 
@@ -71,7 +69,6 @@ public class Skull : Monster
         yield return new WaitForSeconds(Random.Range(1, 3));
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
-        if (isHive) otherSkulls = transform.parent.GetComponentsInChildren<Skull>();
         StartCoroutine(randomJump());
     }
 
