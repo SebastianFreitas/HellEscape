@@ -154,8 +154,16 @@ public class GameMan : ModDataRoom
 
     public IEnumerator LoadingScreen()
     {
-        yield return new WaitForSecondsRealtime(3f);
-        PlacePlayerInCurrentRoom();
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(3f);
+            if (roomGen.isGenerated)
+            {
+                PlacePlayerInCurrentRoom();
+                break;
+            }
+        }
+
     }
 
     public void UnlockDoor()

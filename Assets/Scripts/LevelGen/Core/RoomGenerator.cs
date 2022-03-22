@@ -26,7 +26,7 @@ public class RoomGenerator : MonoBehaviour
 	Doorway nextDoorway;
 	List<Doorway> otherDoorways = new List<Doorway>();
 
-	private bool isGenerated = false;
+	internal bool isGenerated = false;
 
 	void OnEnable()
 	{
