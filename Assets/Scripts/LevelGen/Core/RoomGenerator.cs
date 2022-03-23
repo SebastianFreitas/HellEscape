@@ -11,8 +11,8 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] Room stairs;
 
 	[SerializeField] Room startRoomPrefab, endRoomPrefab;
-	[SerializeField] List<Room> roomPrefabs = new List<Room>();
-	[SerializeField] List<Room> SpecialRoomPrefabs = new List<Room>();
+	[SerializeField] List<Room> mainRooms = new List<Room>();
+	[SerializeField] List<Room> sideRooms = new List<Room>();
 	[SerializeField] List<Room> corridorPrefabs = new List<Room>();
 
 
@@ -27,6 +27,15 @@ public class RoomGenerator : MonoBehaviour
 	List<Doorway> otherDoorways = new List<Doorway>();
 
 	internal bool isGenerated = false;
+	internal enum RoomType
+	{
+		SideRoom,
+		MainRoom,
+		EndRoom,
+		StartRoom,
+		Corridor
+	}
+
 
 	void OnEnable()
 	{
@@ -54,17 +63,17 @@ public class RoomGenerator : MonoBehaviour
             while (true)
             {
 				a++;
-				var rando = Random.Range(0, roomPrefabs.Count);
+				var rando = Random.Range(0, mainRooms.Count);
 
 				var x = Random.Range(1, 4);
                 bool worked;
                 if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
 
-				else worked = PlaceRoom(roomPrefabs[rando], true);
+				else worked = PlaceRoom(mainRooms[rando], true, RoomType.MainRoom);
 
 				if (worked) break;
 
-				if (a >= 10) ResetLevelGenerator(true);
+				if (a >= 10) ResetLevelGenerator();
 
 			}
 
@@ -76,7 +85,7 @@ public class RoomGenerator : MonoBehaviour
 		//finish the level
 		PlaceCorridor(Random.Range(5, 10));
 		yield return startup;
-		if (!PlaceEndRoom()) ResetLevelGenerator(true); 
+		if (!PlaceEndRoom()) ResetLevelGenerator(); 
 
 
 		isGenerated = true;
@@ -100,7 +109,7 @@ public class RoomGenerator : MonoBehaviour
             {
 				while (true)
 				{
-					var current = SpecialRoomPrefabs[Random.Range(0, SpecialRoomPrefabs.Count)];
+					var current = sideRooms[Random.Range(0, sideRooms.Count)];
 
 					// Instantiate room
 					var room = Instantiate(current) as Room;
@@ -122,6 +131,11 @@ public class RoomGenerator : MonoBehaviour
 					else
 					{
 						placedRooms.Add(room);
+
+						var y = Random.Range(1,21);
+						if (y >15) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
+						else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
+						
 						break;
 					}
 				}
@@ -132,8 +146,8 @@ public class RoomGenerator : MonoBehaviour
 
     private bool PlaceCorridor(int length)
     {
-		PlaceRoom(stairs, false);
-		return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true);
+		PlaceRoom(stairs, false, RoomType.Corridor);
+		return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomType.Corridor);
 
 		//     for (int i = 1; i <= length; i++)
 		//     {
@@ -172,7 +186,7 @@ public class RoomGenerator : MonoBehaviour
 		endRoom = Instantiate(endRoomPrefab) as Room;
 		endRoom.transform.parent = this.transform;
 
-		PositionRoomAtDoorway(ref endRoom, endRoom.doorways[0], nextDoorway);
+		PositionRoomAtDoorway(ref endRoom, endRoom.doorways[Random.Range(0,endRoom.doorways.Length)], nextDoorway);
 		if (!CheckRoomOverlap(endRoom)) return true;
 		else return false;
 	}
@@ -209,7 +223,7 @@ public class RoomGenerator : MonoBehaviour
 		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 	}
 
-	bool PlaceRoom(Room room, bool shuffle)
+	bool PlaceRoom(Room room, bool shuffle, RoomType type)
     {
         // Instantiate room
         Room currentRoom = Instantiate(room) as Room;
@@ -226,6 +240,7 @@ public class RoomGenerator : MonoBehaviour
 				{
 					UpdateDoors(currentRoom, door);
 					placedRooms.Add(currentRoom);
+					if (type == RoomType.MainRoom)currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
 					return true;
 				}
 			}
@@ -290,9 +305,9 @@ public class RoomGenerator : MonoBehaviour
 		return false;
 	}
 
-	void ResetLevelGenerator(bool error)
+	void ResetLevelGenerator()
     {
-        if (error) Debug.LogError("Reset level generator");
+        Debug.LogError("Reset level generator");
 
         StopCoroutine("GenerateLevel");
 

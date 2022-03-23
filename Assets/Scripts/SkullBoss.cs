@@ -9,6 +9,7 @@ public class SkullBoss : Monster
     [SerializeField] float maxWaitingTime;
     [SerializeField] float maxJumpForce;
     [SerializeField] float minJumpForce;
+    [SerializeField] float randomJumpTime;
 
     public ParticleSystem attack;
 
@@ -33,7 +34,7 @@ public class SkullBoss : Monster
     {
         while (true)
         {
-            yield return new WaitForSeconds(.4f);
+            yield return new WaitForSeconds(randomJumpTime);
             Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
             Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
@@ -53,7 +54,6 @@ public class SkullBoss : Monster
 
     IEnumerator SummonSkulls()
     {
-        
         while (true)
         {
             var waitTime = Random.Range(minWaitingTime, maxWaitingTime);

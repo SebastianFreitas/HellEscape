@@ -5,7 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public Doorway[] doorways;
-    public Transform playerStart;
+
     internal int roomType;
     internal Transform[] propSpawns;
     internal GameObject[] objects;
@@ -82,15 +82,7 @@ public class Room : MonoBehaviour
         StartCoroutine(TimerPortalUnlock());
     }*/
 
-    internal void VoidPlayer()
-    {
-        player.GetComponent<CharacterController>().enabled = false;
-       
-        player.transform.position = playerStart.position;
-        player.GetComponent<PlayerHpManager>().TakeDamage(10);
-        player.GetComponent<CharacterController>().enabled = true;
 
-    }
 
     public void PickLayout()
     {

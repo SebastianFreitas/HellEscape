@@ -8918,7 +8918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4185932333856171108}
   - component: {fileID: 4185932333856171110}
-  - component: {fileID: 4185932333856171109}
+  - component: {fileID: 1676009838479507484}
   m_Layer: 8
   m_Name: MobSpawner
   m_TagString: Untagged
@@ -8954,7 +8954,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 70.36125, y: 27.484514, z: 94.29567}
   m_Center: {x: 0.58724976, y: -2.7552633, z: -9.672966}
---- !u!114 &4185932333856171109
+--- !u!114 &1676009838479507484
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8963,7 +8963,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4185932333856171107}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f9e56121593ce245b982c544d23c9ba, type: 3}
+  m_Script: {fileID: 11500000, guid: a0a3de63b887e834da1a752b6038b45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   doorMesh:
@@ -8974,8 +8974,7 @@ MonoBehaviour:
   monsters:
   - {fileID: 7509309355495803939, guid: 2c956be3c53f0ee49a0f86446aa2b61c, type: 3}
   lights: {fileID: 4185932334265170062}
-  isBoss: 1
-  bossSpawnPos: {fileID: 1516728927461001828}
+  bossSpawnPos: {fileID: 0}
 --- !u!1 &4185932333861756334
 GameObject:
   m_ObjectHideFlags: 0
@@ -34938,7 +34937,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4185932335189661263}
-  - component: {fileID: 4185932335189661262}
+  - component: {fileID: 3812588433110212299}
   m_Layer: 8
   m_Name: BossRoomA
   m_TagString: Untagged
@@ -34965,7 +34964,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4185932335189661262
+--- !u!114 &3812588433110212299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34974,7 +34973,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4185932335189661261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09ac3153cd058e44f85d09121183466e, type: 3}
+  m_Script: {fileID: 11500000, guid: dba4d09f5ecf65948b9814636b5fb3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   doorways:
@@ -34982,7 +34981,6 @@ MonoBehaviour:
   - {fileID: 4185932333736610549}
   - {fileID: 4185932334236722581}
   - {fileID: 4185932334226390203}
-  playerStart: {fileID: 0}
 --- !u!1 &4185932335198739998
 GameObject:
   m_ObjectHideFlags: 0

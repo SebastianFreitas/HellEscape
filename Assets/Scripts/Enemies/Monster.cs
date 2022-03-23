@@ -116,7 +116,7 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
         if (!died)
         {
-            transform.GetComponentInParent<MobSpawner>().IsEncounterDone();
+            transform.GetComponentInParent<RoomActivator>().IsEncounterDone();
             Drop();
         }
         died = true;

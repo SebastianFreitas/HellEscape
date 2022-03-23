@@ -1655,9 +1655,9 @@ GameObject:
   - component: {fileID: 2314584693363522938}
   - component: {fileID: 6199015974920768809}
   - component: {fileID: 5697143161141613591}
-  - component: {fileID: 7662645854714091795}
+  - component: {fileID: 5107376753270687809}
   m_Layer: 8
-  m_Name: MobSpawner
+  m_Name: RoomActivator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1703,7 +1703,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 20.293182, y: 5.6428046, z: 36.745857}
   m_Center: {x: -1.9609795, y: 0.19737601, z: -1.4941139}
---- !u!114 &7662645854714091795
+--- !u!114 &5107376753270687809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1712,7 +1712,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1784747695842704869}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f9e56121593ce245b982c544d23c9ba, type: 3}
+  m_Script: {fileID: 11500000, guid: a0a3de63b887e834da1a752b6038b45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   doorMesh:
@@ -1722,7 +1722,6 @@ MonoBehaviour:
   monsters:
   - {fileID: 4141487239674373824, guid: f8724434da8028045add89ca43ea3a70, type: 3}
   lights: {fileID: 3846704676218383681}
-  isBoss: 0
   bossSpawnPos: {fileID: 0}
 --- !u!1 &1863178758448492631
 GameObject:
@@ -5226,7 +5225,6 @@ MonoBehaviour:
   - {fileID: 8350329557203303926}
   - {fileID: 8353131485904260906}
   - {fileID: 3548021363098521457}
-  playerStart: {fileID: 0}
 --- !u!1 &4948665924578486100
 GameObject:
   m_ObjectHideFlags: 0
