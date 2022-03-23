@@ -10,6 +10,7 @@ public class MobSpawner : MonoBehaviour
     [SerializeField] GameObject lights;
 
     [SerializeField] bool isBoss = false;
+    [SerializeField] Transform bossSpawnPos;
 
     internal int numberOfEnemies = 0;
     private BoxCollider[] boxColliders;
@@ -30,20 +31,27 @@ public class MobSpawner : MonoBehaviour
         if (other.CompareTag("Dude"))
         {
             var x = 4;
-            if (isBoss) x = 1;
-
-            for(int i = 0; i < x; i++)
+            if (isBoss)
             {
-                var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
-
-                Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds); //+ transform.position;
-                Instantiate(monsters[0], randomPoint, Quaternion.identity, transform);
+                Instantiate(monsters[0], bossSpawnPos.position, bossSpawnPos.rotation, transform);
                 numberOfEnemies++;
-            }
+            } else SpawnTrashMobs(x);
 
             foreach (BoxCollider box in boxColliders) box.size = Vector3.zero;
 
             foreach (GameObject door in doorMesh) door.SetActive(true);
+        }
+    }
+
+    private void SpawnTrashMobs(int x)
+    {
+        for (int i = 0; i < x; i++)
+        {
+            var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
+
+            Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds);
+            Instantiate(monsters[0], randomPoint, Quaternion.identity, transform);
+            numberOfEnemies++;
         }
     }
 

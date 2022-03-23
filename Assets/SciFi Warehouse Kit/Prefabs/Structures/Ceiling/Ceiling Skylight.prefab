@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3089457781081968691}
   - component: {fileID: 6450201270187372536}
   - component: {fileID: 6957952315348431251}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LP_Skylight_glass_snaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -65,6 +67,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -77,6 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2503265614260935823
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,8 +90,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1505956034637721244}
-  m_Layer: 0
-  m_Name: SciFi_CeilingWindow
+  m_Layer: 8
+  m_Name: Ceiling Skylight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +125,7 @@ GameObject:
   - component: {fileID: 694359730541837943}
   - component: {fileID: 8092062765133607492}
   - component: {fileID: 6034828060080512183}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LP_ceiling_tile_Window_snaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,6 +168,8 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -175,6 +181,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -187,6 +194,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &6034828060080512183
 BoxCollider:
   m_ObjectHideFlags: 0

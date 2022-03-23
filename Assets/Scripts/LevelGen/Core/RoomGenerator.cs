@@ -31,7 +31,7 @@ public class RoomGenerator : MonoBehaviour
 	void OnEnable()
 	{
 		if (!isGenerated)
-			ResetLevelGenerator(false);
+			StartCoroutine("GenerateLevel");
 	}
 
 	IEnumerator GenerateLevel()
