@@ -79,14 +79,14 @@ public class RoomGenerator : MonoBehaviour
 
 		}
 
-		//fill the rest of the level
-		FillEmptyDoors();
 		yield return startup;
 		//finish the level
-		PlaceCorridor(Random.Range(5, 10));
+		PlaceCorridor(20);
 		yield return startup;
 		if (!PlaceEndRoom()) ResetLevelGenerator(); 
 
+		//fill the rest of the level
+		FillEmptyDoors();
 
 		isGenerated = true;
 	}
@@ -140,7 +140,6 @@ public class RoomGenerator : MonoBehaviour
 					}
 				}
             }
-
 		}
     }
 
@@ -148,36 +147,6 @@ public class RoomGenerator : MonoBehaviour
     {
 		PlaceRoom(stairs, false, RoomType.Corridor);
 		return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomType.Corridor);
-
-		//     for (int i = 1; i <= length; i++)
-		//     {
-		//var counter = 0;
-		//while (true)
-		//         {
-
-		//             var rando = Random.Range(0, 3);
-		//             var worked = false;
-		//             switch (rando)
-		//             {
-		//                 case 0:
-		//                     worked = PlaceRoom(corridorLight, true);
-		//                     break;
-
-		//                 case 1:
-		//                     worked = PlaceRoom(stairs, false);
-		//                     break;
-
-		//                 case 2:
-		//                     worked = PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true);
-		//                     break;
-		//             }
-
-		//             if (worked) break;
-		//             else counter++;
-
-		//             if (counter > 5) return false;
-		//         }
-		//     }
 	}
 
     private bool PlaceEndRoom()
@@ -185,10 +154,21 @@ public class RoomGenerator : MonoBehaviour
 		// Instantiate room
 		endRoom = Instantiate(endRoomPrefab) as Room;
 		endRoom.transform.parent = this.transform;
+		int attempts = 0;
+        while (true)
+        {
+			var randomDoor = endRoom.doorways[Random.Range(0, endRoom.doorways.Length)];
+			PositionRoomAtDoorway(ref endRoom, randomDoor , nextDoorway);
+			if (!CheckRoomOverlap(endRoom))
+			{
+				UpdateDoors(endRoom, randomDoor, true);
+				return true;
+			}
+			else attempts++;
 
-		PositionRoomAtDoorway(ref endRoom, endRoom.doorways[Random.Range(0,endRoom.doorways.Length)], nextDoorway);
-		if (!CheckRoomOverlap(endRoom)) return true;
-		else return false;
+			if (attempts > 10) return false;
+        }
+
 	}
 
 	void PlaceStartRoom()
@@ -238,7 +218,7 @@ public class RoomGenerator : MonoBehaviour
                 PositionRoomAtDoorway(ref currentRoom, door, nextDoorway);
 				if (!CheckRoomOverlap(currentRoom))
 				{
-					UpdateDoors(currentRoom, door);
+					UpdateDoors(currentRoom, door, false);
 					placedRooms.Add(currentRoom);
 					if (type == RoomType.MainRoom)currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
 					return true;
@@ -263,7 +243,7 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
-    private void UpdateDoors(Room currentRoom, Doorway door)
+    private void UpdateDoors(Room currentRoom, Doorway door, bool isFinal)
     {
 		bool nexDoorPicked = false;
 
@@ -271,7 +251,7 @@ public class RoomGenerator : MonoBehaviour
 		{
 			if (!GameObject.ReferenceEquals(currentDoor.gameObject, door.gameObject))
 			{
-				if (nexDoorPicked) otherDoorways.Add(currentDoor);
+				if (nexDoorPicked || isFinal) otherDoorways.Add(currentDoor);
 				else
 				{
 					nextDoorway = currentDoor;
@@ -321,10 +301,15 @@ public class RoomGenerator : MonoBehaviour
 
         // Clear lists
         placedRooms.Clear();
-        availableDoorways.Clear();
-		nextDoorway = null;
-		otherDoorways.Clear();
 		placedWalls.Clear();
+
+		availableDoorways.Clear();
+		otherDoorways.Clear();
+
+		//nextDoorway = null;
+
+
+	
 
         // Reset coroutine
         StartCoroutine("GenerateLevel");
