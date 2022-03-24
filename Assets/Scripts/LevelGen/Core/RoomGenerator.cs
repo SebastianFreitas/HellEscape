@@ -37,15 +37,15 @@ public class RoomGenerator : MonoBehaviour
 	}
 
 
-	void OnEnable()
-	{
-		if (!isGenerated)
-			StartCoroutine("GenerateLevel");
-	}
+	//void OnEnable()
+	//{
+	//	if (!isGenerated)
+	//		StartCoroutine("GenerateLevel");
+	//}
 
-	IEnumerator GenerateLevel()
+	internal IEnumerator GenerateLevel()
     {
-
+		Clean();
 		WaitForSeconds startup = new WaitForSeconds(.1f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
 

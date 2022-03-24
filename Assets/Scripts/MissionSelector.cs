@@ -52,12 +52,14 @@ public class MissionSelector : ModDataRoom
     {
         if (mission != null)
         {
+
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
             portal.SetActive(true);
             var x = portal.GetComponent<Portal>();
             x.isON = true;
             x.audioSource.PlayOneShot(x.openPortalSound);
             portal.GetComponent<VisualEffect>().enabled = true;
+            portal.GetComponent<VisualEffect>().Play();
 
             DisableSelector();
 
@@ -73,24 +75,29 @@ public class MissionSelector : ModDataRoom
     [SerializeField] internal GameObject buttons;
     private void DisableSelector()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            var child = transform.GetChild(i).gameObject;
-            if (child != null)
-                child.SetActive(false);
-        }
+        //for (int i = 0; i < transform.childCount; i++)
+        //{
+        //    var child = transform.GetChild(i).gameObject;
+        //    if (child != null)
+        //        child.SetActive(false);
+        //}
 
-        //buttons.SetActive(false);
+        StopCoroutine("SearchPath");
+        foreach (MonitorMission mis in missions)
+        {
+            mis.gameObject.SetActive(false);
+        }
+        buttons.SetActive(false);
     }
 
     internal void EnableSelector()
     {
-        for (int i = 0; i < buttons.transform.childCount; i++)
-        {
-            var child = buttons.transform.GetChild(i).gameObject;
-            if (child != null)
-                child.SetActive(true);
-        }
+        //for (int i = 0; i < buttons.transform.childCount; i++)
+        //{
+        //    var child = buttons.transform.GetChild(i).gameObject;
+        //    if (child != null)
+        //        child.SetActive(true);
+        //}
 
         buttons.SetActive(true);
 
@@ -131,7 +138,6 @@ public class MissionSelector : ModDataRoom
 
         if (beenLong)
         {
-
             used = false;
             beenLong = false;
             StartCoroutine(SearchPath());

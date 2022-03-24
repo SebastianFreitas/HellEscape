@@ -135,7 +135,7 @@ public class GameMan : ModDataRoom
         run[i] = null;
 
 
-        roomGen.gameObject.SetActive(true);
+        roomGen.StartCoroutine("GenerateLevel");
 
 
         StartCoroutine("LoadingScreen");

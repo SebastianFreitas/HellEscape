@@ -53,6 +53,7 @@ public class PlayerHpManager : MonoBehaviour
     {
         transform.parent.parent.GetComponent<GameMan>().ReturnToHub();
         hp.SetHealth((int)maxHealth);
+        health = maxHealth;
     }
 
     IEnumerator BloodScreen()

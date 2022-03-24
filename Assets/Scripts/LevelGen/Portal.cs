@@ -31,6 +31,7 @@ public class Portal : MonoBehaviour
             if (ishub)
             {
                 selector.StartSelectedMission();
+                Debug.Log("hee");
             }
             else
             {
@@ -76,6 +77,7 @@ public class Portal : MonoBehaviour
 
     void OnDisable()
     {
+        passed = false;
         Destroy(exp, exp.main.duration);
     }
 
