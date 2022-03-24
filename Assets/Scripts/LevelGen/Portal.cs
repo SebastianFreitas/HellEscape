@@ -78,7 +78,6 @@ public class Portal : MonoBehaviour
     void OnDisable()
     {
         passed = false;
-        Destroy(exp, exp.main.duration);
     }
 
 }
