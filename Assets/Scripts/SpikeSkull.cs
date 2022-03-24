@@ -19,7 +19,6 @@ public class SpikeSkull : Monster
     new void Start()
     {
         mask = LayerMask.GetMask("Enemy");
-        base.Start();
         StartCoroutine(Waiter());
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;

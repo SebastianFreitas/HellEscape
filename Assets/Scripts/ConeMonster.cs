@@ -14,7 +14,7 @@ public class ConeMonster : Monster
     private bool isRunning = false;
     new void Start()
     {
-        base.Start();
+
         //StartCoroutine(Waiter());
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;

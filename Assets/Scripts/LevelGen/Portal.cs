@@ -39,8 +39,8 @@ public class Portal : MonoBehaviour
                 room.player.GetComponent<PlayerSounds>().PlayTeleportSound();
                 room.UseDoor();
             }
-            
 
+            gameObject.SetActive(false);
         }        
     }
 

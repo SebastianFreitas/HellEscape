@@ -25,7 +25,6 @@ public class Skull : Monster
         
         var x = Random.Range(-2,3);
         rigidBody.angularVelocity = new Vector3(x,x,x);
-        base.Start();
         
 
 

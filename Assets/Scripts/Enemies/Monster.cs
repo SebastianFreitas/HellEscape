@@ -34,8 +34,9 @@ public class Monster : MonoBehaviour
 
     public DamagePopUp dmgPopUp;
     private bool died = false;
+    private bool isElite = false;
 
-    protected void Start()
+    protected void Awake()
     {
         volume = PlayerPrefs.GetFloat("Volume");
 
@@ -55,6 +56,7 @@ public class Monster : MonoBehaviour
             player.GetComponent<PlayerHpManager>().TakeDamage((int)damage);
         }
     }
+
     private bool dead = false;
 
     [SerializeField] internal bool isHub;
@@ -123,9 +125,57 @@ public class Monster : MonoBehaviour
         Destroy(gameObject);
     }
 
+    internal enum EliteType
+    {
+        Mini,
+        Big,
+        Pack,
+    }
+
+    internal void TurnElite()
+    {
+        isElite = true;
+        EliteType type = (EliteType)Random.Range(0, System.Enum.GetValues(typeof(EliteType)).Length);
+        switch (type)
+        {
+            case EliteType.Mini:
+                TurnMini();
+                break;
+
+            case EliteType.Big:
+                TurnBig();
+                break;           
+        }
+    }
+
+    private void TurnBig()
+    {
+        transform.localScale *= 2f;
+        health *= 4;
+        damage *= 2;
+    }
+
+    private void TurnMini()
+    {
+        transform.localScale *= 0.5f;
+        actionSpeed += .25f;
+    }
+    
     private void Drop()
     {
-        if (Random.Range(1f,100f) > 99f)
+        var gunparts = 1;
+        var totalDropChance = 99f;
+
+        if (isElite)
+        {
+            gunparts = 10;
+            totalDropChance -= 10;
+        }
+        player.transform.GetComponent<PlayerInventory>().UpdateGunParts(gunparts);
+
+
+
+        if (Random.Range(1f,100f) > totalDropChance)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
             x.transform.parent = transform.parent;

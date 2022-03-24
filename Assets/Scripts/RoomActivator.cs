@@ -76,7 +76,7 @@ public class RoomActivator : MonoBehaviour
     {
         spawnPos = transform.GetChild(0);
 
-        SpecialType type = (SpecialType)Random.Range(0, 5);
+        SpecialType type = (SpecialType)Random.Range(0, System.Enum.GetValues(typeof(SpecialType)).Length);
 
         switch (type)
         {
@@ -113,26 +113,34 @@ public class RoomActivator : MonoBehaviour
     private void SpawnWeapon()
     {
         Instantiate(weaponDrop, spawnPos.position, spawnPos.rotation, transform);
+        TurnLightsRed();
     }
 
     private void SpawnMaxHP()
     {
         Instantiate(healthPack, spawnPos.position, spawnPos.rotation, transform);
+        TurnLightsRed();
     }
 
     private void SpawnHeal()
     {
         Instantiate(healthPack, spawnPos.position, spawnPos.rotation, transform);
+        TurnLightsRed();
     }
 
     private void SpawnElite()
     {
-        throw new System.NotImplementedException();
+        Monster mob = Instantiate(monsters[0], spawnPos.position, spawnPos.rotation, transform) as Monster;
+        mob.TurnElite();
+        numberOfEnemies++;
+        CloseDoors();
+        ClearTrigger();
     }
 
     private void SpawnCraftingBench()
     {
         Instantiate(CraftingBench, spawnPos.position, spawnPos.rotation, transform);
+        TurnLightsRed();
     }
 
     private void SpawnEncounter(int totalMobs)
@@ -186,8 +194,13 @@ public class RoomActivator : MonoBehaviour
         if (numberOfEnemies == 0)
         {
             foreach (GameObject door in doorMesh) door.SetActive(false);
-            foreach (Light light in lightsComponent) light.color = Color.red;
+            TurnLightsRed();
         }
 
+    }
+
+    private void TurnLightsRed()
+    {
+        foreach (Light light in lightsComponent) light.color = Color.red;
     }
 }

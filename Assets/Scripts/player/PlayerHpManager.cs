@@ -51,9 +51,8 @@ public class PlayerHpManager : MonoBehaviour
 
     void Die()
     {
-        transform.parent.parent.GetComponent<GameMan>().RestartGame();
-        Destroy(gameObject);
-
+        transform.parent.parent.GetComponent<GameMan>().ReturnToHub();
+        hp.SetHealth((int)maxHealth);
     }
 
     IEnumerator BloodScreen()

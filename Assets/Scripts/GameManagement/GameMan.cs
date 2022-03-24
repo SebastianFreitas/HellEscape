@@ -66,6 +66,12 @@ public class GameMan : ModDataRoom
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
     }
 
+    internal void ReturnToHub()
+    {
+        roomGen.Clean();
+        GoToHub();
+    }
+
     internal void PreloadRun()
     {
         roomGen.gameObject.SetActive(true);

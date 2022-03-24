@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour
     private int previousEquipedGun = -1;
 
     public GameMan manager;
-    private PlayerInventory playerInventory;
+    internal PlayerInventory playerInventory;
 
     
 

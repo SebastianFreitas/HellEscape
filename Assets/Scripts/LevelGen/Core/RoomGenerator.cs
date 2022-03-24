@@ -91,6 +91,24 @@ public class RoomGenerator : MonoBehaviour
 		isGenerated = true;
 	}
 
+    internal void Clean()
+    {
+		// Delete all rooms
+		if (startRoom) Destroy(startRoom.gameObject);
+		if (endRoom) Destroy(endRoom.gameObject);
+
+
+		foreach (Room room in placedRooms) Destroy(room.gameObject);
+		foreach (var wall in placedWalls) Destroy(wall.gameObject);
+
+		// Clear lists
+		placedRooms.Clear();
+		placedWalls.Clear();
+
+		availableDoorways.Clear();
+		otherDoorways.Clear();
+	}
+
     private void FillEmptyDoors()
     {
         foreach(Doorway door in otherDoorways)
@@ -291,22 +309,9 @@ public class RoomGenerator : MonoBehaviour
 
         StopCoroutine("GenerateLevel");
 
-		// Delete all rooms
-		if (startRoom) Destroy(startRoom.gameObject);
-        if (endRoom) Destroy(endRoom.gameObject);
 
 
-        foreach (Room room in placedRooms) Destroy(room.gameObject);
-		foreach (var wall in placedWalls) Destroy(wall.gameObject);
-
-        // Clear lists
-        placedRooms.Clear();
-		placedWalls.Clear();
-
-		availableDoorways.Clear();
-		otherDoorways.Clear();
-
-		//nextDoorway = null;
+		Clean();
 
 
 	
