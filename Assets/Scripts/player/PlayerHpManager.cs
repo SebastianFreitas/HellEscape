@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerHpManager : MonoBehaviour
 {
     public float health = 50;
+    public float maxHealth = 50;
     public HealthBar hp;
     private bool canTakeDamage = true;
     public PlayerSounds playerSounds;
@@ -15,13 +16,14 @@ public class PlayerHpManager : MonoBehaviour
     void Start()
     {
         //hp = GameObject.FindGameObjectsWithTag("HealthBar")[0].transform.GetComponent<HealthBar>();
-        hp.SetMaxHealth((int)health);
+        hp.SetMaxHealth((int)maxHealth);
     }
 
     private void OnEnable()
     {
         StartCoroutine(waiterImmunity());
     }
+
     public void TakeDamage(float amount)
     {
         if (canTakeDamage)
@@ -38,6 +40,13 @@ public class PlayerHpManager : MonoBehaviour
 
             }
         }
+    }
+
+    internal void Heal(float amount)
+    {
+        var result = health + amount;
+        if (result > maxHealth) hp.SetHealth((int)maxHealth);
+        else hp.SetHealth((int)result);
     }
 
     void Die()

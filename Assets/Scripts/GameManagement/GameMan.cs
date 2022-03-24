@@ -154,11 +154,13 @@ public class GameMan : ModDataRoom
 
     public IEnumerator LoadingScreen()
     {
+        player.gameObject.SetActive(false);
         while (true)
         {
             yield return new WaitForSecondsRealtime(3f);
             if (roomGen.isGenerated)
             {
+                player.gameObject.SetActive(true);
                 PlacePlayerInCurrentRoom();
                 break;
             }

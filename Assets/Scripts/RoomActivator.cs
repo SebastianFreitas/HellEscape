@@ -8,6 +8,10 @@ public class RoomActivator : MonoBehaviour
     [SerializeField] Monster[] monsters;
     [SerializeField] GameObject lights;
 
+    [SerializeField] GameObject healthPack;
+    [SerializeField] GameObject CraftingBench;
+    [SerializeField] GameObject weaponDrop;
+
     internal Transform spawnPos;
 
     internal int numberOfEnemies = 0;
@@ -26,7 +30,8 @@ public class RoomActivator : MonoBehaviour
         Crafting,
         Heal,
         MaxHP,
-        Elite
+        Elite,
+        weapon,
     }
 
     internal RoomType roomType;
@@ -69,7 +74,65 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnSpecial()
     {
+        spawnPos = transform.GetChild(0);
+
+        SpecialType type = (SpecialType)Random.Range(0, 5);
+
+        switch (type)
+        {
+            case SpecialType.Crafting:
+                {
+                    SpawnCraftingBench();
+                    break;
+                }
+
+            case SpecialType.Elite:
+                {
+                    SpawnElite();
+                    break;
+                }
+
+            case SpecialType.Heal:
+                {
+                    SpawnHeal();
+                    break;
+                }
+            case SpecialType.MaxHP:
+                {
+                    SpawnMaxHP();
+                    break;
+                }
+            case SpecialType.weapon:
+                {
+                    SpawnWeapon();
+                    break;
+                }
+        }
+    }
+
+    private void SpawnWeapon()
+    {
+        Instantiate(weaponDrop, spawnPos.position, spawnPos.rotation, transform);
+    }
+
+    private void SpawnMaxHP()
+    {
+        Instantiate(healthPack, spawnPos.position, spawnPos.rotation, transform);
+    }
+
+    private void SpawnHeal()
+    {
+        Instantiate(healthPack, spawnPos.position, spawnPos.rotation, transform);
+    }
+
+    private void SpawnElite()
+    {
         throw new System.NotImplementedException();
+    }
+
+    private void SpawnCraftingBench()
+    {
+        Instantiate(CraftingBench, spawnPos.position, spawnPos.rotation, transform);
     }
 
     private void SpawnEncounter(int totalMobs)
