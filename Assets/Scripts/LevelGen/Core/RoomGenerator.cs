@@ -58,7 +58,7 @@ public class RoomGenerator : MonoBehaviour
 		//place pathway
 		for (int i = 1; i <=50; i++)
 		{
-			yield return startup;
+
 			int a = 0;
             while (true)
             {
@@ -79,10 +79,10 @@ public class RoomGenerator : MonoBehaviour
 
 		}
 
-		yield return startup;
+
 		//finish the level
 		PlaceCorridor(20);
-		yield return startup;
+
 		if (!PlaceEndRoom()) ResetLevelGenerator(); 
 
 		//fill the rest of the level
@@ -107,6 +107,8 @@ public class RoomGenerator : MonoBehaviour
 
 		availableDoorways.Clear();
 		otherDoorways.Clear();
+
+		isGenerated = false;
 	}
 
     private void FillEmptyDoors()

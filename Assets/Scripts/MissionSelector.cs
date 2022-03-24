@@ -70,7 +70,7 @@ public class MissionSelector : ModDataRoom
             StartCoroutine(ErrorWaiter(meshEngagePath));
         }
     }
-
+    [SerializeField] internal GameObject buttons;
     private void DisableSelector()
     {
         for (int i = 0; i < transform.childCount; i++)
@@ -80,6 +80,22 @@ public class MissionSelector : ModDataRoom
                 child.SetActive(false);
         }
 
+        //buttons.SetActive(false);
+    }
+
+    internal void EnableSelector()
+    {
+        for (int i = 0; i < buttons.transform.childCount; i++)
+        {
+            var child = buttons.transform.GetChild(i).gameObject;
+            if (child != null)
+                child.SetActive(true);
+        }
+
+        buttons.SetActive(true);
+
+        used = false;
+        TurnGreen(meshSearchPath);
     }
 
     internal void StartSelectedMission()
@@ -145,7 +161,9 @@ public class MissionSelector : ModDataRoom
 
                 mis.gameObject.SetActive(false);
             }
+
             yield return new WaitForSecondsRealtime(1f);
+
             foreach (MonitorMission mis in missions)
             {
                 var cantFind = true;
