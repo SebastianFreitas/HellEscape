@@ -24,15 +24,15 @@ public class RoomActivator : MonoBehaviour
         Boss,
         Encounter,
         Special,
+        Main,
     }
 
     internal enum AreaType
     {
         Red,
         Blue,
- 
     }
-    internal AreaType influcence = AreaType.Blue;
+
     internal enum SpecialType
     {
         Crafting,
@@ -42,7 +42,18 @@ public class RoomActivator : MonoBehaviour
         weapon,
     }
 
+    internal enum MainType
+    {
+        Shop,
+        choiceSpecial,
+        itemOrDrop,
+        redOrBlue,
+        switchInfluence,
+    }
+
     internal RoomType roomType;
+    internal MainType mainType;
+    internal AreaType influcence = AreaType.Blue;
 
     internal ModDataRoom.GeneratedMission mission;
     private void Start()
@@ -77,8 +88,18 @@ public class RoomActivator : MonoBehaviour
                     SpawnSpecial();
                     break;
                 }
+                case RoomType.Main:
+                {
+                    SpawnMain();
+                    break;
+                }
             }
         }
+    }
+
+    private void SpawnMain()
+    {
+        throw new System.NotImplementedException();
     }
 
     private void SpawnSpecial()

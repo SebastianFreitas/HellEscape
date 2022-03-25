@@ -69,6 +69,7 @@ public class GeneratedGuns : MonoBehaviour
     {
         int i = 0;
         slots = craftingTable.playerInventory.inventoryUI.slots;
+           
         foreach (SelectGun selectX in generatedGuns)
         {
             var currentGun = slots[i].GetComponent<Slot>().gun;

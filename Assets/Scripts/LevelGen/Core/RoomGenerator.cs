@@ -20,6 +20,7 @@ public class RoomGenerator : MonoBehaviour
 	StartRoom startRoom;
 	Room endRoom;
 	internal List<Room> placedRooms = new List<Room>();
+	internal List<Room> placedSideRooms = new List<Room>();
 	internal List<Room> placedWalls = new List<Room>();
 	internal Vector3 currentStartPos;
 
@@ -125,52 +126,69 @@ public class RoomGenerator : MonoBehaviour
     {
         foreach(Doorway door in otherDoorways)
         {
-			var x = Random.Range(1, 3);
-
-			if (x == 2)
+			while (true)
 			{
-				var wallRoom = Instantiate(wall) as Room;
-				wallRoom.transform.parent = this.transform;
-				placedWalls.Add(wallRoom);
+				var current = sideRooms[Random.Range(0, sideRooms.Count)];
 
-				PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
-			}
-			else
-            {
-				while (true)
+				// Instantiate room
+				var room = Instantiate(current) as Room;
+				room.transform.parent = this.transform;
+
+				PositionRoomAtDoorway(ref room, room.doorways[0], door);
+
+				if (CheckRoomOverlap(room))
 				{
-					var current = sideRooms[Random.Range(0, sideRooms.Count)];
+					var wallRoom = Instantiate(wall) as Room;
+					wallRoom.transform.parent = this.transform;
+					placedWalls.Add(wallRoom);
 
-					// Instantiate room
-					var room = Instantiate(current) as Room;
-					room.transform.parent = this.transform;
+					PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
 
-					PositionRoomAtDoorway(ref room, room.doorways[0], door);
-
-					if (CheckRoomOverlap(room))
-					{
-						var wallRoom = Instantiate(wall) as Room;
-						wallRoom.transform.parent = this.transform;
-						placedWalls.Add(wallRoom);
-
-						PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
-
-						Destroy(room.gameObject);
-						break;
-					}
-					else
-					{
-						placedRooms.Add(room);
-
-						var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
-						if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
-						else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
-						
-						break;
-					}
+					Destroy(room.gameObject);
+					break;
 				}
-            }
+				else
+				{
+					placedRooms.Add(room);
+					placedSideRooms.Add(room);
+
+					var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
+					if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
+					else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
+
+					break;
+				}
+			}
 		}
+		List<int> done = new List<int>();
+		int i = 0;
+        while (true)
+        {
+			var rando = Random.Range(0, placedSideRooms.Count);
+			if (!done.Contains(rando))
+            {
+				done.Add(rando);
+				i++;
+				if (ChangeToNextMain(placedSideRooms[rando])) break;
+            }
+        }
+
+    }
+
+	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.redOrBlue, RoomActivator.MainType.Shop, RoomActivator.MainType.switchInfluence };
+	private int mainCounter = 0;
+    private bool ChangeToNextMain(Room room)
+    {
+		room.GetComponentInChildren<RoomActivator>().mainType = mainTypeList[mainCounter];
+		room.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Main;
+		mainCounter++;
+
+		if (mainCounter >= System.Enum.GetValues(typeof(RoomActivator.MainType)).Length - 1)
+		{
+			mainCounter = 0;
+			return true;
+		}
+		else return false;
     }
 
     private bool PlaceCorridor(int length)

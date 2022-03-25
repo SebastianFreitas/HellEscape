@@ -56,11 +56,10 @@ public class CraftingDevice : GunGenerator
     void Start()
     {
         if (portalOnline || isHub) offline.SetActive(true);
-        if (!isHub)
-        {
-            player = GameObject.FindGameObjectsWithTag("Dude")[0];
-            playerInventory = player.GetComponent<PlayerInventory>();
-        }
+
+        player = GameObject.FindGameObjectsWithTag("Dude")[0];
+        playerInventory = player.GetComponent<PlayerInventory>();
+        
 
         gun = CreateWeaponEmpty();
 
@@ -70,11 +69,15 @@ public class CraftingDevice : GunGenerator
 
     internal void DestroyGun()
     {
-        playerInventory.DestroyGun(this.gun);
+        if (playerInventory.GetGeneratedGunsLength()+playerInventory.GetLayoutLength() != 1)
+        {
+            playerInventory.DestroyGun(this.gun);
 
-        slotGuns.GetGunLayout();
-        slotGuns.GetGeneratedGuns();
-        slotGuns.SelectRandomGun();
+            slotGuns.GetGunLayout();
+            slotGuns.GetGeneratedGuns();
+            slotGuns.SelectRandomGun();
+        }
+
     }
 
     internal bool GenerateGun()
