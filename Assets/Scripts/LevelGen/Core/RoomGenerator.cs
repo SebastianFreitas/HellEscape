@@ -37,14 +37,14 @@ public class RoomGenerator : MonoBehaviour
 	}
 
 
-	//void OnEnable()
-	//{
-	//	if (!isGenerated)
-	//		StartCoroutine("GenerateLevel");
-	//}
+    //void OnEnable()
+    //{
+    //	if (!isGenerated)
+    //		StartCoroutine("GenerateLevel");
+    //}
 
-	internal IEnumerator GenerateLevel()
-    {
+    internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
+	{
 		Clean();
 		WaitForSeconds startup = new WaitForSeconds(.1f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
@@ -56,7 +56,7 @@ public class RoomGenerator : MonoBehaviour
 
 
 		//place pathway
-		for (int i = 1; i <=50; i++)
+		for (int i = 1; i <=20+mission.aditionalLength; i++)
 		{
 
 			int a = 0;
@@ -87,10 +87,20 @@ public class RoomGenerator : MonoBehaviour
 
 		//fill the rest of the level
 		FillEmptyDoors();
-
+		ConnectRoomActivator();
 		isGenerated = true;
 	}
-
+	void ConnectRoomActivator()
+    {
+		foreach(Room room in placedRooms)
+        {
+			var x = room.gameObject.GetComponentInChildren<RoomActivator>();
+            if (x)
+            {
+				x.mission = mission;
+            }
+        }
+    }
     internal void Clean()
     {
 		// Delete all rooms
@@ -152,8 +162,8 @@ public class RoomGenerator : MonoBehaviour
 					{
 						placedRooms.Add(room);
 
-						var y = Random.Range(1,21);
-						if (y >15) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
+						var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
+						if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
 						else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
 						
 						break;
@@ -191,7 +201,15 @@ public class RoomGenerator : MonoBehaviour
 
 	}
 
-	void PlaceStartRoom()
+	private ModDataRoom.GeneratedMission mission;
+
+	internal void StartRun(ModDataRoom.GeneratedMission mis)
+    {
+		mission = mis;
+		StartCoroutine(GenerateLevel()); 
+    }
+
+    void PlaceStartRoom()
 	{
 		// Instantiate room
 		startRoom = Instantiate(startRoomPrefab) as StartRoom;

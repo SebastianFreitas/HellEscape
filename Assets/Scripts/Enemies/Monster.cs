@@ -35,7 +35,8 @@ public class Monster : MonoBehaviour
     public DamagePopUp dmgPopUp;
     private bool died = false;
     private bool isElite = false;
-
+    internal RoomActivator roomActivator;
+    internal ModDataRoom.GeneratedMission mission;
     protected void Awake()
     {
         volume = PlayerPrefs.GetFloat("Volume");
@@ -45,6 +46,11 @@ public class Monster : MonoBehaviour
 
         if (player == null) player = GameObject.FindGameObjectsWithTag("Dude")[0];
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
+        roomActivator = transform.GetComponentInParent<RoomActivator>();
+        mission = roomActivator.mission;
+
+        var eliteChance = 5 + mission.increasedChanceElite;
+        if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
     }
 
     void Update(){
@@ -118,7 +124,7 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
         if (!died)
         {
-            transform.GetComponentInParent<RoomActivator>().IsEncounterDone();
+            roomActivator.IsEncounterDone();
             Drop();
         }
         died = true;
@@ -164,7 +170,8 @@ public class Monster : MonoBehaviour
     private void Drop()
     {
         var gunparts = 1;
-        var totalDropChance = 99f;
+        var totalDropChance = 1f;
+        totalDropChance *= 1 + (((float)mission.increasedMonsterDrops*3)/100);
 
         if (isElite)
         {
@@ -175,7 +182,7 @@ public class Monster : MonoBehaviour
 
 
 
-        if (Random.Range(1f,100f) > totalDropChance)
+        if (Random.Range(1f,100f) > 100-totalDropChance)
         {
            GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
             x.transform.parent = transform.parent;

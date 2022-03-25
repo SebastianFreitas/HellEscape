@@ -81,9 +81,17 @@ public class GameMan : ModDataRoom
     private void GoToHub()
     {
         hub.gameObject.SetActive(true);
+
+        player.GetComponentInChildren<MouseLook>().enabled = false;
+        player.GetComponent<PlayerBasicMovement>().enabled = false;
         player.GetComponent<CharacterController>().enabled = false;
+
         player.transform.position = hub.statspos.position;
+        player.transform.rotation = hub.statspos.rotation;
+
         player.GetComponent<CharacterController>().enabled = true;
+        player.GetComponentInChildren<MouseLook>().enabled = true;
+        player.GetComponent<PlayerBasicMovement>().enabled = true;
 
         currentStartPos = hub.statspos.position;
     }
@@ -109,6 +117,7 @@ public class GameMan : ModDataRoom
         //teleport player to new room
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = roomGen.currentStartPos;
+
         player.GetComponent<CharacterController>().enabled = true;
 
         currentStartPos = roomGen.currentStartPos;
@@ -135,8 +144,8 @@ public class GameMan : ModDataRoom
         run[i] = null;
 
 
-        roomGen.StartCoroutine("GenerateLevel");
-
+        //roomGen.StartCoroutine("GenerateLevel");
+        roomGen.StartRun(mis);
 
         StartCoroutine("LoadingScreen");
         

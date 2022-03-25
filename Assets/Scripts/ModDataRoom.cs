@@ -40,7 +40,7 @@ public class ModDataRoom : MonoBehaviour
         new Mod[]{
 
                 new Mod(1,5,   "Area Level",                Grade.interior, OperatorType.plus,    80,4),
-                new Mod(1,5,   "Mission Length",            Grade.interior, OperatorType.plus,    50,5),
+                new Mod(1,25,   "Mission Length",            Grade.interior, OperatorType.plus,    10,5),
                 new Mod(1,5,   "??1?11",                    Grade.interior, OperatorType.non,     2,6), //bloodline, mobs that are not skulls have a chance of spawning 2 skulls
                 new Mod(1,5,   "Double Trash",              Grade.interior, OperatorType.non,     50,7), //Double the trash
                 new Mod(1,5,   "Explosive Trash",           Grade.interior, OperatorType.non,     20,8), //Trash has a chance to become explosive 
@@ -104,11 +104,12 @@ public class ModDataRoom : MonoBehaviour
     }
     internal string GetMissionGood(GeneratedMission result)
     {
+        result.createPositives();
         string text = "";
-        text += result.distance + " units away" + "\n";
-        text += result.increasedChanceElite + "% elite chance" + "\n";
-        text += result.increasedChanceSpecialRooms + "% special room chance" + "\n";
-        text += result.increasedMonsterDrops + "% weapon drop chance" + "\n\n";
+        text += result.distance + " Units Located" + "\n";
+        text += result.increasedChanceElite + 5+ "% elite chance" + "\n";
+        text += result.increasedChanceSpecialRooms+ 25 + "% special room chance" + "\n";
+        text += (float)(1 + (((float)result.increasedMonsterDrops * 3) / 100)) + "% weapon drop chance" + "\n\n";
         return text;
     }
 
@@ -268,16 +269,16 @@ public class ModDataRoom : MonoBehaviour
         public int level = 0;
 
         public HashSet<Mod> mods = new HashSet<Mod>();
-        public string       text = "";
-        public string badText = "";
-        public string goodText = "";
+        public string text      = "";
+        public string badText   = "";
+        public string goodText  = "";
 
         public void createPositives()
         {
-            var result = mods.Count * 2;
+            var result = mods.Count * 2 +Random.Range(1,mods.Count*2);
             increasedMonsterDrops       = result;
-            increasedChanceElite        = result;
-            increasedChanceSpecialRooms = result;
+            increasedChanceElite        = mods.Count + Random.Range(1, mods.Count);
+            increasedChanceSpecialRooms = mods.Count * 2 + Random.Range(1, mods.Count * 4);
 
         }
     }

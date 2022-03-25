@@ -176,7 +176,7 @@ public class MissionSelector : ModDataRoom
                 while (cantFind)
                 {
                     if (totalChance <= 0) break;
-                    if (Random.Range(1, 20) > 13)//13
+                    if (Random.Range(1, 20) > 10)//13
                     {
 
                         mis.gameObject.SetActive(true);

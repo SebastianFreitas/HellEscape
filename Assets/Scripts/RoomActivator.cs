@@ -36,6 +36,7 @@ public class RoomActivator : MonoBehaviour
 
     internal RoomType roomType;
 
+    internal ModDataRoom.GeneratedMission mission;
     private void Start()
     {
         lightsComponent = lights.GetComponentsInChildren<Light>();
@@ -112,6 +113,7 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnWeapon()
     {
+
         Instantiate(weaponDrop, spawnPos.position, spawnPos.rotation, transform);
         TurnLightsRed();
     }
@@ -131,6 +133,8 @@ public class RoomActivator : MonoBehaviour
     private void SpawnElite()
     {
         Monster mob = Instantiate(monsters[0], spawnPos.position, spawnPos.rotation, transform) as Monster;
+        mob.TurnElite();
+        mob = Instantiate(monsters[0], spawnPos.position, spawnPos.rotation, transform) as Monster;
         mob.TurnElite();
         numberOfEnemies++;
         CloseDoors();

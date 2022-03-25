@@ -35,6 +35,8 @@ public class Room : MonoBehaviour
     private bool m_Started;
 
 
+    internal ModDataRoom.GeneratedMission mis;
+
     private void Start()
     {
         m_Started = true;
