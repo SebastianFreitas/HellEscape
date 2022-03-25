@@ -5,7 +5,8 @@ using UnityEngine;
 public class RoomActivator : MonoBehaviour
 {
     [SerializeField] GameObject[] doorMesh;
-    [SerializeField] Monster[] monsters;
+    [SerializeField] Monster[] monstersRed;
+    [SerializeField] Monster[] monstersBlue;
     [SerializeField] GameObject lights;
 
     [SerializeField] GameObject healthPack;
@@ -25,6 +26,13 @@ public class RoomActivator : MonoBehaviour
         Special,
     }
 
+    internal enum AreaType
+    {
+        Red,
+        Blue,
+ 
+    }
+    internal AreaType influcence = AreaType.Blue;
     internal enum SpecialType
     {
         Crafting,
@@ -110,7 +118,22 @@ public class RoomActivator : MonoBehaviour
                 }
         }
     }
+    private Monster SpawnByInfluence(Vector3 position, Quaternion rotation)
+    {
+        Monster currentMob;
+        switch (influcence)
+        {
+            case AreaType.Blue:
+                currentMob = Instantiate(monstersBlue[0], position, rotation, transform);
+                return currentMob;
 
+            case AreaType.Red:
+                currentMob = Instantiate(monstersRed[0], position, rotation, transform);
+                return currentMob;
+        }
+        currentMob = Instantiate(monstersRed[0], position, rotation, transform);
+        return currentMob;
+    }
     private void SpawnWeapon()
     {
 
@@ -132,9 +155,9 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnElite()
     {
-        Monster mob = Instantiate(monsters[0], spawnPos.position, spawnPos.rotation, transform) as Monster;
+        Monster mob = SpawnByInfluence(spawnPos.position,spawnPos.rotation);
         mob.TurnElite();
-        mob = Instantiate(monsters[0], spawnPos.position, spawnPos.rotation, transform) as Monster;
+        mob = SpawnByInfluence(spawnPos.position, spawnPos.rotation);
         mob.TurnElite();
         numberOfEnemies++;
         CloseDoors();
@@ -154,7 +177,7 @@ public class RoomActivator : MonoBehaviour
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
             Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds);
-            Instantiate(monsters[0], randomPoint, Quaternion.identity, transform);
+            SpawnByInfluence(randomPoint, Quaternion.identity);
             numberOfEnemies++;
         }
 
@@ -164,7 +187,7 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnBoss()
     {
-        Instantiate(monsters[0], spawnPos.position, spawnPos.rotation, transform);
+        SpawnByInfluence(spawnPos.position, Quaternion.identity);
         numberOfEnemies++;
         CloseDoors();
         ClearTrigger();
@@ -205,6 +228,16 @@ public class RoomActivator : MonoBehaviour
 
     private void TurnLightsRed()
     {
-        foreach (Light light in lightsComponent) light.color = Color.red;
+
+        switch (influcence)
+        {
+            case AreaType.Blue:
+                foreach (Light light in lightsComponent) light.color = Color.blue;
+                break;
+
+            case AreaType.Red:
+                foreach (Light light in lightsComponent) light.color = Color.red;
+                break;
+        }
     }
 }
