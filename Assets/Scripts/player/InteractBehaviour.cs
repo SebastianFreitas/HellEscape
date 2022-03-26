@@ -131,6 +131,26 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponentInParent<MonsterSpawber>().Error();
                 }
+                else if (hit.transform.CompareTag("VoidBoon"))
+                {
+                    hit.collider.transform.GetComponentInParent<ItemRoom>().GenerateBoon();
+                }
+                else if (hit.transform.CompareTag("WeaponDrop"))
+                {
+                    hit.collider.transform.GetComponentInParent<ItemRoom>().DropWeapon();
+                }
+                else if (hit.transform.CompareTag("HealDrop"))
+                {
+                    hit.collider.transform.GetComponentInParent<ItemRoom>().DropHeal();
+                }
+                else if (hit.transform.CompareTag("YesVoid"))
+                {
+                    hit.collider.transform.GetComponentInParent<BoonDrop>().Accept();
+                }
+                else if (hit.transform.CompareTag("DenyVoid"))
+                {
+                    hit.collider.transform.GetComponentInParent<BoonDrop>().Deny();
+                }
                 else
                 {
                     Debug.Log(hit.transform.tag);

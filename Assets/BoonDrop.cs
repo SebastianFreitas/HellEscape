@@ -1,0 +1,31 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BoonDrop : MonoBehaviour
+{
+    private VoidBoon boon;
+    public TMPro.TextMeshPro text;
+
+    private void Awake()
+    {
+        boon = new VoidBoon();
+        boon.player = GameObject.FindGameObjectsWithTag("Dude")[0];
+        boon.playerHP = boon.player.GetComponent<PlayerHpManager>();
+        boon.playerInv = boon.player.GetComponent<PlayerInventory>();
+        boon.playerMov = boon.player.GetComponent<PlayerBasicMovement>();
+
+        text.text = boon.text;
+    }
+
+    internal void Accept()
+    {
+        boon.AcceptBoon();
+    }
+
+    internal void Deny()
+    {
+        boon.playerHP.TakeDamage(5);
+        gameObject.SetActive(false);
+    }
+}

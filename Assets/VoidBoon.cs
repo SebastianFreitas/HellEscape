@@ -1,8 +1,53 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 internal class VoidBoon
 {
     internal BoonType influence;
+    internal BoonName name;
+
+    internal string text;
+
+    internal List<(int, BoonName)> boonListWeight = new List<(int, BoonName)>();
+
+    internal List<(string, BoonName)> boonListText = new List<(string, BoonName)>();
+    internal VoidBoon()
+    {
+        GetBoonListWeight();
+
+        GetBoonListText();
+
+        List<BoonName> weightList = GetWeightList(boonListWeight);
+        name = weightList[Random.Range(0, weightList.Count)];
+
+        foreach(var current in boonListText)
+        {
+            if (current.Item2 == name) text = current.Item1;
+        }
+    }
+
+    private void GetBoonListText()
+    {
+        boonListWeight.Add((100, BoonName.Greed));
+        boonListWeight.Add((100, BoonName.MaxHp1));
+    }
+
+    private void GetBoonListWeight()
+    {
+        boonListText.Add(("Lose 50% of you max hp \n deal +10 fire damage", BoonName.Greed));
+        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
+    }
+
+    private List<BoonName> GetWeightList(List<(int, BoonName)> boonList)
+    {
+        List<BoonName> weightList = new List<BoonName>();
+        foreach(var current in boonList)
+        {
+            for (int i = 0; i < current.Item1; i++) weightList.Add(current.Item2);
+        }
+        return weightList;
+    }
 
     internal enum BoonType
     {
@@ -10,9 +55,10 @@ internal class VoidBoon
         Red
     }
 
-    internal enum tags
+    internal enum BoonName
     {
-        movement
+        MaxHp1,
+        Greed
     }
 
     internal PlayerBasicMovement playerMov;
@@ -20,23 +66,32 @@ internal class VoidBoon
     internal PlayerInventory playerInv;
     internal GameObject player;
 
-    private void Awake()
+    internal void AcceptBoon()
     {
-        player = GameObject.FindGameObjectsWithTag("Dude")[0];
-        playerHP = player.GetComponent<PlayerHpManager>();
-        playerInv = player.GetComponent<PlayerInventory>();
-        playerMov = player.GetComponent<PlayerBasicMovement>();
+        switch (name)
+        {
+            case BoonName.MaxHp1:
+                Maxhp1();
+                break;
+
+            case BoonName.Greed:
+                Greed();
+                break;
+        }
+
     }
 
     internal void Maxhp1()
     {
+        text = "Gain 10 Max health";
         playerHP.ChangeMaxHP(10);
     }
 
     //red
     internal void Greed()
     {
-        //Lose 50% of you max hp
-        //deal +10 fire damage
+        text = "Lose 50% of you max hp \n deal +10 fire damage";
+        //
+        //
     }
 }
