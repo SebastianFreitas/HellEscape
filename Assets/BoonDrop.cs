@@ -20,7 +20,8 @@ public class BoonDrop : MonoBehaviour
 
     internal void Accept()
     {
-        boon.AcceptBoon();
+        boon.AcceptOrRemoveBoon(true);
+        gameObject.SetActive(false);
     }
 
     internal void Deny()

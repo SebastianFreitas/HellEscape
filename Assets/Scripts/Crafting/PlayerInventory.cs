@@ -11,6 +11,15 @@ public class PlayerInventory : MonoBehaviour
 
     public Gun playerGun;
 
+    internal List<VoidBoon> listBoons = new List<VoidBoon>();
+
+    internal void LooseBoons()
+    {
+        foreach(var current in listBoons.ToArray())
+        {
+            current.AcceptOrRemoveBoon(false);
+        }
+    }
 
     internal void DisassembleGun(GunOfAType gun)
     {

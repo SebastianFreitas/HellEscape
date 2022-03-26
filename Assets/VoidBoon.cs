@@ -29,7 +29,7 @@ internal class VoidBoon
 
     private void GetBoonListText()
     {
-        boonListWeight.Add((100, BoonName.Greed));
+        boonListWeight.Add((1, BoonName.Greed));
         boonListWeight.Add((100, BoonName.MaxHp1));
     }
 
@@ -66,12 +66,12 @@ internal class VoidBoon
     internal PlayerInventory playerInv;
     internal GameObject player;
 
-    internal void AcceptBoon()
+    internal void AcceptOrRemoveBoon(bool gain)
     {
         switch (name)
         {
             case BoonName.MaxHp1:
-                Maxhp1();
+                Maxhp1(gain);
                 break;
 
             case BoonName.Greed:
@@ -81,10 +81,19 @@ internal class VoidBoon
 
     }
 
-    internal void Maxhp1()
+    internal void Maxhp1(bool gain)
     {
-        text = "Gain 10 Max health";
-        playerHP.ChangeMaxHP(10);
+        if (gain)
+        {
+            playerHP.ChangeMaxHP(10);
+            playerInv.listBoons.Add(this);
+        } 
+        else
+        {
+            playerHP.ChangeMaxHP(-10);
+            playerInv.listBoons.Remove(this);
+        }
+
     }
 
     //red
