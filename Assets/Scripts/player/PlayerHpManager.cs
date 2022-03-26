@@ -49,6 +49,11 @@ public class PlayerHpManager : MonoBehaviour
         else hp.SetHealth((int)result);
     }
 
+    internal void ChangeMaxHP(int amount)
+    {
+        hp.SetMaxHealth((int)maxHealth+amount);
+    }
+
     void Die()
     {
         transform.parent.parent.GetComponent<GameMan>().ReturnToHub();

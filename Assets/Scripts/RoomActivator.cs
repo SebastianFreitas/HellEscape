@@ -99,7 +99,28 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnMain()
     {
-        throw new System.NotImplementedException();
+        switch (mainType)
+        {
+            case MainType.choiceSpecial:
+
+                break;
+
+            case MainType.itemOrDrop:
+
+                break;
+
+            case MainType.redOrBlue:
+
+                break;
+
+            case MainType.Shop:
+
+                break;
+
+            case MainType.switchInfluence:
+
+                break;
+        }
     }
 
     private void SpawnSpecial()
