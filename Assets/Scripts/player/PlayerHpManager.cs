@@ -39,6 +39,8 @@ public class PlayerHpManager : MonoBehaviour
                 Die();
 
             }
+
+           // if (health <= maxHealth * .3f) hp.ChangeToRed();
         }
     }
 
@@ -47,6 +49,8 @@ public class PlayerHpManager : MonoBehaviour
         var result = health + amount;
         if (result > maxHealth) hp.SetHealth((int)maxHealth);
         else hp.SetHealth((int)result);
+
+        //if (health > maxHealth * .3f) hp.ChangeToGreen();
     }
 
     internal void ChangeMaxHP(int amount)
