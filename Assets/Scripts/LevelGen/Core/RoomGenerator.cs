@@ -277,6 +277,11 @@ public class RoomGenerator : MonoBehaviour
 					UpdateDoors(currentRoom, door, false);
 					placedRooms.Add(currentRoom);
 					if (type == RoomType.MainRoom)currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
+					else if (type == RoomType.Corridor )
+					{
+						if(currentRoom.transform.GetComponentInChildren<RoomActivator>() !=null)
+							currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Corridor;
+					}
 					return true;
 				}
 			}

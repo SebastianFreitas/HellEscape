@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &49858317158385134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1463817076792928352}
+  m_Layer: 8
+  m_Name: lights
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1463817076792928352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 49858317158385134}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 184123909261016908}
+  m_Father: {fileID: 3210869372305773174}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &231761967458663559
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,8 +764,9 @@ Transform:
   - {fileID: 4408295456365046605}
   - {fileID: 8438380941545387781}
   - {fileID: 226280021119960986}
-  - {fileID: 184123909261016908}
   - {fileID: 1209178869103522094}
+  - {fileID: 2247562084293927631}
+  - {fileID: 1463817076792928352}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -753,7 +785,6 @@ MonoBehaviour:
   doorways:
   - {fileID: 6946628339042827301}
   - {fileID: 2630396425883998051}
-  playerStart: {fileID: 0}
 --- !u!1 &3956288447019695946
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +991,70 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6770688423854141432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2247562084293927631}
+  - component: {fileID: 6010374513167553916}
+  - component: {fileID: 1787922725232417906}
+  m_Layer: 0
+  m_Name: Roomactivator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2247562084293927631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770688423854141432}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.9698524, y: 4.482566, z: -3.0056992}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3210869372305773174}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6010374513167553916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770688423854141432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0a3de63b887e834da1a752b6038b45f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorMesh: []
+  monstersRed: []
+  monstersBlue: []
+  lights: {fileID: 49858317158385134}
+  healthPack: {fileID: 0}
+  CraftingBench: {fileID: 0}
+  weaponDrop: {fileID: 0}
+--- !u!65 &1787922725232417906
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6770688423854141432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 11.198714, y: 5.21697, z: 11.207308}
+  m_Center: {x: -2.943194, y: -2.3697984, z: 3.1315737}
 --- !u!1 &7887181710296664976
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,7 +1230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7085321840897747813, guid: c30f974f0832638438662167d11bfec1, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7085321840897747813, guid: c30f974f0832638438662167d11bfec1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1189,7 +1284,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 3210869372305773174}
+    m_TransformParent: {fileID: 1463817076792928352}
     m_Modifications:
     - target: {fileID: 8614009225601551454, guid: aa24b688afd24ce4b9b224dd2f8970f6, type: 3}
       propertyPath: m_Name
@@ -1197,11 +1292,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8614009225601551455, guid: aa24b688afd24ce4b9b224dd2f8970f6, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8614009225601551455, guid: aa24b688afd24ce4b9b224dd2f8970f6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.08999999
+      value: 0.08999998
       objectReference: {fileID: 0}
     - target: {fileID: 8614009225601551455, guid: aa24b688afd24ce4b9b224dd2f8970f6, type: 3}
       propertyPath: m_LocalPosition.x

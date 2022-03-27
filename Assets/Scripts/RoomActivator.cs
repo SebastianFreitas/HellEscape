@@ -25,6 +25,7 @@ public class RoomActivator : MonoBehaviour
         Encounter,
         Special,
         Main,
+        Corridor,
     }
 
     internal enum AreaType
@@ -91,6 +92,11 @@ public class RoomActivator : MonoBehaviour
                 case RoomType.Main:
                 {
                     SpawnMain();
+                    break;
+                }
+                case RoomType.Corridor:
+                {
+                    TurnLightsRed();
                     break;
                 }
             }

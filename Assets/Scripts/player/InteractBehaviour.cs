@@ -151,6 +151,14 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponentInParent<BoonDrop>().Deny();
                 }
+                else if (hit.transform.CompareTag("Blue"))
+                {
+                    hit.collider.transform.GetComponentInParent<InfluenceRoom>().TurnBlue();
+                }
+                else if (hit.transform.CompareTag("Red"))
+                {
+                    hit.collider.transform.GetComponentInParent<InfluenceRoom>().TurnRed();
+                }
                 else
                 {
                     Debug.Log(hit.transform.tag);
