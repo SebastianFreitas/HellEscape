@@ -29,14 +29,15 @@ internal class VoidBoon
 
     private void GetBoonListText()
     {
-        boonListWeight.Add((1, BoonName.Greed));
-        boonListWeight.Add((100, BoonName.MaxHp1));
+        boonListText.Add(("Lose 50% of you max hp \n deal +10 fire damage", BoonName.Greed));
+        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
+
     }
 
     private void GetBoonListWeight()
     {
-        boonListText.Add(("Lose 50% of you max hp \n deal +10 fire damage", BoonName.Greed));
-        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
+        boonListWeight.Add((1, BoonName.Greed));
+        boonListWeight.Add((100, BoonName.MaxHp1));
     }
 
     private List<BoonName> GetWeightList(List<(int, BoonName)> boonList)
