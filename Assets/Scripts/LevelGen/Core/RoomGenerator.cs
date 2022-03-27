@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RoomGenerator : MonoBehaviour
 {
     [SerializeField] Room corridor1;
@@ -14,6 +15,12 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] List<Room> mainRooms = new List<Room>();
 	[SerializeField] List<Room> sideRooms = new List<Room>();
 	[SerializeField] List<Room> corridorPrefabs = new List<Room>();
+
+	[SerializeField] internal GameObject choseSpecial;
+	[SerializeField]internal GameObject itemRoom;
+	[SerializeField]internal GameObject changeInfluence;
+	[SerializeField]internal GameObject shop;
+	[SerializeField] internal GameObject influenceItem;
 
 
 	List<Doorway> availableDoorways = new List<Doorway>();
@@ -28,14 +35,7 @@ public class RoomGenerator : MonoBehaviour
 	List<Doorway> otherDoorways = new List<Doorway>();
 
 	internal bool isGenerated = false;
-	internal enum RoomType
-	{
-		SideRoom,
-		MainRoom,
-		EndRoom,
-		StartRoom,
-		Corridor
-	}
+
 
 
     //void OnEnable()
@@ -47,7 +47,7 @@ public class RoomGenerator : MonoBehaviour
     internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
 	{
 		Clean();
-		WaitForSeconds startup = new WaitForSeconds(.1f);
+		WaitForSeconds startup = new WaitForSeconds(.2f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
 
 		yield return startup;
@@ -55,7 +55,7 @@ public class RoomGenerator : MonoBehaviour
 		// Place start room
 		PlaceStartRoom();
 
-
+		int influencePos = Random.Range(1,5);
 		//place pathway
 		for (int i = 1; i <=20+mission.aditionalLength; i++)
 		{
@@ -64,13 +64,25 @@ public class RoomGenerator : MonoBehaviour
             while (true)
             {
 				a++;
+
 				var rando = Random.Range(0, mainRooms.Count);
+
+				if (i == influencePos)
+				{
+					if (PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Main))
+					{
+
+						break;
+					}
+
+
+				}
 
 				var x = Random.Range(1, 4);
                 bool worked;
                 if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
 
-				else worked = PlaceRoom(mainRooms[rando], true, RoomType.MainRoom);
+				else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
 
 				if (worked) break;
 
@@ -84,11 +96,13 @@ public class RoomGenerator : MonoBehaviour
 		//finish the level
 		PlaceCorridor(20);
 
-		if (!PlaceEndRoom()) ResetLevelGenerator(); 
+		if (!PlaceEndRoom()) ResetLevelGenerator();
 
+		yield return startup;
 		//fill the rest of the level
 		FillEmptyDoors();
 		ConnectRoomActivator();
+
 		isGenerated = true;
 	}
 	void ConnectRoomActivator()
@@ -99,7 +113,8 @@ public class RoomGenerator : MonoBehaviour
             if (x)
             {
 				x.mission = mission;
-            }
+				x.gameObject.SetActive(true);
+			}
         }
     }
     internal void Clean()
@@ -152,9 +167,14 @@ public class RoomGenerator : MonoBehaviour
 					placedRooms.Add(room);
 					placedSideRooms.Add(room);
 
-					var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
-					if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
-					else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
+					var x = room.transform.GetComponentInChildren<RoomActivator>();
+					if (x != null)
+                    {
+						var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
+						if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
+						else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
+                    }
+
 
 					break;
 				}
@@ -175,7 +195,7 @@ public class RoomGenerator : MonoBehaviour
 
     }
 
-	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.redOrBlue, RoomActivator.MainType.Shop, RoomActivator.MainType.switchInfluence };
+	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.switchInfluence };
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {
@@ -193,8 +213,8 @@ public class RoomGenerator : MonoBehaviour
 
     private bool PlaceCorridor(int length)
     {
-		PlaceRoom(stairs, false, RoomType.Corridor);
-		return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomType.Corridor);
+		PlaceRoom(stairs, false, RoomActivator.RoomType.Corridor);
+		return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomActivator.RoomType.Corridor);
 	}
 
     private bool PlaceEndRoom()
@@ -237,6 +257,7 @@ public class RoomGenerator : MonoBehaviour
 		// Position room
 		startRoom.transform.localPosition = Vector3.zero;
 		startRoom.transform.rotation = Quaternion.identity;
+		startRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Corridor;
 
 		currentStartPos = startRoom.playerStart.position;
 	}
@@ -259,7 +280,7 @@ public class RoomGenerator : MonoBehaviour
 		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 	}
 
-	bool PlaceRoom(Room room, bool shuffle, RoomType type)
+	bool PlaceRoom(Room room, bool shuffle, RoomActivator.RoomType type)
     {
         // Instantiate room
         Room currentRoom = Instantiate(room) as Room;
@@ -276,12 +297,14 @@ public class RoomGenerator : MonoBehaviour
 				{
 					UpdateDoors(currentRoom, door, false);
 					placedRooms.Add(currentRoom);
-					if (type == RoomType.MainRoom)currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
-					else if (type == RoomType.Corridor )
-					{
-						if(currentRoom.transform.GetComponentInChildren<RoomActivator>() !=null)
-							currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Corridor;
-					}
+					//currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Corridor;
+					
+					var x = currentRoom.transform.GetComponentInChildren<RoomActivator>();
+					if (x)
+                    {
+						if (type == RoomActivator.RoomType.Main) x.mainType = RoomActivator.MainType.switchInfluence;
+						x.roomType = type;
+                    }
 					return true;
 				}
 			}
@@ -370,8 +393,14 @@ public class RoomGenerator : MonoBehaviour
 			var x = current.GetComponentInChildren<RoomActivator>();
 			if (x != null)
             {
-				x.influcence = influence;
-				x.TurnLightsRed();
+				
+                if (x.beenTrigered)
+                {
+					x.influcence = influence;
+					x.TurnLightsRed();
+                }
+
+
 
 			}
         }
@@ -381,8 +410,13 @@ public class RoomGenerator : MonoBehaviour
 			var x = current.GetComponentInChildren<RoomActivator>();
 			if (x != null)
 			{
-				x.influcence = influence;
-				x.TurnLightsRed();
+
+				if (x.beenTrigered)
+				{
+					x.influcence = influence;
+					x.TurnLightsRed();
+				}
+
 			}
 		}
 	}

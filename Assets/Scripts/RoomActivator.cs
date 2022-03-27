@@ -19,6 +19,7 @@ public class RoomActivator : MonoBehaviour
     private BoxCollider[] boxColliders;
     private Light[] lightsComponent;
 
+    private RoomGenerator roomgen;
     internal enum RoomType
     {
         Boss,
@@ -54,11 +55,15 @@ public class RoomActivator : MonoBehaviour
 
     internal RoomType roomType;
     internal MainType mainType;
-    internal AreaType influcence = AreaType.Blue;
+    internal AreaType influcence = AreaType.Red;
 
     internal ModDataRoom.GeneratedMission mission;
+    internal bool beenTrigered;
+
     private void Start()
     {
+        if (transform.childCount > 0) spawnPos = transform.GetChild(0);
+        roomgen = GetComponentInParent<RoomGenerator>();
         lightsComponent = lights.GetComponentsInChildren<Light>();
 
         foreach (GameObject door in doorMesh) door.SetActive(false);
@@ -68,8 +73,9 @@ public class RoomActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Dude"))
+        if (other.CompareTag("Dude") && !beenTrigered)
         {
+            beenTrigered = true;
             switch (roomType)
             {
                 case RoomType.Boss:
@@ -103,8 +109,10 @@ public class RoomActivator : MonoBehaviour
         }
     }
 
+
     private void SpawnMain()
     {
+
         switch (mainType)
         {
             case MainType.choiceSpecial:
@@ -124,14 +132,14 @@ public class RoomActivator : MonoBehaviour
                 break;
 
             case MainType.switchInfluence:
-
+                Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
                 break;
         }
     }
 
     private void SpawnSpecial()
     {
-        spawnPos = transform.GetChild(0);
+  
 
         SpecialType type = (SpecialType)Random.Range(0, System.Enum.GetValues(typeof(SpecialType)).Length);
 
