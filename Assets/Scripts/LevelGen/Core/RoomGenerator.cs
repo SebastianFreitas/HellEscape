@@ -362,6 +362,30 @@ public class RoomGenerator : MonoBehaviour
         // Reset coroutine
         StartCoroutine("GenerateLevel");
     }
+
+	internal void ChangeInfluence(RoomActivator.AreaType influence)
+    {
+		foreach(var current in placedRooms)
+        {
+			var x = current.GetComponentInChildren<RoomActivator>();
+			if (x != null)
+            {
+				x.influcence = influence;
+				x.TurnLightsRed();
+
+			}
+        }
+
+		foreach (var current in placedSideRooms)
+		{
+			var x = current.GetComponentInChildren<RoomActivator>();
+			if (x != null)
+			{
+				x.influcence = influence;
+				x.TurnLightsRed();
+			}
+		}
+	}
 }
 
 

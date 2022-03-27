@@ -274,7 +274,7 @@ public class RoomActivator : MonoBehaviour
 
     }
 
-    private void TurnLightsRed()
+    internal void TurnLightsRed()
     {
 
         switch (influcence)

@@ -55,12 +55,16 @@ public class InfluenceRoom : MonoBehaviour
 
     internal void TurnBlue()
     {
+        FindObjectOfType<RoomGenerator>().ChangeInfluence(RoomActivator.AreaType.Blue);
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"));
+        DisableEvent();
     }
 
     internal void TurnRed()
     {
+        FindObjectOfType<RoomGenerator>().ChangeInfluence(RoomActivator.AreaType.Red);
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
+        DisableEvent();
     }
     internal void DisableEvent()
     {
