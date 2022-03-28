@@ -266,12 +266,18 @@ public class ModDataRoom : MonoBehaviour
         public int increasedChanceElite        = 0;
         public int distance = 0;
 
+        public int encounterMobCount = 4;
+
         public int level = 0;
 
         public HashSet<Mod> mods = new HashSet<Mod>();
         public string text      = "";
         public string badText   = "";
         public string goodText  = "";
+        internal bool doubleLife = false;
+        internal bool doubleDrops = false;
+        internal bool deathExplosion = false;
+        internal bool tick;
 
         public void createPositives()
         {

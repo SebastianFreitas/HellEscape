@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-internal class InfluenceEffect
+internal class InfluenceEffect : PlayerAcess
 {
 
     internal enum BlueEffect
@@ -90,6 +90,62 @@ internal class InfluenceEffect
 
 
     }
+    RoomGenerator generator;
+    internal void PickBlue(RoomGenerator roomGen)
+    {
+        generator = roomGen;
+
+        SearchGood();
+
+        SearchBlue();
+    }
+
+    internal void PickRed(RoomGenerator roomGen)
+    {
+        generator = roomGen;
+
+        SearchGood();
+        SearchRed();
+    }
+
+    private void SearchRed()
+    {
+        switch (redEffect)
+        {
+            case RedEffect.FasterMob:
+                break;
+            case RedEffect.MobExplodes:
+                break;
+            case RedEffect.Tick:
+                break;
+        }
+    }
+    private void SearchBlue()
+    {
+        switch (blueEffect)
+        {
+            case BlueEffect.ColdDamage:
+                break;
+            case BlueEffect.EnemyWaits:
+                break;
+            case BlueEffect.Traps:
+                break;
+        }
+    }
+
+    private void SearchGood()
+    {
+
+        switch (goodEffect)
+        {
+            case GoodEffect.MobEliteChance:
+                break;
+            case GoodEffect.MobHPDoubleDrop:
+                break;
+            case GoodEffect.MoreMob:
+                break;
+        }
+    }
 
     private void CreateBadRed()
     {
@@ -143,6 +199,35 @@ internal class InfluenceEffect
 
     }
 
+    internal void MobEliteChance()
+    {
+        generator.mission.increasedChanceElite += 25;
+    }
 
+    internal void MobHPDoubleDrop()
+    {
+        generator.mission.doubleLife = true;
+        generator.mission.doubleDrops = true;
+    }
 
-}
+    internal void MoreMob()
+    {
+        generator.mission.encounterMobCount *= 2;
+    }
+    ///////////Red
+    internal void FasterMob()
+    {
+        generator.mission.increasedActionSpeed += 40;
+    }
+
+    internal void MobExplodes()
+    {
+        generator.mission.deathExplosion = true;
+    }
+
+    internal void Tick()
+    {
+        generator.mission.tick = true;
+    }
+
+} 

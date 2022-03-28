@@ -48,9 +48,35 @@ public class Monster : MonoBehaviour
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
         roomActivator = transform.GetComponentInParent<RoomActivator>();
         mission = roomActivator.mission;
-
-        var eliteChance = 5 + mission.increasedChanceElite;
+        ApplyMission();
+        
         if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
+    }
+    float eliteChance;
+    int gunparts = 1;
+    float totalDropChance = 1f;
+    private void ApplyMission()
+    {
+        health += mission.aditionalLife;
+        damage += mission.aditionalDamage;
+        eliteChance = 5 + mission.increasedChanceElite;
+
+        gunparts = 1;
+        totalDropChance *= 1 + (((float)mission.increasedMonsterDrops * 3) / 100);
+
+        if (isElite)
+        {
+            gunparts = 10;
+            totalDropChance += 10;
+        }
+
+        if (mission.doubleLife) health*= 2;
+        if (mission.doubleDrops)
+        {
+            totalDropChance = (totalDropChance-1) * 2 + 1;
+        }
+
+
     }
 
     void Update(){
@@ -66,6 +92,8 @@ public class Monster : MonoBehaviour
     private bool dead = false;
 
     [SerializeField] internal bool isHub;
+    private GameObject explosion;
+
     public void TakeDamage(int damage, bool isCrit,float critMulti)
     {
         float amount = damage;
@@ -124,6 +152,12 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
         if (!died)
         {
+            if (mission.deathExplosion)
+            {
+                var explo = Instantiate(explosion, transform.position, transform.rotation, transform);
+                explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 6f);
+            }
+                
             roomActivator.IsEncounterDone();
             Drop();
         }
@@ -169,15 +203,7 @@ public class Monster : MonoBehaviour
     
     private void Drop()
     {
-        var gunparts = 1;
-        var totalDropChance = 1f;
-        totalDropChance *= 1 + (((float)mission.increasedMonsterDrops*3)/100);
-
-        if (isElite)
-        {
-            gunparts = 10;
-            totalDropChance -= 10;
-        }
+         
         player.transform.GetComponent<PlayerInventory>().UpdateGunParts(gunparts);
 
 

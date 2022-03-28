@@ -86,7 +86,7 @@ public class RoomActivator : MonoBehaviour
 
                 case RoomType.Encounter:
                 {
-                    SpawnEncounter(4);
+                    SpawnEncounter(Random.Range(2,mission.encounterMobCount));
                     break;
                 }
 
@@ -190,6 +190,8 @@ public class RoomActivator : MonoBehaviour
         currentMob = Instantiate(monstersRed[0], position, rotation, transform);
         return currentMob;
     }
+
+
     private void SpawnWeapon()
     {
 

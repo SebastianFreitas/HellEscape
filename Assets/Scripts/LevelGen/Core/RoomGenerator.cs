@@ -76,15 +76,19 @@ public class RoomGenerator : MonoBehaviour
 					}
 
 
-				}
+                }
+                else
+                {
+					var x = Random.Range(1, 4);
+					bool worked;
+					if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
 
-				var x = Random.Range(1, 4);
-                bool worked;
-                if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
+					else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
 
-				else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
+					if (worked) break;
+                }
 
-				if (worked) break;
+
 
 				if (a >= 10) ResetLevelGenerator();
 
@@ -133,7 +137,7 @@ public class RoomGenerator : MonoBehaviour
 
 		availableDoorways.Clear();
 		otherDoorways.Clear();
-
+		counter = 0;
 		isGenerated = false;
 	}
 
@@ -239,9 +243,10 @@ public class RoomGenerator : MonoBehaviour
 
 	}
 
-	private ModDataRoom.GeneratedMission mission;
+	internal ModDataRoom.GeneratedMission mission;
+    private int counter = 0;
 
-	internal void StartRun(ModDataRoom.GeneratedMission mis)
+    internal void StartRun(ModDataRoom.GeneratedMission mis)
     {
 		mission = mis;
 		StartCoroutine(GenerateLevel()); 
@@ -297,12 +302,16 @@ public class RoomGenerator : MonoBehaviour
 				{
 					UpdateDoors(currentRoom, door, false);
 					placedRooms.Add(currentRoom);
-					//currentRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Corridor;
+
 					
 					var x = currentRoom.transform.GetComponentInChildren<RoomActivator>();
 					if (x)
                     {
-						if (type == RoomActivator.RoomType.Main) x.mainType = RoomActivator.MainType.switchInfluence;
+						if (type == RoomActivator.RoomType.Main && counter == 0)
+						{
+							counter++;
+							x.mainType = RoomActivator.MainType.switchInfluence;
+						}
 						x.roomType = type;
                     }
 					return true;
@@ -393,10 +402,10 @@ public class RoomGenerator : MonoBehaviour
 			var x = current.GetComponentInChildren<RoomActivator>();
 			if (x != null)
             {
-				
-                if (x.beenTrigered)
+				x.influcence = influence;
+				if (x.beenTrigered)
                 {
-					x.influcence = influence;
+
 					x.TurnLightsRed();
                 }
 
@@ -410,10 +419,10 @@ public class RoomGenerator : MonoBehaviour
 			var x = current.GetComponentInChildren<RoomActivator>();
 			if (x != null)
 			{
-
+					x.influcence = influence;
 				if (x.beenTrigered)
 				{
-					x.influcence = influence;
+
 					x.TurnLightsRed();
 				}
 

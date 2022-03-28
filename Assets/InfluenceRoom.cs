@@ -20,10 +20,10 @@ public class InfluenceRoom : MonoBehaviour
     RoomActivator roomActivator;
     private void Start()
     {
-       // roomActivator = GetComponentInParent<RoomActivator>();
+        roomActivator = GetComponentInParent<RoomActivator>();
 
 
-        influenceEffect = new InfluenceEffect(RoomActivator.AreaType.Blue);
+        influenceEffect = new InfluenceEffect(roomActivator.influcence);
 
         CreateText();
     }
@@ -31,7 +31,7 @@ public class InfluenceRoom : MonoBehaviour
     private void CreateText()
     {
 
-        switch (RoomActivator.AreaType.Blue)//(influenceEffect.influenceType)
+        switch (influenceEffect.influenceType)
         {
             case RoomActivator.AreaType.Blue:
                 redName.text = "Pursue" + redNames[Random.Range(0, redNames.Length)];
@@ -55,6 +55,9 @@ public class InfluenceRoom : MonoBehaviour
 
     internal void TurnBlue()
     {
+
+        influenceEffect.PickBlue(roomActivator.GetComponentInParent<RoomGenerator>());
+
         FindObjectOfType<RoomGenerator>().ChangeInfluence(RoomActivator.AreaType.Blue);
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"));
         DisableEvent();
@@ -62,6 +65,7 @@ public class InfluenceRoom : MonoBehaviour
 
     internal void TurnRed()
     {
+        influenceEffect.PickRed(roomActivator.GetComponentInParent<RoomGenerator>());
         FindObjectOfType<RoomGenerator>().ChangeInfluence(RoomActivator.AreaType.Red);
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
         DisableEvent();

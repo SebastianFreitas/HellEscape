@@ -26,7 +26,7 @@ public class ExplosiveCilinder : PropBehaviour
 
     }
 
-    void Explode(Vector3 center, float radius)
+    internal void Explode(Vector3 center, float radius)
     {
         transform.GetComponent<BoxCollider>().enabled = false;
 
