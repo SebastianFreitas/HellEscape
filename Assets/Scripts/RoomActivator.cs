@@ -118,23 +118,31 @@ public class RoomActivator : MonoBehaviour
         switch (mainType)
         {
             case MainType.choiceSpecial:
-
+                Instantiate(roomgen.choseSpecial, spawnPos.position, Quaternion.identity, transform);
+                Debug.Log("choicespecial");
                 break;
 
             case MainType.itemOrDrop:
-
+                Instantiate(roomgen.itemRoom, spawnPos.position, Quaternion.identity, transform);
+                TurnLightsRed();
+                Debug.Log("itemroom");
                 break;
 
             case MainType.redOrBlue:
-
+                // Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
+                Debug.Log("red or blue drop");
                 break;
 
             case MainType.Shop:
-
+                //Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
+                Debug.Log("shop");
+                TurnLightsRed();
                 break;
 
             case MainType.switchInfluence:
                 Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
+                Debug.Log("Switch influence");
+
                 break;
         }
     }
@@ -150,18 +158,22 @@ public class RoomActivator : MonoBehaviour
             case SpecialType.Crafting:
                 {
                     SpawnCraftingBench();
+ 
+                    Debug.Log("crafting");
                     break;
                 }
 
             case SpecialType.Hard:
                 {
                     SpawnEncounter(Random.Range(2, mission.encounterMobCount), true);
+
                     break;
                 }
 
             case SpecialType.Heal:
                 {
                     SpawnHeal();
+                    TurnLightsRed();
                     break;
                 }
             case SpecialType.Extreme:
@@ -172,6 +184,7 @@ public class RoomActivator : MonoBehaviour
             case SpecialType.weapon:
                 {
                     SpawnWeapon();
+                    TurnLightsRed();
                     break;
                 }
         }
@@ -200,12 +213,6 @@ public class RoomActivator : MonoBehaviour
     {
 
         Instantiate(weaponDrop, spawnPos.position, spawnPos.rotation, transform);
-        TurnLightsRed();
-    }
-
-    private void SpawnMaxHP()
-    {
-        Instantiate(healthPack, spawnPos.position, spawnPos.rotation, transform);
         TurnLightsRed();
     }
 

@@ -120,7 +120,17 @@ public class RoomGenerator : MonoBehaviour
 				x.gameObject.SetActive(true);
 			}
         }
-    }
+
+		foreach (Room room in placedSideRooms)
+		{
+			var x = room.gameObject.GetComponentInChildren<RoomActivator>();
+			if (x)
+			{
+				x.mission = mission;
+				x.gameObject.SetActive(true);
+			}
+		}
+	}
     internal void Clean()
     {
 		// Delete all rooms
@@ -129,11 +139,13 @@ public class RoomGenerator : MonoBehaviour
 
 
 		foreach (Room room in placedRooms) Destroy(room.gameObject);
+		foreach (Room room in placedSideRooms) Destroy(room.gameObject);
 		foreach (var wall in placedWalls) Destroy(wall.gameObject);
 
 		// Clear lists
 		placedRooms.Clear();
 		placedWalls.Clear();
+		placedSideRooms.Clear();
 
 		availableDoorways.Clear();
 		otherDoorways.Clear();
@@ -168,7 +180,7 @@ public class RoomGenerator : MonoBehaviour
 				}
 				else
 				{
-					placedRooms.Add(room);
+					//placedRooms.Add(room);
 					placedSideRooms.Add(room);
 
 					var x = room.transform.GetComponentInChildren<RoomActivator>();
@@ -199,7 +211,7 @@ public class RoomGenerator : MonoBehaviour
 
     }
 
-	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.switchInfluence };
+	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {
