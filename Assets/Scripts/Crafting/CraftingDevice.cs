@@ -69,7 +69,7 @@ public class CraftingDevice : GunGenerator
 
     internal void DestroyGun()
     {
-        if (playerInventory.GetGeneratedGunsLength()+playerInventory.GetLayoutLength() != 1)
+        if (playerInventory.GetGeneratedGunsLength()+playerInventory.GetLayoutLength() >1)
         {
             playerInventory.DestroyGun(this.gun);
 

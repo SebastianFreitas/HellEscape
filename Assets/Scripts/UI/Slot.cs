@@ -44,7 +44,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
             gunTypeText.text = "-";
             gunType = null;
             ShowGun();
-            if (equiped) playerGun.EquipBaseGun();
+           // if (equiped) playerGun.EquipBaseGun();
         }
     }
 
