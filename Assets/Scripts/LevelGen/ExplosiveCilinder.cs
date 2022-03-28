@@ -54,7 +54,7 @@ public class ExplosiveCilinder : PropBehaviour
             else if (hitCollider.gameObject.CompareTag("MonsterHead"))
             {
 
-                hitCollider.transform.GetComponent<Monster>().TakeDamage(10, false, 0);
+                hitCollider.transform.GetComponent<Monster>().TakeDamage(50, false, 0);
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 50f, ForceMode.Impulse);
             }
             else if (hitCollider.CompareTag("Prop"))

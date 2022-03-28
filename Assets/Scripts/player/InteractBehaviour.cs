@@ -182,6 +182,14 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponentInParent<ChooseSpecial>().ExtremeEncounter();
                 }
+                else if (hit.transform.CompareTag("ShopBuy"))
+                {
+                    hit.collider.transform.GetComponentInParent<Shop>().Buy();
+                }
+                else if (hit.transform.CompareTag("ShopNext"))
+                {
+                    hit.collider.transform.GetComponentInParent<Shop>().PressNext();
+                }
                 else
                 {
                     Debug.Log(hit.transform.tag);
