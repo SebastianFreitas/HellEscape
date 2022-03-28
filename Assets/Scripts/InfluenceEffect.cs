@@ -11,6 +11,7 @@ internal class InfluenceEffect : PlayerAcess
         EnemyWaits,
         Traps,
         SlowPlayer,
+
     }
 
     internal enum RedEffect
@@ -34,15 +35,15 @@ internal class InfluenceEffect : PlayerAcess
     internal List<(string, BlueEffect)> blueTexts = new List<(string, BlueEffect)>
         {
             ("Trap damage reduces max hp", BlueEffect.Traps),
-            ("You have half movement speed", BlueEffect.SlowPlayer),
-            ("Enemies are sometimes slower and become more powerful", BlueEffect.EnemyWaits)
+            ("Your movement speed is decreased", BlueEffect.SlowPlayer),
+            ("Enemies gain health and deal more damage", BlueEffect.ColdDamage)
 
         }; 
     internal List<(string, RedEffect)> redTexts = new List<(string, RedEffect)>
         {
             ("Monsters jitter uncontrollably", RedEffect.Tick),
             ("Monster act faster", RedEffect.FasterMob),
-            ("Monster explode on death", RedEffect.MobExplodes),       
+            ("Monster explode on death and deal extra damage", RedEffect.MobExplodes),       
         };
 
     internal List<(string, GoodEffect)> goodTexts = new List<(string, GoodEffect)>
@@ -69,8 +70,8 @@ internal class InfluenceEffect : PlayerAcess
     internal RoomActivator.AreaType influenceType;
     internal InfluenceEffect(RoomActivator.AreaType contact)
     {
-
-
+        base.Awake();
+ 
         switch (contact)
         {
             case RoomActivator.AreaType.Blue:
@@ -113,10 +114,13 @@ internal class InfluenceEffect : PlayerAcess
         switch (redEffect)
         {
             case RedEffect.FasterMob:
+                FasterMob();
                 break;
             case RedEffect.MobExplodes:
+                MobExplodes();
                 break;
             case RedEffect.Tick:
+                Tick();
                 break;
         }
     }
@@ -124,13 +128,35 @@ internal class InfluenceEffect : PlayerAcess
     {
         switch (blueEffect)
         {
-            case BlueEffect.ColdDamage:
+            case BlueEffect.SlowPlayer:
+                SlowPlayer();
                 break;
-            case BlueEffect.EnemyWaits:
+            case BlueEffect.ColdDamage:
+                ColdDamage();
                 break;
             case BlueEffect.Traps:
+                Traps();
                 break;
         }
+    }
+
+    private void Traps()
+    {
+        throw new System.NotImplementedException();
+    }
+    private void ColdDamage()
+    {
+        generator.mission.aditionalDamage +=Random.Range(1, 5);
+        generator.mission.aditionalLife += 100;
+    }
+    private void EnemyWaits()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void SlowPlayer()
+    {
+        playerMov.increasedSpeed += -0.5f;
     }
 
     private void SearchGood()
@@ -139,10 +165,13 @@ internal class InfluenceEffect : PlayerAcess
         switch (goodEffect)
         {
             case GoodEffect.MobEliteChance:
+                MobEliteChance();
                 break;
             case GoodEffect.MobHPDoubleDrop:
+                MobHPDoubleDrop();
                 break;
             case GoodEffect.MoreMob:
+                MoreMob();
                 break;
         }
     }
@@ -217,12 +246,13 @@ internal class InfluenceEffect : PlayerAcess
     ///////////Red
     internal void FasterMob()
     {
-        generator.mission.increasedActionSpeed += 40;
+        generator.mission.increasedActionSpeed += 50;
     }
 
     internal void MobExplodes()
     {
         generator.mission.deathExplosion = true;
+        generator.mission.aditionalDamage += Random.Range(1, 5);
     }
 
     internal void Tick()
@@ -230,4 +260,5 @@ internal class InfluenceEffect : PlayerAcess
         generator.mission.tick = true;
     }
 
+    //Blue
 } 

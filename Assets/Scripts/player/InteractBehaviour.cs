@@ -141,7 +141,14 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("HealDrop"))
                 {
-                    hit.collider.transform.GetComponentInParent<ItemRoom>().DropHeal();
+                    var x = hit.collider.transform.GetComponentInParent<ItemRoom>();
+                    if (x) x.DropHeal();
+                    else
+                    {
+                        var y = hit.collider.transform.GetComponentInParent<ChooseSpecial>();
+                        y.DropHeal();
+                    }
+
                 }
                 else if (hit.transform.CompareTag("YesVoid"))
                 {
@@ -158,6 +165,22 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("Red"))
                 {
                     hit.collider.transform.GetComponentInParent<InfluenceRoom>().TurnRed();
+                }
+                else if (hit.transform.CompareTag("SpawnBench"))
+                {
+                    hit.collider.transform.GetComponentInParent<ChooseSpecial>().SpawnBench();
+                }
+                else if (hit.transform.CompareTag("NormalEncounter"))
+                {
+                    hit.collider.transform.GetComponentInParent<ChooseSpecial>().NormalEncounter();
+                }
+                else if (hit.transform.CompareTag("HardEncounter"))
+                {
+                    hit.collider.transform.GetComponentInParent<ChooseSpecial>().HardEncountner();
+                }
+                else if (hit.transform.CompareTag("ExtremeEncounter"))
+                {
+                    hit.collider.transform.GetComponentInParent<ChooseSpecial>().ExtremeEncounter();
                 }
                 else
                 {

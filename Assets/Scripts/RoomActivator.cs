@@ -42,6 +42,8 @@ public class RoomActivator : MonoBehaviour
         MaxHP,
         Elite,
         weapon,
+        Hard,
+        Extreme,
     }
 
     internal enum MainType
@@ -86,7 +88,7 @@ public class RoomActivator : MonoBehaviour
 
                 case RoomType.Encounter:
                 {
-                    SpawnEncounter(Random.Range(2,mission.encounterMobCount));
+                    SpawnEncounter(Random.Range(2,mission.encounterMobCount), false);
                     break;
                 }
 
@@ -151,9 +153,9 @@ public class RoomActivator : MonoBehaviour
                     break;
                 }
 
-            case SpecialType.Elite:
+            case SpecialType.Hard:
                 {
-                    SpawnElite();
+                    SpawnEncounter(Random.Range(2, mission.encounterMobCount), true);
                     break;
                 }
 
@@ -162,9 +164,9 @@ public class RoomActivator : MonoBehaviour
                     SpawnHeal();
                     break;
                 }
-            case SpecialType.MaxHP:
+            case SpecialType.Extreme:
                 {
-                    SpawnMaxHP();
+                    SpawnEncounter(Random.Range(mission.encounterMobCount, mission.encounterMobCount*2), true);
                     break;
                 }
             case SpecialType.weapon:
@@ -174,17 +176,19 @@ public class RoomActivator : MonoBehaviour
                 }
         }
     }
-    private Monster SpawnByInfluence(Vector3 position, Quaternion rotation)
+    private Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite)
     {
         Monster currentMob;
         switch (influcence)
         {
             case AreaType.Blue:
                 currentMob = Instantiate(monstersBlue[0], position, rotation, transform);
+                currentMob.isElite = elite;
                 return currentMob;
 
             case AreaType.Red:
                 currentMob = Instantiate(monstersRed[0], position, rotation, transform);
+                currentMob.isElite = elite;
                 return currentMob;
         }
         currentMob = Instantiate(monstersRed[0], position, rotation, transform);
@@ -213,29 +217,29 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnElite()
     {
-        Monster mob = SpawnByInfluence(spawnPos.position,spawnPos.rotation);
+        Monster mob = SpawnByInfluence(spawnPos.position,spawnPos.rotation, true);
         mob.TurnElite();
-        mob = SpawnByInfluence(spawnPos.position, spawnPos.rotation);
+        mob = SpawnByInfluence(spawnPos.position, spawnPos.rotation, true);
         mob.TurnElite();
-        numberOfEnemies++;
+
         CloseDoors();
         ClearTrigger();
     }
 
-    private void SpawnCraftingBench()
+    internal void SpawnCraftingBench()
     {
         Instantiate(CraftingBench, spawnPos.position, spawnPos.rotation, transform);
         TurnLightsRed();
     }
 
-    private void SpawnEncounter(int totalMobs)
+    internal void SpawnEncounter(int totalMobs, bool elite)
     {
         for (int i = 0; i < totalMobs; i++)
         {
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
             Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds);
-            SpawnByInfluence(randomPoint, Quaternion.identity);
+            SpawnByInfluence(randomPoint, Quaternion.identity, elite);
             numberOfEnemies++;
         }
 
@@ -243,9 +247,11 @@ public class RoomActivator : MonoBehaviour
         ClearTrigger();
     }
 
+   
+
     private void SpawnBoss()
     {
-        SpawnByInfluence(spawnPos.position, Quaternion.identity);
+        SpawnByInfluence(spawnPos.position, Quaternion.identity, false);
         numberOfEnemies++;
         CloseDoors();
         ClearTrigger();

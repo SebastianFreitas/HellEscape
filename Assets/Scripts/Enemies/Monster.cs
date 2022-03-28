@@ -34,7 +34,7 @@ public class Monster : MonoBehaviour
 
     public DamagePopUp dmgPopUp;
     private bool died = false;
-    private bool isElite = false;
+    internal bool isElite = false;
     internal RoomActivator roomActivator;
     internal ModDataRoom.GeneratedMission mission;
     protected void Awake()
@@ -64,11 +64,15 @@ public class Monster : MonoBehaviour
         gunparts = 1;
         totalDropChance *= 1 + (((float)mission.increasedMonsterDrops * 3) / 100);
 
+        actionSpeed += mission.increasedActionSpeed/100;
+
         if (isElite)
         {
             gunparts = 10;
             totalDropChance += 10;
         }
+        
+
 
         if (mission.doubleLife) health*= 2;
         if (mission.doubleDrops)
@@ -76,6 +80,21 @@ public class Monster : MonoBehaviour
             totalDropChance = (totalDropChance-1) * 2 + 1;
         }
 
+        if (mission.tick) StartCoroutine("Tick");
+
+
+    }
+
+    IEnumerator Tick()
+    {
+        isTick = true;
+        var interval = new WaitForSeconds(Random.Range(0f,7f));
+        while (true)
+        {
+            interval = new WaitForSeconds(Random.Range(0, .3f));
+            yield return interval;
+            rigidBody.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 500f);
+        }
 
     }
 
@@ -92,7 +111,8 @@ public class Monster : MonoBehaviour
     private bool dead = false;
 
     [SerializeField] internal bool isHub;
-    private GameObject explosion;
+    [SerializeField] GameObject explosion;
+    private bool isTick;
 
     public void TakeDamage(int damage, bool isCrit,float critMulti)
     {
@@ -152,10 +172,12 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
         if (!died)
         {
+            died = true;
             if (mission.deathExplosion)
             {
                 var explo = Instantiate(explosion, transform.position, transform.rotation, transform);
-                explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 6f);
+                explo.transform.parent = null;
+                explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 10f);
             }
                 
             roomActivator.IsEncounterDone();
@@ -217,8 +239,10 @@ public class Monster : MonoBehaviour
 
         }
     }
-
-
+    private void OnEnable()
+    {
+        if (isTick) StartCoroutine("Tick");
+    }
 
 
 

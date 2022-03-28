@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAcess : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Awake()
+    public void Awake()
     {
         
         player = GameObject.FindGameObjectsWithTag("Dude")[0];
