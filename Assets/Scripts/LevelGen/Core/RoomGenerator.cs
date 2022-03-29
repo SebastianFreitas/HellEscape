@@ -115,7 +115,19 @@ public class RoomGenerator : MonoBehaviour
 
 		isGenerated = true;
 	}
-	void ConnectRoomActivator()
+
+    internal void ManageRoomsEficiency(Room room)
+    {
+		int index = placedRooms.FindIndex(a => (GameObject.ReferenceEquals(a.gameObject, room.gameObject)));
+
+		for(int i = 0; i < placedRooms.Count; i++)
+        {
+			if (i + 4 <= index || i - 4 >= index) placedRooms[i].gameObject.SetActive(false);
+			else placedRooms[i].gameObject.SetActive(true);
+        }
+    }
+
+    void ConnectRoomActivator()
     {
 		foreach(Room room in placedRooms)
         {
@@ -127,16 +139,16 @@ public class RoomGenerator : MonoBehaviour
 			}
         }
 
-		foreach (Room room in placedSideRooms)
-		{
-			var x = room.gameObject.GetComponentInChildren<RoomActivator>();
-			if (x)
-			{
-				x.mission = mission;
-				x.gameObject.SetActive(true);
-			}
-		}
-	}
+        foreach (Room room in placedSideRooms)
+        {
+            var x = room.gameObject.GetComponentInChildren<RoomActivator>();
+            if (x)
+            {
+                x.mission = mission;
+                x.gameObject.SetActive(true);
+            }
+        }
+    }
     internal void Clean()
     {
 		// Delete all rooms
@@ -192,6 +204,7 @@ public class RoomGenerator : MonoBehaviour
 					var x = room.transform.GetComponentInChildren<RoomActivator>();
 					if (x != null)
                     {
+						x.isSideRoom = true;
 						var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
 						if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
 						else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
@@ -244,6 +257,7 @@ public class RoomGenerator : MonoBehaviour
 		// Instantiate room
 		endRoom = Instantiate(endRoomPrefab) as Room;
 		endRoom.transform.parent = this.transform;
+		placedRooms.Add(endRoom);
 		int attempts = 0;
         while (true)
         {
@@ -281,6 +295,8 @@ public class RoomGenerator : MonoBehaviour
 		startRoom.transform.localPosition = Vector3.zero;
 		startRoom.transform.rotation = Quaternion.identity;
 		startRoom.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Corridor;
+
+		placedRooms.Add(startRoom);
 
 		currentStartPos = startRoom.playerStart.position;
 	}
@@ -379,8 +395,10 @@ public class RoomGenerator : MonoBehaviour
 		bounds.Expand(-0.1f);
 		bounds.size /= 1.5f;
 
-
-		foreach (Room currentRoom in placedRooms)
+		List<Room> rooms = new List<Room>();
+		rooms.AddRange(placedRooms);
+		rooms.AddRange(placedSideRooms);
+		foreach (Room currentRoom in rooms)
         {
 			if (GameObject.ReferenceEquals(currentRoom.gameObject, room.gameObject))
 			{
@@ -391,6 +409,8 @@ public class RoomGenerator : MonoBehaviour
                 return true;
             }
         }
+
+
 
 
 		return false;

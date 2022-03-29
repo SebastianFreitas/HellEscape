@@ -61,6 +61,8 @@ public class RoomActivator : MonoBehaviour
     internal ModDataRoom.GeneratedMission mission;
     internal bool beenTrigered;
 
+    internal bool isSideRoom = false;
+
     private void Start()
     {
         if (transform.childCount > 0) spawnPos = transform.GetChild(0);
@@ -74,42 +76,48 @@ public class RoomActivator : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Dude") && !beenTrigered)
+        if (other.CompareTag("Dude"))
         {
-            beenTrigered = true;
-            switch (roomType)
+            if (!isSideRoom)roomgen.ManageRoomsEficiency(transform.GetComponentInParent<Room>());
+
+            if (!beenTrigered)
             {
-                case RoomType.Boss:
-                {
-                    SpawnBoss();
-                    break;
-                }
+                beenTrigered = true;
 
-                case RoomType.Encounter:
+                switch (roomType)
                 {
-                    SpawnEncounter(Random.Range(2,mission.encounterMobCount), false);
-                    break;
-                }
+                    case RoomType.Boss:
+                    {
+                        SpawnBoss();
+                        break;
+                    }
 
-                case RoomType.Special:
-                {
-                    SpawnSpecial();
-                    break;
-                }
-                case RoomType.Main:
-                {
-                    SpawnMain();
-                    break;
-                }
-                case RoomType.Corridor:
-                {
-                    TurnLightsRed();
-                    break;
+                    case RoomType.Encounter:
+                    {
+                        SpawnEncounter(Random.Range(2,mission.encounterMobCount), false);
+                        break;
+                    }
+
+                    case RoomType.Special:
+                    {
+                        SpawnSpecial();
+                        break;
+                    }
+                    case RoomType.Main:
+                    {
+                        SpawnMain();
+                        break;
+                    }
+                    case RoomType.Corridor:
+                    {
+                        TurnLightsRed();
+                        break;
+                    }
                 }
             }
+
         }
     }
-
 
     private void SpawnMain()
     {
@@ -118,29 +126,29 @@ public class RoomActivator : MonoBehaviour
         {
             case MainType.choiceSpecial:
                 Instantiate(roomgen.choseSpecial, spawnPos.position, Quaternion.identity, transform);
-                Debug.Log("choicespecial");
+
                 break;
 
             case MainType.itemOrDrop:
                 Instantiate(roomgen.itemRoom, spawnPos.position, Quaternion.identity, transform);
                 TurnLightsRed();
-                Debug.Log("itemroom");
+
                 break;
 
             case MainType.redOrBlue:
                 // Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
-                Debug.Log("red or blue drop");
+
                 break;
 
             case MainType.Shop:
-                //Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
-                Debug.Log("shop");
+                Instantiate(roomgen.shop, spawnPos.position, Quaternion.identity, transform);
+
                 TurnLightsRed();
                 break;
 
             case MainType.switchInfluence:
                 Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
-                Debug.Log("Switch influence");
+                CloseDoors();
 
                 break;
         }
@@ -158,7 +166,6 @@ public class RoomActivator : MonoBehaviour
                 {
                     SpawnCraftingBench();
  
-                    Debug.Log("crafting");
                     break;
                 }
 
@@ -208,7 +215,7 @@ public class RoomActivator : MonoBehaviour
                 if (Isboss) spawn = roomgen.BossRed[0];
                 else spawn = roomgen.monstersRed[0];
 
-                currentMob = Instantiate(roomgen.monstersRed[0], position, rotation, transform);
+                currentMob = Instantiate(spawn, position, rotation, transform);
 
                 currentMob.isElite = elite;
                 return currentMob;
@@ -216,7 +223,6 @@ public class RoomActivator : MonoBehaviour
         currentMob = Instantiate(roomgen.monstersRed[0], position, rotation, transform);
         return currentMob;
     }
-
 
     private void SpawnWeapon()
     {
@@ -263,8 +269,6 @@ public class RoomActivator : MonoBehaviour
         ClearTrigger();
     }
 
-   
-
     private void SpawnBoss()
     {
         SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true);
@@ -300,10 +304,15 @@ public class RoomActivator : MonoBehaviour
 
         if (numberOfEnemies == 0)
         {
-            foreach (GameObject door in doorMesh) door.SetActive(false);
+            OpenDoors();
             TurnLightsRed();
         }
 
+    }
+
+    internal void OpenDoors()
+    {
+        foreach (GameObject door in doorMesh) door.SetActive(false);
     }
 
     internal void TurnLightsRed()

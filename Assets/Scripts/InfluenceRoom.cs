@@ -74,6 +74,7 @@ public class InfluenceRoom : MonoBehaviour
     {
         blue.SetActive(false);
         red.SetActive(false);
+        roomActivator.OpenDoors();
     }
 
 

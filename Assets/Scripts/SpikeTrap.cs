@@ -8,9 +8,15 @@ public class SpikeTrap : MonoBehaviour
     private bool hasBeenTriggered = false;
     private bool cr_running= false;
 
+    [SerializeField] bool isAlwaysUp = false;
+
     private void Awake()
     {
-        if (Random.Range(1f, 20f) > 15f) gameObject.SetActive(false);
+        if (isAlwaysUp)
+        {
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            Shoot();
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -27,7 +33,7 @@ public class SpikeTrap : MonoBehaviour
     {
         cr_running = true;
 
-        WaitForSeconds interval = new WaitForSeconds(1f);
+        WaitForSeconds interval = new WaitForSeconds(.8f);
         yield return interval;
 
         Shoot();
@@ -53,7 +59,7 @@ public class SpikeTrap : MonoBehaviour
 
     private void OnEnable()
     {
-        if (hasBeenTriggered)Retract();
+        if (hasBeenTriggered && !isAlwaysUp)Retract();
         hasBeenTriggered = false;
     }
 }

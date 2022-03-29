@@ -63,11 +63,14 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        if (isWaiting)
-        {
+
             StartCoroutine(waiterDashCD());
             StartCoroutine(waiterDashDuration());
-        }
+
+            StartCoroutine(waiterGroundLag());
+
+        canDash = true;
+        
 
     }
 
@@ -118,13 +121,6 @@ public class PlayerBasicMovement : MonoBehaviour
 
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
-        //if (playerScript.move == Vector3.zero) animator.SetTrigger("Idle");
-        //else
-        //if (moveRaw.magnitude > 0)
-        //{
-        //    if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Running")) animator.Play("Running");
-        //}
-        //else animator.SetTrigger("Idle");
 
         currentSpeed = (speed + SpeedIncrease()) *(1 + increasedSpeed / 100);
 
@@ -141,6 +137,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     [SerializeField] float holdTime;
     [SerializeField]  float amountToIncrease;
+
     int tier = 1;
     float downTimeRight = 0f;
     private float SpeedIncrease()
@@ -364,11 +361,11 @@ public class PlayerBasicMovement : MonoBehaviour
     }
     IEnumerator waiterDashDuration()
     {
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Prop"));
+       
         yield return new WaitForSecondsRealtime(.3f);
         isSideDashing = false;
         inputLocked = false;
-        //Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Prop"), false);
+
     }
     IEnumerator waiterGroundLag()
     {

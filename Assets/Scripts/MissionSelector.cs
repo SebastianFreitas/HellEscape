@@ -83,6 +83,7 @@ public class MissionSelector : ModDataRoom
         //}
 
         StopCoroutine("SearchPath");
+        StopCoroutine("SearchPath");
         foreach (MonitorMission mis in missions)
         {
             mis.gameObject.SetActive(false);

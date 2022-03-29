@@ -141,7 +141,7 @@ public class GameMan : ModDataRoom
             run[i].mission = mission;
             run[i].player = player;
         }
-        run[i] = null;
+        //run[i] = null;
 
 
         //roomGen.StartCoroutine("GenerateLevel");
