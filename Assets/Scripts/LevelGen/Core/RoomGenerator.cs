@@ -121,10 +121,9 @@ public class RoomGenerator : MonoBehaviour
 		int index = placedRooms.FindIndex(a => (GameObject.ReferenceEquals(a.gameObject, room.gameObject)));
 
 		for(int i = 0; i < placedRooms.Count; i++)
-        {
-			if (i + 4 <= index || i - 4 >= index) placedRooms[i].gameObject.SetActive(false);
-			else placedRooms[i].gameObject.SetActive(true);
-        }
+			placedRooms[i].gameObject.SetActive(!(i + 4 <= index || i - 4 >= index));
+
+        
     }
 
     void ConnectRoomActivator()
