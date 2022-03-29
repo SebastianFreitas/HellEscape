@@ -5,8 +5,7 @@ using UnityEngine;
 public class RoomActivator : MonoBehaviour
 {
     [SerializeField] GameObject[] doorMesh;
-    [SerializeField] Monster[] monstersRed;
-    [SerializeField] Monster[] monstersBlue;
+
     [SerializeField] GameObject lights;
 
     [SerializeField] GameObject healthPack;
@@ -189,22 +188,32 @@ public class RoomActivator : MonoBehaviour
                 }
         }
     }
-    private Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite)
+    private Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss)
     {
         Monster currentMob;
+        Monster spawn;
+
         switch (influcence)
         {
             case AreaType.Blue:
-                currentMob = Instantiate(monstersBlue[0], position, rotation, transform);
+                if (Isboss) spawn = roomgen.BossBlue[0];
+                else spawn = roomgen.monstersBlue[0];
+
+                currentMob = Instantiate(spawn, position, rotation, transform);
+
                 currentMob.isElite = elite;
                 return currentMob;
 
             case AreaType.Red:
-                currentMob = Instantiate(monstersRed[0], position, rotation, transform);
+                if (Isboss) spawn = roomgen.BossRed[0];
+                else spawn = roomgen.monstersRed[0];
+
+                currentMob = Instantiate(roomgen.monstersRed[0], position, rotation, transform);
+
                 currentMob.isElite = elite;
                 return currentMob;
         }
-        currentMob = Instantiate(monstersRed[0], position, rotation, transform);
+        currentMob = Instantiate(roomgen.monstersRed[0], position, rotation, transform);
         return currentMob;
     }
 
@@ -224,9 +233,9 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnElite()
     {
-        Monster mob = SpawnByInfluence(spawnPos.position,spawnPos.rotation, true);
+        Monster mob = SpawnByInfluence(spawnPos.position,spawnPos.rotation, true, false);
         mob.TurnElite();
-        mob = SpawnByInfluence(spawnPos.position, spawnPos.rotation, true);
+        mob = SpawnByInfluence(spawnPos.position, spawnPos.rotation, true, false);
         mob.TurnElite();
 
         CloseDoors();
@@ -246,7 +255,7 @@ public class RoomActivator : MonoBehaviour
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
             Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds);
-            SpawnByInfluence(randomPoint, Quaternion.identity, elite);
+            SpawnByInfluence(randomPoint, Quaternion.identity, elite, false);
             numberOfEnemies++;
         }
 
@@ -258,7 +267,7 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnBoss()
     {
-        SpawnByInfluence(spawnPos.position, Quaternion.identity, false);
+        SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true);
         numberOfEnemies++;
         CloseDoors();
         ClearTrigger();

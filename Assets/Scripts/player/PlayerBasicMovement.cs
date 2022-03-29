@@ -338,7 +338,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void IsGrounded()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask, QueryTriggerInteraction.Ignore);
 
 
         if ((controller.collisionFlags & CollisionFlags.Below) != 0)
@@ -351,7 +351,7 @@ public class PlayerBasicMovement : MonoBehaviour
             //inputLocked = true;
             isGrounded = false;
         }
-        if (Physics.Raycast(transform.position, Vector3.down, controller.height / 2 +0.4f))
+        if (Physics.Raycast(transform.position, Vector3.down, controller.height / 2 +0.4f, groundMask, QueryTriggerInteraction.Ignore))
             isGrounded = true;
     }
 

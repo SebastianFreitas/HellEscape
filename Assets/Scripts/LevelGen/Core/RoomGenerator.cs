@@ -17,10 +17,16 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] List<Room> corridorPrefabs = new List<Room>();
 
 	[SerializeField] internal GameObject choseSpecial;
-	[SerializeField]internal GameObject itemRoom;
-	[SerializeField]internal GameObject changeInfluence;
-	[SerializeField]internal GameObject shop;
+	[SerializeField] internal GameObject itemRoom;
+	[SerializeField] internal GameObject changeInfluence;
+	[SerializeField] internal GameObject shop;
 	[SerializeField] internal GameObject influenceItem;
+
+	[SerializeField]internal Monster[] monstersRed;
+	[SerializeField]internal Monster[] monstersBlue;
+					
+	[SerializeField]internal Monster[] BossRed;
+	[SerializeField] internal Monster[] BossBlue;
 
 
 	List<Doorway> availableDoorways = new List<Doorway>();
