@@ -82,16 +82,16 @@ public class GameMan : ModDataRoom
     {
         hub.gameObject.SetActive(true);
 
-        player.GetComponentInChildren<MouseLook>().enabled = false;
-        player.GetComponent<PlayerBasicMovement>().enabled = false;
+        //player.GetComponentInChildren<MouseLook>().enabled = false;
+        //player.GetComponent<PlayerBasicMovement>().enabled = false;
         player.GetComponent<CharacterController>().enabled = false;
 
         player.transform.position = hub.statspos.position;
         player.transform.rotation = hub.statspos.rotation;
 
         player.GetComponent<CharacterController>().enabled = true;
-        player.GetComponentInChildren<MouseLook>().enabled = true;
-        player.GetComponent<PlayerBasicMovement>().enabled = true;
+        //player.GetComponentInChildren<MouseLook>().enabled = true;
+        //player.GetComponent<PlayerBasicMovement>().enabled = true;
 
         currentStartPos = hub.statspos.position;
     }
