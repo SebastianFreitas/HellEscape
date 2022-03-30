@@ -245,7 +245,7 @@ internal class InfluenceEffect : PlayerAcess
 
     internal void MoreMob()
     {
-        generator.mission.encounterMobCount *= 2;
+        generator.mission.doubleMobs = true;
     }
     ///////////Red
     internal void FasterMob()

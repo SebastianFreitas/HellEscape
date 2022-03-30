@@ -277,7 +277,8 @@ public class ModDataRoom : MonoBehaviour
         internal bool doubleLife = false;
         internal bool doubleDrops = false;
         internal bool deathExplosion = false;
-        internal bool tick;
+        internal bool tick = false;
+        internal bool doubleMobs  = false;
 
         public void createPositives()
         {

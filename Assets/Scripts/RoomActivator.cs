@@ -232,6 +232,7 @@ public class RoomActivator : MonoBehaviour
                 else spawn = roomgen.monstersBlue[0];
 
                 currentMob = Instantiate(spawn, position, rotation, transform);
+                if (roomgen.mission.doubleMobs) 
 
                 currentMob.isElite = elite;
                 return currentMob;
@@ -262,17 +263,6 @@ public class RoomActivator : MonoBehaviour
         TurnLightsRed();
     }
 
-    private void SpawnElite()
-    {
-        Monster mob = SpawnByInfluence(spawnPos.position,spawnPos.rotation, true, false);
-        mob.TurnElite();
-        mob = SpawnByInfluence(spawnPos.position, spawnPos.rotation, true, false);
-        mob.TurnElite();
-
-        CloseDoors();
-        ClearTrigger();
-    }
-
     internal void SpawnCraftingBench()
     {
         Instantiate(roomgen.CraftingBench, spawnPos.position, spawnPos.rotation, transform);
@@ -281,6 +271,8 @@ public class RoomActivator : MonoBehaviour
 
     internal void SpawnEncounter(int totalMobs, bool elite)
     {
+        if (roomgen.mission.doubleMobs) totalMobs *= 2;
+
         for (int i = 0; i < totalMobs; i++)
         {
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
@@ -298,7 +290,14 @@ public class RoomActivator : MonoBehaviour
     {
         SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true);
         numberOfEnemies++;
+
+        if (roomgen.mission.doubleMobs)
+        {
+            SpawnByInfluence(spawnPos.position + Vector3.forward, Quaternion.identity, false, true);
+            numberOfEnemies++;
+        }
         CloseDoors();
+
         ClearTrigger();
     }
 
