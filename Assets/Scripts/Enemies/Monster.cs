@@ -88,12 +88,10 @@ public class Monster : MonoBehaviour
     IEnumerator Tick()
     {
         isTick = true;
-        var interval = new WaitForSeconds(Random.Range(0f,7f));
         while (true)
         {
-            interval = new WaitForSeconds(Random.Range(0, .3f));
-            yield return interval;
-            rigidBody.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 50f);
+            yield return new WaitForSeconds(Random.Range(.3f, .9f));
+            rigidBody.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 500f);
         }
 
     }
@@ -177,7 +175,7 @@ public class Monster : MonoBehaviour
             {
                 var explo = Instantiate(explosion, transform.position, transform.rotation, transform);
                 explo.transform.parent = null;
-                explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 10f);
+                explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 5f);
             }
                 
             roomActivator.IsEncounterDone();

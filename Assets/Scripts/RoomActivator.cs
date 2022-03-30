@@ -150,6 +150,7 @@ public class RoomActivator : MonoBehaviour
         {
             case MainType.choiceSpecial:
                 Instantiate(roomgen.choseSpecial, spawnPos.position, Quaternion.identity, transform);
+                foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
                 break;
 
