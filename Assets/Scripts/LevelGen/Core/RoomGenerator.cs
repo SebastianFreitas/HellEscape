@@ -92,8 +92,14 @@ public class RoomGenerator : MonoBehaviour
 					var x = Random.Range(1, 4);
 					bool worked;
 					if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
+					else
+					{
+						x = Random.Range(1, 4);
+						var type = RoomActivator.RoomType.Encounter;
+						if (x == 1) type = RoomActivator.RoomType.Trap;
 
-					else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
+						worked = PlaceRoom(mainRooms[rando], true, type);
+					}
 
 					if (worked) break;
                 }
@@ -473,6 +479,8 @@ public class RoomGenerator : MonoBehaviour
 
 			}
 		}
+
+		this.influence = influence;
 	}
 }
 

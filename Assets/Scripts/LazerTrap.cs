@@ -6,7 +6,7 @@ public class LazerTrap : MonoBehaviour
 {
     private LineRenderer lr;
 
-    [SerializeField] private bool isRotating = true;
+    [SerializeField] private bool isRotating = false;
     [SerializeField] private float rotationSpeed = 45f;
 
     void Start()
@@ -29,12 +29,14 @@ public class LazerTrap : MonoBehaviour
             //    transform.RotateAround(transform.position, transform.up, Time.deltaTime * rotationSpeed);
             //    //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 180, 0), rotationSpeed * Time.time);
             //}
-            // else transform.rotation = Quaternion.Euler(0, 0, 0);
+            //else transform.rotation = Quaternion.Euler(0, 0, 0);
             transform.RotateAround(transform.position, transform.up, Time.deltaTime * rotationSpeed);
 
         }
 
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 100,9, QueryTriggerInteraction.Ignore))//, 10f, 1 << 2, QueryTriggerInteraction.Ignore))//, QueryTriggerInteraction.Ignore))
+        Debug.DrawRay(transform.position, transform.forward, Color.green);
+
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 100,-1, QueryTriggerInteraction.Ignore))//, 10f, 1 << 2, QueryTriggerInteraction.Ignore))//, QueryTriggerInteraction.Ignore))
         {
             if (hit.collider)
             {

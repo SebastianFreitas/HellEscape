@@ -26,6 +26,7 @@ public class RoomActivator : MonoBehaviour
         Special,
         Main,
         Corridor,
+        Trap,
     }
 
     internal enum AreaType
@@ -121,9 +122,24 @@ public class RoomActivator : MonoBehaviour
                         TurnLightsRed();
                         break;
                     }
+                    case RoomType.Trap:
+                        {
+                            ActivateTraps();
+                            break;
+                        }
                 }
             }
 
+        }
+    }
+
+    private void ActivateTraps()
+    {
+        if (trapLayouts)
+        {
+            foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
+
+            trapLayouts.transform.GetChild(trapLayouts.transform.childCount).gameObject.SetActive(true);
         }
     }
 
