@@ -78,7 +78,7 @@ public class RoomActivator : MonoBehaviour
         {
             foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
-            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount)).gameObject.SetActive(true);
+            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount -1)).gameObject.SetActive(true);
         }
 
     }

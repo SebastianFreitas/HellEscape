@@ -93,7 +93,7 @@ public class Monster : MonoBehaviour
         {
             interval = new WaitForSeconds(Random.Range(0, .3f));
             yield return interval;
-            rigidBody.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 500f);
+            rigidBody.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 50f);
         }
 
     }
@@ -212,7 +212,7 @@ public class Monster : MonoBehaviour
 
     private void TurnBig()
     {
-        transform.localScale *= 2f;
+        transform.localScale *= 3f;
         health *= 4;
         damage *= 2;
     }
