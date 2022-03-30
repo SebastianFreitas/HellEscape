@@ -8,9 +8,9 @@ public class RoomActivator : MonoBehaviour
 
     [SerializeField] GameObject lights;
 
-    [SerializeField] GameObject healthPack;
-    [SerializeField] GameObject CraftingBench;
-    [SerializeField] GameObject weaponDrop;
+
+
+    [SerializeField] GameObject trapLayouts;
 
     internal Transform spawnPos;
 
@@ -72,6 +72,14 @@ public class RoomActivator : MonoBehaviour
         foreach (GameObject door in doorMesh) door.SetActive(false);
 
         boxColliders = transform.GetComponents<BoxCollider>();
+
+        if (trapLayouts)
+        {
+            foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
+
+            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount)).gameObject.SetActive(true);
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -227,13 +235,13 @@ public class RoomActivator : MonoBehaviour
     private void SpawnWeapon()
     {
 
-        Instantiate(weaponDrop, spawnPos.position, spawnPos.rotation, transform);
+        Instantiate(roomgen.weaponDrop, spawnPos.position, spawnPos.rotation, transform);
         TurnLightsRed();
     }
 
     private void SpawnHeal()
     {
-        Instantiate(healthPack, spawnPos.position, spawnPos.rotation, transform);
+        Instantiate(roomgen.healthPack, spawnPos.position, spawnPos.rotation, transform);
         TurnLightsRed();
     }
 
@@ -250,7 +258,7 @@ public class RoomActivator : MonoBehaviour
 
     internal void SpawnCraftingBench()
     {
-        Instantiate(CraftingBench, spawnPos.position, spawnPos.rotation, transform);
+        Instantiate(roomgen.CraftingBench, spawnPos.position, spawnPos.rotation, transform);
         TurnLightsRed();
     }
 

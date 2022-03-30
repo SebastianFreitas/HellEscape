@@ -96,6 +96,8 @@ internal class InfluenceEffect : PlayerAcess
     {
         generator = roomGen;
 
+        generator.influence = RoomActivator.AreaType.Blue;
+
         SearchGood();
 
         SearchBlue();
@@ -103,7 +105,9 @@ internal class InfluenceEffect : PlayerAcess
 
     internal void PickRed(RoomGenerator roomGen)
     {
+
         generator = roomGen;
+        generator.influence = RoomActivator.AreaType.Red;
 
         SearchGood();
         SearchRed();

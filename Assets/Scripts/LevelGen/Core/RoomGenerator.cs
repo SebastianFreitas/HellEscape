@@ -22,6 +22,10 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] internal GameObject shop;
 	[SerializeField] internal GameObject influenceItem;
 
+	[SerializeField] internal GameObject healthPack;
+	[SerializeField] internal GameObject CraftingBench;
+	[SerializeField] internal GameObject weaponDrop;
+
 	[SerializeField]internal Monster[] monstersRed;
 	[SerializeField]internal Monster[] monstersBlue;
 					
@@ -116,6 +120,8 @@ public class RoomGenerator : MonoBehaviour
 		isGenerated = true;
 	}
 
+    internal RoomActivator.AreaType influence;
+
     internal void ManageRoomsEficiency(Room room)
     {
 		int index = placedRooms.FindIndex(a => (GameObject.ReferenceEquals(a.gameObject, room.gameObject)));
@@ -135,6 +141,7 @@ public class RoomGenerator : MonoBehaviour
             {
 				x.mission = mission;
 				x.gameObject.SetActive(true);
+				x.influcence = influence;
 			}
         }
 
@@ -143,7 +150,8 @@ public class RoomGenerator : MonoBehaviour
             var x = room.gameObject.GetComponentInChildren<RoomActivator>();
             if (x)
             {
-                x.mission = mission;
+				x.influcence = influence;
+				x.mission = mission;
                 x.gameObject.SetActive(true);
             }
         }
