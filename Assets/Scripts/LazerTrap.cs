@@ -6,8 +6,8 @@ public class LazerTrap : MonoBehaviour
 {
     private LineRenderer lr;
 
-    [SerializeField] private bool isRotating;
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private bool isRotating = true;
+    [SerializeField] private float rotationSpeed = 45f;
 
     void Start()
     {
@@ -20,21 +20,21 @@ public class LazerTrap : MonoBehaviour
     {
         lr.SetPosition(0, transform.position);
 
-        Vector3 to = new Vector3(-1, 0, 0);
         if (isRotating)
         {
-            Debug.Log(transform.rotation.y);
-            if (transform.rotation.y < .99f)
-            {
-                transform.RotateAround(transform.position, transform.up, Time.deltaTime * rotationSpeed);
-                //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 180, 0), rotationSpeed * Time.time);
-            }
-             else transform.rotation = Quaternion.Euler(0, 0, 0);
-            
+
+            //Debug.Log(transform.rotation.y);
+            //if (transform.rotation.y < .99f)
+            //{
+            //    transform.RotateAround(transform.position, transform.up, Time.deltaTime * rotationSpeed);
+            //    //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 180, 0), rotationSpeed * Time.time);
+            //}
+            // else transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.RotateAround(transform.position, transform.up, Time.deltaTime * rotationSpeed);
 
         }
 
-        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 10f, LayerMask.GetMask("Enemy"), QueryTriggerInteraction.Ignore))//, QueryTriggerInteraction.Ignore))
+        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 100,9, QueryTriggerInteraction.Ignore))//, 10f, 1 << 2, QueryTriggerInteraction.Ignore))//, QueryTriggerInteraction.Ignore))
         {
             if (hit.collider)
             {

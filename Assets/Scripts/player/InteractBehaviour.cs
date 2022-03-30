@@ -34,7 +34,7 @@ public class InteractBehaviour : MonoBehaviour
         if (Input.GetKeyDown("e"))
         {
             Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-            if (Physics.Raycast(ray, out hit, 10f, rayMask) )
+            if (Physics.Raycast(ray, out hit, 10f, rayMask, QueryTriggerInteraction.Collide) )
             {
 
                 if (hit.transform.CompareTag("Item")) hit.collider.transform.GetComponent<Item>().CollectItem();

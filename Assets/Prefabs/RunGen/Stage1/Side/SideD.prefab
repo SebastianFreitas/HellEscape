@@ -2370,9 +2370,7 @@ MonoBehaviour:
   doorMesh:
   - {fileID: 7687821996492053709}
   lights: {fileID: 2568958879630138064}
-  healthPack: {fileID: 1854425252707494, guid: b1f79bc72c7086542a923e6545cc40d2, type: 3}
-  CraftingBench: {fileID: 7504267620506780682, guid: 7ee722c17de293f429bd3112fa9921bb, type: 3}
-  weaponDrop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
+  trapLayouts: {fileID: 0}
 --- !u!1 &2344206792403611153
 GameObject:
   m_ObjectHideFlags: 0
@@ -4827,14 +4825,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5114935617298818047}
-  m_LocalRotation: {x: -0, y: 0.000000014901161, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 2, z: -18}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.00000016391276}
+  m_LocalPosition: {x: -15, y: 2, z: 24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7687821996491555053}
   m_Father: {fileID: 895268928207283103}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &321621606739653455
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9603,7 +9601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8966627916916610821, guid: 711016e15dc0bf14c91cd472ebddb879, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.0000012
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8966627916916610821, guid: 711016e15dc0bf14c91cd472ebddb879, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9611,7 +9609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8966627916916610821, guid: 711016e15dc0bf14c91cd472ebddb879, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 42.01
+      value: -0.0000009834765
       objectReference: {fileID: 0}
     - target: {fileID: 8966627916916610821, guid: 711016e15dc0bf14c91cd472ebddb879, type: 3}
       propertyPath: m_LocalRotation.w
