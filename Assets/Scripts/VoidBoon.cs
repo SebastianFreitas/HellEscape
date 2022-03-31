@@ -11,14 +11,17 @@ internal class VoidBoon
 
     internal List<(int, BoonName)> boonListWeight = new List<(int, BoonName)>();
 
-    internal List<(string, BoonName, BoonType)> boonListText = new List<(string, BoonName, BoonType)>();
+    internal List<(string, BoonName)> boonListText = new List<(string, BoonName)>();
     internal VoidBoon(bool isInfluence, BoonType type)
     {
+        influence = type;
+
         if (isInfluence)
         {
            switch (type)
             {
                 case BoonType.Red:
+
                     GetBoonListTextRed();
                     GetBoonListWeightRed();
                     break;
@@ -49,22 +52,37 @@ internal class VoidBoon
     private void GetBoonListText()
     {
 
-        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1,BoonType.Normal));
+        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
+        boonListText.Add(("Gain 20 Max Health", BoonName.MaxHp2));
+        boonListText.Add(("Gain 30 Max Health", BoonName.MaxHp3));
+        //convert all of your damage randomly each shot
+        //heal full hp gain 100 max hp at most
+
     }
 
     private void GetBoonListTextRed()
     {
-        boonListText.Add(("Lose 50% of you max hp \n deal +10 fire damage", BoonName.Greed, BoonType.Red));
+        boonListText.Add(("Lose 20 max hp \n deal +10 fire damage", BoonName.Greed));
+        //whenever you dash deal aoe fire dmg
+        //convert all of your damage to fire damage
+
     }
 
     private void GetBoonListTextBlue()
     {
+        boonListText.Add(("", BoonName.Greed));
+        //cold damage becomes horizontal slices
+        //lose fire rate gain damage
+        //next time you die come back to life at 50% hp
+
 
     }
 
     private void GetBoonListWeight()
     {
         boonListWeight.Add((100, BoonName.MaxHp1));
+        boonListWeight.Add((10, BoonName.MaxHp2));
+        boonListWeight.Add((1, BoonName.MaxHp3));
     }
 
     private void GetBoonListWeightRed()
@@ -97,8 +115,10 @@ internal class VoidBoon
 
     internal enum BoonName
     {
+        MaxHp2,
+        Greed,
         MaxHp1,
-        Greed
+        MaxHp3
     }
 
     internal PlayerBasicMovement playerMov;
@@ -110,12 +130,12 @@ internal class VoidBoon
     {
         switch (name)
         {
-            case BoonName.MaxHp1:
+            case BoonName.MaxHp2:
                 Maxhp1(gain);
                 break;
 
             case BoonName.Greed:
-                Greed();
+                Greed(gain);
                 break;
         }
 
@@ -137,9 +157,19 @@ internal class VoidBoon
     }
 
     //red
-    internal void Greed()
+    internal void Greed(bool gain)
     {
-        //
-        //
+        if (gain)
+        {
+            playerHP.ChangeMaxHP(-20);
+            playerInv.additionalFireDamage += 10;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerHP.ChangeMaxHP(20);
+            playerInv.additionalFireDamage -= 10;
+            playerInv.listBoons.Remove(this);
+        }
     }
 }

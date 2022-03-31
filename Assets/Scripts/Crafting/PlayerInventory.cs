@@ -14,6 +14,9 @@ public class PlayerInventory : MonoBehaviour
     internal List<VoidBoon> listBoons = new List<VoidBoon>();
     internal int weaponLevel = 10;
 
+    //player stats
+    internal int additionalFireDamage = 0;
+
     internal void LooseBoons()
     {
         foreach(var current in listBoons.ToArray())
