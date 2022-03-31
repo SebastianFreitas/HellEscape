@@ -11,12 +11,31 @@ internal class VoidBoon
 
     internal List<(int, BoonName)> boonListWeight = new List<(int, BoonName)>();
 
-    internal List<(string, BoonName)> boonListText = new List<(string, BoonName)>();
-    internal VoidBoon()
+    internal List<(string, BoonName, BoonType)> boonListText = new List<(string, BoonName, BoonType)>();
+    internal VoidBoon(bool isInfluence, BoonType type)
     {
-        GetBoonListWeight();
+        if (isInfluence)
+        {
+           switch (type)
+            {
+                case BoonType.Red:
+                    GetBoonListTextRed();
+                    GetBoonListWeightRed();
+                    break;
 
-        GetBoonListText();
+                case BoonType.Blue:
+                    GetBoonListTextBlue();
+                    GetBoonListWeightBlue();
+                    break;
+            }
+        }
+        else
+        {
+            GetBoonListWeight();
+            GetBoonListText();
+        }
+
+
 
         List<BoonName> weightList = GetWeightList(boonListWeight);
         name = weightList[Random.Range(0, weightList.Count)];
@@ -29,15 +48,34 @@ internal class VoidBoon
 
     private void GetBoonListText()
     {
-        boonListText.Add(("Lose 50% of you max hp \n deal +10 fire damage", BoonName.Greed));
-        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
+
+        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1,BoonType.Normal));
+    }
+
+    private void GetBoonListTextRed()
+    {
+        boonListText.Add(("Lose 50% of you max hp \n deal +10 fire damage", BoonName.Greed, BoonType.Red));
+    }
+
+    private void GetBoonListTextBlue()
+    {
 
     }
 
     private void GetBoonListWeight()
     {
-        boonListWeight.Add((1, BoonName.Greed));
         boonListWeight.Add((100, BoonName.MaxHp1));
+    }
+
+    private void GetBoonListWeightRed()
+    {
+        boonListWeight.Add((1, BoonName.Greed));
+
+    }
+
+    private void GetBoonListWeightBlue()
+    {
+
     }
 
     private List<BoonName> GetWeightList(List<(int, BoonName)> boonList)
@@ -53,7 +91,8 @@ internal class VoidBoon
     internal enum BoonType
     {
         Blue,
-        Red
+        Red,
+        Normal
     }
 
     internal enum BoonName
@@ -100,7 +139,6 @@ internal class VoidBoon
     //red
     internal void Greed()
     {
-        text = "Lose 50% of you max hp \n deal +10 fire damage";
         //
         //
     }

@@ -68,18 +68,18 @@ internal class InfluenceEffect : PlayerAcess
     private bool goodRed = false;
 
     internal RoomActivator.AreaType influenceType;
-    internal InfluenceEffect(RoomActivator.AreaType contact)
+    internal InfluenceEffect(VoidBoon.BoonType contact)
     {
         base.Awake();
  
         switch (contact)
         {
-            case RoomActivator.AreaType.Blue:
+            case VoidBoon.BoonType.Blue:
                 goodRed = true;
                 influenceType = RoomActivator.AreaType.Blue;
                 break;
 
-            case RoomActivator.AreaType.Red:
+            case VoidBoon.BoonType.Red:
                 goodBlue = true;
                 influenceType = RoomActivator.AreaType.Red;
                 break;
@@ -96,7 +96,7 @@ internal class InfluenceEffect : PlayerAcess
     {
         generator = roomGen;
 
-        generator.influence = RoomActivator.AreaType.Blue;
+        generator.influence = VoidBoon.BoonType.Blue;
 
         SearchGood();
 
@@ -107,7 +107,7 @@ internal class InfluenceEffect : PlayerAcess
     {
 
         generator = roomGen;
-        generator.influence = RoomActivator.AreaType.Red;
+        generator.influence = VoidBoon.BoonType.Red;
 
         SearchGood();
         SearchRed();

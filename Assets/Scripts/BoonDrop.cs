@@ -9,7 +9,7 @@ public class BoonDrop : MonoBehaviour
 
     private void Awake()
     {
-        boon = new VoidBoon();
+        boon = new VoidBoon(false, GetComponentInParent<RoomActivator>().influcence);
         boon.player = GameObject.FindGameObjectsWithTag("Dude")[0];
         boon.playerHP = boon.player.GetComponent<PlayerHpManager>();
         boon.playerInv = boon.player.GetComponent<PlayerInventory>();

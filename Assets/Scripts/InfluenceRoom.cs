@@ -58,7 +58,7 @@ public class InfluenceRoom : MonoBehaviour
 
         influenceEffect.PickBlue(roomActivator.GetComponentInParent<RoomGenerator>());
 
-        FindObjectOfType<RoomGenerator>().ChangeInfluence(RoomActivator.AreaType.Blue);
+        FindObjectOfType<RoomGenerator>().ChangeInfluence(VoidBoon.BoonType.Blue);
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"));
         DisableEvent();
     }
@@ -66,7 +66,7 @@ public class InfluenceRoom : MonoBehaviour
     internal void TurnRed()
     {
         influenceEffect.PickRed(roomActivator.GetComponentInParent<RoomGenerator>());
-        FindObjectOfType<RoomGenerator>().ChangeInfluence(RoomActivator.AreaType.Red);
+        FindObjectOfType<RoomGenerator>().ChangeInfluence(VoidBoon.BoonType.Red);
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
         DisableEvent();
     }

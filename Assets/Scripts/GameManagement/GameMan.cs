@@ -141,13 +141,10 @@ public class GameMan : ModDataRoom
             run[i].mission = mission;
             run[i].player = player;
         }
-        //run[i] = null;
 
-
-        //roomGen.StartCoroutine("GenerateLevel");
         roomGen.StartRun(mis);
 
-        StartCoroutine("LoadingScreen");
+        //StartCoroutine("LoadingScreen");
         
     }
 

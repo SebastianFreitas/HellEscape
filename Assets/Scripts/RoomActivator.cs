@@ -57,7 +57,7 @@ public class RoomActivator : MonoBehaviour
 
     internal RoomType roomType;
     internal MainType mainType;
-    internal AreaType influcence = AreaType.Red;
+    internal VoidBoon.BoonType influcence = VoidBoon.BoonType.Red;
 
     internal ModDataRoom.GeneratedMission mission;
     internal bool beenTrigered;
@@ -78,7 +78,7 @@ public class RoomActivator : MonoBehaviour
         {
             foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
-            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount -1)).gameObject.SetActive(true);
+            
         }
 
     }
@@ -98,13 +98,15 @@ public class RoomActivator : MonoBehaviour
                     case RoomType.Boss:
                     {
                         SpawnBoss();
-                        break;
+                            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
+                            break;
                     }
 
                     case RoomType.Encounter:
                     {
                         SpawnEncounter(Random.Range(2,mission.encounterMobCount), false);
-                        break;
+                            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
+                            break;
                     }
 
                     case RoomType.Special:
@@ -123,10 +125,10 @@ public class RoomActivator : MonoBehaviour
                         break;
                     }
                     case RoomType.Trap:
-                        {
-                            ActivateTraps();
-                            break;
-                        }
+                    {
+                        ActivateTraps();
+                        break;
+                    }
                 }
             }
 
@@ -139,7 +141,7 @@ public class RoomActivator : MonoBehaviour
         {
             foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
-            trapLayouts.transform.GetChild(trapLayouts.transform.childCount).gameObject.SetActive(true);
+            trapLayouts.transform.GetChild(trapLayouts.transform.childCount -1).gameObject.SetActive(true);
         }
     }
 
@@ -197,6 +199,7 @@ public class RoomActivator : MonoBehaviour
             case SpecialType.Hard:
                 {
                     SpawnEncounter(Random.Range(2, mission.encounterMobCount), true);
+                    trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
 
                     break;
                 }
@@ -210,6 +213,7 @@ public class RoomActivator : MonoBehaviour
             case SpecialType.Extreme:
                 {
                     SpawnEncounter(Random.Range(mission.encounterMobCount, mission.encounterMobCount*2), true);
+                    trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
                     break;
                 }
             case SpecialType.weapon:
@@ -227,7 +231,7 @@ public class RoomActivator : MonoBehaviour
 
         switch (influcence)
         {
-            case AreaType.Blue:
+            case VoidBoon.BoonType.Blue:
                 if (Isboss) spawn = roomgen.BossBlue[0];
                 else spawn = roomgen.monstersBlue[0];
 
@@ -237,7 +241,7 @@ public class RoomActivator : MonoBehaviour
                 currentMob.isElite = elite;
                 return currentMob;
 
-            case AreaType.Red:
+            case VoidBoon.BoonType.Red:
                 if (Isboss) spawn = roomgen.BossRed[0];
                 else spawn = roomgen.monstersRed[0];
 
@@ -344,11 +348,11 @@ public class RoomActivator : MonoBehaviour
 
         switch (influcence)
         {
-            case AreaType.Blue:
+            case VoidBoon.BoonType.Blue:
                 foreach (Light light in lightsComponent) light.color = Color.blue;
                 break;
 
-            case AreaType.Red:
+            case VoidBoon.BoonType.Red:
                 foreach (Light light in lightsComponent) light.color = Color.red;
                 break;
         }

@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
 {
-    [SerializeField] Room corridor1;
+
+	[SerializeField] GameObject player;
+
+	[SerializeField] Room corridor1;
 	[SerializeField] Room corridorLight;
 
 	[SerializeField] Room wall;
@@ -56,6 +59,8 @@ public class RoomGenerator : MonoBehaviour
 
     internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
 	{
+		player.SetActive(false);
+
 		Clean();
 		WaitForSeconds startup = new WaitForSeconds(.2f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
@@ -118,15 +123,28 @@ public class RoomGenerator : MonoBehaviour
 
 		if (!PlaceEndRoom()) ResetLevelGenerator();
 
-		yield return startup;
+
 		//fill the rest of the level
 		FillEmptyDoors();
 		ConnectRoomActivator();
 
+
+		for (int i = 1; i < placedRooms.Count; i++)
+			placedRooms[i].gameObject.SetActive(false);
+
+		startRoom.gameObject.SetActive(true);
+
+		player.SetActive(true);
+		player.GetComponent<CharacterController>().enabled = false;
+		player.transform.position = currentStartPos;
+		player.GetComponent<CharacterController>().enabled = true;
+		Debug.Log("finished");
+
 		isGenerated = true;
+		started = false;
 	}
 
-    internal RoomActivator.AreaType influence;
+    internal VoidBoon.BoonType influence = VoidBoon.BoonType.Red;
 
     internal void ManageRoomsEficiency(Room room)
     {
@@ -145,8 +163,9 @@ public class RoomGenerator : MonoBehaviour
 			var x = room.gameObject.GetComponentInChildren<RoomActivator>();
             if (x)
             {
-				x.mission = mission;
 				x.gameObject.SetActive(true);
+				x.mission = mission;
+
 				x.influcence = influence;
 			}
         }
@@ -155,10 +174,11 @@ public class RoomGenerator : MonoBehaviour
         {
             var x = room.gameObject.GetComponentInChildren<RoomActivator>();
             if (x)
-            {
+            {                
+				x.gameObject.SetActive(true);
 				x.influcence = influence;
 				x.mission = mission;
-                x.gameObject.SetActive(true);
+
             }
         }
     }
@@ -228,6 +248,7 @@ public class RoomGenerator : MonoBehaviour
 				}
 			}
 		}
+
 		List<int> done = new List<int>();
 		int i = 0;
         while (true)
@@ -291,10 +312,13 @@ public class RoomGenerator : MonoBehaviour
 	internal ModDataRoom.GeneratedMission mission;
     private int counter = 0;
 
-    internal void StartRun(ModDataRoom.GeneratedMission mis)
+	private bool started = false;
+
+	internal void StartRun(ModDataRoom.GeneratedMission mis)
     {
 		mission = mis;
-		StartCoroutine(GenerateLevel()); 
+		if (!started) StartCoroutine("GenerateLevel");
+		started = true;
     }
 
     void PlaceStartRoom()
@@ -431,7 +455,9 @@ public class RoomGenerator : MonoBehaviour
 
 	void ResetLevelGenerator()
     {
-        Debug.LogError("Reset level generator");
+		isGenerated = false;
+
+		Debug.LogError("Reset level generator");
 
         StopCoroutine("GenerateLevel");
 
@@ -446,7 +472,7 @@ public class RoomGenerator : MonoBehaviour
         StartCoroutine("GenerateLevel");
     }
 
-	internal void ChangeInfluence(RoomActivator.AreaType influence)
+	internal void ChangeInfluence(VoidBoon.BoonType influence)
     {
 		foreach(var current in placedRooms)
         {
