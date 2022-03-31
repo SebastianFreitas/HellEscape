@@ -12,6 +12,7 @@ public class PlayerInventory : MonoBehaviour
     public Gun playerGun;
 
     internal List<VoidBoon> listBoons = new List<VoidBoon>();
+    internal int weaponLevel = 10;
 
     internal void LooseBoons()
     {
@@ -27,9 +28,9 @@ public class PlayerInventory : MonoBehaviour
         inventoryUI.RemoveWeapon(gun, true); 
     }
 
-    internal void DestroyGun(GunOfAType gun)
+    internal void DestroyGun(GunOfAType gun, int reward)
     {
-        UpdateGunParts(gun.level * (gun.mods.Count + 1));
+        UpdateGunParts(reward);
         inventoryUI.RemoveWeapon(gun, false);
     }
 

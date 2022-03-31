@@ -25,7 +25,7 @@ public class RemoveMod : MonoBehaviour
 
     public void UpdatePricetext()
     {
-        price.text = formatedString.Replace("{value}", (craftingTable.gun.level * (1 + craftingTable.gun.mods.Count)) * 2 * timesUsed + "");
+        price.text = formatedString.Replace("{value}", craftingTable.GetRemoveModPrice() * timesUsed + "");
     }
 
     private void OnEnable()

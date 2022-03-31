@@ -33,11 +33,9 @@ public class Destroy : MonoBehaviour
 
     public void UpdatePriceText()
     {
-        if (craftingTable.gun.isBase) formatedString.Replace("{value}", 0 + "");
-        else
-        {
-            parts.text = formatedString.Replace("{value}", (2 * craftingTable.gun.level * (craftingTable.gun.mods.Count + 1)) + "");
-        }
+
+            parts.text = formatedString.Replace("{value}", craftingTable.GetDestroyReward() + "");
+
 
     }
 

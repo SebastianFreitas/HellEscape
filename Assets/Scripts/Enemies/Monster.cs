@@ -76,6 +76,8 @@ public class Monster : MonoBehaviour
 
         if (mission.tick) StartCoroutine("Tick");
 
+        if (isElite) TurnElite();
+
 
     }
 

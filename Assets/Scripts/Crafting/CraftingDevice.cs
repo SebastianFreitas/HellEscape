@@ -31,10 +31,16 @@ public class CraftingDevice : GunGenerator
 
     public Material green;
     public Material yellow;
+
+
+
     public Material red;
     public Material blue;
 
     public int weaponParts;
+
+
+
     public TMPro.TextMeshPro weaponPartsText;
 
     public PlayerInventory playerInventory;
@@ -59,19 +65,37 @@ public class CraftingDevice : GunGenerator
 
         player = GameObject.FindGameObjectsWithTag("Dude")[0];
         playerInventory = player.GetComponent<PlayerInventory>();
-        
 
-        gun = CreateWeaponEmpty();
+        slotGuns.SelectSlot(0);
+        //gun = CreateWeaponEmpty();
 
         //slotGuns.GetGeneratedGuns();
         //slotGuns.GetGunLayout();
+    }
+    internal int GetRemoveModPrice()
+    {
+        if (gun != null) return (gun.level - 9) * (gun.mods.Count + 1);
+        else return 1000;
+        
+    }
+
+    internal int GetAddModPrice()
+    {
+        if (gun != null) return (gun.level - 9) * (gun.mods.Count + 1);
+        else return 1000;
+    }
+
+    internal int GetDestroyReward()
+    {
+        if (gun != null) return (gun.level - 9) * (gun.mods.Count + 1) *2;
+        else return 1000;
     }
 
     internal void DestroyGun()
     {
         if (playerInventory.GetGeneratedGunsLength()+playerInventory.GetLayoutLength() >1)
         {
-            playerInventory.DestroyGun(this.gun);
+            playerInventory.DestroyGun(this.gun, GetDestroyReward());
 
             slotGuns.GetGunLayout();
             slotGuns.GetGeneratedGuns();
@@ -108,15 +132,6 @@ public class CraftingDevice : GunGenerator
         if (playerInventory.GetGeneratedGunsLength() == 1) return 2;
         if (playerInventory.GetLayoutLength() < 8)
         {
-            //if (!(slotGuns.SelectRandomGun()))
-            //{
-            //    //slotGuns.SelectSlot(0);
-            //    //Gun y = player.GetComponentInChildren<Gun>();
-            //    //y.EquipBaseGun();
-            //    //ReadWeapon(null, y.gun);
-            //    return 2;
-
-            //}
             playerInventory.DisassembleGun(gun);
 
             slotGuns.GetGunLayout();
@@ -133,10 +148,10 @@ public class CraftingDevice : GunGenerator
     internal int RemoveRandomMod(int timesUsed)
     {
         if (gun.mods.Count == 0) return 1;
-        if ((gun.level * (1 + gun.mods.Count) * 2 )* timesUsed > playerInventory.gunParts) return 2;
+        if ((GetRemoveModPrice())* timesUsed > playerInventory.gunParts) return 2;
 
 
-        playerInventory.UpdateGunParts(-(gun.level * (1 + gun.mods.Count) * 2) * timesUsed);
+        playerInventory.UpdateGunParts(-(GetRemoveModPrice() * timesUsed));
         int i = Random.Range(0, gun.mods.Count);
         int a = 0;
         foreach(Mod x in gun.mods)
@@ -175,7 +190,7 @@ public class CraftingDevice : GunGenerator
     public int AddNewMod(int timesUsed)
     {
         var worked = 0;
-        var price = (gun.level * (1 + gun.mods.Count)) * timesUsed;
+        var price = GetAddModPrice() * timesUsed;
         if (gun.mods.Count == 6) return worked;
         else
         {

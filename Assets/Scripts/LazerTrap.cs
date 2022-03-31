@@ -16,7 +16,7 @@ public class LazerTrap : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         lr.SetPosition(0, transform.position);
 
