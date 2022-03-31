@@ -93,12 +93,7 @@ public class MissionSelector : ModDataRoom
 
     internal void EnableSelector()
     {
-        //for (int i = 0; i < buttons.transform.childCount; i++)
-        //{
-        //    var child = buttons.transform.GetChild(i).gameObject;
-        //    if (child != null)
-        //        child.SetActive(true);
-        //}
+
 
         buttons.SetActive(true);
 

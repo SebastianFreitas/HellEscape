@@ -69,7 +69,7 @@ public class RoomGenerator : MonoBehaviour
 
 		// Place start room
 		PlaceStartRoom();
-
+		yield return startup;
 		int influencePos = Random.Range(1,5);
 		//place pathway
 		for (int i = 1; i <=20+mission.aditionalLength; i++)
@@ -122,13 +122,13 @@ public class RoomGenerator : MonoBehaviour
 		PlaceCorridor(20);
 
 		if (!PlaceEndRoom()) ResetLevelGenerator();
-
+		yield return startup;
 
 		//fill the rest of the level
 		FillEmptyDoors();
 		ConnectRoomActivator();
 
-
+		yield return startup;
 		for (int i = 1; i < placedRooms.Count; i++)
 			placedRooms[i].gameObject.SetActive(false);
 
@@ -140,6 +140,7 @@ public class RoomGenerator : MonoBehaviour
 		player.GetComponent<CharacterController>().enabled = true;
 		Debug.Log("finished");
 
+		yield return startup;
 		isGenerated = true;
 		started = false;
 	}
@@ -272,7 +273,7 @@ public class RoomGenerator : MonoBehaviour
 		room.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Main;
 		mainCounter++;
 
-		if (mainCounter >= System.Enum.GetValues(typeof(RoomActivator.MainType)).Length - 1)
+		if (mainCounter >= System.Enum.GetValues(typeof(RoomActivator.MainType)).Length -1)
 		{
 			mainCounter = 0;
 			return true;
@@ -317,8 +318,12 @@ public class RoomGenerator : MonoBehaviour
 	internal void StartRun(ModDataRoom.GeneratedMission mis)
     {
 		mission = mis;
-		if (!started) StartCoroutine("GenerateLevel");
-		started = true;
+		if (!started)
+		{
+			started = true;
+			StartCoroutine("GenerateLevel");
+		}
+
     }
 
     void PlaceStartRoom()
@@ -455,11 +460,12 @@ public class RoomGenerator : MonoBehaviour
 
 	void ResetLevelGenerator()
     {
+
 		isGenerated = false;
 
 		Debug.LogError("Reset level generator");
 
-        StopCoroutine("GenerateLevel");
+		StopCoroutine("GenerateLevel");
 
 
 
@@ -468,8 +474,10 @@ public class RoomGenerator : MonoBehaviour
 
 	
 
-        // Reset coroutine
-        StartCoroutine("GenerateLevel");
+		// Reset coroutine
+		StartCoroutine("GenerateLevel");
+        
+
     }
 
 	internal void ChangeInfluence(VoidBoon.BoonType influence)

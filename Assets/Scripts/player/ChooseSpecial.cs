@@ -5,10 +5,15 @@ using UnityEngine;
 
 internal class ChooseSpecial:MonoBehaviour
 {
-    [SerializeField] GameObject healDrop;
+    private RoomActivator roomActi;
+
+    private void Start()
+    {
+        roomActi = GetComponentInParent<RoomActivator>();
+    }
     internal void DropHeal()
     {
-        Instantiate(healDrop, transform.localPosition, transform.rotation, transform);
+        roomActi.SpawnHeal();
         DisableEvent();
     }
 
@@ -19,28 +24,25 @@ internal class ChooseSpecial:MonoBehaviour
 
     internal void SpawnBench()
     {
-        GetComponentInParent<RoomActivator>().SpawnCraftingBench();
+        roomActi.SpawnCraftingBench();
         DisableEvent();
     }
 
     internal void NormalEncounter()
     {
-        var x = GetComponentInParent<RoomActivator>();
-        x.SpawnEncounter(Random.Range(2, x.mission.encounterMobCount), false);
+        roomActi.SpawnEncounter(Random.Range(2, roomActi.mission.encounterMobCount), false);
         DisableEvent();
     }
 
     internal void HardEncountner()
     {
-        var x = GetComponentInParent<RoomActivator>();
-        x.SpawnEncounter(Random.Range(2, x.mission.encounterMobCount), true);
+        roomActi.SpawnEncounter(Random.Range(2, roomActi.mission.encounterMobCount), true);
         DisableEvent();
     }
 
     internal void ExtremeEncounter()
     {
-        var x = GetComponentInParent<RoomActivator>();
-        x.SpawnEncounter(Random.Range(x.mission.encounterMobCount, x.mission.encounterMobCount *2), true);
+        roomActi.SpawnEncounter(Random.Range(roomActi.mission.encounterMobCount, roomActi.mission.encounterMobCount *2), true);
         DisableEvent();
     }
 }

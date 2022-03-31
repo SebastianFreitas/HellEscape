@@ -31,7 +31,6 @@ public class Portal : MonoBehaviour
             if (ishub)
             {
                 selector.StartSelectedMission();
-                Debug.Log("hee");
             }
             else
             {

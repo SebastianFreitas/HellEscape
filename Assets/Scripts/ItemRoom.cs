@@ -12,15 +12,22 @@ public class ItemRoom : MonoBehaviour
     [SerializeField] GameObject boonUI;
     [SerializeField] GameObject healUI;
 
+    private RoomActivator activator;
+
+    private void Start()
+    {
+        activator = GetComponentInParent<RoomActivator>();
+    }
+
     internal void DropWeapon()
     {
-        Instantiate(weaponDrop, transform.localPosition, transform.rotation, transform);
+        activator.SpawnWeapon();
         DisableEvent();
     }
 
     internal void DropHeal()
     {
-        Instantiate(healDrop, transform.localPosition, transform.rotation, transform);
+        activator.SpawnHeal();
         DisableEvent();
     }
 

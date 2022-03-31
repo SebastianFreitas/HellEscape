@@ -65,12 +65,6 @@ public class Monster : MonoBehaviour
         totalDropChance *= 1 + (((float)mission.increasedMonsterDrops * 3) / 100);
 
         actionSpeed += mission.increasedActionSpeed/100;
-
-        if (isElite)
-        {
-            gunparts = 10;
-            totalDropChance += 10;
-        }
         
 
 
@@ -206,6 +200,9 @@ public class Monster : MonoBehaviour
                 TurnBig();
                 break;           
         }
+
+        gunparts = 10;
+        totalDropChance += 10;
     }
 
     private void TurnBig()

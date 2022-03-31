@@ -164,6 +164,8 @@ public class RoomActivator : MonoBehaviour
 
             case MainType.redOrBlue:
                 // Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
+                Debug.Log("por fazer");
+                TurnLightsRed();
 
                 break;
 
@@ -192,7 +194,7 @@ public class RoomActivator : MonoBehaviour
             case SpecialType.Crafting:
                 {
                     SpawnCraftingBench();
- 
+                    TurnLightsRed();
                     break;
                 }
 
@@ -254,16 +256,16 @@ public class RoomActivator : MonoBehaviour
         return currentMob;
     }
 
-    private void SpawnWeapon()
+    internal void SpawnWeapon()
     {
 
-        Instantiate(roomgen.weaponDrop, spawnPos.position, spawnPos.rotation, transform);
+        Instantiate(roomgen.weaponDrop, spawnPos.position + Vector3.up, spawnPos.rotation, transform);
         TurnLightsRed();
     }
 
-    private void SpawnHeal()
+    internal void SpawnHeal()
     {
-        Instantiate(roomgen.healthPack, spawnPos.position, spawnPos.rotation, transform);
+        Instantiate(roomgen.healthPack, spawnPos.position +Vector3.up, spawnPos.rotation, transform);
         TurnLightsRed();
     }
 
