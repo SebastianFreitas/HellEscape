@@ -182,38 +182,10 @@ public class Room : MonoBehaviour
     }
 
 
-    public void killMonster()
-    {
-        monstersAlive--;
-    }
 
-    public void UseDoor()
-    {
-        if (!locked) transform.parent.parent.GetComponent<GameMan>().Next(roomType);
-    }
 
-    private IEnumerator WatchEnemies()
-    {
-        
-        yield return new WaitForSeconds(2f);
-        if (monstersAlive <= 0)
-        {
-            locked = false;
-            portal.SetActive(true);
-            
-        }
-        StartCoroutine(WatchEnemies());
-    }
 
-    private IEnumerator TimerPortalUnlock()
-    {
-        yield return new WaitForSecondsRealtime(500f);
-        locked = false;
-        portal.SetActive(true);
-    }
 
-    internal Transform[] GetEnemies()
-    {
-        return enemies;
-    }
+
+
 }

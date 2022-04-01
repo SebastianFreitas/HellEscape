@@ -39,7 +39,7 @@ public class ModDataRoom : MonoBehaviour
     public static Mod[] mods =
         new Mod[]{
 
-                new Mod(1,5,   "Area Level",                Grade.interior, OperatorType.plus,    80,4),
+                new Mod(1,5,   "Weapon Level",                Grade.interior, OperatorType.plus,    5,4),
                 new Mod(1,25,   "Mission Length",            Grade.interior, OperatorType.plus,    10,5),
                 new Mod(1,5,   "??1?11",                    Grade.interior, OperatorType.non,     2,6), //bloodline, mobs that are not skulls have a chance of spawning 2 skulls
                 new Mod(1,5,   "Double Trash",              Grade.interior, OperatorType.non,     50,7), //Double the trash
@@ -50,8 +50,8 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,5,   "WorkBench",                 Grade.interior, OperatorType.non,     20,12), //Find a workbench, half prices.
 
                 new Mod(15,30, "Monster health",            Grade.interior, OperatorType.plus,          100,1),
-                new Mod(1,3,   "Monster Damage",            Grade.interior, OperatorType.plus,          100,2),
-                new Mod(1,3,   "Monster Speed",             Grade.interior, OperatorType.increased,     100,3)
+                new Mod(1,10,   "Monster Damage",            Grade.interior, OperatorType.plus,          100,2),
+                new Mod(1,10,   "Monster Speed",             Grade.interior, OperatorType.increased,     100,3)
                
 
         };
@@ -194,8 +194,8 @@ public class ModDataRoom : MonoBehaviour
                 mission.increasedActionSpeed    = value;
                 break;                           
                                                  
-            case "Area Level":                   
-                mission.aditionalAreaLevel      = value;
+            case "Weapon Level":                   
+                mission.additionalWeaponLevel      = value;
                 break;                            
                                                   
             case "Mission Length":                
@@ -257,7 +257,7 @@ public class ModDataRoom : MonoBehaviour
         public int aditionalLife           = 0;
         public int aditionalDamage         = 0;
         public int increasedActionSpeed    = 0;
-        public int aditionalAreaLevel      = 0;
+        public int additionalWeaponLevel = 0;
         public int aditionalLength         = 0;
 
 

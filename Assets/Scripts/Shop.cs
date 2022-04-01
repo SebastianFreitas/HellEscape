@@ -27,8 +27,10 @@ public class Shop : GunGenerator
     List<(GunOfAType, int)> weapons = new List<(GunOfAType, int)>();
 
     private int weaponNumber = 0;
+    private int weaponLevel = 10;
     private void Awake()
     {
+        weaponLevel = GetComponentInParent<RoomGenerator>().weaponLevel;
         weaponUI.ResetUI();
         InitiateItemList();
         UpdateShop();
@@ -38,11 +40,12 @@ public class Shop : GunGenerator
     {
         for(int i = 0; i < Random.Range(3,7); i++)
         {
-            var x = CreateWeapon(1, false);
-            var currentPrice = x.mods.Count * x.level;
+            var x = CreateWeapon(weaponLevel, false);
+            var currentPrice = x.mods.Count * (x.level - 9);
             weapons.Add((x, Random.Range(currentPrice + 1, currentPrice * 2)));
         }
     }
+
 
     internal void PressNext()
     {

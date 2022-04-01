@@ -48,16 +48,11 @@ public class RoomGenerator : MonoBehaviour
 	List<Doorway> otherDoorways = new List<Doorway>();
 
 	internal bool isGenerated = false;
+	internal VoidBoon.BoonType influence = VoidBoon.BoonType.Red;
 
+	internal ModDataRoom.GeneratedMission mission;
 
-
-    //void OnEnable()
-    //{
-    //	if (!isGenerated)
-    //		StartCoroutine("GenerateLevel");
-    //}
-
-    internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
+	internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
 	{
 		player.SetActive(false);
 
@@ -144,8 +139,6 @@ public class RoomGenerator : MonoBehaviour
 		isGenerated = true;
 		started = false;
 	}
-
-    internal VoidBoon.BoonType influence = VoidBoon.BoonType.Red;
 
     internal void ManageRoomsEficiency(Room room)
     {
@@ -310,14 +303,15 @@ public class RoomGenerator : MonoBehaviour
 
 	}
 
-	internal ModDataRoom.GeneratedMission mission;
-    private int counter = 0;
 
+    private int counter = 0;
 	private bool started = false;
+	internal int weaponLevel = 9;
 
 	internal void StartRun(ModDataRoom.GeneratedMission mis)
     {
 		mission = mis;
+		weaponLevel += mis.additionalWeaponLevel;
 		if (!started)
 		{
 			started = true;

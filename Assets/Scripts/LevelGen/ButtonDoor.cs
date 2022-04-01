@@ -7,6 +7,6 @@ public class ButtonDoor : MonoBehaviour
     public int roomType;
     public void UseDoor()
     {
-        transform.parent.GetComponent<Room>().UseDoor();
+        //transform.parent.GetComponent<Room>().UseDoor();
     }
 }

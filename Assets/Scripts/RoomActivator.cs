@@ -151,31 +151,31 @@ public class RoomActivator : MonoBehaviour
         switch (mainType)
         {
             case MainType.choiceSpecial:
-                Instantiate(roomgen.choseSpecial, spawnPos.position, Quaternion.identity, transform);
+                Instantiate(roomgen.choseSpecial, spawnPos.position, spawnPos.rotation, transform);
                 foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
                 break;
 
             case MainType.itemOrDrop:
-                Instantiate(roomgen.itemRoom, spawnPos.position, Quaternion.identity, transform);
+                Instantiate(roomgen.itemRoom, spawnPos.position, spawnPos.rotation, transform);
                 TurnLightsRed();
 
                 break;
 
             case MainType.redOrBlue:
-                Instantiate(roomgen.influenceItem, spawnPos.position, Quaternion.identity, transform);
+                Instantiate(roomgen.influenceItem, spawnPos.position, spawnPos.rotation, transform);
                 ActivateTraps();
                 TurnLightsRed();
 
                 break;
 
             case MainType.Shop:
-                Instantiate(roomgen.shop, spawnPos.position, Quaternion.identity, transform);
+                Instantiate(roomgen.shop, spawnPos.position, spawnPos.rotation, transform);
                 TurnLightsRed();
                 break;
 
             case MainType.switchInfluence:
-                Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
+                Instantiate(roomgen.changeInfluence, spawnPos.position, spawnPos.rotation, transform);
                 CloseDoors();
 
                 break;

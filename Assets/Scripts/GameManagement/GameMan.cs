@@ -6,15 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameMan : ModDataRoom
 {
     
-    public Room startRoomPrefab, endRoomPrefab;
-    public List<Room> roomPrefabs = new List<Room>();
-
-    StartRoom startRoom;
-    EndRoom endRoom;
 
 
 
-    public Room currentRoom;
 
     //private GameObject player;
     private int dificulty = 1;
@@ -45,17 +39,13 @@ public class GameMan : ModDataRoom
         }
         else
         {
-            currentRoom = Instantiate(startRoomPrefab, runningGame);
-            currentRoom.areaLevel = currentLevel;
-            currentLevel++;
+
             // currentRoom.transform.parent = this.transform;
 
 
             PlacePlayerInCurrentRoom();
 
-            currentRoom.player = player;
-            currentRoom.PickLayout();
-            currentRoom.SpawnObjects(dificulty);
+
         }
 
 
@@ -96,21 +86,6 @@ public class GameMan : ModDataRoom
         currentStartPos = hub.statspos.position;
     }
 
-    void PlaceRoomAndPlayer(Room room)
-    {
-        // Instantiate room
-        currentRoom = Instantiate(room, runningGame);
-        currentRoom.areaLevel = currentLevel+mission.aditionalAreaLevel;
-
-        currentRoom.mission = mission;
-        currentRoom.transform.parent = runningGame;
-        currentRoom.player = player;
-        currentRoom.PickLayout();
-        currentRoom.SpawnObjects(dificulty);
-
-        PlacePlayerInCurrentRoom();
-
-    }
 
     private void PlacePlayerInCurrentRoom()
     {
@@ -123,24 +98,13 @@ public class GameMan : ModDataRoom
         currentStartPos = roomGen.currentStartPos;
     }
 
-    private Room[] run;
-    private int runProgress = 0;
-    private GeneratedMission mission;
+
+
     public void StartRun(GeneratedMission mis)
     {
-        currentLevel++;
-        mission = mis;
+
+
         hub.gameObject.SetActive(false);
-        runProgress = 0;
-        run = new Room[30];
-        int i = 0;
-        for(; i < mission.distance; i++)
-        {
-            run[i] = GenerateRoom();
-            run[i].areaLevel = currentLevel;
-            run[i].mission = mission;
-            run[i].player = player;
-        }
 
         roomGen.StartRun(mis);
 
@@ -149,20 +113,6 @@ public class GameMan : ModDataRoom
     }
 
 
-    public void Next(int type)
-    {
-        Destroy(currentRoom.gameObject);
-        dificulty++;
-
-        runProgress++;
-        if (run[runProgress] != null)
-        {
-            StartCoroutine(LoadingScreen());
-        }
-        else GoToHub();
-
-
-    }
 
     public IEnumerator LoadingScreen()
     {
@@ -180,25 +130,6 @@ public class GameMan : ModDataRoom
 
     }
 
-    public void UnlockDoor()
-    {
-        currentRoom.locked = true;
-    }
-
-    public void RestartGame()
-    {
-        foreach (Transform child in transform)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-        SceneManager.LoadScene(startScene);
-    }
-
-    Room GenerateRoom()
-    {
-        Room returnRoom = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
-        return returnRoom;
-    }
 
     internal void VoidPlayer()
     {
