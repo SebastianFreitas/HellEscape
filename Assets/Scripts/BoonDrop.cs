@@ -7,9 +7,11 @@ public class BoonDrop : MonoBehaviour
     private VoidBoon boon;
     public TMPro.TextMeshPro text;
 
+    [SerializeField] bool isInfluencePool = false;
+
     private void Awake()
     {
-        boon = new VoidBoon(false, GetComponentInParent<RoomActivator>().influcence);
+        boon = new VoidBoon(isInfluencePool, GetComponentInParent<RoomActivator>().influcence);
         boon.player = GameObject.FindGameObjectsWithTag("Dude")[0];
         boon.playerHP = boon.player.GetComponent<PlayerHpManager>();
         boon.playerInv = boon.player.GetComponent<PlayerInventory>();

@@ -13,6 +13,13 @@ public class Fragments : MonoBehaviour
 
     private void OnEnable()
     {
+        StartCoroutine("SpawnObjects");
+    }
+
+    private IEnumerator SpawnObjects()
+    {
+        WaitForSeconds interval = new WaitForSeconds(0.001f);
+
         Vector3 center = transform.position;
 
         for (int i = 0; i < numObjects; i++)
@@ -21,19 +28,23 @@ public class Fragments : MonoBehaviour
             Quaternion rot = Quaternion.FromToRotation(Vector3.forward, center - pos);
             var obj = Instantiate(objetcts[Random.Range(0, objetcts.Length)], pos, rot, transform);
             obj.transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
+            yield return interval;
         }
 
 
         for (int i = 0; i < numObjectsLine; i++)
         {
-            Vector3 pos = center + new Vector3(0, 0, i+30);
+            Vector3 pos = center + new Vector3(0, 0, i + 30);
             Quaternion rot = Quaternion.FromToRotation(Vector3.forward, center - pos);
             var obj = Instantiate(objetcts[Random.Range(0, objetcts.Length)], pos, rot, transform);
             obj.transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
+            yield return interval;
         }
     }
+
     private void OnDisable()
     {
+        StopAllCoroutines();
         foreach (Transform child in transform)
         {
             GameObject.Destroy(child.gameObject);

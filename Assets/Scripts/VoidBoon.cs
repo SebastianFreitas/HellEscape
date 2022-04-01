@@ -58,6 +58,7 @@ internal class VoidBoon
         //convert all of your damage randomly each shot
         //heal full hp gain 100 max hp at most
 
+
     }
 
     private void GetBoonListTextRed()
