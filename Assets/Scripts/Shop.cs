@@ -8,6 +8,7 @@ public class Shop : GunGenerator
     [SerializeField] WeaponStatsCrafting weaponUI;
     [SerializeField] TMPro.TextMeshPro buyText;
     [SerializeField] TMPro.TextMeshPro priceText;
+    [SerializeField] TMPro.TextMeshPro itemType;
 
 
     [SerializeField] Material green;
@@ -55,6 +56,8 @@ public class Shop : GunGenerator
     {
         gun = weapons[weaponNumber].Item1;
         price = weapons[weaponNumber].Item2;
+        itemType.text = gun.type.ToString();
+
         weaponUI.gun = gun;
         weaponUI.ResetUI();
         weaponUI.UpdateUI();
