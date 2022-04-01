@@ -163,15 +163,14 @@ public class RoomActivator : MonoBehaviour
                 break;
 
             case MainType.redOrBlue:
-                // Instantiate(roomgen.changeInfluence, spawnPos.position, Quaternion.identity, transform);
-                Debug.Log("por fazer");
+                Instantiate(roomgen.influenceItem, spawnPos.position, Quaternion.identity, transform);
+                ActivateTraps();
                 TurnLightsRed();
 
                 break;
 
             case MainType.Shop:
                 Instantiate(roomgen.shop, spawnPos.position, Quaternion.identity, transform);
-
                 TurnLightsRed();
                 break;
 
