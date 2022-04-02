@@ -68,6 +68,7 @@ public class GameMan : ModDataRoom
         roomGen.gameObject.transform.position = roomGen.gameObject.transform.position + new Vector3(0, -10000, 0);
     }
 
+    [SerializeField] CraftingDevice bench;
     private void GoToHub()
     {
         hub.gameObject.SetActive(true);
@@ -84,6 +85,8 @@ public class GameMan : ModDataRoom
         //player.GetComponent<PlayerBasicMovement>().enabled = true;
 
         currentStartPos = hub.statspos.position;
+
+        bench.resetTimesused();
     }
 
 

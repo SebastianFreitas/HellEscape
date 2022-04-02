@@ -56,6 +56,11 @@ public class CraftingDevice : GunGenerator
     public Destroy destroyGun;
     public GeneratedGuns slotGuns;
     
+    internal void resetTimesused()
+    {
+        addMod.timesUsed = 1;
+        removeMod.timesUsed = 1;
+    } 
 
     public bool isHub;
     // Start is called before the first frame update
