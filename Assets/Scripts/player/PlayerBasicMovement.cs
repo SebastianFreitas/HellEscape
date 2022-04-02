@@ -64,10 +64,10 @@ public class PlayerBasicMovement : MonoBehaviour
     private void OnEnable()
     {
 
-            StartCoroutine(waiterDashCD());
-            StartCoroutine(waiterDashDuration());
+        StartCoroutine(waiterDashCD());
+        StartCoroutine(waiterDashDuration());
 
-            StartCoroutine(waiterGroundLag());
+        StartCoroutine(waiterGroundLag());
 
         canDash = true;
         
@@ -85,6 +85,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
 
         IsGrounded();
+       // Debug.Log(isGrounded);
 
 
         if (velocity.y < -15) fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
@@ -242,15 +243,16 @@ public class PlayerBasicMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (groundLag)
-            { //jump normally even while not touched the ground
-                inputLocked = false;
-                JumpDash(false);//Jump();
-                inputLocked = true;
-                desiredDirection = new Vector3(xRaw, 0, zRaw);
-                groundLag = false;
-            }
-            else if (canDash) //dashJump
+            //if (groundLag)
+            //{ //jump normally even while not touched the ground
+            //    inputLocked = false;
+            //    JumpDash(false);//Jump();
+            //    inputLocked = true;
+            //    desiredDirection = new Vector3(xRaw, 0, zRaw);
+            //    groundLag = false;
+            //}
+            //else
+            if (canDash) //dashJump
             {
                 inputLocked = false; //remove input lock if player dashes/jumps
                 JumpDash(true);
@@ -346,9 +348,9 @@ public class PlayerBasicMovement : MonoBehaviour
         else
         {
             //inputLocked = true;
-            isGrounded = false;
+            //isGrounded = false;
         }
-        if (Physics.Raycast(transform.position, Vector3.down, controller.height / 2 +0.4f, groundMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position, Vector3.down, controller.height / 2 +.4f, groundMask, QueryTriggerInteraction.Ignore))
             isGrounded = true;
     }
 
