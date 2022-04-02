@@ -57,6 +57,8 @@ public class Inventory : MonoBehaviour
 
         }
 
+        RemoveLayout(gun);
+
         if (isAdded) AddGunLayout(gun);
     }
 

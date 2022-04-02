@@ -262,6 +262,11 @@ public class CraftingDevice : GunGenerator
         SetGun(gun);
     }
 
+    [SerializeField] GameObject destroyGun2;
+    [SerializeField] GameObject addmod2;
+    [SerializeField] GameObject removeMod2;
+
+
     private void ReadPlayerLayouts(GunOfAType gunA)
     {
 
@@ -271,7 +276,11 @@ public class CraftingDevice : GunGenerator
             {
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
-                craftingRecipes.SetActive(true);
+                //craftingRecipes.SetActive(true);
+                destroyGun2.SetActive(true);
+                addmod2.SetActive(true);
+                removeMod2.SetActive(true);
+
                 deconstruct.SetActive(true);
                 generate.SetActive(false);
                 break;
@@ -284,7 +293,11 @@ public class CraftingDevice : GunGenerator
             {
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
-                craftingRecipes.SetActive(false);
+
+                destroyGun2.SetActive(true);
+                addmod2.SetActive(false);
+                removeMod2.SetActive(false);
+
                 deconstruct.SetActive(false);
                 generate.SetActive(true);
                 break;

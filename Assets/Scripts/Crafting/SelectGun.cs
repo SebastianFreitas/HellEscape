@@ -16,15 +16,6 @@ public class SelectGun : MonoBehaviour
     public AudioClip wrong;
     public AudioClip click;
 
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Bullet"))
-    //    {
-    //        Select();
-
-    //        Destroy(collision.gameObject);
-    //    }
-    //}
 
     public void Select()
     {

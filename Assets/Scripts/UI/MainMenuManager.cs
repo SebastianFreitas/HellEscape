@@ -98,7 +98,7 @@ public class MainMenuManager : MonoBehaviour
     public void GoToPauseScreen()
     {
 
-
+        started = false;
         canvasMenu.SetActive(true);
         canvasGame.SetActive(false);
       runningGame.SetActive(false);
@@ -107,17 +107,26 @@ public class MainMenuManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
     }
 
+    bool started = false;
     public void StartGame()
     {
+        if (!started)
+            StartCoroutine("StartGameCoroutine");
 
 
+
+    }
+
+    private IEnumerator StartGameCoroutine()
+    {
+        started = true;
+        yield return new WaitForSeconds(1f);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         canvasMenu.SetActive(false);
         canvasGame.SetActive(true);
         runningGame.SetActive(true);
         gameManager.enabled = true;
-
     }
 
     public void QuitGame()

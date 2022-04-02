@@ -6,7 +6,7 @@ public class VoidDamage : MonoBehaviour
 {
     [SerializeField] GameMan gameMan;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.transform.CompareTag("Dude"))
         {
