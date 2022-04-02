@@ -24,7 +24,8 @@ public class AddModUI : MonoBehaviour
 
     public void UpdatePriceText()
     {
-         price.text = formatedString.Replace("{value}", craftingTable.GetAddModPrice() * timesUsed + "");
+        if (craftingTable.isHub) timesUsed = 2;
+            price.text = formatedString.Replace("{value}", craftingTable.GetAddModPrice() * timesUsed + "");
     }
 
     private void OnEnable()

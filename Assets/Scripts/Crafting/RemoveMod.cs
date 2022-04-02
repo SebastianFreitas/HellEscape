@@ -25,6 +25,7 @@ public class RemoveMod : MonoBehaviour
 
     public void UpdatePricetext()
     {
+        if (craftingTable.isHub) timesUsed = 2;
         price.text = formatedString.Replace("{value}", craftingTable.GetRemoveModPrice() * timesUsed + "");
     }
 
