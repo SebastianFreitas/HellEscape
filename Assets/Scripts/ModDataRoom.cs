@@ -42,17 +42,15 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,5,   "Weapon Level",              Grade.interior, OperatorType.plus,                       5,4),
                 new Mod(1,25,  "Mission Length",            Grade.interior, OperatorType.plus,                       10,5),
                 new Mod(1,5,   "??1?11",                    Grade.interior, OperatorType.non,                        1,6), //bloodline, mobs that are not skulls have a chance of spawning 2 skulls
-               
                 new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        2,7),
-                new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,                   20,8),
+                new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       20,8),
                 new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,                        2,9),
                 new Mod(1,15,  "Chance for encounters to drop health",        Grade.interior, OperatorType.plus,     10,10),
                 new Mod(1,5,   "Danger",                    Grade.interior, OperatorType.non,                        1,11),
-
                 new Mod(10,50, "Reduced movement speed",                    Grade.interior, OperatorType.reduced,    50,12),
-                new Mod(2,4,   "Located Boons",         Grade.interior, OperatorType.plus,           1,13),
-                new Mod(1,5,   "Error",         Grade.interior, OperatorType.non,           20,14),
-                new Mod(1,5,   "",         Grade.interior, OperatorType.non,           1,15),
+                new Mod(2,4,   "Located Boons",         Grade.interior, OperatorType.plus,                           1,13),
+                new Mod(1,5,   "Error",         Grade.interior, OperatorType.non,                                    20,14),
+                new Mod(1,5,   "",         Grade.interior, OperatorType.non,                                  1,15),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,16),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,17),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,18),

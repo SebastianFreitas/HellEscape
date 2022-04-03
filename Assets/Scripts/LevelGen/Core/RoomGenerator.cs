@@ -144,7 +144,9 @@ public class RoomGenerator : MonoBehaviour
         for(int i = 0; i < mission.additionalBoons; i++)
         {
 			var room = placedRooms[Random.Range(6, placedRooms.Count)];
-			room.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Boon;
+			var roomAct = room.GetComponentInChildren<RoomActivator>();
+			if (roomAct.roomType != RoomActivator.RoomType.Corridor) roomAct.roomType = RoomActivator.RoomType.Boon;
+			else i--;	
 
 		}
 
@@ -152,8 +154,9 @@ public class RoomGenerator : MonoBehaviour
         {
 			foreach(var current in placedRooms)
             {
-				current.GetComponentInChildren<RoomActivator>().roomType = (RoomActivator.RoomType)Random.Range(0, System.Enum.GetValues(typeof(RoomActivator.RoomType)).Length);
-
+				
+				var x = current.GetComponentInChildren<RoomActivator>();
+				if (x.roomType != RoomActivator.RoomType.Corridor) x.roomType = (RoomActivator.RoomType)Random.Range(0, System.Enum.GetValues(typeof(RoomActivator.RoomType)).Length);
 			}
         }
 
