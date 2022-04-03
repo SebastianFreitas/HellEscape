@@ -32,12 +32,13 @@ public class PlayerProjectile : MonoBehaviour
 
     private GunOfAType gun;
 
-
+    internal BulletStats stats;
     public int fireDamage;
     public int coldDamage;
     public int poisonDamage;
     public int physicalDamage;
     internal float critMulti;
+
     public GameObject physicalTrail;
     public GameObject fireTrail;
     public GameObject coldTrail;
@@ -74,10 +75,6 @@ public class PlayerProjectile : MonoBehaviour
 
     private void ConfigureTrails()
     {
-        //if (gun.type.Equals(GunType.normal))physicalTrail.GetComponent<TrailRenderer>().time = 0.5f;
-        //if (gun.type.Equals(GunType.sniper)) physicalTrail.GetComponent<TrailRenderer>().time = 1f;
-        //else physicalTrail.GetComponent<TrailRenderer>().time = 0.1f;
-
         physicalTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
 
         if (fireDamage != 0)
@@ -129,6 +126,8 @@ public class PlayerProjectile : MonoBehaviour
         this.poisonDamage = poisonDamage;
         this.physicalDamage = physicalDamage;
         this.critMulti = critMulti;
+
+        stats = new BulletStats(fireDamage, coldDamage, poisonDamage, physicalDamage, critMulti);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -137,13 +136,13 @@ public class PlayerProjectile : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.transform.parent.GetComponentInParent<Monster>().TakeDamage( physicalDamage, false, critMulti);
+            collision.transform.parent.GetComponentInParent<Monster>().TakeDamage( stats, false, critMulti);
 
             StartCoroutine(KillBullet());
         }
         else if (collision.gameObject.CompareTag("MonsterHead"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage( physicalDamage, true, critMulti);
+            collision.transform.GetComponent<Monster>().TakeDamage( stats, true, critMulti);
 
             StartCoroutine(KillBullet());
         }
@@ -188,7 +187,7 @@ public class PlayerProjectile : MonoBehaviour
             }
             else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
             {
-                hitCollider.GetComponent<Monster>().TakeDamage(fireDamage, false, 0);
+                hitCollider.GetComponent<Monster>().TakeDamage(fireDamage);
             }
             else if (hitCollider.CompareTag("Prop"))
             {

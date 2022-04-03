@@ -108,11 +108,24 @@ public class Monster : MonoBehaviour
     [SerializeField] GameObject explosion;
     private bool isTick;
 
-    public void TakeDamage(int damage, bool isCrit,float critMulti)
+    internal void TakeDamage(BulletStats stats, bool isCrit,float critMulti)
     {
-        float amount = damage;
+        float amount = stats.GetDamage();
         amount +=(int) Random.Range(-amount*.30f, amount * .30f);
+
         if (isCrit) amount *= 2+ critMulti/100;
+
+        if (stats.coldDamage > 0)
+        {
+            StopCoroutine("Chilled");
+            StartCoroutine("Chilled");
+        }
+
+        if (stats.poisonDamage > 0)
+        {
+            StopCoroutine("Poisoned");
+            StartCoroutine(Poisoned(stats.poisonDamage));
+        }
         health -= amount;
         DmgPopUp(amount, isCrit);
         if (health <= 0f )
@@ -127,6 +140,18 @@ public class Monster : MonoBehaviour
         }
     }
 
+    internal void TakeDamage(int amount)
+    {
+        health -= amount;
+        DmgPopUp(amount, false);
+        if (health <= 0f)
+        {
+
+            Die();
+        }
+
+    }
+
     internal void UpdateStatsToLevel()
     {
         health *= 1f + (level / 100f);
@@ -136,21 +161,22 @@ public class Monster : MonoBehaviour
 
     private void DmgPopUp(float amount, bool isCrit)
     {
+
+        var direction = transform.position - player.transform.position ;
+        var rot = Quaternion.LookRotation(direction);
         
-        var rep = player.transform;
-        rep.LookAt(transform.position);
-        var x = Instantiate(dmgPopUp, transform.position, rep.rotation, null);
-        //x.gameObject.transform.parent = null;
+        var x = Instantiate(dmgPopUp, transform.position, rot, null);
+
         x.damageLabel.text = amount.ToString("F0");
-        x.player = rep;
-        if (isCrit) x.damageLabel.color = Color.yellow;
+        //x.player = rot;
+        if (isCrit) x.damageLabel.color = Color.red;
     }
 
     private void Bleed()
     {
         var rep = player.transform;
         rep.LookAt(transform.position);
-        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], volume);
+        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], 0.1f);
         var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
         bloodSplat.Play();
     }
@@ -241,6 +267,28 @@ public class Monster : MonoBehaviour
         if (isTick) StartCoroutine("Tick");
     }
 
+    IEnumerator Chilled()
+    {
+        actionSpeed -= 0.5f;
+        yield return new WaitForSecondsRealtime(3f);
+        actionSpeed += 0.5f;
+    }
 
+    IEnumerator Poisoned(int poison)
+    {
+        WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.5f);
+        int damage = (int)(poison / 5);
+        int i = 0;
+        while (true)
+        {
+            TakeDamage(damage);
+
+            i++;
+            if (i > 9) break;
+
+            yield return waiter;
+
+        }
+    }
 
 }

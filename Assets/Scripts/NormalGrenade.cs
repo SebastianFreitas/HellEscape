@@ -50,11 +50,11 @@ public class NormalGrenade : GrenadeData
             }
             else if (hitCollider.CompareTag("Monster"))
             {
-                hitCollider.GetComponentInParent<Monster>().TakeDamage(damage, false, 0);
+                hitCollider.GetComponentInParent<Monster>().TakeDamage(damage);
             }
             else if (hitCollider.CompareTag("MonsterHead"))
             {
-                hitCollider.GetComponent<Monster>().TakeDamage(damage, false, 0);
+                hitCollider.GetComponent<Monster>().TakeDamage(damage);
             }
             else if (hitCollider.CompareTag("Prop"))
             {
