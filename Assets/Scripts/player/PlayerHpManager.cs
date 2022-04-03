@@ -70,7 +70,7 @@ public class PlayerHpManager : MonoBehaviour
     IEnumerator BloodScreen()
     {
       bloodScreen.GetComponent<RawImage>().enabled = true;
-      yield return new WaitForSeconds(.2f);
+      yield return new WaitForSecondsRealtime(.2f);
       bloodScreen.GetComponent<RawImage>().enabled = false;
     }
 
@@ -78,7 +78,7 @@ public class PlayerHpManager : MonoBehaviour
     {
         canTakeDamage = false;
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSecondsRealtime(.5f);
         canTakeDamage = true;
 
 

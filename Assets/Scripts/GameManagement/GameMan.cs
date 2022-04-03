@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameMan : ModDataRoom
 {
-    
-
-
-
 
     //private GameObject player;
     private int dificulty = 1;
@@ -59,7 +56,11 @@ public class GameMan : ModDataRoom
     internal void ReturnToHub()
     {
         roomGen.Clean();
+
+        roomGen.ApplyMissionToPlayer(false);
+
         GoToHub();
+
     }
 
     internal void PreloadRun()
@@ -110,11 +111,14 @@ public class GameMan : ModDataRoom
 
         roomGen.StartRun(mis);
 
-        //StartCoroutine("LoadingScreen");
+        ApplyMissionToPlayer(mis);
         
     }
 
-
+    private void ApplyMissionToPlayer(GeneratedMission mis)
+    {
+        
+    }
 
     public IEnumerator LoadingScreen()
     {

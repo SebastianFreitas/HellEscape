@@ -6,8 +6,6 @@ using UnityEngine;
 public class RoomGenerator : MonoBehaviour
 {
 
-	[SerializeField] GameObject player;
-
 	[SerializeField] Room corridor1;
 	[SerializeField] Room corridorLight;
 
@@ -52,7 +50,7 @@ public class RoomGenerator : MonoBehaviour
 
 	internal ModDataRoom.GeneratedMission mission;
 
-	internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
+    internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
 	{
 		player.SetActive(false);
 
@@ -133,12 +131,43 @@ public class RoomGenerator : MonoBehaviour
 		player.GetComponent<CharacterController>().enabled = false;
 		player.transform.position = currentStartPos;
 		player.GetComponent<CharacterController>().enabled = true;
-		Debug.Log("finished");
+
+		ApplyMissionToPlayer(true);
 
 		yield return startup;
 		isGenerated = true;
 		started = false;
 	}
+
+	public void Awake()
+	{
+
+		player = GameObject.FindGameObjectsWithTag("Dude")[0];
+		playerHP = player.GetComponent<PlayerHpManager>();
+		playerInv = player.GetComponent<PlayerInventory>();
+		playerMov = player.GetComponent<PlayerBasicMovement>();
+
+	}
+
+	internal PlayerBasicMovement playerMov;
+	internal PlayerHpManager playerHP;
+	internal PlayerInventory playerInv;
+	internal GameObject player;
+
+	internal void ApplyMissionToPlayer(bool isAdd)
+    {
+		if (mission != null)
+        {
+			if (isAdd)
+			{
+				playerMov.increasedSpeed -= mission.playerReducedMovementSpeed;
+			}
+			else
+			{
+				playerMov.increasedSpeed += mission.playerReducedMovementSpeed;
+			}
+        }
+    }
 
     internal void ManageRoomsEficiency(Room room)
     {
