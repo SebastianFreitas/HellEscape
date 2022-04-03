@@ -27,6 +27,7 @@ public class RoomActivator : MonoBehaviour
         Main,
         Corridor,
         Trap,
+        Boon
     }
 
     internal enum AreaType
@@ -127,6 +128,12 @@ public class RoomActivator : MonoBehaviour
                     case RoomType.Trap:
                     {
                         ActivateTraps();
+                        break;
+                    }
+                    case RoomType.Boon:
+                    {
+                        Instantiate(roomgen.itemRoom, spawnPos.position, spawnPos.rotation, transform);
+                        TurnLightsRed();
                         break;
                     }
                 }

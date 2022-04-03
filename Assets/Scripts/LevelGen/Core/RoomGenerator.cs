@@ -79,7 +79,7 @@ public class RoomGenerator : MonoBehaviour
 				{
 					if (PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Main))
 					{
-
+						influencePos += 20;
 						break;
 					}
 
@@ -133,13 +133,33 @@ public class RoomGenerator : MonoBehaviour
 		player.GetComponent<CharacterController>().enabled = true;
 
 		ApplyMissionToPlayer(true);
-
+		ApplyMission();
 		yield return startup;
 		isGenerated = true;
 		started = false;
 	}
 
-	public void Awake()
+    private void ApplyMission()
+    {
+        for(int i = 0; i < mission.additionalBoons; i++)
+        {
+			var room = placedRooms[Random.Range(6, placedRooms.Count)];
+			room.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Boon;
+
+		}
+
+        if (mission.error)
+        {
+			foreach(var current in placedRooms)
+            {
+				current.GetComponentInChildren<RoomActivator>().roomType = (RoomActivator.RoomType)Random.Range(0, System.Enum.GetValues(typeof(RoomActivator.RoomType)).Length);
+
+			}
+        }
+
+    }
+
+    public void Awake()
 	{
 
 		player = GameObject.FindGameObjectsWithTag("Dude")[0];
@@ -287,7 +307,7 @@ public class RoomGenerator : MonoBehaviour
 
     }
 
-	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
+	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {
