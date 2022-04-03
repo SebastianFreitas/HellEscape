@@ -32,24 +32,24 @@ public class ModDataRoom : MonoBehaviour
         return index;
     }
 
-    public static int[] maxModsWeight = { 0, 10, 20 ,10 ,4 ,1};
+    public static int[] maxModsWeight = { 0, 10, 20 ,10 ,4 ,2, 1};
     public static int[] modsWeight = { 80,50,2,50,20,6,5,20,20,100,100,100};
 
 
     public static Mod[] mods =
         new Mod[]{
 
-                new Mod(1,5,   "Weapon Level",                Grade.interior, OperatorType.plus,    5,4),
-                new Mod(1,25,   "Mission Length",            Grade.interior, OperatorType.plus,    10,5),
+                new Mod(1,5,   "Weapon Level",              Grade.interior, OperatorType.plus,    5,4),
+                new Mod(1,25,  "Mission Length",            Grade.interior, OperatorType.plus,    10,5),
                 new Mod(1,5,   "??1?11",                    Grade.interior, OperatorType.non,     2,6), //bloodline, mobs that are not skulls have a chance of spawning 2 skulls
-                new Mod(1,5,   "Double Trash",              Grade.interior, OperatorType.non,     50,7), //Double the trash
-                new Mod(1,5,   "Explosive Trash",           Grade.interior, OperatorType.non,     20,8), //Trash has a chance to become explosive 
-                new Mod(1,5,   "33!3!!",                    Grade.interior, OperatorType.non,     6,9), //Trash can instead spawn as skulls
-                new Mod(1,1,   "High Entity",               Grade.interior, OperatorType.non,     10,10), //Boss Entity + 3 length
-                new Mod(1,5,   "Dangerous Entities",        Grade.interior, OperatorType.non,     20,11), //duo or 5 elite fight.
-                new Mod(1,5,   "WorkBench",                 Grade.interior, OperatorType.non,     20,12), //Find a workbench, half prices.
+               
+                new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,     2,7),
+                new Mod(1,5,   "Mobs found per room",       Grade.interior, OperatorType.plus,    20,8),
+                new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,     2,9),
+                new Mod(1,15,   "Chance for encounters to drop health",        Grade.interior, OperatorType.plus,     10,10),
+                 new Mod(1,5,   "Danger",Grade.interior, OperatorType.non,                        1,11),
 
-                new Mod(15,30, "Monster health",            Grade.interior, OperatorType.plus,          100,1),
+                new Mod(15,30, "Monster health",             Grade.interior, OperatorType.plus,          100,1),
                 new Mod(1,10,   "Monster Damage",            Grade.interior, OperatorType.plus,          100,2),
                 new Mod(1,10,   "Monster Speed",             Grade.interior, OperatorType.increased,     100,3)
                
@@ -57,8 +57,6 @@ public class ModDataRoom : MonoBehaviour
         };
 
 
-    //increased monster item drop rate
-    //increased monster 
 
     public GeneratedMission CreateMission()
     {
@@ -112,7 +110,6 @@ public class ModDataRoom : MonoBehaviour
         text += (float)(1 + (((float)result.increasedMonsterDrops * 3) / 100)) + "% weapon drop chance" + "\n\n";
         return text;
     }
-
     internal string GetMissionBad(GeneratedMission result)
     {
         string text = "";
@@ -126,13 +123,24 @@ public class ModDataRoom : MonoBehaviour
         return text;
     }
 
+    private int[] GenerateModsWheight()
+    {
+        int[] result = new int[mods.Length];
+        int i = 0;
+        foreach(Mod current in mods)
+        {
+            result[i] = current.tier;
+            i++;
+        }
+
+        return result;
+    }
+
     private void AddMod(GeneratedMission mission)
     {
         while (true)
         {
-            var x = new Mod(mods[GetRandomWeightedIndex(modsWeight)]);
-            //var i = mods[GetRandomWeightedIndex(GetMaxModsWeight())];
-            //var x = new Mod(i);
+            var x = new Mod(mods[GetRandomWeightedIndex(GenerateModsWheight())]);
             if (!ContainsMod(mission, x))
             {
               //  i.tier -= 100;
@@ -195,7 +203,7 @@ public class ModDataRoom : MonoBehaviour
                 break;                           
                                                  
             case "Weapon Level":                   
-                mission.additionalWeaponLevel      = value;
+                mission.additionalWeaponLevel   = value;
                 break;                            
                                                   
             case "Mission Length":                
@@ -206,27 +214,27 @@ public class ModDataRoom : MonoBehaviour
                 mission.bloodline = true;
                 break;
 
-            case "Double Trash":
-                mission.doubleTrash = true;
+            case "Double drop chance":
+                mission.dropModifier += value;
                 break;
 
-            case "Explosive Trash":
-                mission.explosiveTrash = true;
+            case "Mobs found per room":
+                mission.encounterMobCount += value;
                 break;
 
-            case "33!3!!":
-                mission.trashToSkulls = true;
+            case "All side rooms are special":
+                mission.everythingSpecial = true;
                 break;
 
-            case "High Entity":
-                mission.boss = true;
+            case "Chance for encounters to drop health":
+                mission.healthChanceEncounter += value;
                 break;
-            case "Dangerous Entities":
-                mission.miniBoss = true;
+
+            case "Danger":
+                mission.encounterMobCount += 10;
+                mission.increasedActionSpeed += 50;
                 break;
-            case "WorkBench":
-                mission.workbench = true;
-                break;
+
 
         }
     }
@@ -246,25 +254,20 @@ public class ModDataRoom : MonoBehaviour
 
     public class GeneratedMission
     {
-        public bool workbench       = false;
-        public bool miniBoss        = false;
-        public bool boss            = false;
-        public bool trashToSkulls   = false;
-        public bool explosiveTrash  = false;
-        public bool doubleTrash     = false;
         public bool bloodline       = false;
 
         public int aditionalLife           = 0;
         public int aditionalDamage         = 0;
         public int increasedActionSpeed    = 0;
-        public int additionalWeaponLevel = 0;
+        public int additionalWeaponLevel   = 0;
         public int aditionalLength         = 0;
+        public int distance = 0;
 
+        internal int dropModifier = 1;
 
         public int increasedMonsterDrops       = 0;
         public int increasedChanceSpecialRooms = 0;
         public int increasedChanceElite        = 0;
-        public int distance = 0;
 
         public int encounterMobCount = 4;
 
@@ -279,13 +282,18 @@ public class ModDataRoom : MonoBehaviour
         internal bool deathExplosion = false;
         internal bool tick = false;
         internal bool doubleMobs  = false;
+        internal bool everythingSpecial = false;
+        internal int healthChanceEncounter = 0;
 
         public void createPositives()
         {
-            var result = mods.Count * 2 +Random.Range(1,mods.Count*2);
-            increasedMonsterDrops       = result;
+  
+            if (everythingSpecial) increasedChanceSpecialRooms = 75;
+            else increasedChanceSpecialRooms = mods.Count * 2 + Random.Range(1, mods.Count * 4) ;
+
+            increasedMonsterDrops       = mods.Count * 2 + Random.Range(1, mods.Count * 2) * dropModifier;
             increasedChanceElite        = mods.Count + Random.Range(1, mods.Count);
-            increasedChanceSpecialRooms = mods.Count * 2 + Random.Range(1, mods.Count * 4);
+     
 
         }
     }

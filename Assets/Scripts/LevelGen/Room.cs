@@ -123,35 +123,9 @@ public class Room : MonoBehaviour
         z.damage += mission.aditionalDamage;
     }
 
-    public void SpawnObjects(int more)
-    {
-        for (int i = 0; i < propSpawns.Length; i++)
-        {
-            var x = GetRandomWeightedIndex(weight);
-            if (mission.doubleTrash)
-            {
-                for (int j = 0; j < 10; j++) SpawnSingleObject(i, GetRandomWeightedIndex(weight));
 
-            } else Instantiate(objects[x], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform);
 
-        }
-    }
 
-    private void SpawnSingleObject(int i, int y)
-    {
-        if (mission.trashToSkulls)
-        {
-            Skull x = Instantiate(skull.GetComponent<Skull>(), new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform) as Skull;
-            x.player = this.player;
-            x.transform.parent = transform;
-            x.level = areaLevel;
-            monstersAlive++;
-            ApplyMissionModsToMonster(x);
-            x.UpdateStatsToLevel();
-        }
-        if (mission.explosiveTrash && Random.Range(1,20)> 3)Instantiate(Explosive, new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform);
-        else Instantiate(objects[y], new Vector3(propSpawns[i].position.x, propSpawns[i].position.y, propSpawns[i].position.z), transform.rotation, transform);
-    }
 
     public int GetRandomWeightedIndex(int[] weights)
     {

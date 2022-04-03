@@ -337,6 +337,7 @@ public class RoomActivator : MonoBehaviour
             TurnLightsRed();
         }
 
+        if (Random.Range(1f, 100f) > 100 - roomgen.mission.healthChanceEncounter) SpawnHeal();
     }
 
     internal void OpenDoors()
