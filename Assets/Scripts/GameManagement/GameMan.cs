@@ -118,7 +118,7 @@ public class GameMan : ModDataRoom
 
     private void ApplyMissionToPlayer(GeneratedMission mis)
     {
-        
+
     }
 
     public IEnumerator LoadingScreen()

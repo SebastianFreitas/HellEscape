@@ -350,11 +350,11 @@ public class ModDataRoom : MonoBehaviour
         internal bool additionalRewards = false;
         internal int additionalGunParts = 0;
         internal bool halfHealing = false;
-        internal bool fireImmunity;
-        internal bool coldImmunity;
-        internal bool poisonImmunity;
-        internal bool physicalImmunity;
-        internal bool noGrenade;
+        internal bool fireImmunity = false;
+        internal bool coldImmunity = false;
+        internal bool poisonImmunity = false;
+        internal bool physicalImmunity = false;
+        internal bool noGrenade = false;
 
         public void createPositives()
         {

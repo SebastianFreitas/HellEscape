@@ -13,7 +13,7 @@ public class GrenadeHolder : MonoBehaviour
     public GameObject projectile2;
 
     public Gun guna;
-
+    internal bool possible = true;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -32,7 +32,7 @@ public class GrenadeHolder : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKey("q"))
+        if (Input.GetKey("q") && possible)
         {
             if (cd.CanShoot())//(baseCD <= 0) && 
             {
@@ -106,6 +106,7 @@ public class GrenadeHolder : MonoBehaviour
 
     public AudioClip wrong;
     private bool beenLong = true;
+
 
     IEnumerator TimerDown()
     {

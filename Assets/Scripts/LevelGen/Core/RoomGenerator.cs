@@ -203,11 +203,14 @@ public class RoomGenerator : MonoBehaviour
         {
 			if (isAdd)
 			{
+				player.GetComponentInChildren<GrenadeHolder>().possible = mission.noGrenade;
 				playerMov.increasedSpeed -= mission.playerReducedMovementSpeed;
 			}
 			else
 			{
+				player.GetComponentInChildren<GrenadeHolder>().possible = true;
 				playerMov.increasedSpeed += mission.playerReducedMovementSpeed;
+
 			}
         }
     }
