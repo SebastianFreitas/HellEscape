@@ -261,6 +261,13 @@ public class Monster : MonoBehaviour
             y.gun = y.CreateWeapon((int)level, false);
 
         }
+
+        if (Random.Range(1f, 100f) > 100 - (totalDropChance*2))
+        {
+            GameObject x = Instantiate(roomActivator.roomgen.healthPack, transform.position + Vector3.up, transform.rotation) as GameObject;
+            x.transform.parent = transform.parent;
+
+        }
     }
     private void OnEnable()
     {

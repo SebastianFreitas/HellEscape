@@ -18,7 +18,7 @@ public class RoomActivator : MonoBehaviour
     private BoxCollider[] boxColliders;
     private Light[] lightsComponent;
 
-    private RoomGenerator roomgen;
+    internal RoomGenerator roomgen;
     internal enum RoomType
     {
         Boss,
