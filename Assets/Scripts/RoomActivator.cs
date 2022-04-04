@@ -232,7 +232,7 @@ public class RoomActivator : MonoBehaviour
                 }
         }
     }
-    private Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss)
+    internal Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss)
     {
         Monster currentMob;
         Monster spawn;

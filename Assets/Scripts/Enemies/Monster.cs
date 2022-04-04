@@ -199,7 +199,12 @@ public class Monster : MonoBehaviour
                 explo.transform.parent = null;
                 explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 5f);
             }
-                
+
+            if (mission.bloodline)
+            {
+                roomActivator.SpawnByInfluence(transform.position, transform.rotation, false, false);
+            }
+
             roomActivator.IsEncounterDone();
             Drop();
         }
