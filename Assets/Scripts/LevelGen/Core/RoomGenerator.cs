@@ -145,7 +145,9 @@ public class RoomGenerator : MonoBehaviour
         {
 			var room = placedRooms[Random.Range(6, placedRooms.Count)];
 			var roomAct = room.GetComponentInChildren<RoomActivator>();
-			if (roomAct.roomType != RoomActivator.RoomType.Corridor) roomAct.roomType = RoomActivator.RoomType.Boon;
+			if (roomAct.roomType != RoomActivator.RoomType.Corridor &&
+				roomAct.roomType != RoomActivator.RoomType.Boss		&&
+				roomAct.mainType != RoomActivator.MainType.itemOrDrop) roomAct.roomType = RoomActivator.RoomType.Boon;
 			else i--;	
 
 		}
@@ -310,7 +312,7 @@ public class RoomGenerator : MonoBehaviour
 
     }
 
-	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
+	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {
