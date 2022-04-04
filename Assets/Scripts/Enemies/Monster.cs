@@ -107,6 +107,11 @@ public class Monster : MonoBehaviour
 
     internal void TakeDamage(BulletStats stats, bool isCrit,float critMulti)
     {
+        if (mission.fireImmunity) stats.fireDamage = 0;
+        if (mission.coldImmunity) stats.coldDamage = 0;
+        if (mission.poisonImmunity) stats.poisonDamage = 0;
+        if (mission.physicalImmunity) stats.physicalDamage = 0;
+
         float amount = stats.GetDamage();
         amount +=(int) Random.Range(-amount*.30f, amount * .30f);
 

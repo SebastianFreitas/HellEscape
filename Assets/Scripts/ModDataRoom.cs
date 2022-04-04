@@ -58,8 +58,8 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,10,  "Monster speed",             Grade.interior, OperatorType.increased,                  100,    3),
 
                 new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,                       50,      17),
-                new Mod(1,5,   "50% increased healing",         Grade.interior, OperatorType.non,                    50,      18),
-                new Mod(1,5,   "Rooms do not have traps",         Grade.interior, OperatorType.non,                  50,      19),
+                new Mod(1,5,   "",         Grade.interior, OperatorType.non,                    50,      18),
+                new Mod(1,5,   "",         Grade.interior, OperatorType.non,                  50,      19),
                 new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       25,      22),
                 new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       25,      20),
                 new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       25,      23),
@@ -276,6 +276,25 @@ public class ModDataRoom : MonoBehaviour
                 mission.halfHealing = true;
                 break;
 
+            case "Cannot use grenade":
+                mission.noGrenade = true;
+                break;
+
+            case "Monsters are immune to fire damage":
+                mission.fireImmunity = true;
+                break;
+
+            case "Monsters are immune to cold damage":
+                mission.coldImmunity = true;
+                break;
+
+            case "Monsters are immune to poison damage":
+                mission.poisonImmunity = true;
+                break;
+
+            case "Monsters are immune to physical damage":
+                mission.physicalImmunity = true;
+                break;
 
         }
     }
@@ -331,6 +350,11 @@ public class ModDataRoom : MonoBehaviour
         internal bool additionalRewards = false;
         internal int additionalGunParts = 0;
         internal bool halfHealing = false;
+        internal bool fireImmunity;
+        internal bool coldImmunity;
+        internal bool poisonImmunity;
+        internal bool physicalImmunity;
+        internal bool noGrenade;
 
         public void createPositives()
         {
