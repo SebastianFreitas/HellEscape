@@ -134,6 +134,9 @@ public class RoomGenerator : MonoBehaviour
 
 		ApplyMissionToPlayer(true);
 		ApplyMission();
+
+		CreateMainRooms();
+
 		yield return startup;
 		isGenerated = true;
 		started = false;
@@ -145,10 +148,25 @@ public class RoomGenerator : MonoBehaviour
         {
 			var room = placedRooms[Random.Range(6, placedRooms.Count)];
 			var roomAct = room.GetComponentInChildren<RoomActivator>();
-			if (roomAct.roomType != RoomActivator.RoomType.Corridor &&
-				roomAct.roomType != RoomActivator.RoomType.Boss		&&
-				roomAct.mainType != RoomActivator.MainType.itemOrDrop) roomAct.roomType = RoomActivator.RoomType.Boon;
-			else i--;	
+
+			if(roomAct != null)
+            {
+				if (roomAct.roomType != RoomActivator.RoomType.Corridor &&
+					roomAct.roomType != RoomActivator.RoomType.Boss		&&
+					roomAct.mainType != RoomActivator.MainType.itemOrDrop) roomAct.roomType = RoomActivator.RoomType.Boon;
+				else i--;	
+            }
+			else i--;
+
+
+		}
+
+        if (mission.additionalRewards)
+        {
+			mainTypeList.Add(RoomActivator.MainType.choiceSpecial);
+			mainTypeList.Add(RoomActivator.MainType.itemOrDrop);
+			mainTypeList.Add(RoomActivator.MainType.Shop);
+			mainTypeList.Add(RoomActivator.MainType.redOrBlue);
 
 		}
 
@@ -254,65 +272,70 @@ public class RoomGenerator : MonoBehaviour
 
     private void FillEmptyDoors()
     {
-        foreach(Doorway door in otherDoorways)
+        foreach (Doorway door in otherDoorways)
         {
-			while (true)
-			{
-				var current = sideRooms[Random.Range(0, sideRooms.Count)];
+            while (true)
+            {
+                var current = sideRooms[Random.Range(0, sideRooms.Count)];
 
-				// Instantiate room
-				var room = Instantiate(current) as Room;
-				room.transform.parent = this.transform;
+                // Instantiate room
+                var room = Instantiate(current) as Room;
+                room.transform.parent = this.transform;
 
-				PositionRoomAtDoorway(ref room, room.doorways[0], door);
+                PositionRoomAtDoorway(ref room, room.doorways[0], door);
 
-				if (CheckRoomOverlap(room))
-				{
-					var wallRoom = Instantiate(wall) as Room;
-					wallRoom.transform.parent = this.transform;
-					placedWalls.Add(wallRoom);
+                if (CheckRoomOverlap(room))
+                {
+                    var wallRoom = Instantiate(wall) as Room;
+                    wallRoom.transform.parent = this.transform;
+                    placedWalls.Add(wallRoom);
 
-					PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
+                    PositionRoomAtDoorway(ref wallRoom, wallRoom.doorways[0], door);
 
-					Destroy(room.gameObject);
-					break;
-				}
-				else
-				{
-					//placedRooms.Add(room);
-					placedSideRooms.Add(room);
+                    Destroy(room.gameObject);
+                    break;
+                }
+                else
+                {
+                    //placedRooms.Add(room);
+                    placedSideRooms.Add(room);
 
-					var x = room.transform.GetComponentInChildren<RoomActivator>();
-					if (x != null)
+                    var x = room.transform.GetComponentInChildren<RoomActivator>();
+                    if (x != null)
                     {
-						x.isSideRoom = true;
-						var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
-						if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
-						else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
+                        x.isSideRoom = true;
+                        var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
+                        if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
+                        else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
                     }
 
 
-					break;
-				}
-			}
-		}
-
-		List<int> done = new List<int>();
-		int i = 0;
-        while (true)
-        {
-			var rando = Random.Range(0, placedSideRooms.Count);
-			if (!done.Contains(rando))
-            {
-				done.Add(rando);
-				i++;
-				if (ChangeToNextMain(placedSideRooms[rando])) break;
+                    break;
+                }
             }
         }
 
+
+
     }
 
-	private RoomActivator.MainType[] mainTypeList = {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
+    private void CreateMainRooms()
+    {
+        List<int> done = new List<int>();
+        int i = 0;
+        while (true)
+        {
+            var rando = Random.Range(0, placedSideRooms.Count);
+            if (!done.Contains(rando))
+            {
+                done.Add(rando);
+                i++;
+                if (ChangeToNextMain(placedSideRooms[rando])) break;
+            }
+        }
+    }
+
+    private List<RoomActivator.MainType> mainTypeList =  new List<RoomActivator.MainType>() {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {
