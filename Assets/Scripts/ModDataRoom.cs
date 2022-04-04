@@ -55,6 +55,9 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,5,   "50% reduced healing",       Grade.interior, OperatorType.non,                        1,     21),
                 new Mod(15,30, "Monster health",            Grade.interior, OperatorType.plus,                       100,    1),
                 new Mod(1,10,  "Monster damage",            Grade.interior, OperatorType.plus,                       100,    2),
+                new Mod(1,10,  "Monster speed",             Grade.interior, OperatorType.increased,                  100,    3),
+                
+                new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,           1,17),
                 new Mod(1,5,   "50% increased healing",         Grade.interior, OperatorType.non,           1,18),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,19),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,20),
