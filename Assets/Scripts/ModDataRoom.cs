@@ -35,13 +35,6 @@ public class ModDataRoom : MonoBehaviour
     public static int[] maxModsWeight = { 0, 10, 20 ,10 ,4 ,2, 1};
     public static int[] modsWeight = { 80,50,2,50,20,6,5,20,20,100,100,100};
 
-    private List<Mod> totalMods = new List<Mod>();
-
-    private void Start()
-    {
-        totalMods = Yep();
-    }
-
     public static Mod[] mods =
         new Mod[]{
 
@@ -74,8 +67,8 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,26),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,27),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,28),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,29),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,30),
+                new Mod(1,5,   "Boss Rush",         Grade.interior, OperatorType.non,           1,29),
+                new Mod(1,5,   "Less damage on traps",         Grade.interior, OperatorType.non,           1,30),
 
         };
 
