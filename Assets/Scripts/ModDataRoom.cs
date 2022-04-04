@@ -48,9 +48,9 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,15,  "Chance for encounters to drop health",        Grade.interior, OperatorType.plus,     10,10),
                 new Mod(1,5,   "Danger",                    Grade.interior, OperatorType.non,                        1,11),
                 new Mod(10,50, "Reduced movement speed",                    Grade.interior, OperatorType.reduced,    50,12),
-                new Mod(2,4,   "Located Boons",         Grade.interior, OperatorType.plus,                           1,13),
-                new Mod(1,5,   "Error",         Grade.interior, OperatorType.non,                                    20,14),
-                new Mod(1,5,   "",         Grade.interior, OperatorType.non,                                  1,15),
+                new Mod(2,4,   "Located Boons",         Grade.interior, OperatorType.plus,                           30,13),
+                new Mod(1,5,   "Error",         Grade.interior, OperatorType.non,                                    1,14),
+                new Mod(1,5,   "Located Additional Rewards",         Grade.interior, OperatorType.non,                                  1,15),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,16),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,17),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,18),
@@ -256,9 +256,8 @@ public class ModDataRoom : MonoBehaviour
                 mission.error = true;
                 break;
 
-            case "Dan3ger":
-                mission.encounterMobCount += 10;
-                mission.increasedActionSpeed += 50;
+            case "Located Additional Rewards":
+                mission.additionalRewards = true;
                 break;
 
 
@@ -313,6 +312,7 @@ public class ModDataRoom : MonoBehaviour
         internal int playerReducedMovementSpeed = 0;
         internal int additionalBoons = 0;
         internal bool error = false;
+        internal bool additionalRewards;
 
         public void createPositives()
         {
