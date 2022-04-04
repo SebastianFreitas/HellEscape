@@ -61,7 +61,7 @@ public class Monster : MonoBehaviour
         damage += mission.aditionalDamage;
         eliteChance = 5 + mission.increasedChanceElite;
 
-        gunparts = 1;
+        gunparts = 1 + mission.additionalGunParts;
         totalDropChance *= 1 + (((float)mission.increasedMonsterDrops * 3) / 100);
 
         actionSpeed += mission.increasedActionSpeed/100;
@@ -69,10 +69,7 @@ public class Monster : MonoBehaviour
 
 
         if (mission.doubleLife) health*= 2;
-        if (mission.doubleDrops)
-        {
-            totalDropChance = (totalDropChance-1) * 2 + 1;
-        }
+        if (mission.doubleDrops) totalDropChance = (totalDropChance-1) * 2 + 1;
 
         if (mission.tick) StartCoroutine("Tick");
 
@@ -234,7 +231,7 @@ public class Monster : MonoBehaviour
                 break;           
         }
 
-        gunparts = 10;
+        gunparts *= 5;
         totalDropChance += 10;
     }
 

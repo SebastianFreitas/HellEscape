@@ -51,7 +51,7 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(2,4,   "Located Boons",         Grade.interior, OperatorType.plus,                           20,13),
                 new Mod(1,5,   "Error",         Grade.interior, OperatorType.non,                                    1,14),
                 new Mod(1,5,   "Located Additional Rewards",         Grade.interior, OperatorType.non,               30,15),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,16),
+                new Mod(1,5,   "Gun parts drops",         Grade.interior, OperatorType.plus,           1,16),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,17),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,18),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,19),
@@ -260,6 +260,10 @@ public class ModDataRoom : MonoBehaviour
                 mission.additionalRewards = true;
                 break;
 
+            case "Gun parts drops":
+                mission.additionalGunParts += value;
+                break;
+
 
         }
     }
@@ -312,7 +316,8 @@ public class ModDataRoom : MonoBehaviour
         internal int playerReducedMovementSpeed = 0;
         internal int additionalBoons = 0;
         internal bool error = false;
-        internal bool additionalRewards;
+        internal bool additionalRewards = false;
+        internal int additionalGunParts = 0;
 
         public void createPositives()
         {
