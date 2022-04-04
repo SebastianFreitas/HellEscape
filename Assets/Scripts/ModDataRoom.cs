@@ -39,31 +39,31 @@ public class ModDataRoom : MonoBehaviour
     public static Mod[] mods =
         new Mod[]{
 
-                new Mod(1,5,   "Weapon Level",              Grade.interior, OperatorType.plus,                       5,     4),
-                new Mod(1,25,  "Mission Length",            Grade.interior, OperatorType.plus,                       10,    5),
+                new Mod(1,5,   "Weapon level",              Grade.interior, OperatorType.plus,                       10,     4),
+                new Mod(1,25,  "Mission length",            Grade.interior, OperatorType.plus,                       10,    5),
                 new Mod(1,5,   "??1?11",                    Grade.interior, OperatorType.non,                        1,     6), //bloodline, mobs that are not skulls have a chance of spawning 2 skulls
-                new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        2,     7),
+                new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        5,     7),
                 new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       20,    8),
-                new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,                        2,     9),
+                new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,                        5,     9),
                 new Mod(1,15,  "Chance for encounters to drop health",        Grade.interior, OperatorType.plus,     10,    10),
                 new Mod(1,5,   "Danger",                    Grade.interior, OperatorType.non,                        1,     11),
                 new Mod(10,50, "Reduced movement speed",    Grade.interior, OperatorType.reduced,                    50,    12),
-                new Mod(2,4,   "Located Boons",         Grade.interior, OperatorType.plus,                           20,    13),
+                new Mod(2,4,   "Located boons",         Grade.interior, OperatorType.plus,                           20,    13),
                 new Mod(1,5,   "ERROR",         Grade.interior, OperatorType.non,                                    1,     14),
-                new Mod(1,5,   "Located Additional Rewards",         Grade.interior, OperatorType.non,               30,    15),
-                new Mod(1,5,   "Gun parts drops",         Grade.interior, OperatorType.plus,                         1,     16),
-                new Mod(1,5,   "50% reduced healing",       Grade.interior, OperatorType.non,                        1,     21),
+                new Mod(1,5,   "Located additional rewards",         Grade.interior, OperatorType.non,               5,    15),
+                new Mod(1,5,   "Gun parts drops",         Grade.interior, OperatorType.plus,                         10,     16),
+                new Mod(1,5,   "50% reduced healing",       Grade.interior, OperatorType.non,                        20,     21),
                 new Mod(15,30, "Monster health",            Grade.interior, OperatorType.plus,                       100,    1),
                 new Mod(1,10,  "Monster damage",            Grade.interior, OperatorType.plus,                       100,    2),
                 new Mod(1,10,  "Monster speed",             Grade.interior, OperatorType.increased,                  100,    3),
-                
-                new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,           1,17),
-                new Mod(1,5,   "50% increased healing",         Grade.interior, OperatorType.non,           1,18),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,19),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,20),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,22),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,23),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,24),
+
+                new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,                       50,      17),
+                new Mod(1,5,   "50% increased healing",         Grade.interior, OperatorType.non,                    50,      18),
+                new Mod(1,5,   "Rooms do not have traps",         Grade.interior, OperatorType.non,                  50,      19),
+                new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       25,      22),
+                new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       25,      20),
+                new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       25,      23),
+                new Mod(1,5,   "Monsters are immune to physical damage",         Grade.interior, OperatorType.non,   10,      24),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,25),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,26),
                 new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,27),
@@ -86,7 +86,7 @@ public class ModDataRoom : MonoBehaviour
         CreatePositives(result);
 
         CreateMissionText(result);
-        
+
 
         return result;
     }
@@ -107,7 +107,7 @@ public class ModDataRoom : MonoBehaviour
     {
         var bonus = result.mods.Count ;
         result.increasedChanceElite         += bonus + Random.Range(0, bonus);
-        result.increasedChanceSpecialRooms  += bonus + Random.Range(0, bonus); 
+        result.increasedChanceSpecialRooms  += bonus + Random.Range(0, bonus);
         result.increasedMonsterDrops        += bonus + Random.Range(0, bonus);
         result.distance = Random.Range(3, 7) + result.aditionalLength;
     }
@@ -213,19 +213,19 @@ public class ModDataRoom : MonoBehaviour
 
             case "Monster damage":
                 mission.aditionalDamage         = value;
-                break;                           
-                                                 
-            case "Monster speed":         
+                break;
+
+            case "Monster speed":
                 mission.increasedActionSpeed    = value;
-                break;                           
-                                                 
-            case "Weapon Level":                   
+                break;
+
+            case "Weapon level":
                 mission.additionalWeaponLevel   = value;
-                break;                            
-                                                  
-            case "Mission Length":                
+                break;
+
+            case "Mission length":
                 mission.aditionalLength         = value;
-                break;   
+                break;
 
             case "??1?11"://bloodline
                 mission.bloodline = true;
@@ -256,7 +256,7 @@ public class ModDataRoom : MonoBehaviour
                 mission.playerReducedMovementSpeed += value;
                 break;
 
-            case "Located Boons":
+            case "Located boons":
                 mission.additionalBoons += value;
                 break;
 
@@ -264,7 +264,7 @@ public class ModDataRoom : MonoBehaviour
                 mission.error = true;
                 break;
 
-            case "Located Additional Rewards":
+            case "Located additional rewards":
                 mission.additionalRewards = true;
                 break;
 
@@ -334,13 +334,13 @@ public class ModDataRoom : MonoBehaviour
 
         public void createPositives()
         {
-  
+
             if (everythingSpecial) increasedChanceSpecialRooms = 75;
             else increasedChanceSpecialRooms = mods.Count * 2 + Random.Range(1, mods.Count * 4) ;
 
             increasedMonsterDrops       = mods.Count * 2 + Random.Range(1, mods.Count * 2) * dropModifier;
             increasedChanceElite        = mods.Count + Random.Range(1, mods.Count);
-     
+
 
         }
     }
