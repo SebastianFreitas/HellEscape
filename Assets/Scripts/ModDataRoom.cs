@@ -35,6 +35,12 @@ public class ModDataRoom : MonoBehaviour
     public static int[] maxModsWeight = { 0, 10, 20 ,10 ,4 ,2, 1};
     public static int[] modsWeight = { 80,50,2,50,20,6,5,20,20,100,100,100};
 
+    private List<Mod> totalMods = new List<Mod>();
+
+    private void Start()
+    {
+        totalMods = Yep();
+    }
 
     public static Mod[] mods =
         new Mod[]{
@@ -103,6 +109,25 @@ public class ModDataRoom : MonoBehaviour
         return ret;
     }
 
+    private List<Mod> Yep()
+    {
+        var let = new List<(Mod, int)>();
+        foreach (var i in mods)
+        {
+            let.Add((i, i.tier));
+        }
+
+        var ret = new List<Mod>();
+        foreach(var i in let)
+        {
+            for(int a = 0; a < i.Item2; a++)
+            {
+                ret.Add(i.Item1);
+            }
+        }
+        return ret;
+    }
+
     private void CreatePositives(GeneratedMission result)
     {
         var bonus = result.mods.Count ;
@@ -155,12 +180,12 @@ public class ModDataRoom : MonoBehaviour
 
     private void AddMod(GeneratedMission mission)
     {
+        var list = Yep();
         while (true)
         {
-            var x = new Mod(mods[GetRandomWeightedIndex(GenerateModsWheight())]);
+            var x = new Mod(list[Random.Range(0, list.Count)]);
             if (!ContainsMod(mission, x))
             {
-              //  i.tier -= 100;
                 var value = Random.Range(x.lowerBound, x.upperBound);
                 x.upperBound = value;
                 x.text = CreateText(x);
