@@ -13,10 +13,14 @@ public class PlayerHpManager : MonoBehaviour
 
     public GameObject bloodScreen;
 
+    private GameMan manager;
+    private ModDataRoom.GeneratedMission mission;
+
     void Start()
     {
         //hp = GameObject.FindGameObjectsWithTag("HealthBar")[0].transform.GetComponent<HealthBar>();
         hp.SetMaxHealth((int)maxHealth);
+        manager = transform.root.GetComponent<GameMan>();
     }
 
     private void OnEnable()
@@ -46,11 +50,13 @@ public class PlayerHpManager : MonoBehaviour
 
     internal void Heal(float amount)
     {
+        if (manager.mission.halfHealing) amount /= 2;
+
         var result = health + amount;
         if (result > maxHealth) hp.SetHealth((int)maxHealth);
         else hp.SetHealth((int)result);
 
-        //if (health > maxHealth * .3f) hp.ChangeToGreen();
+       
     }
 
     internal void ChangeMaxHP(int amount)

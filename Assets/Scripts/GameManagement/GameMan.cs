@@ -25,6 +25,7 @@ public class GameMan : ModDataRoom
     [SerializeField] RoomGenerator roomGen;
     [SerializeField] Vector3 currentStartPos;
 
+    internal ModDataRoom.GeneratedMission mission;
 
     // Start is called before the first frame update
     void Start()
@@ -106,7 +107,7 @@ public class GameMan : ModDataRoom
     public void StartRun(GeneratedMission mis)
     {
 
-
+        mission = mis;
         hub.gameObject.SetActive(false);
 
         roomGen.StartRun(mis);
