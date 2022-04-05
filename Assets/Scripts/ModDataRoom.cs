@@ -57,18 +57,13 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,10,  "Monster speed",             Grade.interior, OperatorType.increased,                  100,    3),
 
                 new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,                       50,      17),
-                new Mod(1,5,   "",         Grade.interior, OperatorType.non,                    50,      18),
-                new Mod(1,5,   "",         Grade.interior, OperatorType.non,                  50,      19),
+                new Mod(1,5,   "UnknownX",         Grade.interior, OperatorType.non,                                 2,      18),//monsters become bigger deal double damage and drop 1 more gunpart
+                new Mod(1,5,   "UnknownY",         Grade.interior, OperatorType.non,                                 2,      19),
                 new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       25,      22),
                 new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       25,      20),
-                new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       25,      23),
+                new Mod(1,5,   "Monsters are immune to poison damage",         Grade.interior, OperatorType.non,     25,      23),
                 new Mod(1,5,   "Monsters are immune to physical damage",         Grade.interior, OperatorType.non,   10,      24),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,25),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,26),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,27),
-                new Mod(1,5,   "Danger",         Grade.interior, OperatorType.non,           1,28),
-                new Mod(1,5,   "Boss Rush",         Grade.interior, OperatorType.non,           1,29),
-                new Mod(1,5,   "Less damage on traps",         Grade.interior, OperatorType.non,           1,30),
+                new Mod(10,50, "Monster reduced action speed",         Grade.interior, OperatorType.reduced,         1,       25),
 
         };
 
@@ -314,6 +309,20 @@ public class ModDataRoom : MonoBehaviour
                 mission.physicalImmunity = true;
                 break;
 
+            case "UnknownX":
+                mission.additionalGunParts +=1;
+                mission.isBig = true;
+                break;
+
+            case "UnknownY":
+                mission.additionalGunParts +=5;
+                mission.increasedActionSpeed += 50;
+                break;
+
+            case "Monster reduced action speed":
+                mission.increasedActionSpeed -= value;
+                break;
+
         }
     }
 
@@ -373,6 +382,7 @@ public class ModDataRoom : MonoBehaviour
         internal bool poisonImmunity = false;
         internal bool physicalImmunity = false;
         internal bool noGrenade = false;
+        internal bool isBig = false;
 
         public void createPositives()
         {
