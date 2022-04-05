@@ -16,7 +16,7 @@ public class ConeMonster : Monster
     private bool isRunning = false;
 
     private float finalWaitTime;
-    new void Start()
+    new void awake()
     {
 
         //StartCoroutine(Waiter());
@@ -24,15 +24,14 @@ public class ConeMonster : Monster
         rigidBody.angularVelocity = Vector3.zero;
         //isRunning = true;
 
-        finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
-        if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
+        
 
     }
     private void OnEnable()
     {
         if (!isRunning)
         {
-            StartCoroutine(MoveRandom());
+            //StartCoroutine(MoveRandom());
             StartCoroutine(Waiter());
         }
 
@@ -45,7 +44,8 @@ public class ConeMonster : Monster
     private IEnumerator Waiter()
     {
 
-
+        finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
+        if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
         isRunning = true;
         yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f));
         while (true)
@@ -67,11 +67,40 @@ public class ConeMonster : Monster
 
     }
 
+    // User Inputs
+    public float degreesPerSecond = 15.0f;
+    public float amplitude = 0.5f;
+    public float frequency = 1f;
+
+    // Position Storage Variables
+    Vector3 posOffset = new Vector3();
+    Vector3 tempPos = new Vector3();
+
+    // Use this for initialization
+    void Start()
+    {
+        // Store the starting position & rotation of the object
+        posOffset = transform.position;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Spin object around Y-Axis
+        transform.Rotate(new Vector3(0f, Time.deltaTime * degreesPerSecond, 0f), Space.World);
+
+        // Float up/down with a Sin()
+        tempPos = posOffset;
+        tempPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
+
+        transform.position = tempPos;
+    }
+
     private IEnumerator MoveRandom()
     {
         var waitTime = finalWaitTime * 2;
         bool signal = true;
-        yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f));
+        yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f * Time.deltaTime));
         while (true)
         {
 
