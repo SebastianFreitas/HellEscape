@@ -66,7 +66,7 @@ public class Monster : MonoBehaviour
 
         actionSpeed += mission.increasedActionSpeed/100;
         
-
+        if (mission.isBig) transform.localScale *= 1.5f;
 
         if (mission.doubleLife) health*= 2;
         if (mission.doubleDrops) totalDropChance = (totalDropChance-1) * 2 + 1;
@@ -200,11 +200,6 @@ public class Monster : MonoBehaviour
                 var explo = Instantiate(explosion, transform.position, transform.rotation, transform);
                 explo.transform.parent = null;
                 explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 5f);
-            }
-
-            if (mission.bloodline)
-            {
-                roomActivator.SpawnByInfluence(transform.position, transform.rotation, false, false);
             }
 
             roomActivator.IsEncounterDone();

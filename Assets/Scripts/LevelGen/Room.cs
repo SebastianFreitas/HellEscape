@@ -99,7 +99,7 @@ public class Room : MonoBehaviour
             monstersAlive++;
             ApplyMissionModsToMonster(z);
             z.UpdateStatsToLevel();
-            if (mission.bloodline) BloodLine(z);
+            
         }
 
         Layouts[x].SetActive(true);

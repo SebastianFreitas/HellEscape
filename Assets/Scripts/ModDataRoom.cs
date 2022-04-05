@@ -38,32 +38,32 @@ public class ModDataRoom : MonoBehaviour
     public static Mod[] mods =
         new Mod[]{
 
-                new Mod(1,5,   "Weapon level",              Grade.interior, OperatorType.plus,                       10,     4),
-                new Mod(1,25,  "Mission length",            Grade.interior, OperatorType.plus,                       10,    5),
-                new Mod(1,5,   "??1?11",                    Grade.interior, OperatorType.non,                        1,     6), //bloodline, mobs that are not skulls have a chance of spawning 2 skulls
-                new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        5,     7),
-                new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       20,    8),
-                new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,                        5,     9),
-                new Mod(1,15,  "Chance for encounters to drop health",        Grade.interior, OperatorType.plus,     10,    10),
-                new Mod(1,5,   "Danger",                    Grade.interior, OperatorType.non,                        1,     11),
-                new Mod(10,50, "Reduced movement speed",    Grade.interior, OperatorType.reduced,                    50,    12),
-                new Mod(2,4,   "Located boons",         Grade.interior, OperatorType.plus,                           20,    13),
-                new Mod(1,5,   "ERROR",         Grade.interior, OperatorType.non,                                    1,     14),
-                new Mod(1,5,   "Located additional rewards",         Grade.interior, OperatorType.non,               5,    15),
-                new Mod(1,5,   "Gun parts drops",         Grade.interior, OperatorType.plus,                         10,     16),
-                new Mod(1,5,   "50% reduced healing",       Grade.interior, OperatorType.non,                        20,     21),
-                new Mod(15,30, "Monster health",            Grade.interior, OperatorType.plus,                       100,    1),
-                new Mod(1,10,  "Monster damage",            Grade.interior, OperatorType.plus,                       100,    2),
-                new Mod(1,10,  "Monster speed",             Grade.interior, OperatorType.increased,                  100,    3),
+                new Mod(1,5,   "Weapon level",              Grade.interior, OperatorType.plus,                       100,     4),
+                new Mod(1,25,  "Mission length",            Grade.interior, OperatorType.plus,                       100,    5),
+            
+                new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        25,     7),
+                new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       200,    8),
+                new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,                        25,     9),
+                new Mod(1,15,  "Chance for encounters to drop health",        Grade.interior, OperatorType.plus,     100,    10),
+                new Mod(1,5,   "Danger",                    Grade.interior, OperatorType.non,                        2,     11),
+                new Mod(10,50, "Reduced movement speed",    Grade.interior, OperatorType.reduced,                    500,    12),
+                new Mod(2,4,   "Located boons",         Grade.interior, OperatorType.plus,                           50,    13),
+                new Mod(1,5,   "ERROR",         Grade.interior, OperatorType.non,                                    2,     14),
+                new Mod(1,5,   "Located additional rewards",         Grade.interior, OperatorType.non,               10,    15),
+                new Mod(1,5,   "Gun parts drops",         Grade.interior, OperatorType.plus,                         100,     16),
+                new Mod(1,5,   "50% reduced healing",       Grade.interior, OperatorType.non,                        200,     21),
+                new Mod(15,100, "Monster health",            Grade.interior, OperatorType.plus,                      1000,    1),
+                new Mod(1,10,  "Monster damage",            Grade.interior, OperatorType.plus,                       1000,    2),
+                new Mod(1,25,  "Monster action speed",             Grade.interior, OperatorType.increased,           1000,    3),
 
-                new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,                       50,      17),
-                new Mod(1,5,   "UnknownX",         Grade.interior, OperatorType.non,                                 2,      18),//monsters become bigger deal double damage and drop 1 more gunpart
-                new Mod(1,5,   "UnknownY",         Grade.interior, OperatorType.non,                                 2,      19),
-                new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       25,      22),
-                new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       25,      20),
-                new Mod(1,5,   "Monsters are immune to poison damage",         Grade.interior, OperatorType.non,     25,      23),
-                new Mod(1,5,   "Monsters are immune to physical damage",         Grade.interior, OperatorType.non,   10,      24),
-                new Mod(10,50, "Monster reduced action speed",         Grade.interior, OperatorType.reduced,         1,       25),
+                new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,                       500,      17),
+                new Mod(1,5,   "UnknownX",         Grade.interior, OperatorType.non,                                 4,      18),//monsters become bigger deal double damage and drop 1 more gunpart
+                new Mod(1,5,   "UnknownY",         Grade.interior, OperatorType.non,                                 4,      19),
+                new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       250,      22),
+                new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       250,      20),
+                new Mod(1,5,   "Monsters are immune to poison damage",         Grade.interior, OperatorType.non,     250,      23),
+                new Mod(1,5,   "Monsters are immune to physical damage",         Grade.interior, OperatorType.non,   100,      24),
+                
 
         };
 
@@ -153,19 +153,6 @@ public class ModDataRoom : MonoBehaviour
         return text;
     }
 
-    private int[] GenerateModsWheight()
-    {
-        int[] result = new int[mods.Length];
-        int i = 0;
-        foreach(Mod current in mods)
-        {
-            result[i] = current.tier;
-            i++;
-        }
-
-        return result;
-    }
-
     private void AddMod(GeneratedMission mission)
     {
         var list = Yep();
@@ -228,7 +215,7 @@ public class ModDataRoom : MonoBehaviour
                 mission.aditionalDamage         = value;
                 break;
 
-            case "Monster speed":
+            case "Monster action speed":
                 mission.increasedActionSpeed    = value;
                 break;
 
@@ -238,10 +225,6 @@ public class ModDataRoom : MonoBehaviour
 
             case "Mission length":
                 mission.aditionalLength         = value;
-                break;
-
-            case "??1?11"://bloodline
-                mission.bloodline = true;
                 break;
 
             case "Double drop chance":
@@ -316,11 +299,7 @@ public class ModDataRoom : MonoBehaviour
 
             case "UnknownY":
                 mission.additionalGunParts +=5;
-                mission.increasedActionSpeed += 50;
-                break;
-
-            case "Monster reduced action speed":
-                mission.increasedActionSpeed -= value;
+                mission.increasedActionSpeed += 100;
                 break;
 
         }
@@ -341,11 +320,10 @@ public class ModDataRoom : MonoBehaviour
 
     public class GeneratedMission
     {
-        public bool bloodline       = false;
 
         public int aditionalLife           = 0;
         public int aditionalDamage         = 0;
-        public int increasedActionSpeed    = 0;
+        public float increasedActionSpeed    = 0;
         public int additionalWeaponLevel   = 0;
         public int aditionalLength         = 0;
         public int distance = 0;

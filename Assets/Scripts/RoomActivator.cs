@@ -61,7 +61,7 @@ public class RoomActivator : MonoBehaviour
     internal VoidBoon.BoonType influcence = VoidBoon.BoonType.Red;
 
     internal ModDataRoom.GeneratedMission mission;
-    internal bool beenTrigered;
+    internal bool beenTrigered = false;
 
     internal bool isSideRoom = false;
 
@@ -92,7 +92,7 @@ public class RoomActivator : MonoBehaviour
 
             if (!beenTrigered)
             {
-                beenTrigered = true;
+               beenTrigered = true;
 
                 switch (roomType)
                 {

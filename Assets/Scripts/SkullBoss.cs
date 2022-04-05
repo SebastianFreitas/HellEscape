@@ -58,7 +58,7 @@ public class SkullBoss : Monster
             var waitTime = Random.Range(minWaitingTime, maxWaitingTime);
             yield return new WaitForSeconds(waitTime);
             var skull = Instantiate(miniSkull, transform.position, transform.rotation, transform.parent);
-            skull.transform.parent.GetComponent<MobSpawner>().numberOfEnemies++;
+            skull.transform.parent.GetComponent<RoomActivator>().numberOfEnemies++;
         }
 
     }
