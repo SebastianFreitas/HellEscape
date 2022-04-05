@@ -31,6 +31,6 @@ public class HealthPack : MonoBehaviour
     {
         var x = GameObject.FindGameObjectWithTag("Dude").transform;
         x.GetComponent<PlayerHpManager>().Heal(25);
-        Destroy(this.transform.parent.gameObject);
+        Destroy(this.transform);
     }
 }

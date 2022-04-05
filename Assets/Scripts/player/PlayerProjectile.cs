@@ -187,7 +187,7 @@ public class PlayerProjectile : MonoBehaviour
             }
             else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
             {
-                hitCollider.GetComponent<Monster>().TakeDamage(fireDamage);
+                hitCollider.GetComponent<Monster>().TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
             }
             else if (hitCollider.CompareTag("Prop"))
             {

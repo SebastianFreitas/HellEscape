@@ -11,7 +11,11 @@ public class ConeMonster : Monster
 
     [SerializeField] float speed;
 
+    [SerializeField] float waitingTime;
+
     private bool isRunning = false;
+
+    private float finalWaitTime;
     new void Start()
     {
 
@@ -20,10 +24,17 @@ public class ConeMonster : Monster
         rigidBody.angularVelocity = Vector3.zero;
         //isRunning = true;
 
+        finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
+        if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
+
     }
     private void OnEnable()
     {
-        if (!isRunning) StartCoroutine(Waiter()); 
+        if (!isRunning)
+        {
+            StartCoroutine(MoveRandom());
+            StartCoroutine(Waiter());
+        }
 
     }
     private void OnDisable()
@@ -33,21 +44,52 @@ public class ConeMonster : Monster
 
     private IEnumerator Waiter()
     {
+
+
         isRunning = true;
-        yield return new WaitForSecondsRealtime(1f);
+        yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f));
         while (true)
         {
+
+
+
+
             shootPoint.transform.LookAt(player.transform);
-
-
             var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
             var bulletScript = bullet.GetComponent<TurretBullet>();
             bulletScript.speed = speed;
             explosionEffect.Play();
 
 
-            yield return new WaitForSecondsRealtime(1f);
+            yield return new WaitForSecondsRealtime(finalWaitTime);
 
+        }
+
+    }
+
+    private IEnumerator MoveRandom()
+    {
+        var waitTime = finalWaitTime * 2;
+        bool signal = true;
+        yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f));
+        while (true)
+        {
+
+            if (signal)
+            {
+                transform.position += Vector3.up;
+                signal = false;
+            }
+            else
+            {
+                transform.position += Vector3.down;
+                signal = true;
+            }
+
+
+
+
+            yield return new WaitForSecondsRealtime(waitTime);
         }
 
     }

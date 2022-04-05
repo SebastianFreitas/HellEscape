@@ -6,20 +6,8 @@ public class MoveCone : MonoBehaviour
 {
     public Transform torus;
 
-
-
-    private void Start()
+    private void FixedUpdate()
     {
-        
-        StartCoroutine(Waiter());
-    }
-
-    IEnumerator Waiter()
-    {
-        while (true)
-        {
-            transform.Rotate(Vector3.right * 500 * Time.deltaTime, Space.Self);
-            yield return new WaitForSecondsRealtime(.1f);
-        }
+        transform.Rotate(Vector3.right * (50 * Time.deltaTime), Space.Self);
     }
 }

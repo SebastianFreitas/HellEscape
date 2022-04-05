@@ -242,7 +242,7 @@ public class RoomActivator : MonoBehaviour
         {
             case VoidBoon.BoonType.Blue:
                 if (Isboss) spawn = roomgen.BossBlue[0];
-                else spawn = roomgen.monstersBlue[0];
+                else spawn = roomgen.monstersBlue[1];
 
                 currentMob = Instantiate(spawn, position, rotation, transform);
                 if (roomgen.mission.doubleMobs) 
@@ -252,7 +252,7 @@ public class RoomActivator : MonoBehaviour
 
             case VoidBoon.BoonType.Red:
                 if (Isboss) spawn = roomgen.BossRed[0];
-                else spawn = roomgen.monstersRed[0];
+                else spawn = roomgen.monstersRed[1];
 
                 currentMob = Instantiate(spawn, position, rotation, transform);
 
