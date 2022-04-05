@@ -185,9 +185,13 @@ public class PlayerProjectile : MonoBehaviour
                 playerMov.AddImpact(hitCollider.transform.position - transform.position, fireDamage);
                 //playerMov.GainSpeed(2);
             }
-            else if (hitCollider.CompareTag("Monster") || hitCollider.CompareTag("MonsterHead"))
+            else if (hitCollider.CompareTag("Monster") )
             {
                 hitCollider.GetComponent<Monster>().TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
+            }
+            else if ( hitCollider.CompareTag("MonsterHead"))
+            {
+                hitCollider.GetComponentInParent<Monster>().TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
             }
             else if (hitCollider.CompareTag("Prop"))
             {

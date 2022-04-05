@@ -238,6 +238,7 @@ public class Monster : MonoBehaviour
     private void TurnBig()
     {
         transform.localScale *= 3f;
+        rigidBody.mass *= 10;
         health *= 4;
         damage *= 2;
     }
