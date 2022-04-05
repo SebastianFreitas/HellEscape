@@ -13,12 +13,12 @@ public class Fragments : MonoBehaviour
 
     private void OnEnable()
     {
-        StartCoroutine("SpawnObjects");
+        SpawnObjects();
     }
 
-    private IEnumerator SpawnObjects()
+    private void SpawnObjects()
     {
-        WaitForSeconds interval = new WaitForSeconds(0.001f);
+       // WaitForSeconds interval = new WaitForSeconds(0.001f);
 
         Vector3 center = transform.position;
 
@@ -28,7 +28,7 @@ public class Fragments : MonoBehaviour
             Quaternion rot = Quaternion.FromToRotation(Vector3.forward, center - pos);
             var obj = Instantiate(objetcts[Random.Range(0, objetcts.Length)], pos, rot, transform);
             obj.transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
-            yield return interval;
+           // yield return interval;
         }
 
 
@@ -38,7 +38,7 @@ public class Fragments : MonoBehaviour
             Quaternion rot = Quaternion.FromToRotation(Vector3.forward, center - pos);
             var obj = Instantiate(objetcts[Random.Range(0, objetcts.Length)], pos, rot, transform);
             obj.transform.Rotate(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
-            yield return interval;
+           // yield return interval;
         }
     }
 

@@ -96,30 +96,7 @@ public class ConeMonster : Monster
         transform.position = tempPos;
     }
 
-    private IEnumerator MoveRandom()
-    {
-        var waitTime = finalWaitTime * 2;
-        bool signal = true;
-        yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f * Time.deltaTime));
-        while (true)
-        {
-
-            if (signal)
-            {
-                transform.position += Vector3.up;
-                signal = false;
-            }
-            else
-            {
-                transform.position += Vector3.down;
-                signal = true;
-            }
 
 
-
-
-            yield return new WaitForSecondsRealtime(waitTime);
-        }
-
-    }
+    
 }
