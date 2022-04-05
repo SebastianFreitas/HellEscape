@@ -10,7 +10,7 @@ public class ModData : MonoBehaviour
                 new Mod(1,3,   "Cold Damage",               Grade.interior, OperatorType.plus,      0,2),
                 new Mod(1,3,   "Poison Damage",             Grade.interior, OperatorType.plus,      0,3),
                 new Mod(2,5,   "Physical Damage",           Grade.interior, OperatorType.increased, 0,4),
-                new Mod(2,5,   "Critical damage",           Grade.interior, OperatorType.increased, 0,5),
+                new Mod(2,5,   "Critical Damage",           Grade.interior, OperatorType.increased, 0,5),
                 
 
             };
@@ -31,17 +31,20 @@ public class ModData : MonoBehaviour
 
     public static Mod[] modSpecial =
         new Mod[]{
-                new Mod(1,10,  "Ricochets follow enemies",           Grade.special, OperatorType.plus, 0,201),
-                new Mod(1,3,   "Bullet Speed",              Grade.special, OperatorType.increased, 0,205),
+                new Mod(2,6,   "Fire Damage",               Grade.special, OperatorType.plus,      0,111),
+                new Mod(2,6,   "Cold Damage",               Grade.special, OperatorType.plus,      0,222),
+                new Mod(2,6,   "Poison Damage",             Grade.special, OperatorType.plus,      0,333),
+                new Mod(4,10,  "Physical Damage",           Grade.special, OperatorType.increased, 0,444),
+                new Mod(4,10,  "Critical Damage",           Grade.special, OperatorType.increased, 0,555),
 
         };
 
 
-    public static int[] InteriorWeight = { 1, 1, 10000, 10, 10};
+    public static int[] InteriorWeight = { 1, 1, 1, 10, 10};
 
     public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
-    public static int[] SpecialWeight = { 1, 1};
+    public static int[] SpecialWeight = { 1,1, 1,1,2};
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 

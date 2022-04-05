@@ -55,7 +55,7 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(15,100, "Monster health",            Grade.interior, OperatorType.plus,                      1000,    1),
                 new Mod(1,10,  "Monster damage",            Grade.interior, OperatorType.plus,                       1000,    2),
                 new Mod(1,25,  "Monster action speed",             Grade.interior, OperatorType.increased,           1000,    3),
-
+                
                 new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,                       500,      17),
                 new Mod(1,5,   "UnknownX",         Grade.interior, OperatorType.non,                                 4,      18),//monsters become bigger deal double damage and drop 1 more gunpart
                 new Mod(1,5,   "UnknownY",         Grade.interior, OperatorType.non,                                 4,      19),
