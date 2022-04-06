@@ -8,8 +8,6 @@ public class RoomActivator : MonoBehaviour
 
     [SerializeField] GameObject lights;
 
-
-
     [SerializeField] GameObject trapLayouts;
 
     internal Transform spawnPos;

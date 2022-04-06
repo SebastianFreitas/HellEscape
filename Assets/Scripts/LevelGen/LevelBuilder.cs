@@ -18,45 +18,46 @@
 //	LayerMask roomLayerMask;
 
 
-	
+
 //	void Start ()
 //	{
 //		roomLayerMask = LayerMask.GetMask ("Room");
 //		StartCoroutine ("GenerateLevel");
 //	}
 
-//	IEnumerator GenerateLevel ()
-//	{
-//		WaitForSeconds startup = new WaitForSeconds (1);
-//		WaitForFixedUpdate interval = new WaitForFixedUpdate ();
+//IEnumerator GenerateLevel()
+//{
+//    WaitForSeconds startup = new WaitForSeconds(1);
+//    WaitForFixedUpdate interval = new WaitForFixedUpdate();
 
-//		yield return startup;
+//    yield return startup;
 
-//		// Place start room
-//		PlaceStartRoom ();
-//		yield return interval;
+//    // Place start room
+//    PlaceStartRoom();
+//    yield return interval;
 
-//		// Random iterations
-//		int iterations = Random.Range ((int)iterationRange.x, (int)iterationRange.y);
+//    // Random iterations
+//    int iterations = Random.Range((int)iterationRange.x, (int)iterationRange.y);
 
-//		for (int i = 0; i < iterations; i++) {
-//			// Place random room from list
-//			PlaceRoom ();
-//			yield return interval;
-//		}
+//    for (int i = 0; i < iterations; i++)
+//    {
+//        // Place random room from list
+//        PlaceRoom();
+//        yield return interval;
+//    }
 
-//		// Place end room
-//		PlaceEndRoom ();
-//		yield return interval;
+//    // Place end room
+//    PlaceEndRoom();
+//    yield return interval;
 
-//		// Level generation finished
-//		Debug.Log ("Level generation finished");
+//    // Level generation finished
+//    Debug.Log("Level generation finished");
 
 
 
-////		yield return new WaitForSeconds (3);
-////		ResetLevelGenerator ();
-//	}
+//    //		yield return new WaitForSeconds (3);
+//    //		ResetLevelGenerator ();
+//}
 
 //	void PlaceStartRoom ()
 //	{
@@ -79,7 +80,7 @@
 //			list.Insert (r, doorway);
 //		}
 //	}
-	
+
 //	void PlaceRoom ()
 //	{
 //		// Instantiate room
@@ -154,7 +155,7 @@
 //		Vector3 roomPositionOffset = roomDoorway.transform.position - room.transform.position;
 //		room.transform.position = targetDoorway.transform.position - roomPositionOffset;
 //	}
-	
+
 //	bool CheckRoomOverlap (Room room)
 //	{
 //		Bounds bounds = room.RoomBounds;
@@ -175,7 +176,7 @@
 
 //		return false;
 //	}
-	
+
 //	void PlaceEndRoom ()
 //	{
 //		// Instantiate room

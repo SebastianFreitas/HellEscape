@@ -109,19 +109,25 @@ public class Monster : MonoBehaviour
     {
         if (mission.fireImmunity) stats.fireDamage = 0;
 
-        if (mission.coldImmunity && stats.coldDamage > 0) stats.coldDamage = 0;
+        if (mission.coldImmunity ) stats.coldDamage = 0;
         else
         {
+            if (stats.coldDamage > 0)
+            {
+                StopCoroutine("Chilled");
+                StartCoroutine("Chilled");
+            }
 
-            StopCoroutine("Chilled");
-            StartCoroutine("Chilled");
-            
         }
-        if (mission.poisonImmunity && stats.poisonDamage > 0) stats.poisonDamage = 0;
+
+        if (mission.poisonImmunity) stats.poisonDamage = 0;
         else
         {
-            //StopCoroutine("Poisoned");
-            StartCoroutine(Poisoned(stats.poisonDamage));
+            if (stats.poisonDamage > 0)
+            {
+                StartCoroutine(Poisoned(stats.poisonDamage));
+            }
+
         }
 
         if (mission.physicalImmunity) stats.physicalDamage = 0;

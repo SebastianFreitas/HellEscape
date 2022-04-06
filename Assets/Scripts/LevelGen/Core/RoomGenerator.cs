@@ -50,7 +50,10 @@ public class RoomGenerator : MonoBehaviour
 
 	internal ModDataRoom.GeneratedMission mission;
 
-    internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
+	internal int encounterCounter = 0;
+	[SerializeField] GameObject[][] encounters;
+
+	internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
 	{
 		player.SetActive(false);
 
@@ -62,7 +65,7 @@ public class RoomGenerator : MonoBehaviour
 
 		// Place start room
 		PlaceStartRoom();
-		yield return startup;
+		yield return interval;
 		int influencePos = Random.Range(1,5);
 		//place pathway
 		for (int i = 1; i <=20+mission.aditionalLength; i++)
@@ -107,6 +110,7 @@ public class RoomGenerator : MonoBehaviour
 				if (a >= 10) ResetLevelGenerator();
 
 			}
+			yield return interval;
 
 		}
 
@@ -115,13 +119,13 @@ public class RoomGenerator : MonoBehaviour
 		PlaceCorridor(20);
 
 		if (!PlaceEndRoom()) ResetLevelGenerator();
-		yield return startup;
+		yield return interval;
 
 		//fill the rest of the level
 		FillEmptyDoors();
 		ConnectRoomActivator();
 
-		yield return startup;
+		yield return interval;
 		for (int i = 1; i < placedRooms.Count; i++)
 			placedRooms[i].gameObject.SetActive(false);
 
@@ -137,7 +141,7 @@ public class RoomGenerator : MonoBehaviour
 
 		CreateMainRooms();
 
-		yield return startup;
+		yield return interval;
 		isGenerated = true;
 		started = false;
 	}
