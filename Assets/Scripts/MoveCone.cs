@@ -11,6 +11,6 @@ public class MoveCone : MonoBehaviour
     private void FixedUpdate()
     {
        // Vector3 chosen;
-        transform.Rotate(Vector3.right * (50 * Time.deltaTime), Space.Self);
+        transform.Rotate(Vector3.right * (75 * Time.deltaTime), Space.Self);
     }
 }

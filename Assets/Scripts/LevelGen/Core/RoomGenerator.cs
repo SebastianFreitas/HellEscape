@@ -195,11 +195,14 @@ public class RoomGenerator : MonoBehaviour
 		playerMov = player.GetComponent<PlayerBasicMovement>();
 
 
-		encounters.Add(new List<int> {0,0,0,0});
-		encounters.Add(new List<int> {0,0,0,1});
+		encounters.Add(new List<int> { 0, 0, 0, 0 });
+		encounters.Add(new List<int> { 0, 0, 0, 1 });
 		encounters.Add(new List<int> { 0, 0, 1, 1 });
 		encounters.Add(new List<int> { 0, 1, 1, 1 });
 		encounters.Add(new List<int> { 1, 1, 1, 1 });
+		encounters.Add(new List<int> { 1, 1, 1, 2 });
+		encounters.Add(new List<int> { 1, 1, 2, 2 });
+		encounters.Add(new List<int> { 1, 2, 2, 2 });
 
 	}
 

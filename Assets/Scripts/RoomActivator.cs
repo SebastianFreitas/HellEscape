@@ -239,7 +239,7 @@ public class RoomActivator : MonoBehaviour
         switch (influcence)
         {
             case VoidBoon.BoonType.Blue:
-                if (Isboss) spawn = roomgen.BossBlue[0];
+                if (Isboss) spawn = roomgen.BossBlue[Random.Range(0, roomgen.BossBlue.Length)];
                 else spawn = roomgen.monstersBlue[mobIndex];
 
                 currentMob = Instantiate(spawn, position, rotation, transform);
@@ -249,7 +249,7 @@ public class RoomActivator : MonoBehaviour
                 return currentMob;
 
             case VoidBoon.BoonType.Red:
-                if (Isboss) spawn = roomgen.BossRed[0];
+                if (Isboss) spawn = roomgen.BossRed[Random.Range(0, roomgen.BossRed.Length)];
                 else spawn = roomgen.monstersRed[mobIndex];
 
                 currentMob = Instantiate(spawn, position, rotation, transform);
@@ -285,14 +285,20 @@ public class RoomActivator : MonoBehaviour
         if (roomgen.mission.doubleMobs) totalMobs *= 2;
 
         int index = 0;
+        int x;
 
         for (int i = 0; i < totalMobs; i++)
         {
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
-            int x = roomgen.encounters[roomgen.encounterCounter][index];
-            index++;
-            if (index == 4) index = 0;
+
+            if (roomgen.encounterCounter >= roomgen.encounters.Count) x = Random.Range(0,3);
+            else
+            {
+                x = roomgen.encounters[roomgen.encounterCounter][index];
+                index++;
+                if (index == 4) index = 0;
+            }
 
             Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds);
             SpawnByInfluence(randomPoint, Quaternion.identity, elite, false, x);
