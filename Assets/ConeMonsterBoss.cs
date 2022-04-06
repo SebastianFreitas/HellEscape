@@ -50,10 +50,14 @@ public class ConeMonsterBoss : Monster
         yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f));
         while (true)
         {
-            ShotAgaisntTarget(player.transform);
+            //ShotAgaisntTarget(player.transform);
 
-            foreach (var current in directionsToShot) ShotAgaisntTarget(current);
-
+            //foreach (var current in directionsToShot) ShotAgaisntTarget(current);
+            shootPoint.transform.LookAt(player.transform);
+            var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
+            var bulletScript = bullet.GetComponent<TurretBullet>();
+            bulletScript.speed = speed;
+            //explosionEffect.Play();
 
             yield return new WaitForSecondsRealtime(finalWaitTime);
 
