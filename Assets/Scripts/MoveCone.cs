@@ -6,8 +6,11 @@ public class MoveCone : MonoBehaviour
 {
     public Transform torus;
 
+
+
     private void FixedUpdate()
     {
+       // Vector3 chosen;
         transform.Rotate(Vector3.right * (50 * Time.deltaTime), Space.Self);
     }
 }
