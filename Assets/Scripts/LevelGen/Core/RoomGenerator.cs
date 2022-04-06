@@ -53,19 +53,25 @@ public class RoomGenerator : MonoBehaviour
 	internal int encounterCounter = 0;
 	internal List<List<int>> encounters = new List<List<int>>();
 
+	[SerializeField] bool startAtBoss = false;
 	internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
 	{
-		player.SetActive(false);
-
-		Clean();
 		WaitForSeconds startup = new WaitForSeconds(.2f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
 
+
+		player.SetActive(false);
 		yield return startup;
+		Clean();
+
+		yield return interval;
 
 		// Place start room
 		PlaceStartRoom();
 		yield return interval;
+		
+
+		
 		int influencePos = Random.Range(1,5);
 		//place pathway
 		for (int i = 1; i <=20+mission.aditionalLength; i++)
@@ -75,6 +81,7 @@ public class RoomGenerator : MonoBehaviour
             while (true)
             {
 				a++;
+				yield return interval;
 
 				var rando = Random.Range(0, mainRooms.Count);
 
@@ -126,10 +133,12 @@ public class RoomGenerator : MonoBehaviour
 		ConnectRoomActivator();
 
 		yield return interval;
-		for (int i = 1; i < placedRooms.Count; i++)
-			placedRooms[i].gameObject.SetActive(false);
+		//for (int i = 1; i < placedRooms.Count; i++)
+		//	placedRooms[i].gameObject.SetActive(false);
 
-		startRoom.gameObject.SetActive(true);
+		//startRoom.gameObject.SetActive(true);
+
+		if (startAtBoss) currentStartPos = endRoom.GetComponentsInChildren<RoomActivator>()[0].spawnPos.position;
 
 		player.SetActive(true);
 		player.GetComponent<CharacterController>().enabled = false;
@@ -200,9 +209,9 @@ public class RoomGenerator : MonoBehaviour
 		encounters.Add(new List<int> { 0, 0, 1, 1 });
 		encounters.Add(new List<int> { 0, 1, 1, 1 });
 		encounters.Add(new List<int> { 1, 1, 1, 1 });
-		encounters.Add(new List<int> { 1, 1, 1, 2 });
-		encounters.Add(new List<int> { 1, 1, 2, 2 });
-		encounters.Add(new List<int> { 1, 2, 2, 2 });
+		//encounters.Add(new List<int> { 1, 1, 1, 2 });
+		//encounters.Add(new List<int> { 1, 1, 2, 2 });
+		//encounters.Add(new List<int> { 1, 2, 2, 2 });
 
 	}
 
@@ -285,6 +294,11 @@ public class RoomGenerator : MonoBehaviour
 		otherDoorways.Clear();
 		counter = 0;
 		isGenerated = false;
+
+		foreach (Transform child in transform)
+		{
+			GameObject.Destroy(child.gameObject);
+		}
 	}
 
     private void FillEmptyDoors()
@@ -554,13 +568,6 @@ public class RoomGenerator : MonoBehaviour
 		Debug.LogError("Reset level generator");
 
 		StopCoroutine("GenerateLevel");
-
-
-
-		Clean();
-
-
-	
 
 		// Reset coroutine
 		StartCoroutine("GenerateLevel");

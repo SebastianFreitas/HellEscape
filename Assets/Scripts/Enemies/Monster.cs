@@ -13,7 +13,7 @@ public class Monster : MonoBehaviour
     internal PlayerMovement playerMovement;
 
     public Rigidbody rigidBody;
-    public Collider monsterCollider;
+    private Collider monsterCollider;
 
     [Header("Sound")]
     public AudioSource audioSource;
@@ -185,7 +185,7 @@ public class Monster : MonoBehaviour
     {
         var rep = player.transform;
         rep.LookAt(transform.position);
-        audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], 0.1f);
+       // audioSource.PlayOneShot(hurts[Random.Range(0, hurts.Length)], 0.1f);
         var bloodSplat = Instantiate(AshesDamage, transform.position, rep.rotation);
         bloodSplat.Play();
     }

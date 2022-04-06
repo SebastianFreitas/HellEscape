@@ -292,13 +292,17 @@ public class RoomActivator : MonoBehaviour
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
 
-            if (roomgen.encounterCounter >= roomgen.encounters.Count) x = Random.Range(0,3);
-            else
-            {
-                x = roomgen.encounters[roomgen.encounterCounter][index];
-                index++;
-                if (index == 4) index = 0;
-            }
+            //if (roomgen.encounterCounter >= roomgen.encounters.Count) x = Random.Range(0,3);
+            //else
+            //{
+            //    x = roomgen.encounters[Random.Range(0,roomgen.encounters.Count)][index];
+            //    index++;
+            //    if (index == 4) index = 0;
+            //}
+
+            x = roomgen.encounters[Random.Range(0, roomgen.encounters.Count)][index];
+            index++;
+            if (index == 4) index = 0;
 
             Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds);
             SpawnByInfluence(randomPoint, Quaternion.identity, elite, false, x);
@@ -307,7 +311,9 @@ public class RoomActivator : MonoBehaviour
 
         CloseDoors();
         ClearTrigger();
-        if(roomgen.encounterCounter < roomgen.encounters.Count) roomgen.encounterCounter++;
+        
+        
+        //if(roomgen.encounterCounter < roomgen.encounters.Count) roomgen.encounterCounter++;
     }
 
     private void SpawnBoss()

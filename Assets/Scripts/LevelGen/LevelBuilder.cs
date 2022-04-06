@@ -219,30 +219,33 @@
 //		}
 //	}
 
-//	void ResetLevelGenerator ()
-//	{
-//		Debug.LogError ("Reset level generator");
+//void ResetLevelGenerator()
+//{
+//    Debug.LogError("Reset level generator");
 
-//		StopCoroutine ("GenerateLevel");
+//    StopCoroutine("GenerateLevel");
 
-//		// Delete all rooms
-//		if (startRoom) {
-//			Destroy (startRoom.gameObject);
-//		}
+//    // Delete all rooms
+//    if (startRoom)
+//    {
+//        Destroy(startRoom.gameObject);
+//    }
 
-//		if (endRoom) {
-//			Destroy (endRoom.gameObject);
-//		}
+//    if (endRoom)
+//    {
+//        Destroy(endRoom.gameObject);
+//    }
 
-//		foreach (Room room in placedRooms) {
-//			Destroy (room.gameObject);
-//		}
+//    foreach (Room room in placedRooms)
+//    {
+//        Destroy(room.gameObject);
+//    }
 
-//		// Clear lists
-//		placedRooms.Clear ();
-//		availableDoorways.Clear ();
+//    // Clear lists
+//    placedRooms.Clear();
+//    availableDoorways.Clear();
 
-//		// Reset coroutine
-//		StartCoroutine ("GenerateLevel");
-//	}
+//    // Reset coroutine
+//    StartCoroutine("GenerateLevel");
+//}
 //}

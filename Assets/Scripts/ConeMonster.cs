@@ -16,15 +16,16 @@ public class ConeMonster : Monster
     private bool isRunning = false;
 
     private float finalWaitTime;
-    new void awake()
+    new void Start()
     {
 
         //StartCoroutine(Waiter());
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;
         //isRunning = true;
+        posOffset = transform.position;
 
-        
+
 
     }
     private void OnEnable()
@@ -47,7 +48,7 @@ public class ConeMonster : Monster
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
         isRunning = true;
-        yield return new WaitForSecondsRealtime(Random.Range(0.1f, 1f));
+        yield return new WaitForSecondsRealtime(Random.Range(0.5f, 1f));
         while (true)
         {
 
@@ -77,11 +78,7 @@ public class ConeMonster : Monster
     Vector3 tempPos = new Vector3();
 
     // Use this for initialization
-    void Start()
-    {
-        // Store the starting position & rotation of the object
-        posOffset = transform.position;
-    }
+
 
     // Update is called once per frame
     void Update()
