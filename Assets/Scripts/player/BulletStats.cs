@@ -1,14 +1,14 @@
 ﻿internal class BulletStats
 {
-    internal int fireDamage;
-    internal int coldDamage;
-    internal int poisonDamage;
+    internal float fireDamage;
+    internal float coldDamage;
+    internal float poisonDamage;
 
-    internal int physicalDamage;
+    internal float physicalDamage;
 
     internal float critMulti;
 
-    internal BulletStats(int fire, int cold, int poison, int phys, float crit)
+    internal BulletStats(float fire, float cold, float poison, float phys, float crit)
     {
         fireDamage = fire;
         coldDamage = cold;
@@ -19,6 +19,6 @@
 
     internal float GetDamage()
     {
-        return physicalDamage + coldDamage;
+        return physicalDamage + coldDamage + fireDamage;
     }
 }

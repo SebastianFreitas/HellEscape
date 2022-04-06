@@ -108,37 +108,38 @@ public class Monster : MonoBehaviour
     internal void TakeDamage(BulletStats stats, bool isCrit,float critMulti)
     {
         if (mission.fireImmunity) stats.fireDamage = 0;
-        if (mission.coldImmunity) stats.coldDamage = 0;
-        if (mission.poisonImmunity) stats.poisonDamage = 0;
-        if (mission.physicalImmunity) stats.physicalDamage = 0;
 
-        float amount = stats.GetDamage();
-        amount +=(int) Random.Range(-amount*.30f, amount * .30f);
-
-        if (isCrit) amount *= 2+ critMulti/100;
-
-        if (stats.coldDamage > 0)
-        {
-            StopCoroutine("Chilled");
-            StartCoroutine("Chilled");
-        }
-
-        if (stats.poisonDamage > 0)
-        {
-            StopCoroutine("Poisoned");
-            StartCoroutine(Poisoned(stats.poisonDamage));
-        }
-        health -= amount;
-        DmgPopUp(amount, isCrit);
-        if (health <= 0f )
-        {
-           
-            Die();
-        } 
+        if (mission.coldImmunity && stats.coldDamage > 0) stats.coldDamage = 0;
         else
         {
-            Bleed();
 
+            StopCoroutine("Chilled");
+            StartCoroutine("Chilled");
+            
+        }
+        if (mission.poisonImmunity && stats.poisonDamage > 0) stats.poisonDamage = 0;
+        else
+        {
+            //StopCoroutine("Poisoned");
+            StartCoroutine(Poisoned(stats.poisonDamage));
+        }
+
+        if (mission.physicalImmunity) stats.physicalDamage = 0;
+ 
+        
+        if (isCrit) stats.physicalDamage *= 2f + critMulti/100f;
+        
+        float amount = stats.GetDamage();
+
+        if(amount > 0)
+        {
+            amount +=(int) Random.Range(-amount*.30f, amount * .30f);
+    
+            health -= amount;
+            DmgPopUp(amount, isCrit);
+
+            if (health <= 0f ) Die();
+            else Bleed();  
         }
     }
 
@@ -284,7 +285,7 @@ public class Monster : MonoBehaviour
         actionSpeed += 0.5f;
     }
 
-    IEnumerator Poisoned(int poison)
+    IEnumerator Poisoned(float poison)
     {
         WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.5f);
         int damage = (int)(poison / 5);
