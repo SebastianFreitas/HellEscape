@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5503130667118666181}
   - component: {fileID: 4199269503947793158}
   - component: {fileID: 5654874079889298048}
+  - component: {fileID: 2084626735995246514}
   m_Layer: 9
   m_Name: TurretBlueBoss (2)
   m_TagString: MonsterHead
@@ -885,6 +886,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2084626735995246514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 849214804002937310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9003c5ff22d7a44a4f000a7f639942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  damage: 10
+  rigidBody: {fileID: 4199269503947793158}
+  die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
+  hurts:
+  - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
+  - {fileID: 8300000, guid: 0a149ddebde65ad40997208bb9a6b117, type: 3}
+  drop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
+  AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
+  AshesDeath: {fileID: 6949414622727591476, guid: cf3460ca370e1b741a7573fd351f9ab5, type: 3}
+  level: 0
+  dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
+  isHub: 0
+  explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
 --- !u!1 &1731739405513210151
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,6 +961,7 @@ GameObject:
   - component: {fileID: 2091289131301372012}
   - component: {fileID: 709467237016465450}
   - component: {fileID: 4724602411931208034}
+  - component: {fileID: 4613935478599571626}
   m_Layer: 9
   m_Name: TurretBlueBoss (4)
   m_TagString: MonsterHead
@@ -1804,6 +1832,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4613935478599571626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095244479092229247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9003c5ff22d7a44a4f000a7f639942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  damage: 10
+  rigidBody: {fileID: 709467237016465450}
+  die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
+  hurts:
+  - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
+  - {fileID: 8300000, guid: 0a149ddebde65ad40997208bb9a6b117, type: 3}
+  drop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
+  AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
+  AshesDeath: {fileID: 6949414622727591476, guid: cf3460ca370e1b741a7573fd351f9ab5, type: 3}
+  level: 0
+  dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
+  isHub: 0
+  explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
 --- !u!1 &3631181994211728947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,6 +1903,7 @@ GameObject:
   - component: {fileID: 7880587195624254773}
   - component: {fileID: 9203499214186417552}
   - component: {fileID: 7940584775049286270}
+  - component: {fileID: 858312761311130999}
   m_Layer: 9
   m_Name: TurretBlueBoss (3)
   m_TagString: MonsterHead
@@ -2719,6 +2774,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &858312761311130999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755100077669495097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9003c5ff22d7a44a4f000a7f639942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  damage: 10
+  rigidBody: {fileID: 9203499214186417552}
+  die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
+  hurts:
+  - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
+  - {fileID: 8300000, guid: 0a149ddebde65ad40997208bb9a6b117, type: 3}
+  drop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
+  AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
+  AshesDeath: {fileID: 6949414622727591476, guid: cf3460ca370e1b741a7573fd351f9ab5, type: 3}
+  level: 0
+  dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
+  isHub: 0
+  explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
 --- !u!1 &8559570685909935143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2751,7 +2832,7 @@ Transform:
   m_GameObject: {fileID: 8559570685909935143}
   m_LocalRotation: {x: -1, y: -0, z: -0, w: 0.0000029504295}
   m_LocalPosition: {x: 0.404, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 3, z: 2}
+  m_LocalScale: {x: 6, y: 8, z: 6}
   m_Children:
   - {fileID: 7761115923210991181}
   - {fileID: 6725181727504716784}
@@ -3523,11 +3604,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01beb565228385348a97e4b0ec9da741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 800
-  damage: 10
+  health: 10000
+  damage: 20
   rigidBody: {fileID: 1793126189686632794}
-  monsterCollider: {fileID: 0}
-  audioSource: {fileID: 1063161114869848453}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -3658,6 +3737,8 @@ GameObject:
   - component: {fileID: 8232226931781343984}
   - component: {fileID: 6680467936720688599}
   - component: {fileID: 1932264305573477653}
+  - component: {fileID: 2325489417957279273}
+  - component: {fileID: 938933836196687532}
   m_Layer: 9
   m_Name: TurretBlueBoss
   m_TagString: MonsterHead
@@ -4528,3 +4609,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2325489417957279273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9113569477627774074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9003c5ff22d7a44a4f000a7f639942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  damage: 10
+  rigidBody: {fileID: 6680467936720688599}
+  die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
+  hurts:
+  - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
+  - {fileID: 8300000, guid: 0a149ddebde65ad40997208bb9a6b117, type: 3}
+  drop: {fileID: 6888695211029164314, guid: 67ad75d8d9618834e8745add1aba9a1b, type: 3}
+  AshesDamage: {fileID: 6949414622727591476, guid: 4f60e751562f6e94a8d2f21c14927cce, type: 3}
+  AshesDeath: {fileID: 6949414622727591476, guid: cf3460ca370e1b741a7573fd351f9ab5, type: 3}
+  level: 0
+  dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
+  isHub: 0
+  explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+--- !u!114 &938933836196687532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9113569477627774074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc9003c5ff22d7a44a4f000a7f639942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 50
+  damage: 10
+  rigidBody: {fileID: 0}
+  die: {fileID: 0}
+  hurts: []
+  drop: {fileID: 0}
+  AshesDamage: {fileID: 0}
+  AshesDeath: {fileID: 0}
+  level: 0
+  dmgPopUp: {fileID: 0}
+  isHub: 0
+  explosion: {fileID: 0}

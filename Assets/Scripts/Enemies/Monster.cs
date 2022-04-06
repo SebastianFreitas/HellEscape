@@ -16,7 +16,7 @@ public class Monster : MonoBehaviour
     private Collider monsterCollider;
 
     [Header("Sound")]
-    public AudioSource audioSource;
+    private AudioSource audioSource;
     public AudioClip die;
     public AudioClip[] hurts;
     internal float volume;
@@ -39,6 +39,8 @@ public class Monster : MonoBehaviour
     internal ModDataRoom.GeneratedMission mission;
     protected void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+
         volume = PlayerPrefs.GetFloat("Volume");
 
         if (rigidBody == null) rigidBody = transform.GetComponent<Rigidbody>();
