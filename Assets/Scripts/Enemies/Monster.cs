@@ -127,7 +127,8 @@ public class Monster : MonoBehaviour
         {
             if (stats.poisonDamage > 0)
             {
-                StartCoroutine(Poisoned(stats.poisonDamage));
+                //StartCoroutine(Poisoned(stats.poisonDamage));
+                StartPoison(stats.poisonDamage);
             }
 
         }
@@ -293,20 +294,39 @@ public class Monster : MonoBehaviour
         actionSpeed += 0.5f;
     }
 
-    IEnumerator Poisoned(float poison)
+    private float poisonValue = 0;
+    private bool isPoisoned = false;
+    private int poisonTicks = 0;
+    IEnumerator Poisoned()
     {
         WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.5f);
-        int damage = (int)(poison / 5);
-        int i = 0;
+        isPoisoned = true;
+
         while (true)
         {
-            TakeDamage(damage);
+            TakeDamage((int)poisonValue);
 
-            i++;
-            if (i > 9) break;
+            poisonTicks++;
+            if (poisonTicks > 9) break;
 
             yield return waiter;
 
+        }
+
+        poisonTicks = 0;
+        isPoisoned = false;
+    }
+
+    void StartPoison(float poisonDamage)
+    {
+        if (isPoisoned)
+        {
+            poisonTicks = 0;
+            poisonValue += poisonDamage / 5;  
+        }
+        else
+        {
+            StartCoroutine(Poisoned());
         }
     }
 
