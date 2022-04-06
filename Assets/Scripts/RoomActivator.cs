@@ -231,7 +231,7 @@ public class RoomActivator : MonoBehaviour
                 }
         }
     }
-    internal Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss)
+    internal Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss, int mobIndex)
     {
         Monster currentMob;
         Monster spawn;
@@ -240,7 +240,7 @@ public class RoomActivator : MonoBehaviour
         {
             case VoidBoon.BoonType.Blue:
                 if (Isboss) spawn = roomgen.BossBlue[0];
-                else spawn = roomgen.monstersBlue[1];
+                else spawn = roomgen.monstersBlue[mobIndex];
 
                 currentMob = Instantiate(spawn, position, rotation, transform);
                 if (roomgen.mission.doubleMobs) 
@@ -250,7 +250,7 @@ public class RoomActivator : MonoBehaviour
 
             case VoidBoon.BoonType.Red:
                 if (Isboss) spawn = roomgen.BossRed[0];
-                else spawn = roomgen.monstersRed[1];
+                else spawn = roomgen.monstersRed[mobIndex];
 
                 currentMob = Instantiate(spawn, position, rotation, transform);
 
@@ -284,27 +284,34 @@ public class RoomActivator : MonoBehaviour
     {
         if (roomgen.mission.doubleMobs) totalMobs *= 2;
 
+        int index = 0;
+
         for (int i = 0; i < totalMobs; i++)
         {
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
+            int x = roomgen.encounters[roomgen.encounterCounter][index];
+            index++;
+            if (index == 4) index = 0;
+
             Vector3 randomPoint = RandomPointInBounds(chosenCollider.bounds);
-            SpawnByInfluence(randomPoint, Quaternion.identity, elite, false);
+            SpawnByInfluence(randomPoint, Quaternion.identity, elite, false, x);
             numberOfEnemies++;
         }
 
         CloseDoors();
         ClearTrigger();
+        if(roomgen.encounterCounter < roomgen.encounters.Count) roomgen.encounterCounter++;
     }
 
     private void SpawnBoss()
     {
-        SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true);
+        SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true,1);
         numberOfEnemies++;
 
         if (roomgen.mission.doubleMobs)
         {
-            SpawnByInfluence(spawnPos.position + Vector3.forward, Quaternion.identity, false, true);
+            SpawnByInfluence(spawnPos.position + Vector3.forward, Quaternion.identity, false, true, 1);
             numberOfEnemies++;
         }
         CloseDoors();

@@ -51,7 +51,7 @@ public class RoomGenerator : MonoBehaviour
 	internal ModDataRoom.GeneratedMission mission;
 
 	internal int encounterCounter = 0;
-	[SerializeField] GameObject[][] encounters;
+	internal List<List<int>> encounters = new List<List<int>>();
 
 	internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
 	{
@@ -193,6 +193,13 @@ public class RoomGenerator : MonoBehaviour
 		playerHP = player.GetComponent<PlayerHpManager>();
 		playerInv = player.GetComponent<PlayerInventory>();
 		playerMov = player.GetComponent<PlayerBasicMovement>();
+
+
+		encounters.Add(new List<int> {0,0,0,0});
+		encounters.Add(new List<int> {0,0,0,1});
+		encounters.Add(new List<int> { 0, 0, 1, 1 });
+		encounters.Add(new List<int> { 0, 1, 1, 1 });
+		encounters.Add(new List<int> { 1, 1, 1, 1 });
 
 	}
 
