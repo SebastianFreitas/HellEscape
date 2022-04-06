@@ -57,7 +57,9 @@ public class ConeMonsterBoss : Monster
             var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
             var bulletScript = bullet.GetComponent<TurretBullet>();
             bulletScript.speed = speed;
-            //explosionEffect.Play();
+
+
+
 
             yield return new WaitForSecondsRealtime(finalWaitTime);
 
@@ -65,14 +67,6 @@ public class ConeMonsterBoss : Monster
 
     }
 
-    private void ShotAgaisntTarget(Transform target)
-    {
-
-        shootPoint.transform.LookAt(target);
-        var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
-        var bulletScript = bullet.GetComponent<TurretBullet>();
-        bulletScript.speed = speed;
-    }
 
 
     // User Inputs
