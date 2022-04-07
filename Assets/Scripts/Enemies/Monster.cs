@@ -48,11 +48,18 @@ public class Monster : MonoBehaviour
 
         if (player == null) player = GameObject.FindGameObjectsWithTag("Dude")[0];
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
-        roomActivator = transform.GetComponentInParent<RoomActivator>();
-        mission = roomActivator.mission;
-        ApplyMission();
-        
-        if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
+
+        if (!isHub)
+        {
+
+            roomActivator = transform.GetComponentInParent<RoomActivator>();
+            mission = roomActivator.mission;
+            ApplyMission();
+
+            if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
+        }
+        else mission = new ModDataRoom.GeneratedMission();
+
     }
     float eliteChance;
     int gunparts = 1;
@@ -103,7 +110,7 @@ public class Monster : MonoBehaviour
 
     private bool dead = false;
 
-    [SerializeField] internal bool isHub;
+    [SerializeField] internal bool isHub = false;
     [SerializeField] GameObject explosion;
     private bool isTick;
 

@@ -142,7 +142,7 @@ public class PlayerProjectile : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("MonsterHead"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage( stats, true, critMulti);
+            collision.transform.GetComponentInParent<Monster>().TakeDamage( stats, true, critMulti);
 
             StartCoroutine(KillBullet());
         }
@@ -187,7 +187,7 @@ public class PlayerProjectile : MonoBehaviour
             }
             else if (hitCollider.CompareTag("Monster") )
             {
-                hitCollider.GetComponent<Monster>().TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
+                hitCollider.GetComponentInParent<Monster>().TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
             }
             else if ( hitCollider.CompareTag("MonsterHead"))
             {
