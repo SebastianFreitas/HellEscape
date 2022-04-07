@@ -46,7 +46,7 @@ public class RoomGenerator : MonoBehaviour
 	List<Doorway> otherDoorways = new List<Doorway>();
 
 	internal bool isGenerated = false;
-	internal VoidBoon.BoonType influence = VoidBoon.BoonType.Red;
+	internal VoidBoon.BoonType influence = VoidBoon.BoonType.Blue;
 
 	internal ModDataRoom.GeneratedMission mission;
 

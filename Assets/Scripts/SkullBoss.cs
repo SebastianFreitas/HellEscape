@@ -12,6 +12,7 @@ public class SkullBoss : Monster
     [SerializeField] float randomJumpTime;
 
     public ParticleSystem attack;
+    private bool isRed;
 
     [SerializeField] Skull miniSkull;
 
@@ -19,13 +20,24 @@ public class SkullBoss : Monster
     {
         var x = Random.Range(-2, 3);
         rigidBody.angularVelocity = new Vector3(x, x, x);
+
+        switch (roomActivator.influcence)
+        {
+            case VoidBoon.BoonType.Blue:
+                isRed = false;
+                break;
+
+            case VoidBoon.BoonType.Red:
+                isRed = true;
+                break;
+        }
     }
 
 
     private void OnEnable()
     {
         StartCoroutine(RandomJump());
-        StartCoroutine(SummonSkulls());
+       if (isRed) StartCoroutine(SummonSkulls());
     }
 
 
@@ -38,7 +50,11 @@ public class SkullBoss : Monster
 
             Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
 
-            base.rigidBody.AddForce((RandomDir() + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
+            Vector3 finalDir; 
+            if (isRed) finalDir = (RandomDir() + direction_to_player);
+            else finalDir = direction_to_player;
+
+            rigidBody.AddForce((finalDir) * Random.Range(minJumpForce, maxJumpForce));
         }
     }
 

@@ -9,13 +9,13 @@ public class ConeMonsterBoss : Monster
     [SerializeField] GameObject turretBullet;
     [SerializeField] ParticleSystem explosionEffect;
 
-    [SerializeField] Transform[] directionsToShot;
 
     [SerializeField] float speed;
 
     [SerializeField] float waitingTime;
 
     private bool isRunning = false;
+    private bool isRed = false;
 
     private float finalWaitTime;
     new void Start()
@@ -25,6 +25,17 @@ public class ConeMonsterBoss : Monster
 
 
         posOffset = transform.position;
+
+        switch (roomActivator.influcence)
+        {
+            case VoidBoon.BoonType.Blue:
+                isRed = false;
+                break;
+
+            case VoidBoon.BoonType.Red:
+                isRed = true;
+                break;
+        }
 
     }
     private void OnEnable()

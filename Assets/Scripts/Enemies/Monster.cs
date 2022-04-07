@@ -292,12 +292,18 @@ public class Monster : MonoBehaviour
     private void OnEnable()
     {
         if (isTick) StartCoroutine("Tick");
+        if (isPoisoned) StartCoroutine("Poisoned");
+        if (isChilled) StartCoroutine("Chilled");
     }
 
+
+    private bool isChilled = false;
     IEnumerator Chilled()
     {
         actionSpeed -= 0.5f;
+        isChilled = true;
         yield return new WaitForSecondsRealtime(3f);
+        isChilled = false;
         actionSpeed += 0.5f;
     }
 

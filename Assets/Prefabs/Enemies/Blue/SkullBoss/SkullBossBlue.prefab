@@ -2913,9 +2913,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6863065450328740004}
   serializedVersion: 2
-  m_Mass: 50
-  m_Drag: 0.5
-  m_AngularDrag: 0.12
+  m_Mass: 10
+  m_Drag: 1
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -3042,11 +3042,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bab7ee4d9714d9e4b8eadfb47c58a5cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 500
+  health: 5000
   damage: 10
   rigidBody: {fileID: 432393528097593099}
-  monsterCollider: {fileID: 5604250770742926201}
-  audioSource: {fileID: 2417536896551099594}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -3060,9 +3058,9 @@ MonoBehaviour:
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
   minWaitingTime: 4
   maxWaitingTime: 7
-  maxJumpForce: 5000
-  minJumpForce: 8000
-  randomJumpTime: 0.8
+  maxJumpForce: 10000
+  minJumpForce: 15000
+  randomJumpTime: 0.4
   attack: {fileID: 7965095559254910861, guid: 301fe2131c8c56744a77f21b20390afa, type: 3}
   miniSkull: {fileID: 4141487239674373824, guid: f8724434da8028045add89ca43ea3a70, type: 3}
 --- !u!1 &6920624296162604644
