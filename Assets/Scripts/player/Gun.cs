@@ -210,7 +210,7 @@ public class Gun : MonoBehaviour
         var x = GameObject.FindGameObjectWithTag("Inventory").transform;
         x.GetComponent<Inventory>().AddWeapon(gun, true);
 
-        GameObject.FindGameObjectWithTag("Slot").GetComponent<Slot>().EquipGun();
+       // GameObject.FindGameObjectWithTag("Slot").GetComponent<Slot>().EquipGun();
     }
 
     public void SetGun(GunOfAType gun)

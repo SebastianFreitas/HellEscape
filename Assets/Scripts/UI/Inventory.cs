@@ -26,6 +26,7 @@ public class Inventory : MonoBehaviour
         StartCoroutine(GiveGunToSlots());
         SetGunParts(playerInventory.gunParts.ToString());
         SetGunLayouts();
+
     }
 
     private void SetGunLayouts()

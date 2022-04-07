@@ -157,25 +157,8 @@ public class Mod
     }
 }
 
-public class CraftingHistory
-{
-    public int addModCounter;
-    public int removeModCounter;
-    public int value;
-    public string basicText;
-    public Grade grade;
-    public OperatorType op;
-
-    public int tier;
-    public int id;
-
-
-    public CraftingHistory()
-    {
-    }
-}
-
-public class GunOfAType
+//[System.Serializable]
+public class GunOfAType : ScriptableObject
 {
     public float[] totalDamage = {0,0,0,0};
 
