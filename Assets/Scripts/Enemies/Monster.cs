@@ -108,7 +108,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private bool dead = false;
+
 
     [SerializeField] internal bool isHub = false;
     [SerializeField] GameObject explosion;
@@ -202,7 +202,7 @@ public class Monster : MonoBehaviour
 
     void Die()
     {
-        dead = true;
+
         Bleed();
         var rep = player.transform;
         rep.LookAt(transform.position);
@@ -219,7 +219,7 @@ public class Monster : MonoBehaviour
                 explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 5f);
             }
 
-            roomActivator.IsEncounterDone();
+            if (!isFiller )roomActivator.IsEncounterDone();
             Drop();
         }
         died = true;
@@ -310,6 +310,8 @@ public class Monster : MonoBehaviour
     private float poisonValue = 0;
     private bool isPoisoned = false;
     private int poisonTicks = 0;
+    internal bool isFiller;
+
     IEnumerator Poisoned()
     {
         WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.5f);
