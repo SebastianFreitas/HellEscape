@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory : GunGenerator
 {
     public GameObject[] slots;
     public GunOfAType[] layouts = new GunOfAType[8];
@@ -18,7 +18,81 @@ public class Inventory : MonoBehaviour
     public GameMan manager;
     internal PlayerInventory playerInventory;
 
-    
+
+    private void OnDisable()
+    {
+        int index = 0;
+        foreach(GameObject current in slots)
+        {
+            var x = current.GetComponent<Slot>().gun;
+            if(x != null)
+            {
+                PlayerPrefs.SetInt("WeaponExists" + index,1);
+                PlayerPrefs.SetString("StoredEnumStringType"+index, x.type.ToString());
+                PlayerPrefs.SetInt("maxLevel"+index, x.level);
+                int indexMod = 0;
+                foreach(var mod in x.mods)
+                {
+
+                    PlayerPrefs.SetString("StoredEnumStringGrade" + index + indexMod, mod.grade.ToString());
+                    PlayerPrefs.SetInt("id" + index +indexMod, mod.id);
+                    PlayerPrefs.SetInt("value" + index + indexMod, mod.upperBound);
+
+                    indexMod++;
+                }
+                for(; indexMod < 6; indexMod++)
+                {
+                    PlayerPrefs.SetInt("id" + index + indexMod,-1);
+                }
+
+            } else PlayerPrefs.SetInt("WeaponExists" + index, -1);
+
+            index++;
+        }
+    }
+
+
+    private void OnEnable()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (PlayerPrefs.HasKey("WeaponExists" + i))
+            {
+                if (PlayerPrefs.GetInt("WeaponExists" + i) > 0)
+                {
+                    Mod[] mods = new Mod[6];
+                    for(int modCounter = 0; modCounter<6; modCounter++)
+                    {
+                        if (PlayerPrefs.GetInt("id" + i + modCounter) > 0)
+                        {
+                            int id = PlayerPrefs.GetInt("id"+i+modCounter);
+                            int value = PlayerPrefs.GetInt("value" + i + modCounter);
+                            Grade grade = (Grade)Enum.Parse(typeof(Grade),  PlayerPrefs.GetString("StoredEnumStringGrade" + i + modCounter));
+
+                            mods[modCounter] = CreateModSeed(id, value, grade);
+                        } else mods[modCounter] = CreateModSeed(-1, -1, Grade.extra);
+
+                    }
+                        int maxLevel = PlayerPrefs.GetInt("maxLevel" + i);
+                        GunType type = (GunType)Enum.Parse(typeof(GunType), PlayerPrefs.GetString("StoredEnumStringType" + i));
+                        slots[i].GetComponent<Slot>().gun = CreateWeaponSeed(maxLevel, type, mods);
+
+
+
+                }
+                else slots[i].GetComponent<Slot>().gun = null;
+            }
+        }
+
+
+
+        playerInventory = manager.player.GetComponent<PlayerInventory>();
+        StartCoroutine(GiveGunToSlots());
+        SetGunParts(playerInventory.gunParts.ToString());
+        SetGunLayouts();
+    }
+
+
 
     void Start()
     {
@@ -41,13 +115,13 @@ public class Inventory : MonoBehaviour
         layoutsText.UpdateText(x);
     }
 
-    private void OnEnable()
-    {
-        playerInventory = manager.player.GetComponent<PlayerInventory>();
-        StartCoroutine(GiveGunToSlots());
-        SetGunParts(playerInventory.gunParts.ToString());
-        SetGunLayouts();
-    }
+    //private void OnEnable()
+    //{
+    //    playerInventory = manager.player.GetComponent<PlayerInventory>();
+    //    StartCoroutine(GiveGunToSlots());
+    //    SetGunParts(playerInventory.gunParts.ToString());
+    //    SetGunLayouts();
+    //}
 
     internal void RemoveWeapon(GunOfAType gun, bool isAdded)
     {

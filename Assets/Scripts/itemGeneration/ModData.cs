@@ -17,11 +17,11 @@ public class ModData : MonoBehaviour
 
     public static Mod[] modsExterior =
         new Mod[]{
-                new Mod(1, 3,   "Movement Speed",            Grade.exterior, OperatorType.increased, 0,101),
-                new Mod(5,10,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,103),
-                new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,104),
-                new Mod(5,10,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,105),
-                new Mod(1, 10,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,106),
+                new Mod(1, 3,   "Movement Speed",            Grade.exterior, OperatorType.increased, 0,1),
+                new Mod(5,10,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,2),
+                new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,3),
+                new Mod(5,10,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,4),
+                new Mod(1, 10,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,5),
                
             //grande damage
             //grenade area
@@ -31,11 +31,11 @@ public class ModData : MonoBehaviour
 
     public static Mod[] modSpecial =
         new Mod[]{
-                new Mod(2,6,   "Fire Damage",               Grade.special, OperatorType.plus,      0,111),
-                new Mod(2,6,   "Cold Damage",               Grade.special, OperatorType.plus,      0,222),
-                new Mod(2,6,   "Poison Damage",             Grade.special, OperatorType.plus,      0,333),
-                new Mod(4,10,  "Physical Damage",           Grade.special, OperatorType.increased, 0,444),
-                new Mod(4,10,  "Critical Damage",           Grade.special, OperatorType.increased, 0,555),
+                new Mod(2,6,   "Fire Damage",               Grade.special, OperatorType.plus,      0,1),
+                new Mod(2,6,   "Cold Damage",               Grade.special, OperatorType.plus,      0,2),
+                new Mod(2,6,   "Poison Damage",             Grade.special, OperatorType.plus,      0,3),
+                new Mod(4,10,  "Physical Damage",           Grade.special, OperatorType.increased, 0,4),
+                new Mod(4,10,  "Critical Damage",           Grade.special, OperatorType.increased, 0,5),
 
         };
 

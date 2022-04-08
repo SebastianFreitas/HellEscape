@@ -30,6 +30,14 @@ public class MainMenuManager : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
 
+        LoadSettings();
+
+
+
+    }
+
+    private void LoadSettings()
+    {
         if (PlayerPrefs.HasKey("Volume"))
         {
             SetVolume(PlayerPrefs.GetFloat("Volume"));
@@ -112,9 +120,6 @@ public class MainMenuManager : MonoBehaviour
     {
         if (!started)
             StartCoroutine("StartGameCoroutine");
-
-
-
     }
 
     private IEnumerator StartGameCoroutine()

@@ -74,8 +74,8 @@ public class Gun : MonoBehaviour
     void Start()
     {
         gunGen = new GunGenerator();
-        
-        if (gun == null) EquipBaseGun();
+        EquipBaseGun();
+        if (!PlayerPrefs.HasKey("WeaponExists1")) EquipBaseGun();
         lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
         muzzleFlashFront.transform.parent = transform.parent;
@@ -88,8 +88,6 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
-
-
         if (Time.time >= m_time)
         {
             m_time += 1 / gun.finalFireRate;

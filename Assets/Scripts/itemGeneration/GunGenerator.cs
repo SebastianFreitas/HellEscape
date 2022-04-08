@@ -45,12 +45,50 @@ public class GunGenerator : ModData
         return FinishWeaponText(ret);
     }
 
+    public Mod CreateModSeed(int id, int value, Grade grade)
+    {
+        Mod ret = new Mod();
+
+        switch (grade)
+        {
+            case Grade.interior:
+                ret = modsInterior[id];
+                break;
+            case Grade.exterior:
+                ret = modsInterior[id];
+                break;
+            case Grade.special:
+                ret = modsInterior[id];
+                break;
+        }
+
+        ret.upperBound = value;
+        ret.lowerBound = value;
+
+        return ret;
+    }
+
     public GunOfAType CreateWeaponSeed(int maxlevel, GunType type, Mod[] mods)
     {
         GunOfAType ret = new GunOfAType();
 
+        ret.ChangeType(ret, type);
+        ret.level = maxlevel;
 
-        return ret;
+        for (int i = 0; i < mods.Length; i++)
+        {
+            if (mods[i].id > -1)
+            {
+                ModToStat(ret, mods[i]);
+                mods[i].text = CreateModText(mods[i]);
+                ret.mods.Add(mods[i]);
+                ret.GenerateTotalDamage();
+            }
+
+        }
+
+        ret.GenerateTotalDamage();
+        return FinishWeaponText(ret);
     }
 
     public GunOfAType FinishWeaponText(GunOfAType ret)
