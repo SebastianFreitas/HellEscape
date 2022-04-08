@@ -75,7 +75,7 @@ public class Gun : MonoBehaviour
     {
         gunGen = new GunGenerator();
         //EquipBaseGun();
-        if (PlayerPrefs.GetInt("WeaponExists0") < 0) EquipBaseGun();
+        if (!PlayerPrefs.HasKey("WeaponExists0") ||PlayerPrefs.GetInt("WeaponExists0") < 0) EquipBaseGun();
         else
         {
             var x = GameObject.FindGameObjectWithTag("Inventory").transform;

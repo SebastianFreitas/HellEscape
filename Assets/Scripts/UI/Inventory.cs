@@ -80,8 +80,8 @@ public class Inventory : GunGenerator
                     }
                     int maxLevel = PlayerPrefs.GetInt("maxLevel" + i);
                     GunType type = (GunType)Enum.Parse(typeof(GunType), PlayerPrefs.GetString("StoredEnumStringType" + i));
-                    slots[i].GetComponent<Slot>().AddWeapon(CreateWeaponSeed(maxLevel, type, mods));
-
+                    //slots[i].GetComponent<Slot>().AddWeapon(CreateWeaponSeed(maxLevel, type, mods));
+                    AddWeapon(CreateWeaponSeed(maxLevel, type, mods), false);
 
 
                 }
