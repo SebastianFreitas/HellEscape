@@ -43,7 +43,7 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
             gun = null;
             gunTypeText.text = "-";
             gunType = null;
-            ShowGun();
+           // ShowGun();
            // if (equiped) playerGun.EquipBaseGun();
         }
     }
@@ -71,11 +71,15 @@ public class Slot : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void UpdateInventoryText()
     {
-        if (gun != null) gunTypeText.text = gunType;
+        if (gun != null)
+        {
+            gunType = gun.type.ToString();
+            gunTypeText.text = gunType;
+        }
         else gunTypeText.text = "-";
 
         gunDescription.gameObject.SetActive(true);
-        gunType = gun.type.ToString();
+       
     }
 
 

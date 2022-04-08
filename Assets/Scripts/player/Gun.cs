@@ -74,8 +74,19 @@ public class Gun : MonoBehaviour
     void Start()
     {
         gunGen = new GunGenerator();
-        EquipBaseGun();
-        if (!PlayerPrefs.HasKey("WeaponExists1")) EquipBaseGun();
+        //EquipBaseGun();
+        if (PlayerPrefs.GetInt("WeaponExists0") < 0) EquipBaseGun();
+        else
+        {
+            var x = GameObject.FindGameObjectWithTag("Inventory").transform;
+            gun = x.GetComponent<Inventory>().slots[0].GetComponent<Slot>().gun;
+            playerScript.increasedSpeed = gun.increasedSpeed;
+            firerate = 1 / gun.finalFireRate;
+
+            SetBulletStats();
+
+
+        }
         lightFlash = transform.GetChild(0).gameObject;
         animator = GetComponent<Animator>();
         muzzleFlashFront.transform.parent = transform.parent;
