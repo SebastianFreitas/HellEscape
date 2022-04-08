@@ -45,6 +45,14 @@ public class GunGenerator : ModData
         return FinishWeaponText(ret);
     }
 
+    public GunOfAType CreateWeaponSeed(int maxlevel, GunType type, Mod[] mods)
+    {
+        GunOfAType ret = new GunOfAType();
+
+
+        return ret;
+    }
+
     public GunOfAType FinishWeaponText(GunOfAType ret)
     {
         ret.text = CreateGunText(ret);
