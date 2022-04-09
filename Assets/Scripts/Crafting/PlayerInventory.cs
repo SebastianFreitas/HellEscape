@@ -17,6 +17,20 @@ public class PlayerInventory : MonoBehaviour
     //player stats
     internal int additionalFireDamage = 0;
 
+
+    private void OnEnable()
+    {
+        if (PlayerPrefs.HasKey("GunParts"))
+        {
+            UpdateGunParts(PlayerPrefs.GetInt("GunParts")); 
+        }
+    }
+
+    private void OnDisable()
+    {
+        PlayerPrefs.SetInt("GunParts", gunParts);
+    }
+
     internal void LooseBoons()
     {
         foreach(var current in listBoons.ToArray())

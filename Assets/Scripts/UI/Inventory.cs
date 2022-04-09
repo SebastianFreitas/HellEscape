@@ -30,6 +30,11 @@ public class Inventory : GunGenerator
                 PlayerPrefs.SetInt("WeaponExists" + index,1);
                 PlayerPrefs.SetString("StoredEnumStringType"+index, x.type.ToString());
                 PlayerPrefs.SetInt("maxLevel"+index, x.level);
+
+
+                PlayerPrefs.SetInt("GradeWeight0" + index, x.gradeWeight[0]);
+                PlayerPrefs.SetInt("GradeWeight1" + index, x.gradeWeight[1]);
+                PlayerPrefs.SetInt("GradeWeight2" + index, x.gradeWeight[2]);
                 int indexMod = 0;
                 foreach(var mod in x.mods)
                 {
@@ -50,6 +55,40 @@ public class Inventory : GunGenerator
 
             index++;
         }
+
+        foreach(var current in layouts)
+        {
+            var x = current;
+            if (current != null)
+            {
+                PlayerPrefs.SetInt("WeaponExists" + index, 1);
+                PlayerPrefs.SetString("StoredEnumStringType" + index, x.type.ToString());
+                PlayerPrefs.SetInt("maxLevel" + index, x.level);
+
+                PlayerPrefs.SetInt("GradeWeight0" + index, x.gradeWeight[0]);
+                PlayerPrefs.SetInt("GradeWeight1" + index, x.gradeWeight[1]);
+                PlayerPrefs.SetInt("GradeWeight2" + index, x.gradeWeight[2]);
+                int indexMod = 0;
+                foreach (var mod in x.mods)
+                {
+
+                    PlayerPrefs.SetString("StoredEnumStringGrade" + index + indexMod, mod.grade.ToString());
+                    PlayerPrefs.SetInt("id" + index + indexMod, mod.id);
+                    PlayerPrefs.SetInt("value" + index + indexMod, mod.upperBound);
+                    PlayerPrefs.SetInt("tier" + index + indexMod, mod.tier);
+
+                    indexMod++;
+                }
+                for (; indexMod < 6; indexMod++)
+                {
+                    PlayerPrefs.SetInt("id" + index + indexMod, -1);
+                }
+
+            }
+            else PlayerPrefs.SetInt("WeaponExists" + index, -1);
+
+            index++;
+        }
     }
 
 
@@ -57,7 +96,7 @@ public class Inventory : GunGenerator
     {
 
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 12; i++)
         {
             if (PlayerPrefs.HasKey("WeaponExists" + i))
             {
@@ -80,18 +119,22 @@ public class Inventory : GunGenerator
                     }
                     int maxLevel = PlayerPrefs.GetInt("maxLevel" + i);
                     GunType type = (GunType)Enum.Parse(typeof(GunType), PlayerPrefs.GetString("StoredEnumStringType" + i));
-                    //slots[i].GetComponent<Slot>().AddWeapon(CreateWeaponSeed(maxLevel, type, mods));
-                    AddWeapon(CreateWeaponSeed(maxLevel, type, mods), false);
+
+                    var zero = PlayerPrefs.GetInt("GradeWeight0" + i);//, x.gradeWeight[0]);
+                    var one = PlayerPrefs.GetInt("GradeWeight1" + i);//, x.gradeWeight[1]);
+                    var two =PlayerPrefs.GetInt("GradeWeight2" + i);//, x.gradeWeight[2]);
+
+                    AddWeapon(CreateWeaponSeed(maxLevel, type, mods, zero, one ,two), true);
 
 
                 }
                 else
                 {
-                    slots[i].GetComponent<Slot>().gun = null;
+                    if (i < 4)  slots[i].GetComponent<Slot>().gun = null;
 
                 }
             }
-            slots[i].GetComponent<Slot>().UpdateInventoryText();
+            if (i < 4) slots[i].GetComponent<Slot>().UpdateInventoryText();
         }
 
 

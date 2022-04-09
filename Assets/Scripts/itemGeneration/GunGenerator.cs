@@ -60,13 +60,13 @@ public class GunGenerator : ModData
         switch (grade)
         {
             case Grade.interior:
-                ret = modsInterior[id-1];
+                ret =new Mod(modsInterior[id-1]);
                 break;
             case Grade.exterior:
-                ret = modsExterior[id-1];
+                ret = new Mod(modsExterior[id - 1]);
                 break;
             case Grade.special:
-                ret = modSpecial[id-1];
+                ret = new Mod(modSpecial[id - 1]);
                 break;
         }
 
@@ -77,7 +77,7 @@ public class GunGenerator : ModData
         return ret;
     }
 
-    public GunOfAType CreateWeaponSeed(int maxlevel, GunType type, Mod[] mods)
+    public GunOfAType CreateWeaponSeed(int maxlevel, GunType type, Mod[] mods, int weight0, int weight1, int weight2)
     {
         GunOfAType ret = new GunOfAType();
 
@@ -97,7 +97,10 @@ public class GunGenerator : ModData
             }
 
         }
-
+        ret.gradeWeight = new int[3];
+        ret.gradeWeight[0] = weight0;
+        ret.gradeWeight[1] = weight1;
+        ret.gradeWeight[2] = weight2;
         ret.GenerateTotalDamage();
         return FinishWeaponText(ret);
     }
@@ -298,7 +301,7 @@ public class GunGenerator : ModData
         if (gun.mods.Count == 0) return false;
         foreach (Mod mod in gun.mods)
         {
-            if (mod.id == modifier.id) return true;
+            if (mod.id == modifier.id && mod.grade == modifier.grade) return true;
         }
         return false;
 
