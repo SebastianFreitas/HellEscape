@@ -143,6 +143,12 @@ public class Inventory : GunGenerator
         StartCoroutine(GiveGunToSlots());
         SetGunParts(playerInventory.gunParts.ToString());
         SetGunLayouts();
+
+        EquipWeaponShortcut(1);
+        EquipWeaponShortcut(2);
+        EquipWeaponShortcut(3);
+        EquipWeaponShortcut(1);
+
     }
 
 
@@ -169,14 +175,6 @@ public class Inventory : GunGenerator
         }
         layoutsText.UpdateText(x);
     }
-
-    //private void OnEnable()
-    //{
-    //    playerInventory = manager.player.GetComponent<PlayerInventory>();
-    //    StartCoroutine(GiveGunToSlots());
-    //    SetGunParts(playerInventory.gunParts.ToString());
-    //    SetGunLayouts();
-    //}
 
     internal void RemoveWeapon(GunOfAType gun, bool isAdded)
     {

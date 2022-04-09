@@ -14,7 +14,7 @@ public class PathFloor : MonoBehaviour
 
     private void Start()
     {
-        for(int i = Random.Range(-7, 4); i > 0; i--)
+        for(int i = Random.Range(-18, 2); i > 0; i--)
         {
             additionalObjects[Random.Range(0, additionalObjects.Length)].SetActive(true);
         }
