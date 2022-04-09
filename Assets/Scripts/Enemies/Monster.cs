@@ -271,26 +271,29 @@ public class Monster : MonoBehaviour
     
     private void Drop()
     {
-         
-        player.transform.GetComponent<PlayerInventory>().UpdateGunParts(gunparts);
-
-
-
-        if (Random.Range(1f,100f) > 100-totalDropChance)
+        if (!isHub)
         {
-           GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
-            x.transform.parent = transform.parent;
-            var y = x.GetComponent<Item>();
-            y.gun = y.CreateWeapon((int)level, false);
+            player.transform.GetComponent<PlayerInventory>().UpdateGunParts(gunparts);
 
+
+
+            if (Random.Range(1f,100f) > 100-totalDropChance)
+            {
+               GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
+                x.transform.parent = transform.parent;
+                var y = x.GetComponent<Item>();
+                y.gun = y.CreateWeapon((int)level, false);
+
+            }
+
+            if (Random.Range(1f, 100f) > 100 - (totalDropChance*2))
+            {
+                GameObject x = Instantiate(roomActivator.roomgen.healthPack, transform.position + Vector3.up, transform.rotation) as GameObject;
+                x.transform.parent = transform.parent;
+
+            }
         }
 
-        if (Random.Range(1f, 100f) > 100 - (totalDropChance*2))
-        {
-            GameObject x = Instantiate(roomActivator.roomgen.healthPack, transform.position + Vector3.up, transform.rotation) as GameObject;
-            x.transform.parent = transform.parent;
-
-        }
     }
     private void OnEnable()
     {
@@ -344,6 +347,7 @@ public class Monster : MonoBehaviour
         }
         else
         {
+            poisonValue = poisonDamage / 5;
             StartCoroutine(Poisoned());
         }
     }

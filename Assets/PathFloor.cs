@@ -33,9 +33,14 @@ public class PathFloor : MonoBehaviour
         {
             passed = true;
 
-            if(IsDivisible(maxSteps, 10))
+            if (maxSteps == 0)
             {
-                SpawnCombat();
+                Instantiate(mainBase, nextSteps.position, nextSteps.rotation, transform);
+                maxSteps--;
+            } 
+            else if (IsDivisible(maxSteps, 10))
+            {
+              SpawnCombat();
             }
             else if (maxSteps > 0)
             {
@@ -48,11 +53,7 @@ public class PathFloor : MonoBehaviour
             }
 
 
-            if (maxSteps == 0)
-            {
-                Instantiate(mainBase, nextSteps.position, nextSteps.rotation, transform);
-                maxSteps--;
-            }
+
         }
 
 

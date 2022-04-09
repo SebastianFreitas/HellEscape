@@ -9,7 +9,8 @@ public class PathCombat : MonoBehaviour
     internal int maxsteps;
     int totalMobs = 10;
     [SerializeField] Monster skull;
-
+    [SerializeField] PathFloor path;
+    [SerializeField] Transform nextSteps;
     private void Start()
     {
         GetBounds();
@@ -23,6 +24,10 @@ public class PathCombat : MonoBehaviour
             Monster currentMob = Instantiate(skull, randomPoint, Quaternion.identity, transform) as Monster;
             currentMob.isHub = true;
         }
+
+        PathFloor newPtah= Instantiate(path, nextSteps.position, nextSteps.rotation, transform) as PathFloor;
+
+        newPtah.isActive = false;
     }
 
     public void GetBounds()
