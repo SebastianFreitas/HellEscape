@@ -56,9 +56,11 @@ public class Monster : MonoBehaviour
             mission = roomActivator.mission;
             ApplyMission();
 
-            if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
+            
         }
         else mission = new ModDataRoom.GeneratedMission();
+
+        if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
 
     }
     float eliteChance;
@@ -219,7 +221,8 @@ public class Monster : MonoBehaviour
                 explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 5f);
             }
 
-            if (!isFiller )roomActivator.IsEncounterDone();
+            if (!isFiller && !isHub)roomActivator.IsEncounterDone();
+            if (isHub) GetComponentInParent<PathCombat>().IsEncounterDone();
             Drop();
         }
         died = true;
@@ -310,7 +313,7 @@ public class Monster : MonoBehaviour
     private float poisonValue = 0;
     private bool isPoisoned = false;
     private int poisonTicks = 0;
-    internal bool isFiller;
+    internal bool isFiller = false;
 
     IEnumerator Poisoned()
     {

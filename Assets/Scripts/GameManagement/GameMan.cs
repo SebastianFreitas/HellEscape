@@ -25,6 +25,8 @@ public class GameMan : ModDataRoom
     [SerializeField] RoomGenerator roomGen;
     [SerializeField] Vector3 currentStartPos;
 
+    [SerializeField] PathFloor path;
+
     internal ModDataRoom.GeneratedMission mission;
 
     // Start is called before the first frame update
@@ -53,7 +55,7 @@ public class GameMan : ModDataRoom
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("BulletEnemy"), LayerMask.NameToLayer("Enemy"));
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Enemy"));
 
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"));
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
     }
 
     internal void ReturnToHub()
@@ -90,6 +92,9 @@ public class GameMan : ModDataRoom
 
         currentStartPos = hub.statspos.position;
 
+        player.GetComponent<PlayerHpManager>().HealForMax();
+
+        path.ResetPath();
     }
 
 
@@ -142,9 +147,11 @@ public class GameMan : ModDataRoom
 
     internal void VoidPlayer()
     {
-        player.GetComponent<CharacterController>().enabled = false;
-        player.transform.position = currentStartPos;
-        player.GetComponent<CharacterController>().enabled = true;
+        //player.GetComponent<CharacterController>().enabled = false;
+        //player.transform.position = currentStartPos;
+        //player.GetComponent<CharacterController>().enabled = true;
+
+        GoToHub();
 
     }
 
