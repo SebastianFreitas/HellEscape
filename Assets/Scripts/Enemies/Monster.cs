@@ -37,6 +37,7 @@ public class Monster : MonoBehaviour
     internal bool isElite = false;
     internal RoomActivator roomActivator;
     internal ModDataRoom.GeneratedMission mission;
+    internal PathFloor path;
     protected void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -56,9 +57,15 @@ public class Monster : MonoBehaviour
             mission = roomActivator.mission;
             ApplyMission();
 
-            
+
         }
-        else mission = new ModDataRoom.GeneratedMission();
+        else
+        {
+            mission = new ModDataRoom.GeneratedMission();
+            path = GetComponentInParent<PathFloor>();
+            level = path.dificulty * 10 +1;
+            UpdateStatsToLevel();
+        }
 
         if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
 
