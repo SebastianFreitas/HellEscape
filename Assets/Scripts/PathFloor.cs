@@ -63,7 +63,7 @@ public class PathFloor : MonoBehaviour
                 Transform b = forward;
                 bool islazer = false;
                 var rando = Random.Range(0, 100);
-                if (rando > 75)
+                if (rando > 50)
                 {
                     b = nextSteps[Random.Range(0, nextSteps.Length)];
                     islazer = true;
@@ -145,6 +145,6 @@ public class PathFloor : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerPrefs.SetInt("PathLevel", 10);
+        PlayerPrefs.SetInt("PathLevel", 0);
     }
 }
