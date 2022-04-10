@@ -78,8 +78,8 @@ public class PathFloor : MonoBehaviour
                 }
                 else
                 {
-                    laser.transform.LookAt(new Vector3(0, -1000, 0));
-                    laser2.transform.LookAt(new Vector3(0,-1000,0));
+                    laser.transform.LookAt(Vector3.zero);
+                    laser2.transform.LookAt(Vector3.zero);
                 }
 
                 //foreach (var current in a.additionalObjects)
@@ -135,6 +135,6 @@ public class PathFloor : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerPrefs.SetInt("PathLevel", dificulty);
+        PlayerPrefs.SetInt("PathLevel", 10);
     }
 }
