@@ -11,6 +11,8 @@ public class Hub : MonoBehaviour
     public GameObject player;
 
     [SerializeField] MissionSelector missionSelector;
+
+    [SerializeField] StartHub startHub;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,11 @@ public class Hub : MonoBehaviour
 
     }
 
+    internal void ResetPath()
+    {
+        if (startHub == null) startHub = GetComponentInChildren<StartHub>();
+        startHub.StartPath();
+    }
     public int GetRandomWeightedIndex(int[] weights)
     {
         // Get the total sum of all the weights.

@@ -70,7 +70,9 @@ public class PathFloor : MonoBehaviour
                 }
                 var a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
                 a.maxSteps = maxSteps - 1;
+
                 laser.gameObject.SetActive(true);
+                laser2.gameObject.SetActive(true);
                 if (islazer)
                 {
                     laser.transform.LookAt(a.lasertarget);
@@ -112,16 +114,24 @@ public class PathFloor : MonoBehaviour
     {
         if (!victory)
         {
-        passed = false;
-        maxSteps = totalSteps;
-        int i = 0;
 
-        foreach (Transform child in this.transform)
-        {
-            if (i > 6)GameObject.Destroy(child.gameObject);
-            i++;
+            //GetComponentInParent<StartHub>().StartPath();
+            Destroy(this);
+
+            passed = false;
+            maxSteps = totalSteps;
+            int i = 0;
+
+            foreach (Transform child in this.transform)
+            {
+                if (i > 6)GameObject.Destroy(child.gameObject);
+                i++;
+            }
+
+            laser.gameObject.SetActive(false);
+            laser2.gameObject.SetActive(false);
         }
-        }
+
 
     }
 

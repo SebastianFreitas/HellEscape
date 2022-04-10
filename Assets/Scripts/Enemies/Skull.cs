@@ -50,7 +50,7 @@ public class Skull : Monster
         if (x) randomHeight = new Vector3(0, Random.Range(minAltitudeJumpDistance, maxAltitudeJumpDistance), 0);
         else randomHeight = new Vector3(0,0,0);
 
-        base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce));
+        base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce) * forceSpeed);
 
 
         yield return new WaitForSeconds(finalWaitTime);

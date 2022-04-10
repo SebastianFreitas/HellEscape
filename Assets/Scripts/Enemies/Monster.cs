@@ -31,6 +31,7 @@ public class Monster : MonoBehaviour
     public float level;
 
     internal float actionSpeed = 1f;
+    internal float forceSpeed = 1f;
 
     public DamagePopUp dmgPopUp;
     private bool died = false;
@@ -184,6 +185,7 @@ public class Monster : MonoBehaviour
     {
         health *= 1f + (level / 100f);
         actionSpeed *= 1f + (level / 100f/2);
+        forceSpeed *= 1f + (level / 100f );
 
     }
 
