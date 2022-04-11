@@ -18,13 +18,18 @@ public class PathCombat : MonoBehaviour
     internal int addedLife;
     internal int sizeMultiplier = 0;
     internal PathFloor.EncounterType type;
+    [SerializeField] private SpikeTrap spikes;
+
     private void Start()
     {
         GetBounds();
 
         // totalMobs += GetComponentInParent<PathFloor>().dificulty;
 
-        
+        var chance = 90 - dificulty;
+        if (chance < 65) chance = 65;
+        if (Random.Range(1, 101) > chance) spikes.gameObject.SetActive(true);
+        else spikes.gameObject.SetActive(false);
     }
 
     internal IEnumerator Waiter()
