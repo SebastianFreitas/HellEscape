@@ -18,6 +18,13 @@ public class PathFloor : MonoBehaviour
     [SerializeField] Transform laser;
     [SerializeField] Transform lasertarget;
 
+    [SerializeField] GameObject arrow;
+    internal void Activate()
+    {
+        isActive = true;
+        arrow.SetActive(true);
+    }
+
     [SerializeField] Transform laser2;
     [SerializeField] Transform lasertarget2;
 
@@ -32,11 +39,6 @@ public class PathFloor : MonoBehaviour
 
         maxSteps += 10 * dificulty;
         totalSteps = maxSteps;
-        //laser.gameObject.SetActive(false);
-        //for(int i = Random.Range(-18, 2); i > 0; i--)
-        //{
-        //    additionalObjects[Random.Range(0, additionalObjects.Length)].SetActive(true);
-        //}
 
     }
     bool victory = false;
@@ -46,6 +48,7 @@ public class PathFloor : MonoBehaviour
         if (other.CompareTag("Dude") && !passed && isActive)
         {
             passed = true;
+            arrow.SetActive(false);
 
             if (maxSteps == 0)
             {
@@ -54,7 +57,7 @@ public class PathFloor : MonoBehaviour
                 transform.parent = transform.parent;
                 victory = true;
                 dificulty++;
-              //  mainBaseUI.SetActive(false);
+
                 maxSteps--;
                 x.GetComponentInChildren<PathFloor>().dificulty = dificulty + 1;
             } 

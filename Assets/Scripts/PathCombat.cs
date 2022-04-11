@@ -79,7 +79,7 @@ public class PathCombat : MonoBehaviour
     private void OpenPath()
     {
         var x = GetComponentInChildren<PathFloor>();
-        x.isActive = true;
+        x.Activate();
         x.maxSteps = maxsteps--;
     }
 }
