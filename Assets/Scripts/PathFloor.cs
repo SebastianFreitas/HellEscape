@@ -32,14 +32,25 @@ public class PathFloor : MonoBehaviour
     internal int dificulty = 0;
     [SerializeField] PathCombat[] combats;
 
+    [SerializeField]  private SpikeTrap spikes;
+
     private int encounterConter;
 
     private void Start()
     {
-
+        
+        if (PlayerPrefs.HasKey("PathLevel"))
+        {
+            dificulty = PlayerPrefs.GetInt("PathLevel");
+        }
         maxSteps += 10 * dificulty;
         totalSteps = maxSteps;
         if (isActive) arrow.SetActive(true);
+
+        var chance = 90 - dificulty;
+        if (chance < 65) chance = 65;
+        if (Random.Range(1, 101) > chance) spikes.gameObject.SetActive(true);
+        else spikes.gameObject.SetActive(false);
     }
     bool victory = false;
     [System.Obsolete]
