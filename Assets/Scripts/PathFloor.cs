@@ -52,14 +52,15 @@ public class PathFloor : MonoBehaviour
 
             if (maxSteps == 0)
             {
-                var b = nextSteps[Random.Range(0, nextSteps.Length)];
-                var x = Instantiate(mainBase, b.position, b.rotation, transform);
+ 
+                var x = Instantiate(mainBase, right.position, right.rotation, transform);
                 transform.parent = transform.parent;
                 victory = true;
                 dificulty++;
 
                 maxSteps--;
-                x.GetComponentInChildren<PathFloor>().dificulty = dificulty + 1;
+                dificulty++;
+                SaveDificulty();
             } 
             else if (IsDivisible(maxSteps, 10))
             {
@@ -78,7 +79,7 @@ public class PathFloor : MonoBehaviour
                 }
                 else 
                 { 
-                    if (rando > 90-dificulty)
+                    if (rando > 80-dificulty)
                     {
                         b = nextSteps[Random.Range(0, nextSteps.Length)];
                         islazer = true;
@@ -116,6 +117,8 @@ public class PathFloor : MonoBehaviour
     [SerializeField] Transform forwardPlusUP;
     [SerializeField] Transform leftPlusUP;
     [SerializeField] Transform rightPlusUP;
+    [SerializeField] Transform left;
+    [SerializeField] Transform right;
     private void SpawnCombat(EncounterType type)
     {
         PathCombat a = new PathCombat(); 
@@ -128,8 +131,7 @@ public class PathFloor : MonoBehaviour
                 a.totalMobs = Random.Range(1, dificulty + 1);
                 a.maxsteps = maxSteps - 1;
                 a.dificulty = dificulty;
-                a.StartCoroutine("Waiter");
-                Debug.Log("ez");
+                a.StartCoroutine(a.Waiter());
                 break;
 
             case EncounterType.Normal:
@@ -148,18 +150,16 @@ public class PathFloor : MonoBehaviour
                 }
                 a.maxsteps = maxSteps - 1;
                 a.dificulty = dificulty;
-                a.StartCoroutine("Waiter");
-                Debug.Log("Normal");
+                a.StartCoroutine(a.Waiter());
+
                 break;
 
             case EncounterType.Hard:
-                Debug.Log("Hard");
-                a = SpawnNormal(ref forwardPlusUP);
-                a.StartCoroutine("Waiter");
-                a = SpawnNormal(ref leftPlusUP);
-                a.StartCoroutine("Waiter");
-                a = SpawnNormal(ref rightPlusUP);
-                a.StartCoroutine("Waiter");
+
+                a = SpawnNormal(ref forward);
+                a = SpawnNormal(ref left);
+                a = SpawnNormal(ref right);
+
                 break;
 
             case EncounterType.Impossible:
@@ -186,7 +186,7 @@ public class PathFloor : MonoBehaviour
         }
         a.maxsteps = maxSteps - 1;
         a.dificulty = dificulty;
-       
+        a.StartCoroutine("Waiter");
         return a;
     }
 
@@ -226,10 +226,17 @@ public class PathFloor : MonoBehaviour
         {
             dificulty = PlayerPrefs.GetInt("PathLevel");
         }
+
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"));
     }
 
     private void OnDisable()
     {
-        PlayerPrefs.SetInt("PathLevel", 0);
+        SaveDificulty();
+    }
+
+    private void SaveDificulty()
+    {
+        PlayerPrefs.SetInt("PathLevel", dificulty);
     }
 }

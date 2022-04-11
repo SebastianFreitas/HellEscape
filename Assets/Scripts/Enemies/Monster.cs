@@ -274,12 +274,12 @@ public class Monster : MonoBehaviour
         rigidBody.mass *= 4;
         health *= 4;
         damage *= 2;
-        forceSpeed *= 4;
+        forceSpeed *= 8;
     }
 
     internal void TurnMini()
     {
-        transform.localScale *= 0.5f;
+        transform.localScale *= 0.75f;
         actionSpeed += .25f;
         forceSpeed *= 2;
     }

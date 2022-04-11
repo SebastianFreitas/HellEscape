@@ -12,6 +12,8 @@ public class PathCombat : MonoBehaviour
     [SerializeField] PathFloor path;
     [SerializeField] Transform nextSteps;
 
+    [SerializeField] GameObject combatSymbol;
+
     internal int dificulty;
     internal int addedLife;
     internal int sizeMultiplier = 0;
@@ -27,7 +29,9 @@ public class PathCombat : MonoBehaviour
 
     internal IEnumerator Waiter()
     {
-        yield return new WaitForSecondsRealtime(.5f);
+        yield return new WaitForFixedUpdate();
+
+        if (totalMobs < 1) totalMobs = 1;
         for (int i = 0; i < totalMobs; i++)
         {
 
@@ -40,9 +44,7 @@ public class PathCombat : MonoBehaviour
             else if (sizeMultiplier < 0) currentMob.TurnMini();
         }
 
-        PathFloor newPtah = Instantiate(path, nextSteps.position, nextSteps.rotation, transform) as PathFloor;
 
-        newPtah.isActive = false;
     }
 
 
@@ -78,8 +80,11 @@ public class PathCombat : MonoBehaviour
 
     private void OpenPath()
     {
-        var x = GetComponentInChildren<PathFloor>();
-        x.Activate();
-        x.maxSteps = maxsteps--;
+        PathFloor newPtah = Instantiate(path, nextSteps.position, nextSteps.rotation, transform) as PathFloor;
+
+        newPtah.Activate();
+
+
+        combatSymbol.SetActive(false);
     }
 }
