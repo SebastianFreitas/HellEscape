@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathFloor : MonoBehaviour
+public class PathFloor : PathAux
 {
     [SerializeField] internal bool isActive = true;
     private bool passed = false;
@@ -15,9 +15,6 @@ public class PathFloor : MonoBehaviour
     [SerializeField] GameObject[] additionalObjects;
     [SerializeField] internal int maxSteps = 40;
 
-    [SerializeField] Transform laser;
-    [SerializeField] Transform lasertarget;
-
     [SerializeField] GameObject arrow;
     internal void Activate()
     {
@@ -25,8 +22,7 @@ public class PathFloor : MonoBehaviour
         arrow.SetActive(true);
     }
 
-    [SerializeField] Transform laser2;
-    [SerializeField] Transform lasertarget2;
+
 
     private int totalSteps;
     internal int dificulty = 0;
@@ -132,13 +128,17 @@ public class PathFloor : MonoBehaviour
     [SerializeField] Transform right;
     private void SpawnCombat(EncounterType type)
     {
-        PathCombat a = new PathCombat(); 
+        PathCombat a = new PathCombat();
 
-
+        laser.transform.LookAt(Vector3.zero);
+        laser2.transform.LookAt(Vector3.zero);
         switch (type)
         {
             case EncounterType.Easy:
                 a = Instantiate(combats[Random.Range(0, combats.Length)], forward.position, forward.rotation, transform) as PathCombat;
+
+
+
                 a.totalMobs = Random.Range(1, dificulty + 1);
                 a.maxsteps = maxSteps - 1;
                 a.dificulty = dificulty;
@@ -147,6 +147,8 @@ public class PathFloor : MonoBehaviour
 
             case EncounterType.Normal:
                 a = Instantiate(combats[Random.Range(0, combats.Length)], forward.position, forward.rotation, transform) as PathCombat;
+
+
                 var total = Random.Range(dificulty + 1, 2 * (dificulty + 1));
                 if (Random.Range(0, 100) > 50)
                 {
@@ -168,8 +170,17 @@ public class PathFloor : MonoBehaviour
             case EncounterType.Hard:
 
                 a = SpawnNormal(ref forward);
+                laser.transform.LookAt(a.lasertarget);
+                laser2.transform.LookAt(a.lasertarget2);
+
                 a = SpawnNormal(ref left);
+
+                laser.transform.LookAt(a.lasertarget);
+                laser2.transform.LookAt(a.lasertarget2);
                 a = SpawnNormal(ref right);
+
+                laser.transform.LookAt(a.lasertarget);
+                laser2.transform.LookAt(a.lasertarget2);
 
                 break;
 

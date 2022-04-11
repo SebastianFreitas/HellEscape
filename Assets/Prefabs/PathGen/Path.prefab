@@ -6722,7 +6722,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6145580692653672988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 7, z: 30}
+  m_LocalPosition: {x: 0, y: 7, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4451503646472269869}
@@ -8098,7 +8098,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7799373756954621004}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 12, z: 6}
+  m_LocalPosition: {x: 0, y: 12, z: 12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4451503646472269869}
@@ -8425,6 +8425,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e6681558173e3d438f36e588025aec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  laser: {fileID: 6145841440091250462}
+  laser2: {fileID: 6002146073486305484}
+  lasertarget: {fileID: 691860621141574994}
+  lasertarget2: {fileID: 4202807335315789293}
   isActive: 0
   nextSteps:
   - {fileID: 4483519048264050583}
@@ -8448,11 +8452,7 @@ MonoBehaviour:
   - {fileID: 5922880283969941904}
   - {fileID: 5922880283865939980}
   maxSteps: 49
-  laser: {fileID: 6145841440091250462}
-  lasertarget: {fileID: 691860621141574994}
   arrow: {fileID: 1133896241798607725}
-  laser2: {fileID: 6002146073486305484}
-  lasertarget2: {fileID: 4202807335315789293}
   combats:
   - {fileID: 1369392632526653327, guid: ef6e2aa09a11dba4dbb2b4f8f0d6a35d, type: 3}
   spikes: {fileID: 4511325539962943719}

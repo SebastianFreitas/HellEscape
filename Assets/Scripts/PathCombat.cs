@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathCombat : MonoBehaviour
+public class PathCombat : PathAux
 {
     internal Bounds combatBounds;
 
