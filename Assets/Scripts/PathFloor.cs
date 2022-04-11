@@ -39,7 +39,7 @@ public class PathFloor : MonoBehaviour
 
         maxSteps += 10 * dificulty;
         totalSteps = maxSteps;
-
+        if (isActive) arrow.SetActive(true);
     }
     bool victory = false;
     [System.Obsolete]
