@@ -184,7 +184,11 @@ public class Monster : MonoBehaviour
     internal void UpdateStatsToLevel()
     {
         health *= 1f + (level / 100f);
-        actionSpeed *= 1f + (level / 100f/2);
+
+        var speed = 1f + (level / 100f);
+        if (speed > 1.3) speed = 1.3f;
+        actionSpeed *= speed;
+
         forceSpeed *= 1f + (level / 100f );
 
     }
@@ -264,18 +268,20 @@ public class Monster : MonoBehaviour
         totalDropChance += 10;
     }
 
-    private void TurnBig()
+    internal void TurnBig()
     {
         transform.localScale *= 3f;
-        rigidBody.mass *= 10;
+        rigidBody.mass *= 4;
         health *= 4;
         damage *= 2;
+        forceSpeed *= 4;
     }
 
-    private void TurnMini()
+    internal void TurnMini()
     {
         transform.localScale *= 0.5f;
         actionSpeed += .25f;
+        forceSpeed *= 2;
     }
     
     private void Drop()

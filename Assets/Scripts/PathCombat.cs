@@ -11,24 +11,40 @@ public class PathCombat : MonoBehaviour
     [SerializeField] Monster skull;
     [SerializeField] PathFloor path;
     [SerializeField] Transform nextSteps;
+
+    internal int dificulty;
+    internal int addedLife;
+    internal int sizeMultiplier = 0;
+    internal PathFloor.EncounterType type;
     private void Start()
     {
         GetBounds();
 
-        totalMobs += GetComponentInParent<PathFloor>().dificulty;
+        // totalMobs += GetComponentInParent<PathFloor>().dificulty;
 
-        for(int i = 0; i < totalMobs; i++)
+        
+    }
+
+    internal IEnumerator Waiter()
+    {
+        yield return new WaitForSecondsRealtime(.5f);
+        for (int i = 0; i < totalMobs; i++)
         {
 
             Vector3 randomPoint = RandomPointInBounds(combatBounds);
             Monster currentMob = Instantiate(skull, randomPoint, Quaternion.identity, transform) as Monster;
             currentMob.isHub = true;
+
+            currentMob.health += addedLife;
+            if (sizeMultiplier > 0) currentMob.TurnBig();
+            else if (sizeMultiplier < 0) currentMob.TurnMini();
         }
 
-        PathFloor newPtah= Instantiate(path, nextSteps.position, nextSteps.rotation, transform) as PathFloor;
+        PathFloor newPtah = Instantiate(path, nextSteps.position, nextSteps.rotation, transform) as PathFloor;
 
         newPtah.isActive = false;
     }
+
 
     public void GetBounds()
     {

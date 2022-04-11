@@ -25,8 +25,12 @@ public class PathFloor : MonoBehaviour
     internal int dificulty = 0;
     [SerializeField] PathCombat[] combats;
 
+    private int encounterConter;
+
     private void Start()
     {
+
+        maxSteps += 10 * dificulty;
         totalSteps = maxSteps;
         //laser.gameObject.SetActive(false);
         //for(int i = Random.Range(-18, 2); i > 0; i--)
@@ -56,53 +60,131 @@ public class PathFloor : MonoBehaviour
             } 
             else if (IsDivisible(maxSteps, 10))
             {
-              SpawnCombat();
+                if(maxSteps<30) SpawnCombat(EncounterType.Hard);
+                else SpawnCombat(EncounterType.Normal);
             }
             else if (maxSteps > 0)
             {
+                PathFloor a = new PathFloor();
                 Transform b = forward;
                 bool islazer = false;
                 var rando = Random.Range(0, 100);
-                if (rando > 50)
+                if (rando > 85)
                 {
-                    b = nextSteps[Random.Range(0, nextSteps.Length)];
-                    islazer = true;
+                    SpawnCombat(EncounterType.Easy);
                 }
-                var a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
-                a.maxSteps = maxSteps - 1;
+                else 
+                { 
+                    if (rando > 90-dificulty)
+                    {
+                        b = nextSteps[Random.Range(0, nextSteps.Length)];
+                        islazer = true;
+                    }
 
-                laser.gameObject.SetActive(true);
-                laser2.gameObject.SetActive(true);
-                if (islazer)
+                    a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
+                    a.maxSteps = maxSteps - 1;
+
+                    laser.gameObject.SetActive(true);
+                    laser2.gameObject.SetActive(true);
+                    if (islazer)
+                    {
+                        laser.transform.LookAt(a.lasertarget);
+                        laser2.transform.LookAt(a.lasertarget2);
+                    }
+                    else
+                    {
+                        laser.transform.LookAt(Vector3.zero);
+                        laser2.transform.LookAt(Vector3.zero);
+                    }
+                }
+
+            }
+
+        }
+    }
+    internal enum EncounterType
+    {
+        Easy,
+        Normal,
+        Hard,
+        Impossible
+    }
+    [SerializeField] Transform forwardPlus;
+    [SerializeField] Transform forwardPlusUP;
+    [SerializeField] Transform leftPlusUP;
+    [SerializeField] Transform rightPlusUP;
+    private void SpawnCombat(EncounterType type)
+    {
+        PathCombat a = new PathCombat(); 
+
+
+        switch (type)
+        {
+            case EncounterType.Easy:
+                a = Instantiate(combats[Random.Range(0, combats.Length)], forward.position, forward.rotation, transform) as PathCombat;
+                a.totalMobs = Random.Range(1, dificulty + 1);
+                a.maxsteps = maxSteps - 1;
+                a.dificulty = dificulty;
+                a.StartCoroutine("Waiter");
+                Debug.Log("ez");
+                break;
+
+            case EncounterType.Normal:
+                a = Instantiate(combats[Random.Range(0, combats.Length)], forward.position, forward.rotation, transform) as PathCombat;
+                var total = Random.Range(dificulty + 1, 2 * (dificulty + 1));
+                if (Random.Range(0, 100) > 50)
                 {
-                    laser.transform.LookAt(a.lasertarget);
-                    laser2.transform.LookAt(a.lasertarget2);
+                    a.totalMobs = total;
+                    a.sizeMultiplier += -1;
                 }
                 else
                 {
-                    laser.transform.LookAt(Vector3.zero);
-                    laser2.transform.LookAt(Vector3.zero);
+                    a.totalMobs = total / 2;
+                    a.sizeMultiplier += 1;
+                    a.addedLife += 10 * dificulty;
                 }
+                a.maxsteps = maxSteps - 1;
+                a.dificulty = dificulty;
+                a.StartCoroutine("Waiter");
+                Debug.Log("Normal");
+                break;
 
-                //foreach (var current in a.additionalObjects)
-                //{
-                //    current.SetActive(false);
-                //}
-            }
+            case EncounterType.Hard:
+                Debug.Log("Hard");
+                a = SpawnNormal(ref forwardPlusUP);
+                a.StartCoroutine("Waiter");
+                a = SpawnNormal(ref leftPlusUP);
+                a.StartCoroutine("Waiter");
+                a = SpawnNormal(ref rightPlusUP);
+                a.StartCoroutine("Waiter");
+                break;
 
+            case EncounterType.Impossible:
 
-
+                break;
         }
-
-
 
 
     }
 
-    private void SpawnCombat()
+    private PathCombat SpawnNormal(ref Transform pos)
     {
-        PathCombat a = Instantiate(combats[Random.Range(0, combats.Length)], forward.position, forward.rotation, transform) as PathCombat;
+        PathCombat a = Instantiate(combats[Random.Range(0, combats.Length)], pos.position, pos.rotation, transform) as PathCombat;
+        var total = Random.Range(dificulty + 1, 2 * (dificulty + 1));
+        if (Random.Range(0, 100) > 50)
+        {
+            a.totalMobs = total;
+        }
+        else
+        {
+            a.totalMobs = total / 2;
+            a.sizeMultiplier += 1;
+            a.addedLife += 10 * dificulty;
+        }
         a.maxsteps = maxSteps - 1;
+        a.dificulty = dificulty;
+       
+        return a;
     }
 
     public bool IsDivisible(int x, int n)
