@@ -22,7 +22,8 @@ public class PlayerInventory : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("GunParts"))
         {
-            UpdateGunParts(PlayerPrefs.GetInt("GunParts")); 
+            gunParts = PlayerPrefs.GetInt("GunParts");
+            inventoryUI.SetGunParts(gunParts.ToString());
         }
     }
 
