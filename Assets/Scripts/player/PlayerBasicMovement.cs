@@ -115,7 +115,7 @@ public class PlayerBasicMovement : MonoBehaviour
     public Animator animator;
     private void MoveState()
     {
-        if (transform.position.y < -1000) manager.VoidPlayer();
+        if (transform.position.y < -100) manager.VoidPlayer();
 
         transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
                                                                                                                          

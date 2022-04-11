@@ -13,7 +13,7 @@ public class PathFloor : PathAux
     [SerializeField] PathFloor path;
     //[SerializeField] GameObject mainBaseUI;
     [SerializeField] GameObject[] additionalObjects;
-    [SerializeField] internal int maxSteps = 40;
+    [SerializeField] internal int maxSteps = 10;
 
     [SerializeField] GameObject arrow;
     internal void Activate()
@@ -25,7 +25,7 @@ public class PathFloor : PathAux
 
 
     private int totalSteps;
-    internal int dificulty = 0;
+    public int dificulty = 0;
     [SerializeField] PathCombat[] combats;
 
     [SerializeField]  private SpikeTrap spikes;

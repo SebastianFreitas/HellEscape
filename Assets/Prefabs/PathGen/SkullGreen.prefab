@@ -353,14 +353,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8138318554325435447}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0.5
   m_AngularDrag: 0.12
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!135 &1843145111958875087
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -403,8 +403,8 @@ MonoBehaviour:
   maxAltitudeJumpDistance: 1
   minAltitudeJumpDistance: -1
   waitingTime: 1.2
-  maxJumpForce: 800
-  minJumpForce: 700
+  maxJumpForce: 80000
+  minJumpForce: 70000
   attack: {fileID: 7965095559254910861, guid: 301fe2131c8c56744a77f21b20390afa, type: 3}
   otherSkulls: []
 --- !u!82 &6392196465432017947

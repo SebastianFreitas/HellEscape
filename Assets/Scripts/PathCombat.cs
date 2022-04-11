@@ -8,7 +8,7 @@ public class PathCombat : PathAux
 
     internal int maxsteps;
     [SerializeField]  internal int totalMobs = 10;
-    [SerializeField] Monster skull;
+    [SerializeField] Monster[] mobs;
     [SerializeField] PathFloor path;
     [SerializeField] Transform nextSteps;
 
@@ -41,7 +41,7 @@ public class PathCombat : PathAux
         {
 
             Vector3 randomPoint = RandomPointInBounds(combatBounds);
-            Monster currentMob = Instantiate(skull, randomPoint, Quaternion.identity, transform) as Monster;
+            Monster currentMob = Instantiate(mobs[0], randomPoint, Quaternion.identity, transform) as Monster;
             currentMob.isHub = true;
 
             currentMob.health += addedLife;
@@ -86,7 +86,8 @@ public class PathCombat : PathAux
     private void OpenPath()
     {
         PathFloor newPtah = Instantiate(path, nextSteps.position, nextSteps.rotation, transform) as PathFloor;
-
+   
+        newPtah.maxSteps = maxsteps--;
         newPtah.Activate();
 
 
