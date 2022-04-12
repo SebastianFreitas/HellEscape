@@ -37,6 +37,7 @@ public class PathCombat : PathAux
         yield return new WaitForFixedUpdate();
 
         if (totalMobs < 1) totalMobs = 1;
+        if (totalMobs > 10) totalMobs = 10;
         for (int i = 0; i < totalMobs; i++)
         {
 

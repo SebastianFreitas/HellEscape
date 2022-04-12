@@ -386,6 +386,8 @@ public class PlayerBasicMovement : MonoBehaviour
         Rigidbody body = hit.collider.attachedRigidbody;
         var pushPower = 5f;
         // no rigidbody
+        if (hit.collider.CompareTag("Bullet")) { return; }
+
         if (body == null || body.isKinematic) { return; }
         // We dont want to push objects below us
         if (hit.moveDirection.y < -0.3) { return; }

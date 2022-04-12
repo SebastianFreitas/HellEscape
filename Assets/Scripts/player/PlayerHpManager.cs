@@ -15,12 +15,14 @@ public class PlayerHpManager : MonoBehaviour
 
     private GameMan manager;
     private ModDataRoom.GeneratedMission mission;
-
+    private bool isDashing;
     void Start()
     {
         //hp = GameObject.FindGameObjectsWithTag("HealthBar")[0].transform.GetComponent<HealthBar>();
         hp.SetMaxHealth((int)maxHealth);
         manager = transform.root.GetComponent<GameMan>();
+
+        isDashing = GetComponent<PlayerBasicMovement>().isSideDashing;
     }
 
     private void OnEnable()
@@ -30,8 +32,9 @@ public class PlayerHpManager : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (canTakeDamage)
+        if (canTakeDamage && !isDashing)
         {
+            canTakeDamage = false;
             StartCoroutine(BloodScreen());
             StartCoroutine(waiterImmunity());
             playerSounds.PlayTakeDamageSound();
@@ -89,7 +92,7 @@ public class PlayerHpManager : MonoBehaviour
     {
         canTakeDamage = false;
 
-        yield return new WaitForSecondsRealtime(.5f);
+        yield return new WaitForSecondsRealtime(1f);
         canTakeDamage = true;
 
 

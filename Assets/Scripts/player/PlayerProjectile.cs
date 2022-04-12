@@ -136,7 +136,7 @@ public class PlayerProjectile : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.transform.parent.GetComponentInParent<Monster>().TakeDamage( stats, false, critMulti);
+            collision.transform.GetComponentInParent<Monster>().TakeDamage( stats, false, critMulti);
 
             StartCoroutine(KillBullet());
         }
