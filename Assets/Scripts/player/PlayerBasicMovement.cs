@@ -386,7 +386,7 @@ public class PlayerBasicMovement : MonoBehaviour
         Rigidbody body = hit.collider.attachedRigidbody;
         var pushPower = 5f;
         // no rigidbody
-        if (hit.collider.CompareTag("Bullet")) { return; }
+        if (hit.collider.CompareTag("Bullet") || hit.collider.CompareTag("Enemy")) { return; }
 
         if (body == null || body.isKinematic) { return; }
         // We dont want to push objects below us
