@@ -142,10 +142,11 @@ public class PlayerProjectile : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("MonsterHead"))
         {
-            collision.transform.GetComponentInParent<Monster>().TakeDamage( stats, true, critMulti);
+            collision.transform.GetComponent<Monster>().TakeDamage( stats, true, critMulti);
 
             StartCoroutine(KillBullet());
         }
+
 
         if (fireDamage > 0)
         {
