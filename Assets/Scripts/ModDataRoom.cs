@@ -51,17 +51,17 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,5,   "ERROR",         Grade.interior, OperatorType.non,                                    4,     14),
                 new Mod(1,5,   "Located additional rewards",         Grade.interior, OperatorType.non,               10,    15),
                 new Mod(1,5,   "Gun parts drops",         Grade.interior, OperatorType.plus,                         100,     16),
-                new Mod(1,5,   "50% reduced healing",       Grade.interior, OperatorType.non,                        200,     21),
-                new Mod(15,100, "Monster health",            Grade.interior, OperatorType.plus,                      500,    1),
-                new Mod(1,10,  "Monster damage",            Grade.interior, OperatorType.plus,                       500,    2),
+                new Mod(1,5,   "50% reduced healing",       Grade.interior, OperatorType.non,                        100,     21),
+                new Mod(15,100, "Monster health",            Grade.interior, OperatorType.plus,                      250,    1),
+                new Mod(1,10,  "Monster damage",            Grade.interior, OperatorType.plus,                       250,    2),
                 new Mod(1,25,  "Monster action speed",             Grade.interior, OperatorType.increased,           250,    3),
                 
                 new Mod(1,5,   "Cannot use grenade",         Grade.interior, OperatorType.non,                       100,      17),
                 new Mod(1,5,   "UnknownX",         Grade.interior, OperatorType.non,                                 8,      18),//monsters become bigger deal double damage and drop 1 more gunpart
                 new Mod(1,5,   "UnknownY",         Grade.interior, OperatorType.non,                                 8,      19),
-                new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       250,      22),
-                new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       250,      20),
-                new Mod(1,5,   "Monsters are immune to poison damage",         Grade.interior, OperatorType.non,     250,      23),
+                new Mod(1,5,   "Monsters are immune to fire damage",         Grade.interior, OperatorType.non,       100,      22),
+                new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       100,      20),
+                new Mod(1,5,   "Monsters are immune to poison damage",         Grade.interior, OperatorType.non,     100,      23),
                 new Mod(1,5,   "Monsters are immune to physical damage",         Grade.interior, OperatorType.non,   100,      24),
                 
 
