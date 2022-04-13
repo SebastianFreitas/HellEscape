@@ -135,6 +135,7 @@ public class Gun : MonoBehaviour
         bulletSpeed = (int)gun.GetShotSpeed();
     }
     public GrenadeCooldown cd;
+    PlayerProjectile currentBullet;
     void Shoot(float attackRate)
     {
         cd.startCD(timeBtwShots);
@@ -229,8 +230,23 @@ public class Gun : MonoBehaviour
     {
         this.gun = gun;
         SetBulletStats();
+
+
         playerScript.increasedSpeed = gun.increasedSpeed;
         firerate = 1 / gun.finalFireRate;
         //playerScript.gameObject.transform.parent.GetComponent<Room>().GetEnemies();
+
+        GunOfAType gunx;
+        gunx = this.gun;
+        gunText = this.gun;
+
+        var bul = Instantiate(projectile, Vector3.zero, Quaternion.identity); //shoot normal bullet
+        currentBullet = bul.GetComponent<PlayerProjectile>();
+        currentBullet.initialFade = true;
+        currentBullet.Gun = gunx;
+        currentBullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
+        currentBullet.playerMov = playerScript;
+
+        //currentBullet.AwakeRemote();
     }
 }

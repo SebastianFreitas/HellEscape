@@ -79,6 +79,8 @@ public class PlayerProjectile : MonoBehaviour
         if (initialFade) StartCoroutine(fadeWaiter());//this line will fuck up (usual bug andar pa tras ou pa frente + double bounce com side walk)
         rb.AddForce(transform.forward * speed);
         bounceSpeed = speed / 2;
+
+        
         StartCoroutine(waiter(10f));
 
         switch (type)
@@ -202,7 +204,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             if (hitCollider.CompareTag("Dude"))
             {
-                playerMov.AddImpact(hitCollider.transform.position - transform.position, stats.fireDamage);
+                playerMov.AddImpact(hitCollider.transform.position - transform.position, stats.fireDamage*5);
                 //playerMov.GainSpeed(2);
             }
             else if (hitCollider.CompareTag("Monster") )
