@@ -51,11 +51,12 @@ public class PlayerProjectile : MonoBehaviour
 
     public GameObject trails;
 
-    [SerializeField] BulletType type;
+    [SerializeField] internal BulletType type;
     internal enum BulletType
     {
         normal,
-        rocketTriangle
+        rocketTriangle,
+        loading
     }
 
     public GunOfAType Gun { get => gun; set => gun = value; }
@@ -67,6 +68,18 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void AwakeRemote()
     {
+        switch (type)
+        {
+            case BulletType.normal:
+                break;
+            case BulletType.loading:
+
+                break;
+
+            case BulletType.rocketTriangle:
+                stats.fireDamage += 50;
+                break;
+        }
         newSizeMulti  = (1 + gun.increasedBulletSize / 100);
         //transform.localScale = new Vector3(newSizeMulti, newSizeMulti, newSizeMulti);
         if (isSphere)  transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
@@ -81,17 +94,9 @@ public class PlayerProjectile : MonoBehaviour
         bounceSpeed = speed / 2;
 
         
-        StartCoroutine(waiter(10f));
+        StartCoroutine(waiter(3f));
 
-        switch (type)
-        {
-            case BulletType.normal:
-                break;
 
-            case BulletType.rocketTriangle:
-                stats.fireDamage += 50;
-                break;
-        }
     }
 
     private void ConfigureTrails()
@@ -122,7 +127,10 @@ public class PlayerProjectile : MonoBehaviour
 
     IEnumerator waiter(float a){
     yield return new WaitForSeconds(a);
-    Destroy(gameObject);
+        if (type != BulletType.loading)
+        {
+            Destroy(gameObject);
+        }
     }
 
     IEnumerator fadeWaiter()
@@ -227,12 +235,16 @@ public class PlayerProjectile : MonoBehaviour
 
     void ExplodeParticule()
     {
-        exp.gameObject.SetActive(true);
-        var explode = exp.GetComponent<ParticleSystem>();
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        explode.Play();
-        Destroy(gameObject, explode.main.duration);
+        if(type != BulletType.loading)
+        {
+            exp.gameObject.SetActive(true);
+            var explode = exp.GetComponent<ParticleSystem>();
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            explode.Play();
+            Destroy(gameObject, explode.main.duration);
+        }
+
 
     }
 
@@ -265,14 +277,16 @@ public class PlayerProjectile : MonoBehaviour
 
     private IEnumerator KillBullet()
     {
-
-        StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
-        if (fireDamage != 0 ) exp.transform.parent = null;
+        if (type != BulletType.loading)
+        {
+            StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
+            if (fireDamage != 0 ) exp.transform.parent = null;
         
-        trails.transform.parent = null;
+            trails.transform.parent = null;
 
 
-        yield return new WaitForSeconds(.5f);
-        Destroy(this.gameObject);
+            yield return new WaitForSeconds(.5f);
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -16,7 +16,7 @@ public class Gun : MonoBehaviour
 
     public Camera fpsCam;
     public GameObject realBulletHolder;
-    public GameObject projectile;
+    public PlayerProjectile projectile;
     public GameObject pnt;
     public GameObject muzzleFlashFront;
     public GameObject lightFlash;
@@ -160,14 +160,13 @@ public class Gun : MonoBehaviour
         gunx = this.gun;
         gunText = this.gun;
 
-        GameObject bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
-        var bulletscript = bullet.GetComponent<PlayerProjectile>();
-        bulletscript.initialFade = true;
-        bulletscript.Gun = gunx;
-
-        bulletscript.SetStats((int)gunx.increasedRicochetGuide,bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
-        bulletscript.playerMov = playerScript;
-        bulletscript.AwakeRemote();
+        var bullet = Instantiate(currentBullet, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
+        bullet.gameObject.SetActive(true);
+        bullet.initialFade = true;
+        bullet.Gun = gunx;
+        bullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
+        bullet.playerMov = playerScript;
+        bullet.AwakeRemote();
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
@@ -175,14 +174,9 @@ public class Gun : MonoBehaviour
             var spread = 5f;
             pelletRot.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
-            bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot.rotation);
-
-            bulletscript = bullet.GetComponent<PlayerProjectile>();
-            bulletscript.Gun = gunx;
-            bulletscript.initialFade = true;
-            bulletscript.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
-            bulletscript.playerMov = playerScript;
-            bulletscript.AwakeRemote();
+            bullet = Instantiate(currentBullet, realBulletHolder.transform.position, pelletRot.rotation);
+            bullet.type = currentType;
+            bullet.AwakeRemote();
         }
 
 
@@ -226,6 +220,8 @@ public class Gun : MonoBehaviour
        // GameObject.FindGameObjectWithTag("Slot").GetComponent<Slot>().EquipGun();
     }
 
+    PlayerProjectile.BulletType currentType;
+
     public void SetGun(GunOfAType gun)
     {
         this.gun = gun;
@@ -234,19 +230,21 @@ public class Gun : MonoBehaviour
 
         playerScript.increasedSpeed = gun.increasedSpeed;
         firerate = 1 / gun.finalFireRate;
-        //playerScript.gameObject.transform.parent.GetComponent<Room>().GetEnemies();
 
         GunOfAType gunx;
         gunx = this.gun;
         gunText = this.gun;
 
-        var bul = Instantiate(projectile, Vector3.zero, Quaternion.identity); //shoot normal bullet
-        currentBullet = bul.GetComponent<PlayerProjectile>();
+        //currentBullet = Instantiate(projectile, Vector3.zero, Quaternion.identity) as PlayerProjectile; //shoot normal bullet
+        currentBullet = projectile;
+        currentBullet.gameObject.SetActive(false);
         currentBullet.initialFade = true;
         currentBullet.Gun = gunx;
         currentBullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
+        currentType = currentBullet.type;
         currentBullet.playerMov = playerScript;
-
+       // currentBullet.type = PlayerProjectile.BulletType.loading;
+        //currentBullet
         //currentBullet.AwakeRemote();
     }
 }
