@@ -190,6 +190,10 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponentInParent<Shop>().PressNext();
                 }
+                else if (hit.transform.CompareTag("Mirror"))
+                {
+                    hit.collider.transform.GetComponent<MirrorButtons>().PushButton();
+                }
                 else
                 {
                     Debug.Log(hit.transform.tag);

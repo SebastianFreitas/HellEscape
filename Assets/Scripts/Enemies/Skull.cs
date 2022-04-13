@@ -21,13 +21,8 @@ public class Skull : Monster
 
     new void Start()
     {
-
-        
         var x = Random.Range(-2,3);
         rigidBody.angularVelocity = new Vector3(x,x,x);
-        
-
-
     }
 
 
@@ -54,7 +49,6 @@ public class Skull : Monster
 
 
         yield return new WaitForSeconds(finalWaitTime);
-       // if (isHive) base.rigidBody.AddForce(((otherSkulls[Random.Range(0, otherSkulls.Length)].transform.position - this.transform.position).normalized) * 150 * 3);
 
         StartCoroutine(randomJump());
 

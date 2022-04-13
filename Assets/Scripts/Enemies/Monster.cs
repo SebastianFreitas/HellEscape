@@ -64,7 +64,7 @@ public class Monster : MonoBehaviour
         {
             mission = new ModDataRoom.GeneratedMission();
             path = GetComponentInParent<PathFloor>();
-            level = path.dificulty * 10 +1;
+            level = path.dificulty;
             UpdateStatsToLevel();
         }
 
@@ -108,13 +108,14 @@ public class Monster : MonoBehaviour
 
     }
 
-    void Update(){
+    void FixedUpdate(){
         if (monsterCollider.bounds.Intersects(playerCollider.bounds))
         {
             var direction = player.transform.position- transform.position;
             var playerScript = player.GetComponent<PlayerBasicMovement>();
             playerScript.AddImpact(direction, 100f);
             player.GetComponent<PlayerHpManager>().TakeDamage((int)damage);
+           // player.GetComponent<PlayerHpManager>().canta
         }
     }
 
@@ -239,6 +240,10 @@ public class Monster : MonoBehaviour
             Drop();
         }
         died = true;
+
+        var x = GetComponentInChildren<TrailRenderer>().gameObject;
+        if (x != null) x.transform.parent = null;
+
         Destroy(gameObject);
     }
 

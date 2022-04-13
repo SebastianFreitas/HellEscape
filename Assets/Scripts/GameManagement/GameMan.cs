@@ -22,7 +22,7 @@ public class GameMan : ModDataRoom
     public Hub hub;
     public bool startAtHub;
 
-    [SerializeField] RoomGenerator roomGen;
+    [SerializeField] internal RoomGenerator roomGen;
     [SerializeField] Vector3 currentStartPos;
 
     [SerializeField] PathFloor path;

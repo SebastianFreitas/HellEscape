@@ -4,7 +4,35 @@ using UnityEngine;
 
 public class MirrorManager : PlayerAcess
 {
-    [SerializeField] RoomGenerator roomGen;
+    RoomGenerator roomGen;
+
+    [SerializeField] TMPro.TextMeshPro lifeText;
+    [SerializeField] TMPro.TextMeshPro boonText;
+    [SerializeField] TMPro.TextMeshPro lengthText;
+    [SerializeField] TMPro.TextMeshPro levelText;
+
+    int life = 0;
+    float boon = 0;
+    int length = 0;
+    int level = 0;
+
+    [SerializeField] TMPro.TextMeshPro availablePoints;
+
+    private void Start()
+    {
+        roomGen = player.GetComponentInParent<GameMan>().roomGen;
+    }
+
+    private void UpdateUI()
+    {
+
+        availablePoints.text = $"{maxPoints-usedPoints} Available points";
+
+        lifeText.text = $"+{life} Max life";
+        boonText.text = $"+{boon} Boon chance after encounter";
+        lengthText.text = $"+{length} run length";
+        levelText.text = $"+{level} level of item drops";
+    }
 
     internal enum MirrorBoon
     {
@@ -55,7 +83,7 @@ public class MirrorManager : PlayerAcess
         }
         hub = GetComponentInParent<Hub>();
 
-
+        UpdateUI();
     }
 
     private void OnDisable()
@@ -101,29 +129,35 @@ public class MirrorManager : PlayerAcess
                 break;
             case MirrorBoon.nope:
                 break;
-        }   
-
+        }
+        UpdateUI();
     }
 
     private void RunLength(int choice)
     {
         roomGen.mirrorLength += 2*choice;
+        level += 2 * choice;
+        
     }
 
     private void MaxLife(int choice)
     {      
         playerHP.maxHealth += 5*choice;
         playerHP.health += 5 * choice;
+        life += 5 * choice;
+
     }
 
     private void ItemLevel(int choice)
     {
         playerInv.weaponLevel += 1 * choice;
+        level += 1 * choice;
     }
 
     private void BoonChance(int choice)
     {
         roomGen.mirrorLength += 1 * choice;
+        boon += 1 * choice;
     }
 
   

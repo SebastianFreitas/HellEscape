@@ -17,6 +17,7 @@ public class ExplosionTrap : MonoBehaviour
         if (other.CompareTag("Dude"))
         {
             other.transform.GetComponent<PlayerHpManager>().TakeDamage(10);
+            other.transform.GetComponent<PlayerHpManager>().canTakeDamage = false;
             var direction = other.transform.position - transform.position;
             other.GetComponent<PlayerBasicMovement>().AddImpact(direction, 50f);
 

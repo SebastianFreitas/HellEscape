@@ -71,7 +71,7 @@ public class PathFloor : PathAux
             } 
             else if (IsDivisible(maxSteps, 10))
             {
-                if(maxSteps<30) SpawnCombat(EncounterType.Hard);
+                if(maxSteps<10 * dificulty) SpawnCombat(EncounterType.Hard);
                 else SpawnCombat(EncounterType.Normal);
             }
             else if (maxSteps > 0)
@@ -86,7 +86,7 @@ public class PathFloor : PathAux
                 }
                 else 
                 { 
-                    if (rando > 80-dificulty)
+                    if (rando > 90-dificulty)
                     {
                         b = nextSteps[Random.Range(0, nextSteps.Length)];
                         islazer = true;
@@ -132,6 +132,7 @@ public class PathFloor : PathAux
 
         laser.transform.LookAt(Vector3.zero);
         laser2.transform.LookAt(Vector3.zero);
+        if (dificulty == 0) type = EncounterType.Easy;
         switch (type)
         {
             case EncounterType.Easy:
@@ -254,7 +255,7 @@ public class PathFloor : PathAux
 
     private void OnDisable()
     {
-        SaveDificulty();
+        //SaveDificulty();
     }
 
     private void SaveDificulty()

@@ -8,7 +8,7 @@ public class PlayerHpManager : MonoBehaviour
     public float health = 50;
     public float maxHealth = 50;
     public HealthBar hp;
-    private bool canTakeDamage = true;
+    internal bool canTakeDamage = true;
     public PlayerSounds playerSounds;
 
     public GameObject bloodScreen;
@@ -32,7 +32,7 @@ public class PlayerHpManager : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (canTakeDamage && !isDashing)
+     if (canTakeDamage && !isDashing)
         {
             canTakeDamage = false;
             StartCoroutine(BloodScreen());
