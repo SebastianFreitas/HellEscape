@@ -65,7 +65,7 @@ public class Skull : Monster
 
     IEnumerator waiterStart()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.1f);
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
         StartCoroutine(randomJump());
