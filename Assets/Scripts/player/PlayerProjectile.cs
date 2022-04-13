@@ -51,17 +51,26 @@ public class PlayerProjectile : MonoBehaviour
 
     public GameObject trails;
 
+    [SerializeField] BulletType type;
+    internal enum BulletType
+    {
+        normal,
+        rocketTriangle
+    }
 
     public GunOfAType Gun { get => gun; set => gun = value; }
 
     internal Transform[] enemies;
     private float newSizeMulti;
 
-    void Start()
+    [SerializeField] bool isSphere = true;
+
+    internal void AwakeRemote()
     {
         newSizeMulti  = (1 + gun.increasedBulletSize / 100);
         //transform.localScale = new Vector3(newSizeMulti, newSizeMulti, newSizeMulti);
-        transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
+        if (isSphere)  transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
+        else transform.GetComponent<BoxCollider>().size*= newSizeMulti;
 
         SetVisibility(false);
         rb = GetComponent<Rigidbody>();
@@ -71,6 +80,16 @@ public class PlayerProjectile : MonoBehaviour
         rb.AddForce(transform.forward * speed);
         bounceSpeed = speed / 2;
         StartCoroutine(waiter(10f));
+
+        switch (type)
+        {
+            case BulletType.normal:
+                break;
+
+            case BulletType.rocketTriangle:
+                stats.fireDamage += 50;
+                break;
+        }
     }
 
     private void ConfigureTrails()
@@ -183,7 +202,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             if (hitCollider.CompareTag("Dude"))
             {
-                playerMov.AddImpact(hitCollider.transform.position - transform.position, fireDamage);
+                playerMov.AddImpact(hitCollider.transform.position - transform.position, stats.fireDamage);
                 //playerMov.GainSpeed(2);
             }
             else if (hitCollider.CompareTag("Monster") )

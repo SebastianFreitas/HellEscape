@@ -166,6 +166,8 @@ public class Gun : MonoBehaviour
 
         bulletscript.SetStats((int)gunx.increasedRicochetGuide,bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
         bulletscript.playerMov = playerScript;
+        bulletscript.AwakeRemote();
+
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
         {
             var pelletRot = realpos;
@@ -179,6 +181,7 @@ public class Gun : MonoBehaviour
             bulletscript.initialFade = true;
             bulletscript.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
             bulletscript.playerMov = playerScript;
+            bulletscript.AwakeRemote();
         }
 
 
