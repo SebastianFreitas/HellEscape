@@ -74,7 +74,7 @@ public class RoomGenerator : MonoBehaviour
 		
 		int influencePos = Random.Range(1,5);
 		//place pathway
-		for (int i = 1; i <=20+mission.aditionalLength; i++)
+		for (int i = 1; i <=20+mission.aditionalLength+mirrorLength; i++)
 		{
 
 			int a = 0;
@@ -102,9 +102,9 @@ public class RoomGenerator : MonoBehaviour
 					if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
 					else
 					{
-						x = Random.Range(1, 4);
+						x = Random.Range(0, 100);
 						var type = RoomActivator.RoomType.Encounter;
-						if (x == 1) type = RoomActivator.RoomType.Trap;
+						if (x < 1f + mirrorBoonChance) type = RoomActivator.RoomType.Boon;
 
 						worked = PlaceRoom(mainRooms[rando], true, type);
 					}
@@ -415,8 +415,10 @@ public class RoomGenerator : MonoBehaviour
     private int counter = 0;
 	private bool started = false;
 	internal int weaponLevel = 9;
+    internal int mirrorLength = 0;
+    internal float mirrorBoonChance = 0;
 
-	internal void StartRun(ModDataRoom.GeneratedMission mis)
+    internal void StartRun(ModDataRoom.GeneratedMission mis)
     {
 		mission = mis;
 		weaponLevel += mis.additionalWeaponLevel;

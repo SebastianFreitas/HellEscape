@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MirrorManager : MonoBehaviour
+public class MirrorManager : PlayerAcess
 {
-    private int maxPoints;
+    [SerializeField] RoomGenerator roomGen;
 
     internal enum MirrorBoon
     {
@@ -21,6 +21,10 @@ public class MirrorManager : MonoBehaviour
         (MirrorBoon.MaxLife, 0)
     };
 
+    private int maxPoints;
+    private int usedPoints;
+    private Hub hub;
+
     private void OnEnable()
     {
         if (PlayerPrefs.HasKey("PathLevel"))
@@ -32,9 +36,11 @@ public class MirrorManager : MonoBehaviour
         int i = 0;
         foreach(var x in powerList)
         {
-            if (PlayerPrefs.HasKey(x.Item1.ToString())) powerList[i].Item2 = PlayerPrefs.GetInt(x.Item1.ToString());
+            if (PlayerPrefs.HasKey(x.Item1.ToString())) powerList[i].Item2 += PlayerPrefs.GetInt(x.Item1.ToString());
             i++;
         }
+        hub = GetComponentInParent<Hub>();
+
     }
 
     private void OnDisable()
@@ -72,21 +78,24 @@ public class MirrorManager : MonoBehaviour
 
     private void RunLength(int choice)
     {
-        throw new System.NotImplementedException();
+        roomGen.mirrorLength += 2*choice;
     }
 
     private void MaxLife(int choice)
-    {
-        throw new System.NotImplementedException();
+    {      
+        playerHP.maxHealth += 5*choice;
+        playerHP.health += 5 * choice;
     }
 
     private void ItemLevel(int choice)
     {
-        throw new System.NotImplementedException();
+        playerInv.weaponLevel += 1 * choice;
     }
 
     private void BoonChance(int choice)
     {
-        throw new System.NotImplementedException();
+        roomGen.mirrorLength += 1 * choice;
     }
+
+  
 }
