@@ -59,15 +59,14 @@ public class PathFloor : PathAux
 
             if (maxSteps == 0)
             {
- 
+                 maxSteps--;
+                dificulty++;
+                SaveDificulty();
                 var x = Instantiate(mainBase, right.position, right.rotation, transform);
                 transform.parent = transform.parent;
                 victory = true;
-                dificulty++;
 
-                maxSteps--;
-                dificulty++;
-                SaveDificulty();
+
             } 
             else if (IsDivisible(maxSteps, 10))
             {
