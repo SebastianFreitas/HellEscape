@@ -385,7 +385,8 @@ public class RoomGenerator : MonoBehaviour
     private bool PlaceCorridor(int length)
     {
 		PlaceRoom(stairs, false, RoomActivator.RoomType.Corridor);
-		return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomActivator.RoomType.Corridor);
+		 PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomActivator.RoomType.Corridor);
+		return PlaceRoom(stairs, false, RoomActivator.RoomType.Corridor);
 	}
 
     private bool PlaceEndRoom()

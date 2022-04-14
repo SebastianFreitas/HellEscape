@@ -23,6 +23,7 @@ public class StartHub : MonoBehaviour
 
         currentPath = Instantiate(path, pathStartPos.position, pathStartPos.rotation, transform) as PathFloor;
         currentPath.Activate();
+        currentPath.isFirst = true;
     }
 
 

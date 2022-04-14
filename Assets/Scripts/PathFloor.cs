@@ -13,7 +13,7 @@ public class PathFloor : PathAux
     [SerializeField] PathFloor path;
     //[SerializeField] GameObject mainBaseUI;
     [SerializeField] GameObject[] additionalObjects;
-    [SerializeField] internal int maxSteps = 10;
+    [SerializeField] internal int maxSteps = 0;
 
     [SerializeField] GameObject arrow;
 
@@ -44,7 +44,7 @@ public class PathFloor : PathAux
         {
             dificulty = PlayerPrefs.GetInt("PathLevel");
         }
-        maxSteps += 10 * dificulty;
+        if (isFirst)  maxSteps += 10 * dificulty;
         totalSteps = maxSteps;
         if (isActive) arrow.SetActive(true);
 
@@ -53,7 +53,7 @@ public class PathFloor : PathAux
         if (Random.Range(1, 101) > chance) spikes.gameObject.SetActive(true);
         else spikes.gameObject.SetActive(false);
     }
-    bool victory = false;
+   internal bool victory = false;
     [System.Obsolete]
     private void OnTriggerStay(Collider other)
     {
@@ -69,14 +69,15 @@ public class PathFloor : PathAux
                 dificulty++;
                 SaveDificulty();
                 var x = Instantiate(mainBase, right.position, right.rotation, transform);
-                transform.parent = transform.parent;
+                x.transform.parent = GetComponentInParent<Hub>().transform; 
                 victory = true;
-
-                Destroy(gameObject);
+                var par = transform.parent;
+                transform.parent = x.transform;
+                Destroy(par.GetComponentInParent<StartHub>().gameObject);
             } 
             else if (IsDivisible(maxSteps, 10))
             {
-                if(maxSteps<10 * dificulty) SpawnCombat(EncounterType.Hard);
+                if(maxSteps<5 * dificulty) SpawnCombat(EncounterType.Hard);
                 else SpawnCombat(EncounterType.Normal);
             }
             else if (maxSteps > 0)
@@ -91,7 +92,7 @@ public class PathFloor : PathAux
                 }
                 else 
                 { 
-                    if (rando > 50-dificulty)
+                    if (rando > 75-dificulty)
                     {
                         b = nextSteps[Random.Range(0, nextSteps.Length)];
                         islazer = true;
@@ -99,7 +100,8 @@ public class PathFloor : PathAux
 
                     a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
                     a.maxSteps = maxSteps - 1;
-                    a.isAdds = true;
+                    a.isAdds = false;
+                    a.isFirst = false;
 
                     laser.gameObject.SetActive(true);
                     laser2.gameObject.SetActive(true);
@@ -132,6 +134,8 @@ public class PathFloor : PathAux
     [SerializeField] Transform rightPlusUP;
     [SerializeField] Transform left;
     [SerializeField] Transform right;
+    internal bool isFirst= false;
+
     private void SpawnCombat(EncounterType type)
     {
         PathCombat a = new PathCombat();
@@ -146,7 +150,7 @@ public class PathFloor : PathAux
 
 
 
-                a.totalMobs = Random.Range(1, dificulty + 1);
+                a.totalMobs = Random.Range(1, dificulty/5);
                 a.maxsteps = maxSteps - 1;
                 a.dificulty = dificulty;
                 a.StartCoroutine(a.Waiter());
@@ -156,7 +160,7 @@ public class PathFloor : PathAux
                 a = Instantiate(combats[Random.Range(0, combats.Length)], forward.position, forward.rotation, transform) as PathCombat;
 
 
-                var total = Random.Range(dificulty + 1, 2 * (dificulty + 1));
+                var total = Random.Range(dificulty/5, 2 * (dificulty/5));
                 if (Random.Range(0, 100) > 50)
                 {
                     a.totalMobs = total;
@@ -202,7 +206,7 @@ public class PathFloor : PathAux
     private PathCombat SpawnNormal(ref Transform pos)
     {
         PathCombat a = Instantiate(combats[Random.Range(0, combats.Length)], pos.position, pos.rotation, transform) as PathCombat;
-        var total = Random.Range(dificulty + 1, 2 * (dificulty + 1));
+        var total = Random.Range(dificulty / 5, 2 * (dificulty / 5));
         if (Random.Range(0, 100) > 50)
         {
             a.totalMobs = total;
