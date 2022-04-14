@@ -7,8 +7,8 @@ public class MirrorButtons : MonoBehaviour
 
     [SerializeField] MirrorManager.MirrorBoon boonType;
     [SerializeField] int operatoR;
-    internal void PushButton()
+    internal bool PushButton()
     {
-        GetComponentInParent<MirrorManager>().InsertPoint(boonType, operatoR);
+        return GetComponentInParent<MirrorManager>().InsertPoint(boonType, operatoR);
     }
 }

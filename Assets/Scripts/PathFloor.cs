@@ -66,7 +66,7 @@ public class PathFloor : PathAux
                 transform.parent = transform.parent;
                 victory = true;
 
-
+                Destroy(gameObject);
             } 
             else if (IsDivisible(maxSteps, 10))
             {

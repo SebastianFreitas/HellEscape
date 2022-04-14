@@ -93,6 +93,7 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("StartMission"))
                 {
                     hit.collider.transform.GetComponentInParent<MissionSelector>().OpenPortal();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else if (hit.transform.CompareTag("SelectMission"))
                 {
@@ -192,11 +193,14 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("Mirror"))
                 {
-                    hit.collider.transform.GetComponent<MirrorButtons>().PushButton();
+                    if (hit.collider.transform.GetComponent<MirrorButtons>().PushButton())
+                    {
+                        AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                    }
+                    else AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
                 }
                 else
                 {
-                    Debug.Log(hit.transform.tag);
                     AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
                 }
             

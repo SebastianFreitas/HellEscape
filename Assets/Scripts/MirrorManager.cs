@@ -26,7 +26,7 @@ public class MirrorManager : PlayerAcess
     private void UpdateUI()
     {
 
-        availablePoints.text = $"{maxPoints-usedPoints} Available points";
+        availablePoints.text = $"{currentPoints} Available points";
 
         lifeText.text = $"+{life} Max life";
         boonText.text = $"+{boon} Boon chance after encounter";
@@ -52,10 +52,13 @@ public class MirrorManager : PlayerAcess
 
     private int maxPoints;
     private int usedPoints = 0;
+    private int currentPoints;
     private Hub hub;
 
     private void OnEnable()
     {
+        roomGen = player.GetComponentInParent<GameMan>().roomGen;
+
         if (PlayerPrefs.HasKey("PathLevel"))
         {
             maxPoints = PlayerPrefs.GetInt("PathLevel");
@@ -82,7 +85,7 @@ public class MirrorManager : PlayerAcess
             
         }
         hub = GetComponentInParent<Hub>();
-
+        currentPoints = maxPoints - usedPoints;
         UpdateUI();
     }
 
@@ -91,19 +94,29 @@ public class MirrorManager : PlayerAcess
         int i = 0;
         foreach (var x in powerList)
         {
-            PlayerPrefs.SetInt(x.Item1.ToString(), x.Item2);
+            PlayerPrefs.SetInt(x.Item1.ToString(),  x.Item2);
             i++;
         }
     }
 
-    internal void InsertPoint(MirrorBoon type, int choice)
+    internal bool InsertPoint(MirrorBoon type, int choice)
     {
-
-
-        if (usedPoints < maxPoints && choice > 0) usedPoints++;
-        else if (choice < 0) usedPoints--;
-        else type = MirrorBoon.nope;
-
+        if (currentPoints >= 0)
+        {
+            if (currentPoints > 0 && choice > 0)
+            {
+                currentPoints--;
+            }
+            else if (choice < 0 && (GetPowerList(type) > 0))
+            {
+                currentPoints++;
+            }
+            else return false;
+        }
+        else
+        {
+            return false;
+        }
 
 
         switch (type)
@@ -131,19 +144,30 @@ public class MirrorManager : PlayerAcess
                 break;
         }
         UpdateUI();
+        return true;
+    }
+
+    private int GetPowerList(MirrorBoon type)
+    {
+        foreach(var current in powerList)
+        {
+            if (current.Item1 == type) return current.Item2;
+        }
+
+        return -1;
     }
 
     private void RunLength(int choice)
     {
         roomGen.mirrorLength += 2*choice;
-        level += 2 * choice;
+        length += 2 * choice;
         
     }
 
     private void MaxLife(int choice)
     {      
-        playerHP.maxHealth += 5*choice;
-        playerHP.health += 5 * choice;
+
+        playerHP.ChangeMaxHP(5 * choice);
         life += 5 * choice;
 
     }
