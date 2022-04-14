@@ -16,6 +16,9 @@ public class PathFloor : PathAux
     [SerializeField] internal int maxSteps = 10;
 
     [SerializeField] GameObject arrow;
+
+    [SerializeField] GameObject adds;
+    [SerializeField] bool isAdds = false;
     internal void Activate()
     {
         isActive = true;
@@ -34,6 +37,8 @@ public class PathFloor : PathAux
 
     private void Start()
     {
+
+        adds.SetActive(isAdds);
         
         if (PlayerPrefs.HasKey("PathLevel"))
         {
@@ -56,6 +61,7 @@ public class PathFloor : PathAux
         {
             passed = true;
             arrow.SetActive(false);
+
 
             if (maxSteps == 0)
             {
@@ -85,7 +91,7 @@ public class PathFloor : PathAux
                 }
                 else 
                 { 
-                    if (rando > 90-dificulty)
+                    if (rando > 50-dificulty)
                     {
                         b = nextSteps[Random.Range(0, nextSteps.Length)];
                         islazer = true;
@@ -93,6 +99,7 @@ public class PathFloor : PathAux
 
                     a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
                     a.maxSteps = maxSteps - 1;
+                    a.isAdds = true;
 
                     laser.gameObject.SetActive(true);
                     laser2.gameObject.SetActive(true);
