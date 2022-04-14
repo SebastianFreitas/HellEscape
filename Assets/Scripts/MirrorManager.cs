@@ -57,6 +57,13 @@ public class MirrorManager : PlayerAcess
 
     private void OnEnable()
     {
+        powerList = new (MirrorBoon, int)[] {
+        (MirrorBoon.BoonChance, 0),
+        (MirrorBoon.RunLength, 0),
+        (MirrorBoon.ItemLevel, 0),
+        (MirrorBoon.MaxLife, 0)
+        };
+
         roomGen = player.GetComponentInParent<GameMan>().roomGen;
 
         if (PlayerPrefs.HasKey("PathLevel"))
@@ -66,15 +73,19 @@ public class MirrorManager : PlayerAcess
         else maxPoints = 0;
 
         int i = 0;
-        foreach(var x in powerList)
+        usedPoints = 0;
+
+        hub = GetComponentInParent<Hub>();
+        currentPoints = maxPoints;// - usedPoints;
+        foreach (var x in powerList)
         {
             if (PlayerPrefs.HasKey(x.Item1.ToString()))
             {
                 var value = PlayerPrefs.GetInt(x.Item1.ToString());
-                powerList[i].Item2 += value;
+                powerList[i].Item2 = +value;
                 usedPoints += value;
 
-                for(int a =0; a <value; a++)
+                for (int a = 0; a < value; a++)
                 {
                     InsertPoint(x.Item1, 1);
                 }
@@ -82,10 +93,9 @@ public class MirrorManager : PlayerAcess
             }
             i++;
 
-            
+
         }
-        hub = GetComponentInParent<Hub>();
-        currentPoints = maxPoints - usedPoints;
+
         UpdateUI();
     }
 
@@ -94,8 +104,13 @@ public class MirrorManager : PlayerAcess
         int i = 0;
         foreach (var x in powerList)
         {
-            PlayerPrefs.SetInt(x.Item1.ToString(),  x.Item2);
+            PlayerPrefs.SetInt(x.Item1.ToString(),   x.Item2);
             i++;
+
+            //for (int a = 0; a < x.Item2; a++)
+            //{
+            //    InsertPoint(x.Item1, -1);
+            //}
         }
     }
 
