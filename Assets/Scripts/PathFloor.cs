@@ -65,7 +65,7 @@ public class PathFloor : PathAux
 
             if (maxSteps == 0)
             {
-                 maxSteps--;
+                maxSteps--;
                 dificulty++;
                 SaveDificulty();
                 var x = Instantiate(mainBase, right.position, right.rotation, transform);
