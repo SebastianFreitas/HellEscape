@@ -107,19 +107,26 @@ public class Monster : MonoBehaviour
         }
 
     }
-
+    private bool hasCollide = false;
     void FixedUpdate(){
         if (monsterCollider.bounds.Intersects(playerCollider.bounds))
         {
-            var direction = player.transform.position- transform.position;
-            var playerScript = player.GetComponent<PlayerBasicMovement>();
-            playerScript.AddImpact(direction, 100f);
-            player.GetComponent<PlayerHpManager>().TakeDamage((int)damage);
-           // player.GetComponent<PlayerHpManager>().canta
+            if (hasCollide == false)
+            {
+                var direction = player.transform.position- transform.position;
+                var playerScript = player.GetComponent<PlayerBasicMovement>();
+                playerScript.AddImpact(direction, 100f);
+                player.GetComponent<PlayerHpManager>().TakeDamage((int)damage);
+                StartCoroutine("WaitDamage");
+            }
         }
     }
 
-
+    IEnumerator WaitDamage()
+    {
+        yield return new WaitForSecondsRealtime(.5f);
+        hasCollide = false;
+    }
 
     [SerializeField] internal bool isHub = false;
     [SerializeField] GameObject explosion;
@@ -274,7 +281,7 @@ public class Monster : MonoBehaviour
     }
 
     internal void TurnBig()
-    {
+   {
         transform.localScale *= 3f;
         rigidBody.mass *= 4;
         health *= 4;

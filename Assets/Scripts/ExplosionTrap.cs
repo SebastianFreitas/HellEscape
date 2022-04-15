@@ -11,17 +11,21 @@ public class ExplosionTrap : MonoBehaviour
     {
         StartCoroutine("Die");
     }
-
+    private bool hasCollide = false;
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Dude"))
         {
-            other.transform.GetComponent<PlayerHpManager>().TakeDamage(10);
-            other.transform.GetComponent<PlayerHpManager>().canTakeDamage = false;
-            var direction = other.transform.position - transform.position;
-            other.GetComponent<PlayerBasicMovement>().AddImpact(direction, 50f);
+            if (hasCollide == false)
+            {
+                hasCollide = true;
+                other.transform.GetComponent<PlayerHpManager>().TakeDamage(10);
+                var direction = other.transform.position - transform.position;
+                other.GetComponent<PlayerBasicMovement>().AddImpact(direction, 50f);
+                StartCoroutine("WaitDamage");
+                source.PlayOneShot(explodeSound, 0.1f);
+            }
 
-            source.PlayOneShot(explodeSound, 0.1f);
         }
     }
 
@@ -29,6 +33,11 @@ public class ExplosionTrap : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(3f);
         Destroy(this.gameObject);
+    }
+    IEnumerator WaitDamage()
+    {
+        yield return new WaitForSecondsRealtime(.5f);
+        hasCollide = false;
     }
 
     

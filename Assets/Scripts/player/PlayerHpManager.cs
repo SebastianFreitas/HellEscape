@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerHpManager : MonoBehaviour
 {
-    public float health = 50;
-    public float maxHealth = 50;
+    private float health = 50;
+    private float maxHealth = 50;
     public HealthBar hp;
     internal bool canTakeDamage = true;
     public PlayerSounds playerSounds;
@@ -16,11 +16,14 @@ public class PlayerHpManager : MonoBehaviour
     private GameMan manager;
     private ModDataRoom.GeneratedMission mission;
     private bool isDashing;
-    void Start()
+    private int invincibilityDurationSeconds;
+
+    void Awake()
     {
         //hp = GameObject.FindGameObjectsWithTag("HealthBar")[0].transform.GetComponent<HealthBar>();
-        hp.SetMaxHealth((int)maxHealth);
         manager = transform.root.GetComponent<GameMan>();
+        hp.SetMaxHealth((int)maxHealth);
+
 
         isDashing = GetComponent<PlayerBasicMovement>().isSideDashing;
     }
@@ -31,29 +34,42 @@ public class PlayerHpManager : MonoBehaviour
     }
 
     public void TakeDamage(float amount)
-    {
-     if (canTakeDamage && !isDashing)
-        {
-            canTakeDamage = false;
-            StartCoroutine(BloodScreen());
-            StartCoroutine(waiterImmunity());
-            playerSounds.PlayTakeDamageSound();
+   {
+        if (!canTakeDamage || isDashing) return;
+     
 
-            health -= amount;
-            hp.SetHealth((int)health);
-            if (health <= 0f)
-            {
-                Die();
+        canTakeDamage = false;
+        StartCoroutine(BloodScreen());
+        StartCoroutine(waiterImmunity());
+        playerSounds.PlayTakeDamageSound();
+
+        health -= amount;
+        hp.SetHealth((int)health);
+        if (health <= 0f)
+        {
+            Die();
 
             }
 
            // if (health <= maxHealth * .3f) hp.ChangeToRed();
+        
+    }
+
+    void BecomeTemporarilyInvincible()
+    {
+        for (float i = 0; i < invincibilityDurationSeconds; i += Time.deltaTime)
+        {
+            // do stuff here
         }
     }
 
     internal void Heal(float amount)
     {
-        if (manager.mission.halfHealing) amount /= 2;
+        if (manager.mission != null)
+        {
+            if (manager.mission.halfHealing) amount /= 2;
+        }
+
 
         var result = health + amount;
         if (result > maxHealth) hp.SetHealth((int)maxHealth);
@@ -64,12 +80,13 @@ public class PlayerHpManager : MonoBehaviour
 
     internal void HealForMax()
     {
-        hp.SetHealth((int)maxHealth);
+        Heal((int)maxHealth);
     }
 
     internal void ChangeMaxHP(int amount)
     {
         hp.SetMaxHealth((int)maxHealth+amount);
+        Heal(amount);
         maxHealth += amount;
     }
 

@@ -8,23 +8,35 @@ public class HealthBar : MonoBehaviour
 {
     public Slider slider;
     [SerializeField] TextUI hpText;
-
+    //[SerializeField] TMPro.TextMeshPro text;
     private Image[] images;
     private void Awake()
     {
-        images = GetComponentsInChildren<Image>(); ;
+        images = GetComponentsInChildren<Image>();
+        UIUpdate();
+
     }
+    private int life=50;
+    private int maxLife = 50;
+    private void UIUpdate()
+    {
+        hpText.UpdateText( $"[{life}/{maxLife}]");
+    }
+
     public void SetHealth(int health)
     {
         slider.value = health;
-        hpText.UpdateText(""+health);
+        life = health;
+        UIUpdate();
     }
 
     public void SetMaxHealth(int health)
     {
         slider.maxValue = health;
-        slider.value = health;
-        hpText.UpdateText("" + health);
+        maxLife = health;
+        UIUpdate();
+        //slider.value = health;
+        //hpText.UpdateText("" + health);
     }
 
     internal void ChangeToRed()
