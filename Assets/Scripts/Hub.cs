@@ -21,7 +21,7 @@ public class Hub : MonoBehaviour
 
     private void OnEnable()
     {
-        missionSelector.EnableSelector();
+       // missionSelector.EnableSelector();
     }
 
 
