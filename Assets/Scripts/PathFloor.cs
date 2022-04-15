@@ -103,18 +103,18 @@ public class PathFloor : PathAux
                     a.isAdds = false;
                     a.isFirst = false;
 
-                    laser.gameObject.SetActive(true);
-                    laser2.gameObject.SetActive(true);
-                    if (islazer)
-                    {
-                        laser.transform.LookAt(a.lasertarget);
-                        laser2.transform.LookAt(a.lasertarget2);
-                    }
-                    else
-                    {
-                        laser.transform.LookAt(Vector3.zero);
-                        laser2.transform.LookAt(Vector3.zero);
-                    }
+                    //laser.gameObject.SetActive(true);
+                    //laser2.gameObject.SetActive(true);
+                    //if (islazer)
+                    //{
+                    //    laser.transform.LookAt(a.lasertarget);
+                    //    laser2.transform.LookAt(a.lasertarget2);
+                    //}
+                    //else
+                    //{
+                    //    laser.transform.LookAt(Vector3.zero);
+                    //    laser2.transform.LookAt(Vector3.zero);
+                    //}
                 }
 
             }
@@ -140,8 +140,8 @@ public class PathFloor : PathAux
     {
         PathCombat a = new PathCombat();
 
-        laser.transform.LookAt(Vector3.zero);
-        laser2.transform.LookAt(Vector3.zero);
+        //laser.transform.LookAt(Vector3.zero);
+        //laser2.transform.LookAt(Vector3.zero);
         if (dificulty == 0) type = EncounterType.Easy;
         switch (type)
         {
@@ -260,7 +260,7 @@ public class PathFloor : PathAux
             dificulty = PlayerPrefs.GetInt("PathLevel");
         }
 
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"));
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"),false);
     }
 
     private void OnDisable()
