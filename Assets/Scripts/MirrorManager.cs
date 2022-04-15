@@ -82,8 +82,8 @@ public class MirrorManager : PlayerAcess
             if (PlayerPrefs.HasKey(x.Item1.ToString()))
             {
                 var value = PlayerPrefs.GetInt(x.Item1.ToString());
-                powerList[i].Item2 = +value;
-                usedPoints += value;
+                //powerList[i].Item2 = +value;
+               // currentPoints -= value;
 
                 for (int a = 0; a < value; a++)
                 {
@@ -104,13 +104,13 @@ public class MirrorManager : PlayerAcess
         int i = 0;
         foreach (var x in powerList)
         {
-            PlayerPrefs.SetInt(x.Item1.ToString(),   x.Item2);
+            PlayerPrefs.SetInt(x.Item1.ToString(),  x.Item2);
             i++;
 
-            //for (int a = 0; a < x.Item2; a++)
-            //{
-            //    InsertPoint(x.Item1, -1);
-            //}
+            for (int a = 0; a < x.Item2; a++)
+            {
+                InsertPoint(x.Item1, -1);
+            }
         }
     }
 
