@@ -147,7 +147,7 @@ public class RoomActivator : MonoBehaviour
         {
             foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
-            trapLayouts.transform.GetChild(trapLayouts.transform.childCount -1).gameObject.SetActive(true);
+            trapLayouts.transform.GetChild(trapLayouts.transform.childCount -2).gameObject.SetActive(true);
         }
     }
 

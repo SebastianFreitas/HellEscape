@@ -32,6 +32,8 @@ public class PathCombat : PathAux
         else spikes.gameObject.SetActive(false);
     }
 
+
+
     internal IEnumerator Waiter()
     {
         yield return new WaitForFixedUpdate();
@@ -42,7 +44,7 @@ public class PathCombat : PathAux
         {
 
             Vector3 randomPoint = RandomPointInBounds(combatBounds);
-            Monster currentMob = Instantiate(mobs[0], randomPoint, Quaternion.identity, transform) as Monster;
+            Monster currentMob = Instantiate(mobs[Random.Range(0,mobs.Length)], randomPoint, Quaternion.identity, transform) as Monster;
             currentMob.isHub = true;
 
             currentMob.health += addedLife;
