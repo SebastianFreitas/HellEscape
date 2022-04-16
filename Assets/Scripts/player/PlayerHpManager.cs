@@ -86,8 +86,11 @@ public class PlayerHpManager : MonoBehaviour
     internal void ChangeMaxHP(int amount)
     {
         hp.SetMaxHealth((int)maxHealth+amount);
-        Heal(amount);
         maxHealth += amount;
+
+        health += amount;
+        hp.SetHealth((int)health);
+
     }
 
     void Die()
