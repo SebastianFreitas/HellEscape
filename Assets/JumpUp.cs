@@ -10,7 +10,7 @@ public class JumpUp : MonoBehaviour
         if (other.CompareTag("Dude"))
         {
             other.GetComponent<PlayerBasicMovement>().AddImpact(Vector3.up, 1500f);
-            other.GetComponent<PlayerHpManager>().TakeDamage(5);
+            other.GetComponent<PlayerHpManager>().TakeDamage(10);
         }
     }
 }

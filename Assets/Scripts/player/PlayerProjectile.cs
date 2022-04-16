@@ -82,8 +82,10 @@ public class PlayerProjectile : MonoBehaviour
         }
         newSizeMulti  = (1 + gun.increasedBulletSize / 100);
         //transform.localScale = new Vector3(newSizeMulti, newSizeMulti, newSizeMulti);
-        if (isSphere)  transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
-        else transform.GetComponent<BoxCollider>().size*= newSizeMulti;
+        //if (isSphere)  transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
+        //else transform.GetComponent<BoxCollider>().size*= newSizeMulti;
+
+        transform.localScale *= newSizeMulti;
 
         SetVisibility(false);
         rb = GetComponent<Rigidbody>();
