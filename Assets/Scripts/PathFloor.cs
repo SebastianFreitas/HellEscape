@@ -77,14 +77,14 @@ public class PathFloor : PathAux
             } 
             else if (IsDivisible(maxSteps, 10))
             {
-                if(maxSteps<5 * dificulty) SpawnCombat(EncounterType.Hard);
+                if(maxSteps<10 * dificulty) SpawnCombat(EncounterType.Hard);
                 else SpawnCombat(EncounterType.Normal);
             }
             else if (maxSteps > 0)
             {
                 PathFloor a = new PathFloor();
                 Transform b = forward;
-                bool islazer = false;
+
                 var rando = Random.Range(0, 100);
                 if (rando > 85)
                 {
@@ -95,7 +95,7 @@ public class PathFloor : PathAux
                     if (rando > 75-dificulty)
                     {
                         b = nextSteps[Random.Range(0, nextSteps.Length)];
-                        islazer = true;
+                        
                     }
 
                     a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
@@ -150,7 +150,7 @@ public class PathFloor : PathAux
 
 
 
-                a.totalMobs = Random.Range(1, dificulty/5);
+                a.totalMobs = Random.Range(1, ((dificulty / 5) + 1));
                 a.maxsteps = maxSteps - 1;
                 a.dificulty = dificulty;
                 a.StartCoroutine(a.Waiter());
@@ -160,7 +160,7 @@ public class PathFloor : PathAux
                 a = Instantiate(combats[Random.Range(0, combats.Length)], forward.position, forward.rotation, transform) as PathCombat;
 
 
-                var total = Random.Range(dificulty/5, 2 * (dificulty/5));
+                var total = Random.Range(((dificulty / 5) + 1), 2 * ((dificulty / 5) + 1));
                 if (Random.Range(0, 100) > 50)
                 {
                     a.totalMobs = total;
@@ -180,18 +180,20 @@ public class PathFloor : PathAux
 
             case EncounterType.Hard:
 
-                a = SpawnNormal(ref forward);
-                laser.transform.LookAt(a.lasertarget);
-                laser2.transform.LookAt(a.lasertarget2);
+                SpawnNormal(ref forward);
 
-                a = SpawnNormal(ref left);
 
-                laser.transform.LookAt(a.lasertarget);
-                laser2.transform.LookAt(a.lasertarget2);
-                a = SpawnNormal(ref right);
+                if (Random.Range(1,100) > 50 - dificulty)
+                {
+                    SpawnNormal(ref left);
+                }
 
-                laser.transform.LookAt(a.lasertarget);
-                laser2.transform.LookAt(a.lasertarget2);
+                if (Random.Range(1, 100) > 50 - dificulty)
+                {
+                    SpawnNormal(ref right);
+                }
+
+
 
                 break;
 
@@ -206,7 +208,7 @@ public class PathFloor : PathAux
     private PathCombat SpawnNormal(ref Transform pos)
     {
         PathCombat a = Instantiate(combats[Random.Range(0, combats.Length)], pos.position, pos.rotation, transform) as PathCombat;
-        var total = Random.Range(dificulty / 5, 2 * (dificulty / 5));
+        var total = Random.Range((dificulty / 5)+1, 2 * ((dificulty / 5)+1));
         if (Random.Range(0, 100) > 50)
         {
             a.totalMobs = total;

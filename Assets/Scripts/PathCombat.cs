@@ -42,9 +42,10 @@ public class PathCombat : PathAux
         if (totalMobs > 10) totalMobs = 10;
         for (int i = 0; i < totalMobs; i++)
         {
-
+            var x = 0;
+            if (i > 0) x = Random.Range(0, mobs.Length);
             Vector3 randomPoint = RandomPointInBounds(combatBounds);
-            Monster currentMob = Instantiate(mobs[Random.Range(0,mobs.Length)], randomPoint, Quaternion.identity, transform) as Monster;
+            Monster currentMob = Instantiate(mobs[x], randomPoint, Quaternion.identity, transform) as Monster;
             currentMob.isHub = true;
 
             currentMob.health += addedLife;
