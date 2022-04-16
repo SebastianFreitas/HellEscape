@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PathCombat : PathAux
@@ -37,6 +38,8 @@ public class PathCombat : PathAux
     internal IEnumerator Waiter()
     {
         yield return new WaitForFixedUpdate();
+        List<int> list = new List<int>();
+       // var numberList = Enumerable.Range(1, 10).Select().ToList();
 
         if (totalMobs < 1) totalMobs = 1;
         if (totalMobs > 10) totalMobs = 10;

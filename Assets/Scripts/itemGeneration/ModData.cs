@@ -22,11 +22,7 @@ public class ModData : MonoBehaviour
                 new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,3),
                 new Mod(5,10,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,4),
                 new Mod(1, 10,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,5),
-               
-            //grande damage
-            //grenade area
-            //grenade throwing speed
-            //jumping power
+              
         };
 
     public static Mod[] modSpecial =
@@ -37,6 +33,11 @@ public class ModData : MonoBehaviour
                 new Mod(4,10,  "Physical Damage",           Grade.special, OperatorType.increased, 0,4),
                 new Mod(4,10,  "Critical Damage",           Grade.special, OperatorType.increased, 0,5),
 
+                new Mod(4,10,  "Shoot Horizontal Slashes",           Grade.special, OperatorType.non, 0,9),
+                new Mod(4,10,  "Slow Bullets",           Grade.special, OperatorType.non, 0,9),
+                new Mod(4,10,  "Shoot Horizontal Slashes",           Grade.special, OperatorType.non, 0,9),
+                new Mod(4,10,  "Shoot Horizontal Slashes",           Grade.special, OperatorType.non, 0,9)
+
         };
 
 
@@ -44,7 +45,7 @@ public class ModData : MonoBehaviour
 
     public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
-    public static int[] SpecialWeight = { 1,1, 1,1,2};
+    public static int[] SpecialWeight = { 10, 10, 10, 10, 20,         1,1,1,1};
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 
