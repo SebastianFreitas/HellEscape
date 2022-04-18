@@ -63,7 +63,7 @@ public class MissionSelector : ModDataRoom
 
             DisableSelector();
 
-            //manager.PreloadRun();
+            
 
         }
         else
@@ -95,10 +95,11 @@ public class MissionSelector : ModDataRoom
         used = false;
         TurnGreen(meshSearchPath);
     }
-
+    internal bool startedRun = false;
     internal void StartSelectedMission()
     {
-         manager.StartRun(mission);
+        manager.startedRun = true;
+            manager.StartRun(mission);
     }
 
     internal void TurnBlue(MeshRenderer[] materials)

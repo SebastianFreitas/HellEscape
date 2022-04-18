@@ -18,6 +18,9 @@ public class MirrorManager : PlayerAcess
 
     [SerializeField] TMPro.TextMeshPro availablePoints;
 
+
+    [SerializeField] MissionSelector misSelector;
+
     private void Start()
     {
         roomGen = player.GetComponentInParent<GameMan>().roomGen;
@@ -51,12 +54,28 @@ public class MirrorManager : PlayerAcess
     };
 
     private int maxPoints;
-    private int usedPoints = 0;
     private int currentPoints;
     private Hub hub;
 
     private void OnEnable()
     {
+        if (transform.root.GetComponent<GameMan>().startedRun)
+        {
+
+            transform.root.GetComponent<GameMan>().startedRun = false;
+            int b = 0;
+            foreach (var x in powerList)
+            {
+                PlayerPrefs.SetInt(x.Item1.ToString(), x.Item2);
+                b++;
+
+                for (int a = 0; a < x.Item2; a++)
+                {
+                    InsertPoint(x.Item1, -1);
+                }
+            }
+        }
+
         powerList = new (MirrorBoon, int)[] {
         (MirrorBoon.BoonChance, 0),
         (MirrorBoon.RunLength, 0),
@@ -73,7 +92,6 @@ public class MirrorManager : PlayerAcess
         else maxPoints = 0;
 
         int i = 0;
-        usedPoints = 0;
 
         hub = GetComponentInParent<Hub>();
         currentPoints = maxPoints;// - usedPoints;
@@ -82,25 +100,21 @@ public class MirrorManager : PlayerAcess
             if (PlayerPrefs.HasKey(x.Item1.ToString()))
             {
                 var value = PlayerPrefs.GetInt(x.Item1.ToString());
-                //powerList[i].Item2 = +value;
-               // currentPoints -= value;
 
                 for (int a = 0; a < value; a++)
                 {
                     InsertPoint(x.Item1, 1);
                 }
-
             }
             i++;
-
-
         }
-
         UpdateUI();
     }
 
     private void OnDisable()
     {
+        if (transform.root.GetComponent<GameMan>().startedRun) return;
+        
         int i = 0;
         foreach (var x in powerList)
         {
@@ -112,6 +126,8 @@ public class MirrorManager : PlayerAcess
                 InsertPoint(x.Item1, -1);
             }
         }
+        
+
     }
 
     internal bool InsertPoint(MirrorBoon type, int choice)
