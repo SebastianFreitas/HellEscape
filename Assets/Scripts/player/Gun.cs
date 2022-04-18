@@ -97,7 +97,7 @@ public class Gun : MonoBehaviour
 
 
 
-    void Update()
+    void LateUpdate()
     {
         if (Time.time >= m_time)
         {
@@ -167,7 +167,7 @@ public class Gun : MonoBehaviour
             SpawnBullet(pelletRot);
         }
 
-        StartCoroutine(DelayedBullet(realpos));
+        if (gun.delayedBullet) StartCoroutine(DelayedBullet(realpos));
         StartCoroutine(waiter(attackRate));
     }
 
@@ -185,9 +185,18 @@ public class Gun : MonoBehaviour
     }
     IEnumerator DelayedBullet(Transform realpos)
     {
-        yield return new WaitForSecondsRealtime(0.1f);
+        yield return new WaitForSecondsRealtime(0.2f);
         SpawnBullet(realpos);
+        for (var i = 0; i < gun.baseBulletsPerShot - 1; i++) //shoot extra bullets
+        {
+            var pelletRot = realpos;
+            var spread = 5f;
+            pelletRot.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
+
+            SpawnBullet(pelletRot);
+        }
     }
+
     IEnumerator waiter(float attackRate){
       isWaiting = true;
       yield return new WaitForSecondsRealtime(attackRate);

@@ -214,6 +214,7 @@ public class GunOfAType : ScriptableObject
     public float averageDamage;
 
     public bool isBase = false;
+    internal bool delayedBullet;
 
     public float GetShotSpeed()
     {
