@@ -16,7 +16,7 @@ public class ConeMonster : Monster
     private bool isRunning = false;
 
     private float finalWaitTime;
-    new void Start()
+    void Start()
     {
 
         //StartCoroutine(Waiter());

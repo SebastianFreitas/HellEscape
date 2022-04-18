@@ -10,8 +10,6 @@ public class Monster : MonoBehaviour
 
     internal GameObject player;
 
-    internal PlayerMovement playerMovement;
-
     public Rigidbody rigidBody;
     private Collider monsterCollider;
 

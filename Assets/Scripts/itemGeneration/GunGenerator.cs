@@ -196,6 +196,14 @@ public class GunGenerator : ModData
             case "Ricochets follow enemies":
                 ret.increasedRicochetGuide += newMod.upperBound;
                 break;
+
+            case "Delayed Shot":
+                ret.delayedBullet = true;
+                break;
+
+            case "Horizontal Shot":
+                ret.horizontalShot = true;
+                break;
         }
     }
 

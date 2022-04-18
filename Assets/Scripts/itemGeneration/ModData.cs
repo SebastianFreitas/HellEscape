@@ -33,7 +33,7 @@ public class ModData : MonoBehaviour
                 new Mod(4,10,  "Physical Damage",           Grade.special, OperatorType.increased, 0,4),
                 new Mod(4,10,  "Critical Damage",           Grade.special, OperatorType.increased, 0,5),
 
-                new Mod(4,10,  "Shoot Horizontal Slashes",           Grade.special, OperatorType.non, 0,9),
+                new Mod(4,10,  "Horizontal Shot",           Grade.special, OperatorType.non, 0,9),
                 new Mod(4,10,  "Slow Bullets",           Grade.special, OperatorType.non, 0,9),
                 new Mod(4,10,  "Delayed Shot",           Grade.special, OperatorType.non, 0,9),
                 new Mod(4,10,  "double shot",           Grade.special, OperatorType.non, 0,9),
@@ -215,6 +215,7 @@ public class GunOfAType : ScriptableObject
 
     public bool isBase = false;
     internal bool delayedBullet;
+    internal bool horizontalShot;
 
     public float GetShotSpeed()
     {
