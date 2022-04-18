@@ -46,7 +46,7 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,                        25,     9),
                 new Mod(1,15,  "Chance for encounters to drop health",        Grade.interior, OperatorType.non,     100,    10),
                 new Mod(1,5,   "Danger",                    Grade.interior, OperatorType.non,                        4,     11),
-                new Mod(10,50, "Reduced movement speed",    Grade.interior, OperatorType.reduced,                    100,    12),
+                new Mod(10,50, "Movement speed",    Grade.interior, OperatorType.reduced,                    100,    12),
                 new Mod(2,4,   "Located boons",         Grade.interior, OperatorType.plus,                           50,    13),
                 new Mod(1,5,   "ERROR",         Grade.interior, OperatorType.non,                                    4,     14),
                 new Mod(1,5,   "Located additional rewards",         Grade.interior, OperatorType.non,               10,    15),
@@ -248,7 +248,7 @@ public class ModDataRoom : MonoBehaviour
                 mission.increasedActionSpeed += 50;
                 break;
 
-            case "Reduced movement speed":
+            case "Movement speed":
                 mission.playerReducedMovementSpeed += value;
                 break;
 
