@@ -144,9 +144,9 @@ public class Gun : MonoBehaviour
         canShoot = false;
         StartCoroutine(waiterFlash());
 
-        GetComponent<AudioSource>().PlayOneShot(shoot, volume/2);
+        GetComponent<AudioSource>().PlayOneShot(shoot, volume / 2);
 
-        Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2,0));
+        Ray ray = fpsCam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         if (Physics.Raycast(ray, out hit))
             targetPoint = hit.point;
         else
@@ -156,38 +156,37 @@ public class Gun : MonoBehaviour
         Transform realpos = fpsCam.transform;
         realpos.LookAt(targetPoint);
 
-        GunOfAType gunx;
-        gunx = this.gun;
-        gunText = this.gun;
+        PlayerProjectile bullet = SpawnBullet(realpos);
 
-        var bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
-
-        bullet.initialFade = true;
-        bullet.Gun = gunx;
-        bullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
-        bullet.playerMov = playerScript;
-        bullet.gameObject.SetActive(true);
-        bullet.AwakeRemote();
-
-        for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
+        for (var i = 0; i < gun.baseBulletsPerShot - 1; i++) //shoot extra bullets
         {
             var pelletRot = realpos;
             var spread = 5f;
             pelletRot.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
-            bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot.rotation);
-            bullet.initialFade = true;
-            bullet.Gun = gunx;
-            bullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
-            bullet.playerMov = playerScript;
-            bullet.gameObject.SetActive(true);
-            bullet.AwakeRemote();
+            SpawnBullet(pelletRot);
         }
 
-
+        StartCoroutine(DelayedBullet());
         StartCoroutine(waiter(attackRate));
     }
 
+    private PlayerProjectile SpawnBullet(Transform realpos)
+    {
+        var bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
+
+        bullet.initialFade = true;
+        bullet.Gun = gun;
+        bullet.SetStats((int)gun.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gun.increasedCriticalDamage);
+        bullet.playerMov = playerScript;
+        bullet.gameObject.SetActive(true);
+        bullet.AwakeRemote();
+        return bullet;
+    }
+    IEnumerator DelayedBullet()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+    }
     IEnumerator waiter(float attackRate){
       isWaiting = true;
       yield return new WaitForSecondsRealtime(attackRate);
