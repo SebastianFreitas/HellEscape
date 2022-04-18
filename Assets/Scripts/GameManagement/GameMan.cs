@@ -26,6 +26,9 @@ public class GameMan : ModDataRoom
     // Start is called before the first frame update
     void Start()
     {
+
+
+
         if (startAtHub) GoToHub();
         else PlacePlayerInCurrentRoom();
 

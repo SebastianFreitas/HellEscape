@@ -36,12 +36,12 @@ public class ModData : MonoBehaviour
                 new Mod(4,10,  "Horizontal Shot",           Grade.special, OperatorType.non, 0,9),
                 new Mod(4,10,  "Slow Bullets",           Grade.special, OperatorType.non, 0,9),
                 new Mod(4,10,  "Delayed Shot",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "double shot",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "triple shot",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "Circle",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9)
+                //new Mod(4,10,  "double shot",           Grade.special, OperatorType.non, 0,9),
+                //new Mod(4,10,  "triple shot",           Grade.special, OperatorType.non, 0,9),
+                //new Mod(4,10,  "Circle",           Grade.special, OperatorType.non, 0,9),
+                //new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9),
+                //new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9),
+                //new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9)
 
         };
 
@@ -50,7 +50,7 @@ public class ModData : MonoBehaviour
 
     public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
-    public static int[] SpecialWeight = { 10, 10, 10, 10, 20, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+    public static int[] SpecialWeight = { 10, 10, 10, 10, 20, 100, 100, 1, };// 1, 1, 1, 1, 1, 1 };
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 
@@ -216,6 +216,7 @@ public class GunOfAType : ScriptableObject
     public bool isBase = false;
     internal bool delayedBullet;
     internal bool horizontalShot;
+    internal bool slowbullet;
 
     public float GetShotSpeed()
     {

@@ -8,15 +8,16 @@ public class Gun : MonoBehaviour
     public Animator animator;
     public GunGenerator gunGen;
 
-    public GunOfAType gun;
+    internal GunOfAType gun;
 
-    public convergion totalConvergion;
     public float range = 100f;
     public float timeBtwShots = .5f;
 
     public Camera fpsCam;
     public GameObject realBulletHolder;
-    public PlayerProjectile projectile;
+    private PlayerProjectile projectile;
+
+
     public GameObject pnt;
     public GameObject muzzleFlashFront;
     public GameObject lightFlash;
@@ -73,6 +74,7 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
+        projectile = normal;
         gunGen = new GunGenerator();
         //EquipBaseGun();
         if (!PlayerPrefs.HasKey("WeaponExists0") ||PlayerPrefs.GetInt("WeaponExists0") < 0) EquipBaseGun();
@@ -234,7 +236,9 @@ public class Gun : MonoBehaviour
     }
 
     PlayerProjectile.BulletType currentType;
-
+    [SerializeField] PlayerProjectile horizontal;
+    [SerializeField] PlayerProjectile slow;
+    [SerializeField] PlayerProjectile normal;
     public void SetGun(GunOfAType gun)
     {
         this.gun = gun;
@@ -244,17 +248,21 @@ public class Gun : MonoBehaviour
         playerScript.increasedSpeed = gun.increasedSpeed;
         firerate = 1 / gun.finalFireRate;
 
-        GunOfAType gunx;
-        gunx = this.gun;
-        gunText = this.gun;
+        //GunOfAType gunx;
+        //gunx = this.gun;
+        //gunText = this.gun;
 
-        currentBullet = Instantiate(projectile, Vector3.zero, Quaternion.identity) as PlayerProjectile; //shoot normal bullet
-        currentBullet.gameObject.SetActive(false);
-        currentBullet.initialFade = true;
-        currentBullet.Gun = gunx;
-        currentBullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
-        currentType = currentBullet.type;
-        currentBullet.playerMov = playerScript;
+        //currentBullet = Instantiate(projectile, Vector3.zero, Quaternion.identity) as PlayerProjectile; //shoot normal bullet
+        //currentBullet.gameObject.SetActive(false);
+        //currentBullet.initialFade = true;
+        //currentBullet.Gun = gunx;
+        //currentBullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
+        //currentType = currentBullet.type;
+        //currentBullet.playerMov = playerScript;
+
+        if (gun.horizontalShot) projectile = horizontal;
+        else if (gun.slowbullet) projectile = slow;
+        else projectile = normal;
 
     }
 }

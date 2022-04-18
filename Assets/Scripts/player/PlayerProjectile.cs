@@ -2,13 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct convergion
-{
-  public float bludgeoning;
-  public float piercing;
-  public float slashing;
 
-}
 public class PlayerProjectile : MonoBehaviour
 {
     public GameObject damagePopup;

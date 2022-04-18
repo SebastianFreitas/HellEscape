@@ -204,6 +204,10 @@ public class GunGenerator : ModData
             case "Horizontal Shot":
                 ret.horizontalShot = true;
                 break;
+
+            case "Slow Bullets":
+                ret.slowbullet = true;
+                break;
         }
     }
 
