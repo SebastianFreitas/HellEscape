@@ -156,7 +156,7 @@ public class Gun : MonoBehaviour
         Transform realpos = fpsCam.transform;
         realpos.LookAt(targetPoint);
 
-        PlayerProjectile bullet = SpawnBullet(realpos);
+        SpawnBullet(realpos);
 
         for (var i = 0; i < gun.baseBulletsPerShot - 1; i++) //shoot extra bullets
         {
@@ -167,7 +167,7 @@ public class Gun : MonoBehaviour
             SpawnBullet(pelletRot);
         }
 
-        StartCoroutine(DelayedBullet());
+        StartCoroutine(DelayedBullet(realpos));
         StartCoroutine(waiter(attackRate));
     }
 
@@ -183,9 +183,10 @@ public class Gun : MonoBehaviour
         bullet.AwakeRemote();
         return bullet;
     }
-    IEnumerator DelayedBullet()
+    IEnumerator DelayedBullet(Transform realpos)
     {
         yield return new WaitForSecondsRealtime(0.1f);
+        SpawnBullet(realpos);
     }
     IEnumerator waiter(float attackRate){
       isWaiting = true;
