@@ -61,10 +61,10 @@ public class PlayerProjectile : MonoBehaviour
 
     public GunOfAType Gun { get => gun; set => gun = value; }
 
-    internal Transform[] enemies;
+    
     private float newSizeMulti;
 
-    [SerializeField] bool isSphere = true;
+
 
     internal void AwakeRemote()
     {

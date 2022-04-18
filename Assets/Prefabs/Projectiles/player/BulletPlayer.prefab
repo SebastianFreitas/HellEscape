@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7051637704615240823
 Transform:
   m_ObjectHideFlags: 0
@@ -2268,11 +2268,11 @@ MonoBehaviour:
   newBullet: {fileID: 312125936527058168}
   visual: 0
   initialFade: 1
-  bounces: 3
+  bounces: 5
   fireDamage: 0
   coldDamage: 0
   poisonDamage: 0
-  physicalDamage: 0
+  physicalDamage: 60
   physicalTrail: {fileID: 1966749029145872479}
   fireTrail: {fileID: 5110533622630568991}
   coldTrail: {fileID: 1057400844538590592}
@@ -2280,6 +2280,8 @@ MonoBehaviour:
   playerMov: {fileID: 0}
   exp: {fileID: 8448092724392358648}
   trails: {fileID: 394431594628725333}
+  type: 0
+  isSphere: 1
 --- !u!54 &4441181378661258463
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17328,8 +17330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2780ad20aa5356849bbb52f5131892c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 2
-  dieOnStart: 0
+  timer: 5
+  dieOnStart: 1
 --- !u!1 &5110533622630568991
 GameObject:
   m_ObjectHideFlags: 0

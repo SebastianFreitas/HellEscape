@@ -50,8 +50,8 @@ public class PathFloor : PathAux
 
         var chance = 90 - dificulty;
         if (chance < 65) chance = 65;
-        if (Random.Range(1, 101) > chance) spikes.gameObject.SetActive(true);
-        else spikes.gameObject.SetActive(false);
+        spikes.gameObject.SetActive(Random.Range(1, 101) > chance);
+
     }
    internal bool victory = false;
     [System.Obsolete]
@@ -102,19 +102,6 @@ public class PathFloor : PathAux
                     a.maxSteps = maxSteps - 1;
                     a.isAdds = false;
                     a.isFirst = false;
-
-                    //laser.gameObject.SetActive(true);
-                    //laser2.gameObject.SetActive(true);
-                    //if (islazer)
-                    //{
-                    //    laser.transform.LookAt(a.lasertarget);
-                    //    laser2.transform.LookAt(a.lasertarget2);
-                    //}
-                    //else
-                    //{
-                    //    laser.transform.LookAt(Vector3.zero);
-                    //    laser2.transform.LookAt(Vector3.zero);
-                    //}
                 }
 
             }
@@ -140,8 +127,6 @@ public class PathFloor : PathAux
     {
         PathCombat a = new PathCombat();
 
-        //laser.transform.LookAt(Vector3.zero);
-        //laser2.transform.LookAt(Vector3.zero);
         if (dificulty == 0) type = EncounterType.Easy;
         switch (type)
         {

@@ -160,12 +160,13 @@ public class Gun : MonoBehaviour
         gunx = this.gun;
         gunText = this.gun;
 
-        var bullet = Instantiate(currentBullet, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
-        bullet.gameObject.SetActive(true);
+        var bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
+
         bullet.initialFade = true;
         bullet.Gun = gunx;
         bullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
         bullet.playerMov = playerScript;
+        bullet.gameObject.SetActive(true);
         bullet.AwakeRemote();
 
         for (var i = 0; i < gunx.baseBulletsPerShot-1; i++) //shoot extra bullets
@@ -174,14 +175,17 @@ public class Gun : MonoBehaviour
             var spread = 5f;
             pelletRot.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
-            bullet = Instantiate(currentBullet, realBulletHolder.transform.position, pelletRot.rotation);
-            bullet.type = currentType;
+            bullet = Instantiate(projectile, realBulletHolder.transform.position, pelletRot.rotation);
+            bullet.initialFade = true;
+            bullet.Gun = gunx;
+            bullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
+            bullet.playerMov = playerScript;
+            bullet.gameObject.SetActive(true);
             bullet.AwakeRemote();
         }
 
 
-      
-      StartCoroutine(waiter(attackRate));
+        StartCoroutine(waiter(attackRate));
     }
 
     IEnumerator waiter(float attackRate){
@@ -235,16 +239,13 @@ public class Gun : MonoBehaviour
         gunx = this.gun;
         gunText = this.gun;
 
-        //currentBullet = Instantiate(projectile, Vector3.zero, Quaternion.identity) as PlayerProjectile; //shoot normal bullet
-        currentBullet = projectile;
+        currentBullet = Instantiate(projectile, Vector3.zero, Quaternion.identity) as PlayerProjectile; //shoot normal bullet
         currentBullet.gameObject.SetActive(false);
         currentBullet.initialFade = true;
         currentBullet.Gun = gunx;
         currentBullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
         currentType = currentBullet.type;
         currentBullet.playerMov = playerScript;
-       // currentBullet.type = PlayerProjectile.BulletType.loading;
-        //currentBullet
-        //currentBullet.AwakeRemote();
+
     }
 }

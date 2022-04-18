@@ -21,7 +21,7 @@ public class ModData : MonoBehaviour
                 new Mod(5,10,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,2),
                 new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,3),
                 new Mod(5,10,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,4),
-                new Mod(1, 10,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,5),
+                new Mod(1, 5,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,5),
               
         };
 
