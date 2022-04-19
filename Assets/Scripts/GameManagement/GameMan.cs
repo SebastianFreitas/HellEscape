@@ -56,6 +56,7 @@ public class GameMan : ModDataRoom
     internal bool startedRun = false;
     internal void ReturnToHub()
     {
+        hub.missionSelector.EnableSelector();
         roomGen.Clean();
 
         roomGen.ApplyMissionToPlayer(false);

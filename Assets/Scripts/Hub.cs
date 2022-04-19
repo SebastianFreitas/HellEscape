@@ -10,13 +10,13 @@ public class Hub : MonoBehaviour
     public int[] weight;
     public GameObject player;
 
-    [SerializeField] MissionSelector missionSelector;
+    [SerializeField] internal MissionSelector missionSelector;
 
     [SerializeField] StartHub startHub;
     // Start is called before the first frame update
     void Start()
     {
-        SpawnObjects(5);
+        //SpawnObjects(1);
     }
 
     private void OnEnable()

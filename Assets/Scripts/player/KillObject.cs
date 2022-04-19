@@ -6,14 +6,15 @@ public class KillObject : MonoBehaviour
 {
     public float timer;
     public bool dieOnStart = true;
-    void Start()
-    {
-        if (dieOnStart) StartCoroutine(WaitDie(timer));
-    }
 
     public IEnumerator WaitDie(float time)
     {
         yield return new WaitForSeconds(time);
         Destroy(this.gameObject);
+    }
+
+    private void OnEnable()
+    {
+        if (dieOnStart) StartCoroutine(WaitDie(timer));
     }
 }
