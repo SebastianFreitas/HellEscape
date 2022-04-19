@@ -116,7 +116,7 @@ public class PlayerProjectile : MonoBehaviour
         }
     }
 
-    private void SetVisibility(bool onOff)
+    internal void SetVisibility(bool onOff)
     {
         //this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
     }
@@ -196,7 +196,8 @@ public class PlayerProjectile : MonoBehaviour
         }
     }
 
-    private void FireExplode()
+
+    internal void FireExplode()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3);
         foreach (var hitCollider in hitColliders)
@@ -204,7 +205,6 @@ public class PlayerProjectile : MonoBehaviour
             if (hitCollider.CompareTag("Dude"))
             {
                 playerMov.AddImpact(hitCollider.transform.position - transform.position, stats.fireDamage*5);
-                //playerMov.GainSpeed(2);
             }
             else if (hitCollider.CompareTag("Monster") )
             {
@@ -219,12 +219,12 @@ public class PlayerProjectile : MonoBehaviour
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
 
-            ExplodeParticule();
+            
         }
-       // Destroy(this.gameObject);
+        ExplodeParticule();
     }
 
-    void ExplodeParticule()
+    internal void ExplodeParticule()
     {
         if(type != BulletType.loading)
         {
@@ -259,14 +259,14 @@ public class PlayerProjectile : MonoBehaviour
         return foundEnemy;
     }
 
-    private void RicochetSparkAndSound()
+    internal void RicochetSparkAndSound()
     {
         var sparkBounce = Instantiate(spark, transform.position, Quaternion.Inverse(transform.rotation));
         sparkBounce.Play();
         AudioSource.PlayClipAtPoint(ricochet, this.gameObject.transform.position, 0.2f);
     }
 
-    private IEnumerator KillBullet()
+    internal IEnumerator KillBullet()
     {
         if (type != BulletType.loading)
         {
@@ -279,5 +279,10 @@ public class PlayerProjectile : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             Destroy(this.gameObject);
         }
+    }
+
+    private void OnDisable()
+    {
+        Destroy(this.gameObject);
     }
 }
