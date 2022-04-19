@@ -198,19 +198,19 @@ public class GunGenerator : ModData
                 break;
 
             case "Delayed Shot":
-                ret.delayedBullet = true;
+                ret.delayedBullet += newMod.upperBound;
                 break;
 
             case "Horizontal Shot":
-                ret.horizontalShot = true;
+                ret.horizontalShot += newMod.upperBound;
                 break;
 
             case "Zero-gravity Shot":
-                ret.slowbullet = true;
+                ret.slowbullet += newMod.upperBound;
                 break;
 
             case "Piercing Shot":
-                ret.piercing = true;
+                ret.piercing += newMod.upperBound;
                 break;
         }
     }

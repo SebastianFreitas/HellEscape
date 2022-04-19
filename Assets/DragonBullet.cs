@@ -8,18 +8,16 @@ public class DragonBullet : PlayerProjectile
     {
         if (other.gameObject.CompareTag("Monster"))
         {
-            other.transform.GetComponentInParent<Monster>().TakeDamage(stats, false, critMulti);
+            other.transform.GetComponentInParent<Monster>().TakeDamage(stats, false, stats.critMulti);
 
            
         }
         else if (other.gameObject.CompareTag("MonsterHead"))
         {
-            other.transform.GetComponent<Monster>().TakeDamage(stats, true, critMulti);
-
-            
+            other.transform.GetComponent<Monster>().TakeDamage(stats, true, stats.critMulti);    
         }
 
-        if (fireDamage > 0)
+        if (stats.fireDamage > 0)
         {
             StartCoroutine(KillBullet());
             FireExplode();

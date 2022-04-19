@@ -27,11 +27,6 @@ public class PlayerProjectile : MonoBehaviour
     private GunOfAType gun;
 
     internal BulletStats stats;
-    public int fireDamage;
-    public int coldDamage;
-    public int poisonDamage;
-    public int physicalDamage;
-    internal float critMulti;
 
     public GameObject physicalTrail;
     public GameObject fireTrail;
@@ -90,7 +85,7 @@ public class PlayerProjectile : MonoBehaviour
         bounceSpeed = speed / 2;
 
         
-        StartCoroutine(waiter(3f));
+        StartCoroutine(waiter(10f));
 
 
     }
@@ -99,17 +94,17 @@ public class PlayerProjectile : MonoBehaviour
     {
         physicalTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
 
-        if (fireDamage != 0)
+        if (stats.fireDamage != 0)
         {
             fireTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
             fireTrail.SetActive(true);
         }
-        if (coldDamage != 0) 
+        if (stats.coldDamage != 0) 
         {
             coldTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
             coldTrail.SetActive(true);
         }
-        if (poisonDamage != 0)
+        if (stats.poisonDamage != 0)
         {
             poisonTrail.GetComponent<TrailRenderer>().widthMultiplier *= newSizeMulti;
             poisonTrail.SetActive(true);
@@ -146,11 +141,6 @@ public class PlayerProjectile : MonoBehaviour
         this.bulletGuided = bulletguided;
         this.bounces = bounces;
         this.speed = bulletSpeed;
-        this.fireDamage = fireDamage;
-        this.coldDamage = coldDamage;
-        this.poisonDamage = poisonDamage;
-        this.physicalDamage = physicalDamage;
-        this.critMulti = critMulti;
 
         stats = new BulletStats(fireDamage, coldDamage, poisonDamage, physicalDamage, critMulti);
     }
@@ -161,19 +151,19 @@ public class PlayerProjectile : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Monster"))
         {
-            collision.transform.GetComponentInParent<Monster>().TakeDamage( stats, false, critMulti);
+            collision.transform.GetComponentInParent<Monster>().TakeDamage( stats, false, stats.critMulti);
 
             StartCoroutine(KillBullet());
         }
         else if (collision.gameObject.CompareTag("MonsterHead"))
         {
-            collision.transform.GetComponent<Monster>().TakeDamage( stats, true, critMulti);
+            collision.transform.GetComponent<Monster>().TakeDamage( stats, true, stats.critMulti);
 
             StartCoroutine(KillBullet());
         }
 
 
-        if (fireDamage > 0)
+        if (stats.fireDamage > 0)
         {
             StartCoroutine(KillBullet());
             FireExplode();
@@ -271,7 +261,7 @@ public class PlayerProjectile : MonoBehaviour
         if (type != BulletType.loading)
         {
             StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
-            if (fireDamage != 0 ) exp.transform.parent = null;
+            if (stats.fireDamage != 0 ) exp.transform.parent = null;
         
             trails.transform.parent = null;
 

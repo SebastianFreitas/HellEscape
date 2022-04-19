@@ -169,7 +169,7 @@ public class Gun : MonoBehaviour
             SpawnBullet(pelletRot);
         }
 
-        if (gun.delayedBullet) StartCoroutine(DelayedBullet(realpos));
+        if (gun.delayedBullet > 0) StartCoroutine(DelayedBullet(realpos));
         StartCoroutine(waiter(attackRate));
     }
 
@@ -249,9 +249,9 @@ public class Gun : MonoBehaviour
         playerScript.increasedSpeed = gun.increasedSpeed;
         firerate = 1 / gun.finalFireRate;
 
-        if (gun.horizontalShot) projectile = horizontal;
-        else if (gun.slowbullet) projectile = slow;
-        else if (gun.piercing) projectile = piercing;
+        if (gun.horizontalShot > 0) projectile = horizontal;
+        else if (gun.slowbullet > 0) projectile = slow;
+        else if (gun.piercing > 0) projectile = piercing;
         else projectile = normal;
 
     }

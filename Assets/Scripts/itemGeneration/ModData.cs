@@ -51,7 +51,7 @@ public class ModData : MonoBehaviour
 
     public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
-    public static int[] SpecialWeight = { 40, 40, 40, 40, 20, 2, 5, 1, 2};// 1, 1, 1, 1, 1, 1 };
+    public static int[] SpecialWeight = { 30, 30, 30, 30, 20, 3, 5, 2, 3};// 1, 1, 1, 1, 1, 1 };
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 
@@ -215,10 +215,10 @@ public class GunOfAType : ScriptableObject
     public float averageDamage;
 
     public bool isBase = false;
-    internal bool delayedBullet;
-    internal bool horizontalShot;
-    internal bool slowbullet;
-    internal bool piercing;
+    internal float delayedBullet;
+    internal float horizontalShot;
+    internal float slowbullet;
+    internal float piercing;
 
     public float GetShotSpeed()
     {

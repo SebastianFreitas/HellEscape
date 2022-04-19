@@ -22,7 +22,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("GunParts"))
         {
-            gunParts = PlayerPrefs.GetInt("GunParts");
+            gunParts = 1000000;// PlayerPrefs.GetInt("GunParts");
             inventoryUI.SetGunParts(gunParts.ToString());
         }
     }
