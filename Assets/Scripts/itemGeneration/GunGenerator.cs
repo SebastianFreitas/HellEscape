@@ -208,6 +208,10 @@ public class GunGenerator : ModData
             case "Zero-gravity Shot":
                 ret.slowbullet = true;
                 break;
+
+            case "Piercing Shot":
+                ret.piercing = true;
+                break;
         }
     }
 

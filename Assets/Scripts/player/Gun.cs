@@ -238,6 +238,7 @@ public class Gun : MonoBehaviour
     PlayerProjectile.BulletType currentType;
     [SerializeField] PlayerProjectile horizontal;
     [SerializeField] PlayerProjectile slow;
+    [SerializeField] PlayerProjectile piercing;
     [SerializeField] PlayerProjectile normal;
     public void SetGun(GunOfAType gun)
     {
@@ -250,6 +251,7 @@ public class Gun : MonoBehaviour
 
         if (gun.horizontalShot) projectile = horizontal;
         else if (gun.slowbullet) projectile = slow;
+        else if (gun.piercing) projectile = piercing;
         else projectile = normal;
 
     }

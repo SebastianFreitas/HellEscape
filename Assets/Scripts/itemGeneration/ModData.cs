@@ -35,7 +35,8 @@ public class ModData : MonoBehaviour
 
                 new Mod(4,10,  "Horizontal Shot",           Grade.special, OperatorType.non, 0,9),
                 new Mod(4,10,  "Zero-gravity Shot",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "Delayed Shot",           Grade.special, OperatorType.non, 0,9),
+                new Mod(4,10,  "Delayed Shot",           Grade.special, OperatorType.non, 0,100),
+                new Mod(4,10,  "Piercing Shot",           Grade.special, OperatorType.non, 0,9),
                 //new Mod(4,10,  "double shot",           Grade.special, OperatorType.non, 0,9),
                 //new Mod(4,10,  "triple shot",           Grade.special, OperatorType.non, 0,9),
                 //new Mod(4,10,  "Circle",           Grade.special, OperatorType.non, 0,9),
@@ -50,7 +51,7 @@ public class ModData : MonoBehaviour
 
     public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
-    public static int[] SpecialWeight = { 20, 20, 20, 20, 10, 1, 5, 1 };// 1, 1, 1, 1, 1, 1 };
+    public static int[] SpecialWeight = { 40, 40, 40, 40, 20, 2, 5, 1, 2};// 1, 1, 1, 1, 1, 1 };
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 
@@ -217,6 +218,7 @@ public class GunOfAType : ScriptableObject
     internal bool delayedBullet;
     internal bool horizontalShot;
     internal bool slowbullet;
+    internal bool piercing;
 
     public float GetShotSpeed()
     {
