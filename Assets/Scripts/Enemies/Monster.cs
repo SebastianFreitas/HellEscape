@@ -189,13 +189,13 @@ public class Monster : MonoBehaviour
 
     internal void UpdateStatsToLevel()
     {
-        health *= 1f + (level / 100f);
+        health *= 1f + ((float)level / 100f);
 
-        var speed = 1f + (level / 100f);
+        var speed = 1f + ((float)level / 100f);
         if (speed > 1.3) speed = 1.3f;
         actionSpeed *= speed;
 
-        forceSpeed *= 1f + (level / 100f );
+        forceSpeed *= 1f + ((float)level / 100f );
 
     }
 

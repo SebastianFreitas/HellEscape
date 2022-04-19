@@ -186,13 +186,8 @@ public class PlayerProjectile : MonoBehaviour
                 SetVisibility(true);
 
                 RicochetSparkAndSound();
-
-                if (bulletGuided > 0)
-                {
-                    bool foundEnemy = GuidedBullet();
-                    if (!foundEnemy) rb.AddForce(contact.normal * bounceSpeed);
-                }
-                else rb.AddForce(contact.normal * bounceSpeed);
+                rb.AddForce(contact.normal * bounceSpeed);
+                transform.LookAt(contact.normal);
 
                 bounces--;
             } else StartCoroutine(KillBullet());

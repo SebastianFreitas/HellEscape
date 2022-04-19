@@ -18,9 +18,9 @@ public class ModData : MonoBehaviour
     public static Mod[] modsExterior =
         new Mod[]{
                 new Mod(1, 3,   "Movement Speed",            Grade.exterior, OperatorType.increased, 0,1),
-                new Mod(5,10,   "Ricochets",                 Grade.exterior, OperatorType.increased, 0,2),
+                new Mod(1,6,    "Ricochets",                 Grade.exterior, OperatorType.increased, 0,2),
                 new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,3),
-                new Mod(5,10,   "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,4),
+                new Mod(2,5,    "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,4),
                 new Mod(1, 5,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,5),
               
         };
@@ -34,7 +34,7 @@ public class ModData : MonoBehaviour
                 new Mod(4,10,  "Critical Damage",           Grade.special, OperatorType.increased, 0,5),
 
                 new Mod(4,10,  "Horizontal Shot",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "Slow Bullets",           Grade.special, OperatorType.non, 0,9),
+                new Mod(4,10,  "Zero-gravity Shot",           Grade.special, OperatorType.non, 0,9),
                 new Mod(4,10,  "Delayed Shot",           Grade.special, OperatorType.non, 0,9),
                 //new Mod(4,10,  "double shot",           Grade.special, OperatorType.non, 0,9),
                 //new Mod(4,10,  "triple shot",           Grade.special, OperatorType.non, 0,9),
@@ -50,7 +50,7 @@ public class ModData : MonoBehaviour
 
     public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
-    public static int[] SpecialWeight = { 20, 20, 20, 20, 10, 1, 1, 1, };// 1, 1, 1, 1, 1, 1 };
+    public static int[] SpecialWeight = { 20, 20, 20, 20, 10, 1, 5, 1 };// 1, 1, 1, 1, 1, 1 };
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 
@@ -332,7 +332,7 @@ public class GunOfAType : ScriptableObject
                 basePhysicalDamage = 50;
                 baseBounces = 5;
                 baseBulletsPerShot = 1;
-                baseshotSpeed = 3000;
+                baseshotSpeed = 2500;
                 basebounceSpeed = 250;
                 break;
 
@@ -359,7 +359,7 @@ public class GunOfAType : ScriptableObject
                 basePhysicalDamage = 200;
                 baseBounces = 10;
                 baseBulletsPerShot = 1;
-                baseshotSpeed = 6000;
+                baseshotSpeed = 5000;
                 basebounceSpeed = 500;
                 break;
         }

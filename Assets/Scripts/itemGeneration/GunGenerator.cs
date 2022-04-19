@@ -205,7 +205,7 @@ public class GunGenerator : ModData
                 ret.horizontalShot = true;
                 break;
 
-            case "Slow Bullets":
+            case "Zero-gravity Shot":
                 ret.slowbullet = true;
                 break;
         }
