@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour
     private int maxLife = 50;
     private void UIUpdate()
     {
-        hpText.UpdateText( $"[{life}/{maxLife}]");
+        hpText.UpdateText( $"{life}/{maxLife}");
     }
 
     public void SetHealth(int health)

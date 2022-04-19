@@ -65,12 +65,17 @@ public class PathFloor : PathAux
 
             if (maxSteps == 0)
             {
+                transform.root.GetComponent<GameMan>().startedRun = true;
                 maxSteps--;
                 dificulty++;
                 SaveDificulty();
+
+
                 var x = Instantiate(mainBase, right.position, right.rotation, transform);
                 x.transform.parent = GetComponentInParent<Hub>().transform; 
                 victory = true;
+
+
                 var par = transform.parent;
                 transform.parent = x.transform;
                 Destroy(par.GetComponentInParent<StartHub>().gameObject);

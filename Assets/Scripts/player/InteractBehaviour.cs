@@ -199,6 +199,12 @@ public class InteractBehaviour : MonoBehaviour
                     }
                     else AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
                 }
+                else if (hit.transform.CompareTag("Message"))
+                {
+                    hit.collider.gameObject.SetActive(false);
+                    hit.collider.transform.GetComponentInParent<StartHub>().Activate();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                }
                 else
                 {
                     AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);

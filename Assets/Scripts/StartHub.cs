@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,12 @@ public class StartHub : MonoBehaviour
     [SerializeField] PathFloor path;
     [SerializeField] Transform pathStartPos;
 
+    [SerializeField] GameObject ui;
+
     internal PathFloor currentPath;
-    void Start()
+    void Awake()
     {
-        StartPath();
+        ui.SetActive(false);
     }
 
     internal void StartPath()
@@ -26,5 +29,9 @@ public class StartHub : MonoBehaviour
         currentPath.isFirst = true;
     }
 
-
+    internal void Activate()
+    {
+        StartPath();
+        ui.SetActive(true);
+    }
 }

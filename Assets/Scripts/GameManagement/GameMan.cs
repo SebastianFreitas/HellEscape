@@ -26,10 +26,19 @@ public class GameMan : ModDataRoom
     // Start is called before the first frame update
     void Start()
     {
+        if (startAtHub)
+        {
+            hub.gameObject.SetActive(true);
+            currentStartPos = hub.statspos.position;
 
+            player.GetComponent<PlayerHpManager>().HealForMax();
+            player.GetComponent<CharacterController>().enabled = false;
 
+            player.transform.position = hub.statspos.position;
+            player.transform.rotation = hub.statspos.rotation;
 
-        if (startAtHub) GoToHub();
+            player.GetComponent<CharacterController>().enabled = true;
+        }
         else PlacePlayerInCurrentRoom();
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Player"),LayerMask.NameToLayer("Bullet"));
@@ -58,16 +67,13 @@ public class GameMan : ModDataRoom
     {
         hub.gameObject.SetActive(true);
 
-        //player.GetComponentInChildren<MouseLook>().enabled = false;
-        //player.GetComponent<PlayerBasicMovement>().enabled = false;
         player.GetComponent<CharacterController>().enabled = false;
 
         player.transform.position = hub.statspos.position;
         player.transform.rotation = hub.statspos.rotation;
 
         player.GetComponent<CharacterController>().enabled = true;
-        //player.GetComponentInChildren<MouseLook>().enabled = true;
-        //player.GetComponent<PlayerBasicMovement>().enabled = true;
+
 
         currentStartPos = hub.statspos.position;
 

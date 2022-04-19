@@ -248,18 +248,6 @@ public class Gun : MonoBehaviour
         playerScript.increasedSpeed = gun.increasedSpeed;
         firerate = 1 / gun.finalFireRate;
 
-        //GunOfAType gunx;
-        //gunx = this.gun;
-        //gunText = this.gun;
-
-        //currentBullet = Instantiate(projectile, Vector3.zero, Quaternion.identity) as PlayerProjectile; //shoot normal bullet
-        //currentBullet.gameObject.SetActive(false);
-        //currentBullet.initialFade = true;
-        //currentBullet.Gun = gunx;
-        //currentBullet.SetStats((int)gunx.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gunx.increasedCriticalDamage);
-        //currentType = currentBullet.type;
-        //currentBullet.playerMov = playerScript;
-
         if (gun.horizontalShot) projectile = horizontal;
         else if (gun.slowbullet) projectile = slow;
         else projectile = normal;

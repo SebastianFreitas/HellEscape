@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 686833597369167851}
   - component: {fileID: 2593183737087011268}
+  - component: {fileID: 5913588828929969406}
   m_Layer: 15
   m_Name: Trail
   m_TagString: Untagged
@@ -138,6 +139,20 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 1
   m_Emitting: 1
+--- !u!114 &5913588828929969406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101600412380164793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2780ad20aa5356849bbb52f5131892c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 15
+  dieOnStart: 1
 --- !u!1 &964709968511408894
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,8 +345,9 @@ GameObject:
   - component: {fileID: 2965743846735320020}
   - component: {fileID: 5410791825155227698}
   - component: {fileID: 4158881758299791165}
-  - component: {fileID: 6257304237870093685}
   - component: {fileID: 4537396488406881413}
+  - component: {fileID: 9117945368180409112}
+  - component: {fileID: 2581961449717987629}
   m_Layer: 15
   m_Name: Ring
   m_TagString: Bullet
@@ -2689,18 +2705,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.23658581, y: 0.04265312, z: 0.23888627}
   m_Center: {x: -0.005815554, y: 0.049996853, z: -0.0026407004}
---- !u!114 &6257304237870093685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6382422305777069614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1e7d3309b2dbfe42b8e74dfbca11db9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &4537396488406881413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2714,6 +2718,34 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.23658581, y: 0.04265312, z: 0.23888627}
   m_Center: {x: -0.005815554, y: 0.049996853, z: -0.0026407004}
+--- !u!114 &9117945368180409112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382422305777069614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca3752a9ebea42489d55e3c5df0b11a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trail: {fileID: 101600412380164793}
+  bombs: {fileID: 7054470332723861069}
+--- !u!114 &2581961449717987629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6382422305777069614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2780ad20aa5356849bbb52f5131892c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 10
+  dieOnStart: 1
 --- !u!1 &7054470332723861069
 GameObject:
   m_ObjectHideFlags: 0
@@ -2724,6 +2756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7241376560328798121}
   - component: {fileID: 3320487774738935416}
+  - component: {fileID: 4658867991179184238}
   m_Layer: 15
   m_Name: TrailBombs
   m_TagString: Untagged
@@ -2758,6 +2791,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bomb: {fileID: 574277012246396114, guid: 82761206f1a72a54fa08337edc4de4c5, type: 3}
+--- !u!114 &4658867991179184238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054470332723861069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2780ad20aa5356849bbb52f5131892c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 15
+  dieOnStart: 1
 --- !u!1 &7368398355437766747
 GameObject:
   m_ObjectHideFlags: 0

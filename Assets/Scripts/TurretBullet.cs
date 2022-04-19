@@ -9,13 +9,8 @@ public class TurretBullet : MonoBehaviour
     internal float speed;
     void Start()
     {
-
         rb = GetComponent<Rigidbody>();
-
-
-        
         rb.AddForce(transform.forward * speed);
-
     }
     void OnCollisionEnter(Collision collision)
     {
@@ -32,4 +27,6 @@ public class TurretBullet : MonoBehaviour
 
     
     }
+
+
 }
