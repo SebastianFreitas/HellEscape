@@ -392,9 +392,10 @@ public class PlayerBasicMovement : MonoBehaviour
         // We dont want to push objects below us
         if (hit.moveDirection.y < -.3)
         {
-            velocity = body.velocity;
+            velocity =  body.velocity;
+            Debug.Log("riding");
             return;
-        }
+        } else velocity = Vector3.zero;
 
         // Calculate push direction from move direction,
         // we only push objects to the sides never up and down
