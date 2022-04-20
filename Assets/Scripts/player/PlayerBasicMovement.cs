@@ -54,6 +54,12 @@ public class PlayerBasicMovement : MonoBehaviour
 
     [SerializeField] GameMan manager;
 
+    private float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+
+    private float jumpBufferTime = 0.2f;
+    private float jumpBufferCounter;
+
     private void Start()
     {
         if (playerView == null)
@@ -78,6 +84,8 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void Update()
     {
+
+
         /* Ensure that the cursor is locked into the screen */
         if (Cursor.lockState != CursorLockMode.Locked)
         {
@@ -85,9 +93,9 @@ public class PlayerBasicMovement : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
         }
 
+        JumpBuffer();
 
         IsGrounded();
-       // Debug.Log(isGrounded);
 
 
         if (velocity.y < -15) fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
@@ -111,7 +119,22 @@ public class PlayerBasicMovement : MonoBehaviour
 
         //if (isGrounded) inputLocked = false;
         isGroundedOlder = isGrounded;
+
+
     }
+
+    private void JumpBuffer()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+    }
+
     public Animator animator;
     private void MoveState()
     {
@@ -199,6 +222,10 @@ public class PlayerBasicMovement : MonoBehaviour
 
     void GroundMove()
     {
+
+
+        coyoteTimeCounter = coyoteTime;
+
         if (cd.cdUI <= 0) canDash = true;
 
         lastPos = transform;
@@ -207,7 +234,7 @@ public class PlayerBasicMovement : MonoBehaviour
         if (isSideDashing) inputLocked = true;
         //else inputLocked = false;
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpBufferCounter > 0f)
         {
             JumpDash(false);//Jump();
             inputLocked = true;
@@ -228,11 +255,17 @@ public class PlayerBasicMovement : MonoBehaviour
             velocity.y = -1;
             inputLocked = false;
         }
+        
+        
+
+
+        
     }
 
     void AirMove()
     {
-        
+        coyoteTimeCounter -= Time.deltaTime;
+
         if (!isSideDashing)
         {
             //these checks are made to increase gravity in a certain moment of air movement making it feel heavier without reducing height reach
@@ -245,18 +278,17 @@ public class PlayerBasicMovement : MonoBehaviour
 
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (jumpBufferCounter > 0f)
         {
-            //if (groundLag)
-            //{ //jump normally even while not touched the ground
-            //    inputLocked = false;
-            //    JumpDash(false);//Jump();
-            //    inputLocked = true;
-            //    desiredDirection = new Vector3(xRaw, 0, zRaw);
-            //    groundLag = false;
-            //}
-            //else
-            if (canDash) //dashJump
+            if (coyoteTimeCounter > 0f)
+            { //jump normally even while not touched the ground
+                inputLocked = false;
+                JumpDash(false);
+                inputLocked = true;
+                desiredDirection = new Vector3(xRaw, 0, zRaw);
+                groundLag = false;
+            }
+            else if (canDash) //dashJump
             {
                 inputLocked = false; //remove input lock if player dashes/jumps
                 JumpDash(true);
@@ -296,6 +328,11 @@ public class PlayerBasicMovement : MonoBehaviour
             canDash = false;
             StartCoroutine(waiterDashCD());
             StartCoroutine(waiterDashDuration());
+        }
+        else
+        {
+            coyoteTimeCounter = 0f;
+            jumpBufferCounter = 0f;
         }
 
     }
@@ -380,22 +417,23 @@ public class PlayerBasicMovement : MonoBehaviour
         groundLag = false;
     }
 
-    [SerializeField] Transform realParent;
+
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Rigidbody body = hit.collider.attachedRigidbody;
         var pushPower = 5f;
-        // no rigidbody
-        if (hit.collider.CompareTag("Bullet") || hit.collider.CompareTag("Monster")) { return; }
 
+        if (hit.collider.CompareTag("Bullet") || hit.collider.CompareTag("Monster")) { return; }
+        // no rigidbody
         if (body == null || body.isKinematic) { return; }
         // We dont want to push objects below us
         if (hit.moveDirection.y < -.3)
         {
-            velocity =  body.velocity;
-            Debug.Log("riding");
+            //velocity = new Vector3( body.velocity.x, body.velocity.z, body.velocity.y);
+           
             return;
-        } else velocity = Vector3.zero;
+        } 
 
         // Calculate push direction from move direction,
         // we only push objects to the sides never up and down
@@ -410,5 +448,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
 
     }
+
+    
 
 }
