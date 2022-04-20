@@ -22,6 +22,10 @@ public class TurretBullet : MonoBehaviour
 
            
         }
+
+        var x = GetComponentInChildren<TrailRenderer>();
+        if (x != null) x.transform.parent = null;
+
         Destroy(gameObject);
 
 

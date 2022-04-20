@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 686833597369167851}
   - component: {fileID: 2593183737087011268}
-  - component: {fileID: 5913588828929969406}
   m_Layer: 15
   m_Name: Trail
   m_TagString: Untagged
@@ -52,7 +51,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4b72969d01c29a548b22598e1308bb03, type: 2}
+  - {fileID: 2100000, guid: cf036d8a49eb04a4aa81668d6d24a993, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -82,7 +81,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.8571424
+        value: 0.6571427
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -90,7 +89,16 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1
+        time: 0.7584878
+        value: 1
+        inSlope: -1.5054814
+        outSlope: -1.5054814
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.9963236
         value: 0
         inSlope: 0
         outSlope: 0
@@ -139,20 +147,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 1
   m_Emitting: 1
---- !u!114 &5913588828929969406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101600412380164793}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2780ad20aa5356849bbb52f5131892c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: 15
-  dieOnStart: 1
 --- !u!1 &6382422305777069614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2576,7 +2570,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7241376560328798121}
   - component: {fileID: 3320487774738935416}
-  - component: {fileID: 4658867991179184238}
   m_Layer: 15
   m_Name: TrailBombs
   m_TagString: Untagged
@@ -2611,20 +2604,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bomb: {fileID: 574277012246396114, guid: 82761206f1a72a54fa08337edc4de4c5, type: 3}
---- !u!114 &4658867991179184238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054470332723861069}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2780ad20aa5356849bbb52f5131892c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timer: 15
-  dieOnStart: 1
 --- !u!1 &7368398355437766747
 GameObject:
   m_ObjectHideFlags: 0

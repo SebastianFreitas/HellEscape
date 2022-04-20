@@ -44,6 +44,8 @@ public class PlayerHpManager : MonoBehaviour
         playerSounds.PlayTakeDamageSound();
 
         health -= amount;
+
+        Debug.LogError(amount);
         hp.SetHealth((int)health);
         if (health <= 0f)
         {
