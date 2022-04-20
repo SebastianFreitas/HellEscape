@@ -40,13 +40,6 @@ public class PlayerProjectile : MonoBehaviour
 
     public GameObject trails;
 
-    [SerializeField] internal BulletType type;
-    internal enum BulletType
-    {
-        normal,
-        rocketTriangle,
-        loading
-    }
 
     public GunOfAType Gun { get => gun; set => gun = value; }
 
@@ -57,18 +50,6 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void AwakeRemote()
     {
-        switch (type)
-        {
-            case BulletType.normal:
-                break;
-            case BulletType.loading:
-
-                break;
-
-            case BulletType.rocketTriangle:
-                stats.fireDamage += 50;
-                break;
-        }
         newSizeMulti  = (1 + gun.increasedBulletSize / 100);
         //transform.localScale = new Vector3(newSizeMulti, newSizeMulti, newSizeMulti);
         //if (isSphere)  transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
@@ -118,10 +99,9 @@ public class PlayerProjectile : MonoBehaviour
 
     IEnumerator waiter(float a){
     yield return new WaitForSeconds(a);
-        if (type != BulletType.loading)
-        {
+
             Destroy(gameObject);
-        }
+
     }
 
     IEnumerator fadeWaiter()
@@ -216,17 +196,12 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void ExplodeParticule()
     {
-        if(type != BulletType.loading)
-        {
-            exp.gameObject.SetActive(true);
-            var explode = exp.GetComponent<ParticleSystem>();
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            explode.Play();
-            Destroy(gameObject, explode.main.duration);
-        }
-
-
+        exp.gameObject.SetActive(true);
+        var explode = exp.GetComponent<ParticleSystem>();
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+        explode.Play();
+        Destroy(gameObject, explode.main.duration);
     }
 
 
@@ -258,17 +233,16 @@ public class PlayerProjectile : MonoBehaviour
 
     internal IEnumerator KillBullet()
     {
-        if (type != BulletType.loading)
-        {
-            StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
-            if (stats.fireDamage != 0 ) exp.transform.parent = null;
+
+        StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
+        if (stats.fireDamage != 0 ) exp.transform.parent = null;
         
-            trails.transform.parent = null;
+        trails.transform.parent = null;
 
 
-            yield return new WaitForSeconds(.5f);
-            Destroy(this.gameObject);
-        }
+        yield return new WaitForSeconds(.5f);
+        Destroy(this.gameObject);
+        
     }
 
     private void OnDisable()

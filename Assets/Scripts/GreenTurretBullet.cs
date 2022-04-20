@@ -9,7 +9,7 @@ public class GreenTurretBullet : TurretBullet
     [SerializeField] GameObject bombs;
     private void OnDestroy()
     {
-        trail.transform.parent = null;
-        bombs.transform.parent = null;
+        //trail.transform.parent = null;
+        //bombs.transform.parent = null;
     }
 }

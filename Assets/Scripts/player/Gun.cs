@@ -137,7 +137,6 @@ public class Gun : MonoBehaviour
         bulletSpeed = (int)gun.GetShotSpeed();
     }
     public GrenadeCooldown cd;
-    PlayerProjectile currentBullet;
     void Shoot(float attackRate)
     {
         cd.startCD(timeBtwShots);
@@ -234,8 +233,6 @@ public class Gun : MonoBehaviour
 
        // GameObject.FindGameObjectWithTag("Slot").GetComponent<Slot>().EquipGun();
     }
-
-    PlayerProjectile.BulletType currentType;
     [SerializeField] PlayerProjectile horizontal;
     [SerializeField] PlayerProjectile slow;
     [SerializeField] PlayerProjectile piercing;
