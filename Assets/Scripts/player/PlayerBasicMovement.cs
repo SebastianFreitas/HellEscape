@@ -43,11 +43,11 @@ public class PlayerBasicMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     private bool isGrounded;
-    private bool groundLag;//used to give the player a few frames where he can still jump right after leaving the floor
+
     private bool fallingAtSomeSpeed = false;
     private bool isGroundedOlder;
     private float currentSpeed;
-    private bool isWaiting;
+
     internal Transform lastPos;
 
     public GrenadeCooldown cd;
@@ -72,10 +72,10 @@ public class PlayerBasicMovement : MonoBehaviour
     private void OnEnable()
     {
 
-        StartCoroutine(waiterDashCD());
+
         StartCoroutine(waiterDashDuration());
 
-        StartCoroutine(waiterGroundLag());
+
 
         canDash = true;
         
@@ -105,7 +105,7 @@ public class PlayerBasicMovement : MonoBehaviour
             fallingAtSomeSpeed = false;
             playerSound.PlayLandSound();
         }
-        else if (isGroundedOlder && !isGrounded) StartCoroutine(waiterGroundLag());
+        else 
 
         GetInputWASD();
 
@@ -239,7 +239,7 @@ public class PlayerBasicMovement : MonoBehaviour
             JumpDash(false);//Jump();
             inputLocked = true;
             desiredDirection = new Vector3(xRaw, 0, zRaw);
-            groundLag = false;
+
         }
         else if (Input.GetButtonDown("Fire2") && canDash)
         {
@@ -286,7 +286,6 @@ public class PlayerBasicMovement : MonoBehaviour
                 JumpDash(false);
                 inputLocked = true;
                 desiredDirection = new Vector3(xRaw, 0, zRaw);
-                groundLag = false;
             }
             else if (canDash) //dashJump
             {
@@ -326,7 +325,6 @@ public class PlayerBasicMovement : MonoBehaviour
             cd.startCD((int)dashCooldown);
             playerSound.PlayDashSound();
             canDash = false;
-            StartCoroutine(waiterDashCD());
             StartCoroutine(waiterDashDuration());
         }
         else
@@ -346,7 +344,6 @@ public class PlayerBasicMovement : MonoBehaviour
 
         canDash = false;
         isSideDashing = true;
-        StartCoroutine(waiterDashCD());
         StartCoroutine(waiterDashDuration());
     }
 
@@ -395,13 +392,6 @@ public class PlayerBasicMovement : MonoBehaviour
             isGrounded = true;
     }
 
-    IEnumerator waiterDashCD()
-    {
-        isWaiting = true;
-        yield return new WaitForSecondsRealtime(dashCooldown);
-        //canDash = true;
-        isWaiting = false;
-    }
     IEnumerator waiterDashDuration()
     {
        
@@ -410,12 +400,7 @@ public class PlayerBasicMovement : MonoBehaviour
         inputLocked = false;
 
     }
-    IEnumerator waiterGroundLag()
-    {
-        groundLag = true;
-        yield return new WaitForSecondsRealtime(.2f);
-        groundLag = false;
-    }
+
 
 
 
