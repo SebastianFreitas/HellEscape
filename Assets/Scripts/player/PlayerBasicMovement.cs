@@ -380,7 +380,7 @@ public class PlayerBasicMovement : MonoBehaviour
         groundLag = false;
     }
 
- 
+    [SerializeField] Transform realParent;
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Rigidbody body = hit.collider.attachedRigidbody;
@@ -390,7 +390,12 @@ public class PlayerBasicMovement : MonoBehaviour
 
         if (body == null || body.isKinematic) { return; }
         // We dont want to push objects below us
-        if (hit.moveDirection.y < -0.3) { return; }
+        if (hit.moveDirection.y < -.3)
+        {
+            velocity = body.velocity;
+            return;
+        }
+
         // Calculate push direction from move direction,
         // we only push objects to the sides never up and down
         var pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
@@ -399,7 +404,7 @@ public class PlayerBasicMovement : MonoBehaviour
         // Apply the push
         var dashPower = 1f;
         if (isSideDashing) dashPower = 5f;
-        body.velocity = pushDir * pushPower * dashPower;
+        body.velocity = dashPower * pushPower * pushDir ;
 
 
 
