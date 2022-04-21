@@ -8,16 +8,15 @@ internal class InfluenceEffect : PlayerAcess
     internal enum BlueEffect
     {
         ColdDamage,
-        EnemyWaits,
-        Traps,
-        SlowPlayer,
+        Chill,
+        Invisible,
 
     }
 
     internal enum RedEffect
     {
   
-        Tick,
+        KockBack,
         FasterMob,
         MobExplodes,
 
@@ -34,24 +33,23 @@ internal class InfluenceEffect : PlayerAcess
 
     internal List<(string, BlueEffect)> blueTexts = new List<(string, BlueEffect)>
         {
-            ("Trap damage reduces max hp", BlueEffect.Traps),
-            ("Your movement speed is decreased", BlueEffect.SlowPlayer),
-            ("Enemies gain health and deal more damage", BlueEffect.ColdDamage)
-
+            ("Monster melee hits reduce movement speed", BlueEffect.Chill),
+            ("Monsters become invisible temporarily", BlueEffect.Invisible),
+            ("Monsters gain health and deal more damage", BlueEffect.ColdDamage)
         }; 
+
     internal List<(string, RedEffect)> redTexts = new List<(string, RedEffect)>
         {
-            ("Monsters jitter uncontrollably", RedEffect.Tick),
-            ("Monster act faster", RedEffect.FasterMob),
-            ("Monster explode on death and deal extra damage", RedEffect.MobExplodes),       
+            ("Monsters push you back further", RedEffect.KockBack),
+            ("Monsters act faster", RedEffect.FasterMob),
+            ("Monsters explode on death and deal extra damage", RedEffect.MobExplodes),       
         };
 
     internal List<(string, GoodEffect)> goodTexts = new List<(string, GoodEffect)>
         {
-            ("+25% base elite chance", GoodEffect.MobEliteChance),
-            ("Enemies have double Health and drop chance", GoodEffect.MobHPDoubleDrop),
-            ("Every enemy is Doubled", GoodEffect.MoreMob)
-
+            ("+25% elite chance", GoodEffect.MobEliteChance),
+            ("Monsters have double Health and drop chance", GoodEffect.MobHPDoubleDrop),
+            ("Every monster is Doubled", GoodEffect.MoreMob)
         };
 
 
@@ -123,8 +121,8 @@ internal class InfluenceEffect : PlayerAcess
             case RedEffect.MobExplodes:
                 MobExplodes();
                 break;
-            case RedEffect.Tick:
-                Tick();
+            case RedEffect.KockBack:
+                KockBack();
                 break;
         }
     }
@@ -132,35 +130,16 @@ internal class InfluenceEffect : PlayerAcess
     {
         switch (blueEffect)
         {
-            case BlueEffect.SlowPlayer:
-                SlowPlayer();
+            case BlueEffect.Invisible:
+                Invisible();
                 break;
             case BlueEffect.ColdDamage:
                 ColdDamage();
                 break;
-            case BlueEffect.Traps:
-                Traps();
+            case BlueEffect.Chill:
+                Chill();
                 break;
         }
-    }
-
-    private void Traps()
-    {
-        throw new System.NotImplementedException();
-    }
-    private void ColdDamage()
-    {
-        generator.mission.aditionalDamage +=Random.Range(1, 5);
-        generator.mission.aditionalLife += 100;
-    }
-    private void EnemyWaits()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    private void SlowPlayer()
-    {
-        playerMov.increasedSpeed += -0.5f;
     }
 
     private void SearchGood()
@@ -247,7 +226,7 @@ internal class InfluenceEffect : PlayerAcess
     {
         generator.mission.doubleMobs = true;
     }
-    ///////////Red
+    //Red---------------------------------------------------------------------------------------------------------------
     internal void FasterMob()
     {
         generator.mission.increasedActionSpeed += 50;
@@ -259,10 +238,23 @@ internal class InfluenceEffect : PlayerAcess
         generator.mission.aditionalDamage += Random.Range(1, 5);
     }
 
-    internal void Tick()
+    internal void KockBack()
     {
-        generator.mission.tick = true;
+        generator.mission.kockBack += 100;
     }
 
-    //Blue
+    //Blue---------------------------------------------------------------------------------------------------------------
+    private void Chill()
+    {
+        generator.mission.chill = true;
+    }
+    private void ColdDamage()
+    {
+        generator.mission.aditionalDamage += Random.Range(1, 5);
+        generator.mission.aditionalLife += 100;
+    }
+    private void Invisible()
+    {
+        generator.mission.invisible = true;
+    }
 } 

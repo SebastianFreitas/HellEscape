@@ -361,6 +361,9 @@ public class ModDataRoom : MonoBehaviour
         internal bool physicalImmunity = false;
         internal bool noGrenade = true;
         internal bool isBig = false;
+        internal bool chill;
+        internal bool invisible;
+        internal int kockBack;
 
         public void createPositives()
         {

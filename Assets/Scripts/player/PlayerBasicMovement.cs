@@ -75,7 +75,7 @@ public class PlayerBasicMovement : MonoBehaviour
 
         StartCoroutine(waiterDashDuration());
 
-
+        if (isChilled) increasedSpeed += chillValue;
 
         canDash = true;
         
@@ -401,7 +401,18 @@ public class PlayerBasicMovement : MonoBehaviour
 
     }
 
+    private int chillValue = 50;
+    private bool isChilled = false;
 
+    internal IEnumerator Chilled()
+    {
+        increasedSpeed -= chillValue;
+        isChilled = true;
+        yield return new WaitForSecondsRealtime(1f);
+        increasedSpeed += chillValue;
+        isChilled = false;
+
+    }
 
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -429,9 +440,6 @@ public class PlayerBasicMovement : MonoBehaviour
         var dashPower = 1f;
         if (isSideDashing) dashPower = 5f;
         body.velocity = dashPower * pushPower * pushDir ;
-
-
-
     }
 
     

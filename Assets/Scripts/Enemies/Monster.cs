@@ -37,6 +37,9 @@ public class Monster : MonoBehaviour
     internal RoomActivator roomActivator;
     internal ModDataRoom.GeneratedMission mission;
     internal PathFloor path;
+
+    private PlayerBasicMovement playerMov;
+    private PlayerHpManager playerHP;
     protected void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -48,6 +51,9 @@ public class Monster : MonoBehaviour
 
         if (player == null) player = GameObject.FindGameObjectsWithTag("Dude")[0];
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
+
+        playerMov =  player.GetComponent<PlayerBasicMovement>();
+        playerHP = player.GetComponent<PlayerHpManager>();
 
         if (!isHub)
         {
@@ -92,29 +98,39 @@ public class Monster : MonoBehaviour
 
         if (isElite) TurnElite();
 
-
+        if (mission.invisible) StartCoroutine("Invisible");
     }
 
-    IEnumerator Tick()
+
+    private bool isInvisible = false;
+    IEnumerator Invisible()
     {
-        isTick = true;
+        isInvisible = true;
+
+        var mesh = GetComponentsInChildren<MeshRenderer>();
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(.3f, .9f));
-            rigidBody.AddForce(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 500f);
+            yield return new WaitForSeconds(Random.Range(2,6));
+            foreach (var current in mesh) current.enabled = false;
+
+            yield return new WaitForSeconds(1);
+            foreach (var current in mesh) current.enabled = true;
         }
 
     }
     private bool hasCollide = false;
+
     void FixedUpdate(){
         if (monsterCollider.bounds.Intersects(playerCollider.bounds))
         {
             if (hasCollide == false)
             {
                 var direction = player.transform.position- transform.position;
-                var playerScript = player.GetComponent<PlayerBasicMovement>();
-                playerScript.AddImpact(direction, 100f);
-                player.GetComponent<PlayerHpManager>().TakeDamage((int)damage);
+
+                playerMov.AddImpact(direction, 100f + mission.kockBack);
+                playerHP.TakeDamage((int)damage);
+
+                if (mission.chill) playerMov.StartCoroutine("Chilled");
                 StartCoroutine("WaitDamage");
             }
         }
@@ -322,7 +338,7 @@ public class Monster : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (isTick) StartCoroutine("Tick");
+        if (isInvisible) StartCoroutine("Invisible");
         if (isPoisoned) StartCoroutine("Poisoned");
         if (isChilled) StartCoroutine("Chilled");
     }

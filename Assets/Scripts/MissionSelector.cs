@@ -174,7 +174,7 @@ public class MissionSelector : ModDataRoom
                 while (cantFind)
                 {
                     if (totalChance <= 0) break;
-                    if (Random.Range(1, 100) < 50f + additionalChance)//13
+                    if (Random.Range(1, 100) < 35f + additionalChance)//13
                     {
 
                         mis.gameObject.SetActive(true);
@@ -190,6 +190,13 @@ public class MissionSelector : ModDataRoom
             }
         }
         else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+
+        if (!missions[0].isActiveAndEnabled)
+        {
+            missions[0].gameObject.SetActive(true);
+            missions[0].RefreshMission();
+            AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
+        }
     }
 
 
