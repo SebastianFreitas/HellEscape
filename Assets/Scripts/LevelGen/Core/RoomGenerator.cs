@@ -72,9 +72,9 @@ public class RoomGenerator : MonoBehaviour
 		
 
 		
-		int influencePos = Random.Range(2,5);
+		int influencePos = Random.Range(1,5);
 		//place pathway
-		for (int i = 1; i <=20; i++) //+mission.aditionalLength+mirrorLength
+		for (int i = 1; i <=30; i++) //+mission.aditionalLength+mirrorLength
 		{
 
 			int a = 0;

@@ -36,13 +36,15 @@ public class MissionSelector : ModDataRoom
 
     public int totalChance { get; private set; }
 
-    private int additionalChance;
     public MeshRenderer[] meshEngagePath;
     public MeshRenderer[] meshSearchPath;
     public MeshRenderer[] meshReloadSearch;
     private bool beenLong = true;
 
     public AudioClip click;
+
+
+    [SerializeField] MirrorManager mirror;
 
     private void OnEnable()
     {
@@ -141,8 +143,12 @@ public class MissionSelector : ModDataRoom
     }
 
     bool used = false;
+
+    internal float additionalChance = 0;
     internal IEnumerator SearchPath()
     {
+        manager.startedRun = true;
+        mirror.gameObject.SetActive(false);
 
         if (!used)
         {
@@ -152,7 +158,7 @@ public class MissionSelector : ModDataRoom
             TurnRed(meshSearchPath);
 
 
-            totalChance = 9;//9
+            totalChance = missions.Length;
             
             foreach (MonitorMission mis in missions)
             {
@@ -168,28 +174,23 @@ public class MissionSelector : ModDataRoom
                 while (cantFind)
                 {
                     if (totalChance <= 0) break;
-                    if (Random.Range(1, 20) > 10)//13
+                    if (Random.Range(1, 100) < 50f + additionalChance)//13
                     {
 
                         mis.gameObject.SetActive(true);
                         mis.RefreshMission();
-                        totalChance--;
+                        
                         AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
                         cantFind = false;
                     }
                     else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
                     totalChance--;
                     yield return new WaitForSecondsRealtime(1f);
-                }
-                
-                
+                } 
             }
-
-
         }
         else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
     }
-
 
 
     IEnumerator ErrorWaiter(MeshRenderer[] materials)

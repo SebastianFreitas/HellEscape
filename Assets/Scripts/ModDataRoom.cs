@@ -39,7 +39,7 @@ public class ModDataRoom : MonoBehaviour
         new Mod[]{
 
                 new Mod(1,5,   "Weapon level",              Grade.interior, OperatorType.plus,                       100,     4),
-                new Mod(1,25,  "Mission length",            Grade.interior, OperatorType.plus,                       100,    5),
+                //new Mod(1,25,  "Mission length",            Grade.interior, OperatorType.plus,                       100,    5),
             
                 new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        25,     7),
                 new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       100,    8),
@@ -122,7 +122,7 @@ public class ModDataRoom : MonoBehaviour
         result.increasedChanceElite         += bonus + Random.Range(0, bonus);
         result.increasedChanceSpecialRooms  += bonus + Random.Range(0, bonus);
         result.increasedMonsterDrops        += bonus + Random.Range(0, bonus);
-        result.distance = Random.Range(3, 7) + result.aditionalLength;
+        
     }
     private void CreateMissionText(GeneratedMission result)
     {
@@ -134,7 +134,7 @@ public class ModDataRoom : MonoBehaviour
     {
         result.createPositives();
         string text = "";
-        text += result.distance + " Units Located" + "\n";
+        //text += result.additionalBoons + " Boons Located" + "\n";
         text += result.increasedChanceElite + 5+ "% elite chance" + "\n";
         text += result.increasedChanceSpecialRooms+ 25 + "% special room chance" + "\n";
         text += (float)(1 + (((float)result.increasedMonsterDrops * 3) / 100)) + "% weapon drop chance" + "\n\n";//(float)(1 + (((float)result.increasedMonsterDrops * 3) / 100)) + "% weapon drop chance" + "\n\n";
@@ -350,7 +350,7 @@ public class ModDataRoom : MonoBehaviour
         internal bool everythingSpecial = false;
         internal int healthChanceEncounter = 0;
         internal int playerReducedMovementSpeed = 0;
-        internal int additionalBoons = 0;
+        internal int additionalBoons = 1;
         internal bool error = false;
         internal bool additionalRewards = false;
         internal int additionalGunParts = 0;

@@ -12,8 +12,8 @@ public class MirrorManager : PlayerAcess
     [SerializeField] TMPro.TextMeshPro levelText;
 
     int life = 0;
-    float boon = 0;
-    int length = 0;
+    int boon = 0;
+    internal float missionChance = 0;
     int level = 0;
 
     [SerializeField] TMPro.TextMeshPro availablePoints;
@@ -32,30 +32,29 @@ public class MirrorManager : PlayerAcess
         availablePoints.text = $"{currentPoints} Available points";
 
         lifeText.text = $"+{life} Max life";
-        boonText.text = $"+{boon} Boon chance after encounter";
-        lengthText.text = $"+{length} run length";
-        levelText.text = $"+{level} level of item drops";
+        boonText.text = $"+{boon}% Boon drop chance";
+        lengthText.text = $"+{missionChance}% chance to locate paths";
+        levelText.text = $"+{level} item drop level";
     }
 
     internal enum MirrorBoon
     {
         nope,
         MaxLife,
-        RunLength,
+        MissionChance,
         ItemLevel,
         BoonChance
     }
 
     internal (MirrorBoon,int)[] powerList = new (MirrorBoon, int)[] {
         (MirrorBoon.BoonChance, 0),
-        (MirrorBoon.RunLength, 0),
+        (MirrorBoon.MissionChance, 0),
         (MirrorBoon.ItemLevel, 0),
         (MirrorBoon.MaxLife, 0)
     };
 
     private int maxPoints;
     private int currentPoints;
-    private Hub hub;
 
     private void OnEnable()
     {
@@ -78,7 +77,7 @@ public class MirrorManager : PlayerAcess
 
         powerList = new (MirrorBoon, int)[] {
         (MirrorBoon.BoonChance, 0),
-        (MirrorBoon.RunLength, 0),
+        (MirrorBoon.MissionChance, 0),
         (MirrorBoon.ItemLevel, 0),
         (MirrorBoon.MaxLife, 0)
         };
@@ -88,13 +87,13 @@ public class MirrorManager : PlayerAcess
         if (PlayerPrefs.HasKey("PathLevel"))
         {
             maxPoints = PlayerPrefs.GetInt("PathLevel");
-            maxPoints = 100;
+ 
         }
         else maxPoints = 0;
 
         int i = 0;
 
-        hub = GetComponentInParent<Hub>();
+       
         currentPoints = maxPoints;// - usedPoints;
         foreach (var x in powerList)
         {
@@ -168,9 +167,9 @@ public class MirrorManager : PlayerAcess
                 MaxLife(choice);
                 break;
 
-            case MirrorBoon.RunLength:
+            case MirrorBoon.MissionChance:
                 powerList[1].Item2 += choice;
-                RunLength(choice);
+                MissionChance(choice);
                 break;
             case MirrorBoon.nope:
                 break;
@@ -189,11 +188,10 @@ public class MirrorManager : PlayerAcess
         return -1;
     }
 
-    private void RunLength(int choice)
+    private void MissionChance(int choice)
     {
-        roomGen.mirrorLength += 2*choice;
-        length += 2 * choice;
-        
+        misSelector.additionalChance += 1 * choice;
+        missionChance += 1 * choice;   
     }
 
     private void MaxLife(int choice)
