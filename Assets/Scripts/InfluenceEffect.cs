@@ -26,8 +26,10 @@ internal class InfluenceEffect : PlayerAcess
     {
         MoreMob,
         MobHPDoubleDrop,
-        MobEliteChance
-
+        MobEliteChance,
+        HealthGunPart,
+        HealthPack,
+        WeaponDrop
     }
 
 
@@ -49,7 +51,10 @@ internal class InfluenceEffect : PlayerAcess
         {
             ("+25% elite chance", GoodEffect.MobEliteChance),
             ("Monsters have double Health and drop chance", GoodEffect.MobHPDoubleDrop),
-            ("Every monster is Doubled", GoodEffect.MoreMob)
+            ("Every monster is Doubled", GoodEffect.MoreMob),
+            ("Monsters drop one additional gun parts and gain health", GoodEffect.HealthGunPart),
+            ("+5% chance for monsters to drop health packs", GoodEffect.HealthPack),
+            ("+5% chance for monsters to drop weapon layouts", GoodEffect.WeaponDrop)
         };
 
 
@@ -156,8 +161,19 @@ internal class InfluenceEffect : PlayerAcess
             case GoodEffect.MoreMob:
                 MoreMob();
                 break;
+            case GoodEffect.HealthGunPart:
+                HealthGunPart();
+                break;
+            case GoodEffect.HealthPack:
+                HealthPack();
+                break;
+            case GoodEffect.WeaponDrop:
+                WeaponDrop();
+                break;
         }
     }
+
+
 
     private void CreateBadRed()
     {
@@ -226,6 +242,23 @@ internal class InfluenceEffect : PlayerAcess
     {
         generator.mission.doubleMobs = true;
     }
+
+    private void HealthGunPart()
+    {
+        generator.mission.aditionalLife += 100;
+        generator.mission.additionalGunParts += 1;
+    }
+
+    private void HealthPack()
+    {
+        generator.mission.monsterHealthDropChance += 5;
+    }
+
+    private void WeaponDrop()
+    {
+        generator.mission.monsterWeaponDropChance += 5;
+    }
+
     //Red---------------------------------------------------------------------------------------------------------------
     internal void FasterMob()
     {

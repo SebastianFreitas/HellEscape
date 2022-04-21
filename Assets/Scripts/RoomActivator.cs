@@ -84,8 +84,6 @@ public class RoomActivator : MonoBehaviour
     {
         if (other.CompareTag("Dude"))
         {
-            Debug.Log(roomType);
-            Debug.Log(beenTrigered + "has been");
 
             if (!isSideRoom)roomgen.ManageRoomsEficiency(transform.GetComponentInParent<Room>());
 

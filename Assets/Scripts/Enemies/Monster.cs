@@ -318,7 +318,7 @@ public class Monster : MonoBehaviour
 
 
 
-            if (Random.Range(1f,100f) > 100-totalDropChance)
+            if (Random.Range(1f,100f) > 100-totalDropChance + mission.monsterWeaponDropChance)
             {
                GameObject x =Instantiate(drop, transform.position, transform.rotation) as GameObject;
                 x.transform.parent = transform.parent;
@@ -327,7 +327,7 @@ public class Monster : MonoBehaviour
 
             }
 
-            if (Random.Range(1f, 100f) > 100 - (totalDropChance*2))
+            if (Random.Range(1f, 100f) > 100 - (totalDropChance*2 + mission.monsterHealthDropChance))
             {
                 GameObject x = Instantiate(roomActivator.roomgen.healthPack, transform.position + Vector3.up, transform.rotation) as GameObject;
                 x.transform.parent = transform.parent;

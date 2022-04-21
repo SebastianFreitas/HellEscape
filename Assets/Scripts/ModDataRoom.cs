@@ -364,6 +364,8 @@ public class ModDataRoom : MonoBehaviour
         internal bool chill;
         internal bool invisible;
         internal int kockBack;
+        internal float monsterHealthDropChance;
+        internal float monsterWeaponDropChance;
 
         public void createPositives()
         {
