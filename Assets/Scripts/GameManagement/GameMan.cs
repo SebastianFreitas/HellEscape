@@ -80,8 +80,6 @@ public class GameMan : ModDataRoom
 
         player.GetComponent<PlayerHpManager>().HealForMax();
         hub.ResetPath();
-     
-        //path.ResetPath();
     }
 
     private void PlacePlayerInCurrentRoom()

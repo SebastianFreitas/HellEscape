@@ -34,6 +34,7 @@ public class ExplosionTrap : MonoBehaviour
         yield return new WaitForSecondsRealtime(3f);
         Destroy(this.gameObject);
     }
+
     IEnumerator WaitDamage()
     {
         yield return new WaitForSecondsRealtime(.5f);

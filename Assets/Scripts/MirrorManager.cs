@@ -88,6 +88,7 @@ public class MirrorManager : PlayerAcess
         if (PlayerPrefs.HasKey("PathLevel"))
         {
             maxPoints = PlayerPrefs.GetInt("PathLevel");
+            maxPoints = 100;
         }
         else maxPoints = 0;
 
@@ -206,12 +207,13 @@ public class MirrorManager : PlayerAcess
     private void ItemLevel(int choice)
     {
         playerInv.weaponLevel += 1 * choice;
+        roomGen.weaponLevel += 1 * choice;
         level += 1 * choice;
     }
 
     private void BoonChance(int choice)
     {
-        roomGen.mirrorLength += 1 * choice;
+        roomGen.mirrorBoonChance += 1 * choice;
         boon += 1 * choice;
     }
 

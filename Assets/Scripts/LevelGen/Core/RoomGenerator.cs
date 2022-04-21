@@ -54,7 +54,7 @@ public class RoomGenerator : MonoBehaviour
 	internal List<List<int>> encounters = new List<List<int>>();
 
 	[SerializeField] bool startAtBoss = false;
-	internal IEnumerator GenerateLevel()//ModDataRoom.GeneratedMission mis)
+	internal IEnumerator GenerateLevel()
 	{
 		WaitForSeconds startup = new WaitForSeconds(.2f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
@@ -72,9 +72,9 @@ public class RoomGenerator : MonoBehaviour
 		
 
 		
-		int influencePos = Random.Range(1,5);
+		int influencePos = Random.Range(2,5);
 		//place pathway
-		for (int i = 1; i <=20+mission.aditionalLength+mirrorLength; i++)
+		for (int i = 1; i <=20; i++) //+mission.aditionalLength+mirrorLength
 		{
 
 			int a = 0;
@@ -102,11 +102,7 @@ public class RoomGenerator : MonoBehaviour
 					if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
 					else
 					{
-						x = Random.Range(0, 100);
-						var type = RoomActivator.RoomType.Encounter;
-						if (x < 1f + mirrorBoonChance) type = RoomActivator.RoomType.Boon;
-
-						worked = PlaceRoom(mainRooms[rando], true, type);
+						worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
 					}
 
 					if (worked) break;
@@ -114,7 +110,11 @@ public class RoomGenerator : MonoBehaviour
 
 
 
-				if (a >= 10) ResetLevelGenerator();
+				if (a > 10)
+				{
+					Debug.Log(i+" "+ influencePos);
+					ResetLevelGenerator();
+				}
 
 			}
 			yield return interval;
