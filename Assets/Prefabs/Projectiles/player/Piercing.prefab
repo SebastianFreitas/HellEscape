@@ -17340,10 +17340,10 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7455985202651632449}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -17479,10 +17479,6 @@ MonoBehaviour:
   visual: 0
   initialFade: 1
   bounces: 2
-  fireDamage: 0
-  coldDamage: 0
-  poisonDamage: 0
-  physicalDamage: 0
   physicalTrail: {fileID: 495524331967862549}
   fireTrail: {fileID: 2707317916177135628}
   coldTrail: {fileID: 3635358787468029423}
@@ -17490,7 +17486,6 @@ MonoBehaviour:
   playerMov: {fileID: 0}
   exp: {fileID: 9185312960775842628}
   trails: {fileID: 6349487729892245158}
-  type: 0
 --- !u!1 &7550913963868488525
 GameObject:
   m_ObjectHideFlags: 0
