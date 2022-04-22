@@ -24,6 +24,7 @@ public class MirrorManager : PlayerAcess
     private void Start()
     {
         roomGen = player.GetComponentInParent<GameMan>().roomGen;
+        LoadMirror();
     }
 
     private void UpdateUI()
@@ -53,48 +54,16 @@ public class MirrorManager : PlayerAcess
         (MirrorBoon.MaxLife, 0)
     };
 
-    private int maxPoints;
     private int currentPoints;
 
-    private void OnEnable()
+
+    void LoadMirror()
     {
-        if (transform.root.GetComponent<GameMan>().startedRun)
-        {
+        ResetMirror();
 
-            transform.root.GetComponent<GameMan>().startedRun = false;
-            int b = 0;
-            foreach (var x in powerList)
-            {
-                PlayerPrefs.SetInt(x.Item1.ToString(), x.Item2);
-                b++;
+        if (PlayerPrefs.HasKey("PathLevel")) currentPoints = PlayerPrefs.GetInt("PathLevel");
+        else currentPoints = 0;
 
-                for (int a = 0; a < x.Item2; a++)
-                {
-                    InsertPoint(x.Item1, -1);
-                }
-            }
-        }
-
-        powerList = new (MirrorBoon, int)[] {
-        (MirrorBoon.BoonChance, 0),
-        (MirrorBoon.MissionChance, 0),
-        (MirrorBoon.ItemLevel, 0),
-        (MirrorBoon.MaxLife, 0)
-        };
-
-        roomGen = player.GetComponentInParent<GameMan>().roomGen;
-
-        if (PlayerPrefs.HasKey("PathLevel"))
-        {
-            maxPoints = PlayerPrefs.GetInt("PathLevel");
- 
-        }
-        else maxPoints = 0;
-
-        int i = 0;
-
-       
-        currentPoints = maxPoints;// - usedPoints;
         foreach (var x in powerList)
         {
             if (PlayerPrefs.HasKey(x.Item1.ToString()))
@@ -106,29 +75,14 @@ public class MirrorManager : PlayerAcess
                     InsertPoint(x.Item1, 1);
                 }
             }
-            i++;
         }
         UpdateUI();
     }
-
-    private void OnDisable()
+    private void OnDestroy()
     {
-        if (transform.root.GetComponent<GameMan>().startedRun) return;
-        
-        int i = 0;
-        foreach (var x in powerList)
-        {
-            PlayerPrefs.SetInt(x.Item1.ToString(),  x.Item2);
-            i++;
-
-            for (int a = 0; a < x.Item2; a++)
-            {
-                InsertPoint(x.Item1, -1);
-            }
-        }
-        
-
+         foreach (var x in powerList) PlayerPrefs.SetInt(x.Item1.ToString(),  x.Item2);
     }
+
 
     internal bool InsertPoint(MirrorBoon type, int choice)
     {
@@ -215,5 +169,20 @@ public class MirrorManager : PlayerAcess
         boon += 1 * choice;
     }
 
+    private void ResetMirror()
+    {
+        misSelector.additionalChance = 0;
+        missionChance = 0;
+
+        playerHP.ChangeMaxHP(50);
+        life = 0;
+
+        playerInv.weaponLevel = 0;
+        roomGen.weaponLevel = 0;
+        level = 0;
+
+        roomGen.mirrorBoonChance = 0;
+        boon = 0;
+    }
   
 }
