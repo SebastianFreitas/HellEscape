@@ -35,7 +35,6 @@ public class PathFloor : PathAux
 
     private void Start()
     {
-        SaveDificulty();
         adds.SetActive(isAdds);
         
         if (PlayerPrefs.HasKey("PathLevel"))
@@ -260,6 +259,6 @@ public class PathFloor : PathAux
 
     private void SaveDificulty()
     {
-        PlayerPrefs.SetInt("PathLevel", 0);
+        PlayerPrefs.SetInt("PathLevel", dificulty);
     }
 }
