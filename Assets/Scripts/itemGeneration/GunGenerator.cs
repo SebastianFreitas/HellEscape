@@ -36,11 +36,14 @@ public class GunGenerator : ModData
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
         var newMod = new Mod();
 
-
-        for (int i = 0; i < totalMods; i++)
+        if (!isBase)
         {
-            newMod = AddMod(maxLevel, ret);
+            for (int i = 0; i < totalMods; i++)
+            {
+                newMod = AddMod(maxLevel, ret);
+            }
         }
+
         ret.GenerateTotalDamage();
         return FinishWeaponText(ret);
     }

@@ -35,7 +35,7 @@ public class PathFloor : PathAux
 
     private void Start()
     {
-
+        SaveDificulty();
         adds.SetActive(isAdds);
         
         if (PlayerPrefs.HasKey("PathLevel"))
@@ -69,7 +69,7 @@ public class PathFloor : PathAux
                 SaveDificulty();
 
 
-                var x = Instantiate(mainBase, right.position, right.rotation, transform);
+                var x = Instantiate(mainBase, forward.position, forward.rotation, transform);
                 x.transform.parent = GetComponentInParent<Hub>().transform; 
                 victory = true;
 
@@ -81,15 +81,14 @@ public class PathFloor : PathAux
             else if (IsDivisible(maxSteps, 10))
             {
                 if(maxSteps<10 * dificulty) SpawnCombat(EncounterType.Hard);
-                else SpawnCombat(EncounterType.Easy);
+                else SpawnCombat(EncounterType.Normal);
             }
             else if (maxSteps > 0)
             {
-                PathFloor a = new PathFloor();
                 Transform b = forward;
 
                 var rando = Random.Range(0, 100);
-                if (rando > 101)//85
+                if (rando > 85)//
                 {
                     SpawnCombat(EncounterType.Easy);
                 }
@@ -101,7 +100,7 @@ public class PathFloor : PathAux
                         
                     }
 
-                    a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
+                    var a = Instantiate(path, b.position, b.rotation, transform) as PathFloor;
                     a.maxSteps = maxSteps - 1;
                     a.isAdds = false;
                     a.isFirst = false;
@@ -261,6 +260,6 @@ public class PathFloor : PathAux
 
     private void SaveDificulty()
     {
-        PlayerPrefs.SetInt("PathLevel", dificulty);
+        PlayerPrefs.SetInt("PathLevel", 0);
     }
 }

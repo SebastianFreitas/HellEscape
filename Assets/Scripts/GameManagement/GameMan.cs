@@ -83,7 +83,7 @@ public class GameMan : ModDataRoom
         currentStartPos = hub.statspos.position;
 
         player.GetComponent<PlayerHpManager>().HealForMax();
-        hub.ResetPath();
+       
     }
 
     private void PlacePlayerInCurrentRoom()
@@ -110,8 +110,9 @@ public class GameMan : ModDataRoom
         //player.GetComponent<CharacterController>().enabled = false;
         //player.transform.position = currentStartPos;
         //player.GetComponent<CharacterController>().enabled = true;
-
+        currentHub.RefreshHub();
         GoToHub();
+
 
     }
 

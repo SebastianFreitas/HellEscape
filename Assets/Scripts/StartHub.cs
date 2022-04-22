@@ -47,6 +47,10 @@ public class StartHub : MonoBehaviour
     {
         ui.SetActive(false);
         message.SetActive(true);
+        if (currentPath != null)
+        {
+            GameObject.Destroy(currentPath.gameObject);
+        }
 
     }
 }
