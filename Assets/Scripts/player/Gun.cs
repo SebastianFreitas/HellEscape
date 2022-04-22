@@ -154,21 +154,24 @@ public class Gun : MonoBehaviour
             targetPoint = ray.GetPoint(1000);
 
         pnt.transform.LookAt(targetPoint);
-        Transform realpos = fpsCam.transform;
-        realpos.LookAt(targetPoint);
+        var realpos = new GameObject();
+        //Transform realpos;// = fpsCam.transform;
+        realpos.transform.rotation = fpsCam.transform.rotation;
+        realpos.transform.position = fpsCam.transform.position;
+        realpos.transform.LookAt(targetPoint);
 
-        SpawnBullet(realpos);
+        SpawnBullet(realpos.transform);
 
         for (var i = 0; i < gun.baseBulletsPerShot - 1; i++) //shoot extra bullets
         {
             var pelletRot = realpos;
             var spread = 5f;
-            pelletRot.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
+            pelletRot.transform.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
-            SpawnBullet(pelletRot);
+            SpawnBullet(pelletRot.transform);
         }
 
-        if (gun.delayedBullet > 0) StartCoroutine(DelayedBullet(realpos));
+        if (gun.delayedBullet > 0) StartCoroutine(DelayedBullet(realpos.transform));
         StartCoroutine(waiter(attackRate));
     }
 
