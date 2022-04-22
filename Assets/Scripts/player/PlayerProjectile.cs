@@ -51,9 +51,6 @@ public class PlayerProjectile : MonoBehaviour
     internal void AwakeRemote()
     {
         newSizeMulti  = (1 + gun.increasedBulletSize / 100);
-        //transform.localScale = new Vector3(newSizeMulti, newSizeMulti, newSizeMulti);
-        //if (isSphere)  transform.GetComponent<SphereCollider>().radius *= newSizeMulti;
-        //else transform.GetComponent<BoxCollider>().size*= newSizeMulti;
 
         transform.localScale *= newSizeMulti;
 
@@ -94,7 +91,7 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void SetVisibility(bool onOff)
     {
-        //this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
+        this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
     }
 
     IEnumerator waiter(float a){
@@ -106,9 +103,9 @@ public class PlayerProjectile : MonoBehaviour
 
     IEnumerator fadeWaiter()
     {
-    SetVisibility(false);
-    yield return new WaitForSeconds(.005f);
-    SetVisibility(true);
+        SetVisibility(false);
+        yield return new WaitForSeconds(.055f);
+        SetVisibility(true);
     }
 
     void OnEnable()
