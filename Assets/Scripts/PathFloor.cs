@@ -8,7 +8,7 @@ public class PathFloor : PathAux
     private bool passed = false;
     [SerializeField] Transform[] nextSteps;
     [SerializeField] Transform forward;
-    [SerializeField] GameObject mainBase;
+    [SerializeField] internal GameObject mainBase;
 
     [SerializeField] PathFloor path;
     //[SerializeField] GameObject mainBaseUI;
@@ -32,8 +32,6 @@ public class PathFloor : PathAux
     [SerializeField] PathCombat[] combats;
 
     [SerializeField]  private SpikeTrap spikes;
-
-    private int encounterConter;
 
     private void Start()
     {
@@ -83,7 +81,7 @@ public class PathFloor : PathAux
             else if (IsDivisible(maxSteps, 10))
             {
                 if(maxSteps<10 * dificulty) SpawnCombat(EncounterType.Hard);
-                else SpawnCombat(EncounterType.Normal);
+                else SpawnCombat(EncounterType.Easy);
             }
             else if (maxSteps > 0)
             {
@@ -91,7 +89,7 @@ public class PathFloor : PathAux
                 Transform b = forward;
 
                 var rando = Random.Range(0, 100);
-                if (rando > 85)
+                if (rando > 101)//85
                 {
                     SpawnCombat(EncounterType.Easy);
                 }
@@ -251,6 +249,7 @@ public class PathFloor : PathAux
         {
             dificulty = PlayerPrefs.GetInt("PathLevel");
         }
+        else dificulty = 0;
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"),false);
     }

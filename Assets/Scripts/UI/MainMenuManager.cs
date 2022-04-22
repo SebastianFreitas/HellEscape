@@ -26,7 +26,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
-      // PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -43,7 +43,7 @@ public class MainMenuManager : MonoBehaviour
             SetVolume(PlayerPrefs.GetFloat("Volume"));
             volumeSlider.value = PlayerPrefs.GetFloat("Volume");
         }
-        else SetVolume(1);
+        else SetVolume(.3f);
 
         if (PlayerPrefs.HasKey("Sensitivity"))
         {
@@ -64,7 +64,7 @@ public class MainMenuManager : MonoBehaviour
             SetBrightness(PlayerPrefs.GetFloat("BRIGHT"));
             brightSlider.value = PlayerPrefs.GetFloat("BRIGHT");
         }
-        else SetBrightness(1);
+        else SetBrightness(.5f);
 
         ReadResolution();
     }
