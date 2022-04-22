@@ -7,6 +7,8 @@ public class PlayerHpManager : MonoBehaviour
 {
     private float health = 50;
     private float maxHealth = 50;
+
+    private float baseHealth = 50;
     public HealthBar hp;
     internal bool canTakeDamage = true;
     public PlayerSounds playerSounds;
@@ -83,6 +85,15 @@ public class PlayerHpManager : MonoBehaviour
     internal void HealForMax()
     {
         Heal((int)maxHealth);
+    }
+
+    internal void SetHPToBase()
+    {
+        hp.SetMaxHealth((int)baseHealth);
+        //hp.SetHealth((int) baseHealth);
+
+        maxHealth = baseHealth;
+        //health = baseHealth;
     }
 
     internal void ChangeMaxHP(int amount)

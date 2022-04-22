@@ -26,7 +26,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
 

@@ -10,6 +10,8 @@ public class StartHub : MonoBehaviour
 
     [SerializeField] GameObject ui;
 
+    [SerializeField] GameObject message;
+
     internal PathFloor currentPath;
     void Awake()
     {
@@ -33,5 +35,16 @@ public class StartHub : MonoBehaviour
     {
         StartPath();
         ui.SetActive(true);
+
+        foreach(Transform child in ui.transform) {
+            child.gameObject.SetActive(true);
+        }
+    }
+
+    internal void RefreshHub()
+    {
+        ui.SetActive(false);
+        message.SetActive(true);
+
     }
 }

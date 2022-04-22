@@ -174,7 +174,7 @@ public class MirrorManager : PlayerAcess
         misSelector.additionalChance = 0;
         missionChance = 0;
 
-        playerHP.ChangeMaxHP(50);
+        playerHP.SetHPToBase();
         life = 0;
 
         playerInv.weaponLevel = 0;

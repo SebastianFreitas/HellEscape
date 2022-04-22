@@ -234,7 +234,7 @@ public class PlayerProjectile : MonoBehaviour
     internal IEnumerator KillBullet()
     {
 
-        StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
+       // StartCoroutine(exp.GetComponent<KillObject>().WaitDie(3f));
         if (stats.fireDamage != 0 ) exp.transform.parent = null;
         
         trails.transform.parent = null;
