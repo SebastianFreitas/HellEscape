@@ -203,7 +203,7 @@ public class RoomGenerator : MonoBehaviour
 		playerInv = player.GetComponent<PlayerInventory>();
 		playerMov = player.GetComponent<PlayerBasicMovement>();
 
-
+		weaponLevel = playerInv.weaponLevel;
 		encounters.Add(new List<int> { 0, 0, 0, 0 });
 		encounters.Add(new List<int> { 0, 0, 0, 1 });
 		encounters.Add(new List<int> { 0, 0, 1, 1 });
@@ -415,7 +415,7 @@ public class RoomGenerator : MonoBehaviour
 
     private int counter = 0;
 	private bool started = false;
-	internal int weaponLevel = 9;
+	internal int weaponLevel;
     internal int mirrorLength = 0;
     internal float mirrorBoonChance = 0;
 

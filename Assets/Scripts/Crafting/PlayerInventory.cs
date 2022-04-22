@@ -58,9 +58,10 @@ public class PlayerInventory : MonoBehaviour
         inventoryUI.SetGunParts(gunParts.ToString());
     }
 
-    internal void UpdateEquipedGun()
+    internal void UpdateEquipedGun(GunOfAType gun)
     {
-        playerGun.SetBulletStats();
+        playerGun.SetGun(gun);
+       
     }
 
     internal int GetLayoutLength()

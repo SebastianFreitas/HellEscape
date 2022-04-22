@@ -24,8 +24,6 @@ public class SelectGun : MonoBehaviour
         {
             craftingTable.ReadWeapon(null, gun);
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
-            //craftingTable.EquipGun(gun, position);
-            //generatedGuns.SelectSlot(position);
         }
         else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
     }

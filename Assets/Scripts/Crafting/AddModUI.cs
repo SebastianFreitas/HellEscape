@@ -52,17 +52,18 @@ public class AddModUI : MonoBehaviour
             timesUsed++;
             craftingTable.UpdateCrafts();
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+
         }
         else if (x == -1)
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-            StartCoroutine(ExceptionMessage("Not ENough parts"));
+            StartCoroutine(ExceptionMessage("Not enough parts"));
             AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
         else
         {
             craftingTable.StartCoroutine(craftingTable.HighLightNot(meshes));
-            StartCoroutine(ExceptionMessage("full capacity"));
+            StartCoroutine(ExceptionMessage("Full capacity"));
             AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
         }
     }

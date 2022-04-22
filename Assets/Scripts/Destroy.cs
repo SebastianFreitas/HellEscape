@@ -67,7 +67,7 @@ public class Destroy : MonoBehaviour
         buttonText.text = x;
         areYouSure = true;
         isCoroutine = true;
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(.5f);
         isCoroutine = false;
         areYouSure = false;
         buttonText.text = labelText;

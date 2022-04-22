@@ -91,7 +91,6 @@ public class Inventory : GunGenerator
         }
     }
 
-
     private void OnEnable()
     {
 
@@ -150,9 +149,6 @@ public class Inventory : GunGenerator
         EquipWeaponShortcut(1);
 
     }
-
-
-
     void Start()
     {
 
@@ -255,6 +251,19 @@ public class Inventory : GunGenerator
 
         if (canBeLayout) return AddGunLayout(gun);
         else return true;
+    }
+
+    internal void EquipWeapon(GunOfAType gun)
+    {
+        int i = 1;
+        foreach (var item in slots)
+        {
+            if (gun == item.GetComponent<Slot>().gun)
+            {
+                EquipWeaponShortcut(i);
+            }
+            i++;
+        }
     }
 
     public bool AddGunLayout(GunOfAType gun)

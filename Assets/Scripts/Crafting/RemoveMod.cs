@@ -56,6 +56,7 @@ public class RemoveMod : MonoBehaviour
             timesUsed++;
             craftingTable.UpdateCrafts();
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+
         }
         else if (x == 2)
         {

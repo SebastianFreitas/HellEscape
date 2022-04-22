@@ -177,7 +177,7 @@ public class MirrorManager : PlayerAcess
         playerHP.SetHPToBase();
         life = 0;
 
-        playerInv.weaponLevel = 0;
+        playerInv.weaponLevel = 10;
         roomGen.weaponLevel = 0;
         level = 0;
 

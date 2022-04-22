@@ -39,8 +39,6 @@ public class CraftingDevice : GunGenerator
 
     public int weaponParts;
 
-
-
     public TMPro.TextMeshPro weaponPartsText;
 
     public PlayerInventory playerInventory;
@@ -55,7 +53,6 @@ public class CraftingDevice : GunGenerator
     public RemoveMod removeMod;
     public Destroy destroyGun;
     public GeneratedGuns slotGuns;
-    
 
     public bool isHub;
 
@@ -68,11 +65,8 @@ public class CraftingDevice : GunGenerator
         playerInventory = player.GetComponent<PlayerInventory>();
 
         slotGuns.SelectSlot(0);
-        //gun = CreateWeaponEmpty();
-
-        //slotGuns.GetGeneratedGuns();
-        //slotGuns.GetGunLayout();
     }
+
     internal int GetRemoveModPrice()
     {
         if (gun != null) return (gun.level - 9) * (gun.mods.Count + 1);
@@ -171,7 +165,7 @@ public class CraftingDevice : GunGenerator
         guntext.text = gun.text;
         weaponStats.UpdateUI();
         UpdateStats();
-        playerInventory.UpdateEquipedGun();
+        playerInventory.UpdateEquipedGun(gun);
         return 0;
     }
 
@@ -204,7 +198,7 @@ public class CraftingDevice : GunGenerator
                 worked = 1;
                 weaponStats.gun = gun;
                 UpdateStats();
-                playerInventory.UpdateEquipedGun();
+                playerInventory.UpdateEquipedGun(gun);
                 weaponStats.UpdateUI();
 
             }
@@ -322,6 +316,8 @@ public class CraftingDevice : GunGenerator
         UpdateStats();
         slotGuns.GetGunLayout();
         slotGuns.GetGeneratedGuns();
+
+        playerInventory.inventoryUI.EquipWeapon(gun);
     }
 
     public IEnumerator HighLight(MeshRenderer[] materials)
