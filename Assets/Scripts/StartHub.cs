@@ -16,6 +16,8 @@ public class StartHub : MonoBehaviour
     void Awake()
     {
         ui.SetActive(false);
+
+        transform.root.GetComponent<GameMan>().currentHub = this;
     }
 
     internal void StartPath()

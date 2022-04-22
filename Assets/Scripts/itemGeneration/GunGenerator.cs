@@ -317,6 +317,10 @@ public class GunGenerator : ModData
         if (gun.mods.Count == 0) return false;
         foreach (Mod mod in gun.mods)
         {
+            if((modifier.grade == Grade.special) && (mod.grade == Grade.special))
+            {
+                if ((mod.id > 6) && (modifier.id > 6)) return true;
+            }
             if (mod.id == modifier.id && mod.grade == modifier.grade) return true;
         }
         return false;

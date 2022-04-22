@@ -23,9 +23,13 @@ public class GameMan : ModDataRoom
 
     internal ModDataRoom.GeneratedMission mission;
 
+    internal StartHub currentHub;
+
     // Start is called before the first frame update
     void Start()
     {
+
+
         if (startAtHub)
         {
             hub.gameObject.SetActive(true);
@@ -56,7 +60,7 @@ public class GameMan : ModDataRoom
     internal bool startedRun = false;
     internal void ReturnToHub()
     {
-        hub.missionSelector.EnableSelector();
+        currentHub.RefreshHub();
         roomGen.Clean();
 
         roomGen.ApplyMissionToPlayer(false);

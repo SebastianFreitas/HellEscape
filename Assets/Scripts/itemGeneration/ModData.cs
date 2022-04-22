@@ -32,17 +32,12 @@ public class ModData : MonoBehaviour
                 new Mod(2,6,   "Poison Damage",             Grade.special, OperatorType.plus,      0,3),
                 new Mod(4,10,  "Physical Damage",           Grade.special, OperatorType.increased, 0,4),
                 new Mod(4,10,  "Critical Damage",           Grade.special, OperatorType.increased, 0,5),
+                new Mod(4,10,  "Delayed Shot",              Grade.special, OperatorType.non, 0,6),
 
-                new Mod(4,10,  "Horizontal Shot",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "Zero-gravity Shot",           Grade.special, OperatorType.non, 0,9),
-                new Mod(4,10,  "Delayed Shot",           Grade.special, OperatorType.non, 0,100),
-                new Mod(4,10,  "Piercing Shot",           Grade.special, OperatorType.non, 0,9),
-                //new Mod(4,10,  "double shot",           Grade.special, OperatorType.non, 0,9),
-                //new Mod(4,10,  "triple shot",           Grade.special, OperatorType.non, 0,9),
-                //new Mod(4,10,  "Circle",           Grade.special, OperatorType.non, 0,9),
-                //new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9),
-                //new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9),
-                //new Mod(4,10,  "",           Grade.special, OperatorType.non, 0,9)
+                new Mod(4,10,  "Horizontal Shot",           Grade.special, OperatorType.non, 0,7),
+                new Mod(4,10,  "Zero-gravity Shot",         Grade.special, OperatorType.non, 0,8),
+               
+                new Mod(4,10,  "Piercing Shot",             Grade.special, OperatorType.non, 0,9),
 
         };
 
@@ -51,7 +46,7 @@ public class ModData : MonoBehaviour
 
     public static int[] ExteriorWeight = { 3, 3, 1, 3, 3};  //
 
-    public static int[] SpecialWeight = { 30, 30, 30, 30, 20, 3, 5, 2, 3};// 1, 1, 1, 1, 1, 1 };
+    public static int[] SpecialWeight = { 30, 30, 30, 30, 20, 2, 5, 5, 5};// 1, 1, 1, 1, 1, 1 };
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
 

@@ -26,7 +26,7 @@ public class MissionSelector : ModDataRoom
 
     public GameObject portal;
 
-    public GameMan manager;
+    private GameMan manager;
 
     //public GameObject[] monitors;
     public MonitorMission[] missions;
@@ -45,6 +45,18 @@ public class MissionSelector : ModDataRoom
 
 
     [SerializeField] MirrorManager mirror;
+
+    private void Awake()
+    {
+        manager = transform.root.GetComponent<GameMan>();
+
+        foreach (MonitorMission mis in missions)
+        {
+
+            mis.gameObject.SetActive(false);
+        }
+
+    }
 
     private void OnEnable()
     {
@@ -100,7 +112,7 @@ public class MissionSelector : ModDataRoom
     internal bool startedRun = false;
     internal void StartSelectedMission()
     {
-        manager.startedRun = true;
+            manager.startedRun = true;
             manager.StartRun(mission);
     }
 
