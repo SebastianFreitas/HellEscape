@@ -17,8 +17,10 @@ public class PlayerHpManager : MonoBehaviour
 
     private GameMan manager;
     private ModDataRoom.GeneratedMission mission;
-    private bool isDashing;
+
+    private PlayerBasicMovement playerMov;
     private int invincibilityDurationSeconds;
+
 
     void Awake()
     {
@@ -27,7 +29,7 @@ public class PlayerHpManager : MonoBehaviour
         hp.SetMaxHealth((int)maxHealth);
 
 
-        isDashing = GetComponent<PlayerBasicMovement>().isSideDashing;
+        playerMov = GetComponent<PlayerBasicMovement>();//.isSideDashing;
     }
 
     private void OnEnable()
@@ -37,7 +39,7 @@ public class PlayerHpManager : MonoBehaviour
 
     public void TakeDamage(float amount)
    {
-        if (!canTakeDamage || isDashing) return;
+        if (!canTakeDamage || playerMov.isSideDashing) return;
      
 
         canTakeDamage = false;
@@ -45,18 +47,13 @@ public class PlayerHpManager : MonoBehaviour
         StartCoroutine(waiterImmunity());
         playerSounds.PlayTakeDamageSound();
 
+        Debug.LogError(amount + "damage taken");
+        Debug.LogError(health + "health");
+
         health -= amount;
 
-        Debug.LogError(amount);
         hp.SetHealth((int)health);
-        if (health <= 0f)
-        {
-            Die();
-
-            }
-
-           // if (health <= maxHealth * .3f) hp.ChangeToRed();
-        
+        if (health <= 0f) Die();
     }
 
     void BecomeTemporarilyInvincible()

@@ -123,21 +123,25 @@ public class CraftingDevice : GunGenerator
 
     public int DisassembleGun()
     {
-        if (gun.isBase) return 2;
-        if (playerInventory.GetGeneratedGunsLength() == 1) return 2;
-        if (playerInventory.GetLayoutLength() < 8)
+        if (gun != null)
         {
-            playerInventory.DisassembleGun(gun);
+            if (gun.isBase) return 2;
+            if (playerInventory.GetGeneratedGunsLength() == 1) return 2;
+            if (playerInventory.GetLayoutLength() < 8)
+            {
+                playerInventory.DisassembleGun(gun);
 
-            slotGuns.GetGunLayout();
-            slotGuns.GetGeneratedGuns();
+                slotGuns.GetGunLayout();
+                slotGuns.GetGeneratedGuns();
 
-            gun = null;
+                gun = null;
 
 
 
-        } else return 1;
-        return 0;
+            } else return 1;
+            return 0;
+        }
+        return 2;
     }
 
     internal int RemoveRandomMod(int timesUsed)
