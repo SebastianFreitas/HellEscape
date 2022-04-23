@@ -13,10 +13,11 @@ public class StartHub : MonoBehaviour
     [SerializeField] GameObject message;
 
     internal PathFloor currentPath;
+    [SerializeField] MissionSelector selector;
     void Awake()
     {
         ui.SetActive(false);
-
+        //selector = ;
         transform.root.GetComponent<GameMan>().currentHub = this;
     }
 
@@ -41,6 +42,8 @@ public class StartHub : MonoBehaviour
         foreach(Transform child in ui.transform) {
             child.gameObject.SetActive(true);
         }
+
+        GetComponentInChildren<MissionSelector>().EnableSelector();
     }
 
     internal void RefreshHub()

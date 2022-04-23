@@ -108,6 +108,12 @@ public class MissionSelector : ModDataRoom
 
         used = false;
         TurnGreen(meshSearchPath);
+
+        foreach (MonitorMission mis in missions)
+        {
+
+            mis.gameObject.SetActive(false);
+        }
     }
     internal bool startedRun = false;
     internal void StartSelectedMission()

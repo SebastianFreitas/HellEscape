@@ -91,7 +91,7 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void SetVisibility(bool onOff)
     {
-        this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
+       // this.GetComponentInChildren<TrailRenderer>().enabled = onOff;
     }
 
     IEnumerator waiter(float a){
@@ -150,7 +150,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             if (bounces > 0)
             {
-                SetVisibility(true);
+              
 
                 RicochetSparkAndSound();
                 rb.AddForce(contact.normal * bounceSpeed);

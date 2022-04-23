@@ -39,7 +39,7 @@ public class ModDataRoom : MonoBehaviour
         new Mod[]{
 
                 new Mod(1,5,   "Weapon level",              Grade.interior, OperatorType.plus,                       100,     4),
-                //new Mod(1,25,  "Mission length",            Grade.interior, OperatorType.plus,                       100,    5),
+                new Mod(1,10,  "Mission length",            Grade.interior, OperatorType.plus,                       100,    5),
             
                 new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        25,     7),
                 new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       100,    8),
@@ -134,7 +134,7 @@ public class ModDataRoom : MonoBehaviour
     {
         result.createPositives();
         string text = "";
-        //text += result.additionalBoons + " Boons Located" + "\n";
+        text += (result.totalLenght+ result.aditionalLength) + " Depth level" + "\n";
         text += result.increasedChanceElite + 5+ "% elite chance" + "\n";
         text += result.increasedChanceSpecialRooms+ 25 + "% special room chance" + "\n";
         text += (float)(1 + (((float)result.increasedMonsterDrops * 3) / 100)) + "% weapon drop chance" + "\n\n";//(float)(1 + (((float)result.increasedMonsterDrops * 3) / 100)) + "% weapon drop chance" + "\n\n";
@@ -333,7 +333,7 @@ public class ModDataRoom : MonoBehaviour
         public int increasedMonsterDrops       = 0;
         public int increasedChanceSpecialRooms = 0;
         public int increasedChanceElite        = 0;
-
+        public int totalLenght;
         public int encounterMobCount = 4;
 
         public int level = 0;
@@ -375,7 +375,7 @@ public class ModDataRoom : MonoBehaviour
 
             increasedMonsterDrops       = mods.Count * 2 + Random.Range(1, mods.Count * 2) * dropModifier;
             increasedChanceElite        = mods.Count + Random.Range(1, mods.Count);
-
+            totalLenght = Random.Range(10, 20);
 
         }
     }
