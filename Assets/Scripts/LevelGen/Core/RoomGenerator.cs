@@ -356,17 +356,26 @@ public class RoomGenerator : MonoBehaviour
         int i = 0;
         while (true)
         {
-            var rando = Random.Range(0, placedSideRooms.Count);
-            if (!done.Contains(rando))
+            //var rando = Random.Range(0, placedSideRooms.Count);
+            //if (!done.Contains(rando))
+            //{
+            //    done.Add(rando);
+            //    i++;
+            //    if (ChangeToNextMain(placedSideRooms[rando])) break;
+            //}
+
+			if (i >= placedSideRooms.Count) break;
+
+
+            for (int a = 0; a < mainTypeList.Count; a++)
             {
-                done.Add(rando);
-                i++;
-                if (ChangeToNextMain(placedSideRooms[rando])) break;
-            }
+				if (ChangeToNextMain(placedSideRooms[i])) i += Random.Range(5, 10);
+				else i++; 
+			}
         }
     }
 
-    private List<RoomActivator.MainType> mainTypeList =  new List<RoomActivator.MainType>() {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.redOrBlue };
+    private List<RoomActivator.MainType> mainTypeList =  new List<RoomActivator.MainType>() {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop };
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {
@@ -374,7 +383,7 @@ public class RoomGenerator : MonoBehaviour
 		room.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Main;
 		mainCounter++;
 
-		if (mainCounter >= System.Enum.GetValues(typeof(RoomActivator.MainType)).Length -1)
+		if (mainCounter >=mainTypeList.Count) //  System.Enum.GetValues(typeof(RoomActivator.MainType)).Length -1
 		{
 			mainCounter = 0;
 			return true;

@@ -150,7 +150,7 @@ public class PlayerBasicMovement : MonoBehaviour
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
 
-        currentSpeed = (speed + SpeedIncrease()) *(1 + increasedSpeed / 100);
+        currentSpeed = (speed) *(1 + increasedSpeed / 100);
 
         controller.Move(move * currentSpeed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);
