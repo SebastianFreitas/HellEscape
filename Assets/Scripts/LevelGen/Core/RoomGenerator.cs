@@ -366,7 +366,6 @@ public class RoomGenerator : MonoBehaviour
 
 			if (i >= placedSideRooms.Count) break;
 
-
             for (int a = 0; a < mainTypeList.Count; a++)
             {
 				if (ChangeToNextMain(placedSideRooms[i])) i += Random.Range(5, 10);
