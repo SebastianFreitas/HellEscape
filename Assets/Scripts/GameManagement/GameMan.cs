@@ -62,7 +62,7 @@ public class GameMan : ModDataRoom
     {
         currentHub.RefreshHub();
         roomGen.Clean();
-
+        startedRun = false;
         roomGen.ApplyMissionToPlayer(false);
         GoToHub();
 
