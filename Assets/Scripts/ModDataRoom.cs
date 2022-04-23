@@ -69,11 +69,12 @@ public class ModDataRoom : MonoBehaviour
 
 
 
-    public GeneratedMission CreateMission()
+    public GeneratedMission CreateMission(int maxMods)
     {
         GeneratedMission result = new GeneratedMission();
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
 
+        if (totalMods > maxMods) totalMods = maxMods;
 
         for(int i = 0; i<totalMods; i++) AddMod(result);
 

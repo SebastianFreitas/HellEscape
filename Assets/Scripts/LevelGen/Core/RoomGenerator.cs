@@ -59,7 +59,7 @@ public class RoomGenerator : MonoBehaviour
 		WaitForSeconds startup = new WaitForSeconds(.2f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
 
-
+		weaponLevel = playerInv.weaponLevel;
 		player.SetActive(false);
 		yield return startup;
 		Clean();
@@ -203,7 +203,7 @@ public class RoomGenerator : MonoBehaviour
 		playerInv = player.GetComponent<PlayerInventory>();
 		playerMov = player.GetComponent<PlayerBasicMovement>();
 
-		weaponLevel = playerInv.weaponLevel;
+
 		encounters.Add(new List<int> { 0, 0, 0, 0 });
 		encounters.Add(new List<int> { 0, 0, 0, 1 });
 		encounters.Add(new List<int> { 0, 0, 1, 1 });

@@ -34,9 +34,11 @@ public class MonitorMission : ModDataRoom
         selector.TurnBlue(meshesGood);
     }
 
-    internal void RefreshMission()
+  
+
+    internal void RefreshMission(int maxMods)
     {
-        mission = CreateMission();
+        mission = CreateMission(maxMods);
         textGood.text = mission.goodText;
         textBad.text = mission.badText;
     }

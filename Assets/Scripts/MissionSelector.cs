@@ -23,6 +23,7 @@ public class MissionSelector : ModDataRoom
     public Material red;
 
     internal GeneratedMission mission = null;
+    internal int maxMods = 0;
 
     public GameObject portal;
 
@@ -196,7 +197,7 @@ public class MissionSelector : ModDataRoom
                     {
 
                         mis.gameObject.SetActive(true);
-                        mis.RefreshMission();
+                        mis.RefreshMission(1 + maxMods);
                         
                         AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
                         cantFind = false;
@@ -212,7 +213,7 @@ public class MissionSelector : ModDataRoom
         if (!missions[0].isActiveAndEnabled)
         {
             missions[0].gameObject.SetActive(true);
-            missions[0].RefreshMission();
+            missions[0].RefreshMission(1 + maxMods);
             AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
         }
     }

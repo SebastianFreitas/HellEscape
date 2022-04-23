@@ -8,13 +8,15 @@ public class MirrorManager : PlayerAcess
 
     [SerializeField] TMPro.TextMeshPro lifeText;
     [SerializeField] TMPro.TextMeshPro boonText;
-    [SerializeField] TMPro.TextMeshPro lengthText;
+    [SerializeField] TMPro.TextMeshPro missionChanceText;
+    [SerializeField] TMPro.TextMeshPro missionTotalModsText;
     [SerializeField] TMPro.TextMeshPro levelText;
 
     int life = 0;
     int boon = 0;
     internal float missionChance = 0;
     int level = 0;
+    int maxMods = 0;
 
     [SerializeField] TMPro.TextMeshPro availablePoints;
 
@@ -34,8 +36,9 @@ public class MirrorManager : PlayerAcess
 
         lifeText.text = $"+{life} Max life";
         boonText.text = $"+{boon}% Boon drop chance";
-        lengthText.text = $"+{missionChance}% chance to locate paths";
         levelText.text = $"+{level} item drop level";
+        missionChanceText.text = $"+{missionChance}% chance to locate paths";
+        missionTotalModsText.text = $"+{maxMods} maximum path mods";
     }
 
     internal enum MirrorBoon
@@ -44,6 +47,7 @@ public class MirrorManager : PlayerAcess
         MaxLife,
         MissionChance,
         ItemLevel,
+        MissionMaxMods,
         BoonChance
     }
 
@@ -51,7 +55,8 @@ public class MirrorManager : PlayerAcess
         (MirrorBoon.BoonChance, 0),
         (MirrorBoon.MissionChance, 0),
         (MirrorBoon.ItemLevel, 0),
-        (MirrorBoon.MaxLife, 0)
+        (MirrorBoon.MaxLife, 0),
+        (MirrorBoon.MissionMaxMods, 0)
     };
 
     private int currentPoints;
@@ -103,33 +108,35 @@ public class MirrorManager : PlayerAcess
             return false;
         }
 
+        var worked = false;
 
         switch (type)
         {
             case MirrorBoon.BoonChance:
-                powerList[0].Item2 += choice;
-                BoonChance(choice);
+                
+                worked = BoonChance(choice);
                 break;
 
             case MirrorBoon.ItemLevel:
-                powerList[2].Item2 += choice;
-                ItemLevel(choice);
+
+                worked = ItemLevel(choice);
                 break;
 
             case MirrorBoon.MaxLife:
-                powerList[3].Item2 += choice;
-                MaxLife(choice);
+
+                worked = MaxLife(choice);
                 break;
 
             case MirrorBoon.MissionChance:
-                powerList[1].Item2 += choice;
-                MissionChance(choice);
+
+                worked = MissionChance(choice);
                 break;
-            case MirrorBoon.nope:
+            case MirrorBoon.MissionMaxMods:
+                worked = MissionMaxMods(choice);
                 break;
         }
         UpdateUI();
-        return true;
+        return worked;
     }
 
     private int GetPowerList(MirrorBoon type)
@@ -142,31 +149,81 @@ public class MirrorManager : PlayerAcess
         return -1;
     }
 
-    private void MissionChance(int choice)
+
+    private bool MissionMaxMods(int choice)
     {
-        misSelector.additionalChance += 1 * choice;
-        missionChance += 1 * choice;   
+        var worked = false;
+        if ((powerList[4].Item2 <= 5 && choice > 0) || (choice < 0))
+        {
+            misSelector.maxMods += choice;
+            maxMods += choice;
+            powerList[4].Item2 += choice;
+            worked = true;
+        }
+        return worked;
     }
 
-    private void MaxLife(int choice)
-    {      
 
-        playerHP.ChangeMaxHP(5 * choice);
-        life += 5 * choice;
+    private bool MissionChance(int choice)
+    {
+        var worked = false;
+        if ((powerList[1].Item2 <= 20 && choice > 0) || ( choice < 0))
+        {
+            misSelector.additionalChance +=  3*choice;
+            missionChance +=  3*choice;
+            powerList[1].Item2 +=3* choice;
+            worked = true;
+        }
+        return worked;
+    }
+
+    private bool MaxLife(int choice)
+    {
+
+        var worked = false;
+        if ((powerList[3].Item2 <= 45 && choice > 0) || (choice < 0))
+        {
+
+            playerHP.ChangeMaxHP(5 * choice);
+            life += 5 * choice;
+            powerList[3].Item2 += 5 * choice;
+
+            worked = true;
+        }
+        return worked;
+
 
     }
 
-    private void ItemLevel(int choice)
+    private bool ItemLevel(int choice)
     {
-        playerInv.weaponLevel += 1 * choice;
-        roomGen.weaponLevel += 1 * choice;
-        level += 1 * choice;
+
+        var worked = false;
+        if ((powerList[2].Item2 <= 50 && choice > 0) || (choice < 0))
+        {
+
+            playerInv.weaponLevel +=  choice;
+            level +=  choice;
+            powerList[2].Item2 += choice;
+            worked = true;
+        }
+        return worked;
+
     }
 
-    private void BoonChance(int choice)
+    private bool BoonChance(int choice)
     {
-        roomGen.mirrorBoonChance += 1 * choice;
-        boon += 1 * choice;
+        var worked = false;
+        if ((powerList[0].Item2 <= 100 && choice > 0) || (choice < 0))
+        {
+
+            roomGen.mirrorBoonChance += choice;
+            boon +=  choice;
+            powerList[0].Item2 += choice;
+            worked = true;
+        }
+        return worked;
+
     }
 
     private void ResetMirror()
@@ -178,7 +235,6 @@ public class MirrorManager : PlayerAcess
         life = 0;
 
         playerInv.weaponLevel = 10;
-        roomGen.weaponLevel = 0;
         level = 0;
 
         roomGen.mirrorBoonChance = 0;
