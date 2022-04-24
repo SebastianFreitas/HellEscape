@@ -356,18 +356,19 @@ public class RoomGenerator : MonoBehaviour
         int i = 0;
         while (true)
         {
-            //var rando = Random.Range(0, placedSideRooms.Count);
-            //if (!done.Contains(rando))
-            //{
-            //    done.Add(rando);
-            //    i++;
-            //    if (ChangeToNextMain(placedSideRooms[rando])) break;
-            //}
+			//var rando = Random.Range(0, placedSideRooms.Count);
+			//if (!done.Contains(rando))
+			//{
+			//    done.Add(rando);
+			//    i++;
+			//    if (ChangeToNextMain(placedSideRooms[rando])) break;
+			//}
 
 			if (i >= placedSideRooms.Count) break;
 
-            for (int a = 0; a < mainTypeList.Count; a++)
+			for (int a = 0; a < mainTypeList.Count; a++)
             {
+				if (i >= placedSideRooms.Count) break;
 				if (ChangeToNextMain(placedSideRooms[i])) i += Random.Range(5, 10);
 				else i++; 
 			}
