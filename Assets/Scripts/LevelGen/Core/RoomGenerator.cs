@@ -336,9 +336,11 @@ public class RoomGenerator : MonoBehaviour
                     {
                         x.isSideRoom = true;
                         var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
-                        if (Random.Range(1f, 100f) > 100 - specialRoomChance) room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Special;
-                        else room.transform.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Encounter;
-                    }
+                        if (Random.Range(1f, 100f) > 100 - specialRoomChance) x.roomType = RoomActivator.RoomType.Special;
+                        else x.roomType = RoomActivator.RoomType.Encounter;
+
+						x.UpdateSymbolRoomType();
+					}
 
 
                     break;
@@ -353,17 +355,9 @@ public class RoomGenerator : MonoBehaviour
     private void CreateMainRooms()
     {
         List<int> done = new List<int>();
-        int i = 0;
+        int i = Random.Range(0,5);
         while (true)
         {
-			//var rando = Random.Range(0, placedSideRooms.Count);
-			//if (!done.Contains(rando))
-			//{
-			//    done.Add(rando);
-			//    i++;
-			//    if (ChangeToNextMain(placedSideRooms[rando])) break;
-			//}
-
 			if (i >= placedSideRooms.Count) break;
 
 			for (int a = 0; a < mainTypeList.Count; a++)
@@ -379,16 +373,22 @@ public class RoomGenerator : MonoBehaviour
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {
-		room.GetComponentInChildren<RoomActivator>().mainType = mainTypeList[mainCounter];
-		room.GetComponentInChildren<RoomActivator>().roomType = RoomActivator.RoomType.Main;
-		mainCounter++;
 
-		if (mainCounter >=mainTypeList.Count) //  System.Enum.GetValues(typeof(RoomActivator.MainType)).Length -1
+
+		if (mainCounter >= mainTypeList.Count) //  System.Enum.GetValues(typeof(RoomActivator.MainType)).Length -1
 		{
 			mainCounter = 0;
 			return true;
 		}
-		else return false;
+		else
+		{
+            var activator = room.GetComponentInChildren<RoomActivator>();
+            activator.mainType = mainTypeList[mainCounter];
+            activator.roomType = RoomActivator.RoomType.Main;
+            activator.UpdateSymbolMainType();
+            mainCounter++;
+            return false;
+		}
     }
 
     private bool PlaceCorridor(int length)

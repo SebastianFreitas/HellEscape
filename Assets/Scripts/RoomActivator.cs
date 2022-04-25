@@ -314,6 +314,8 @@ public class RoomActivator : MonoBehaviour
         //if(roomgen.encounterCounter < roomgen.encounters.Count) roomgen.encounterCounter++;
     }
 
+
+
     private void SpawnBoss()
     {
         SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true,1);
@@ -364,6 +366,23 @@ public class RoomActivator : MonoBehaviour
         if (Random.Range(1f, 100f) > 100 - roomgen.mirrorBoonChance)
         {
             Instantiate(roomgen.itemRoom, spawnPos.position + Vector3.back, spawnPos.rotation, transform);
+        }
+    }
+
+    internal void UpdateSymbolMainType()
+    {
+        foreach (GameObject door in doorMesh)
+        {
+            door.SetActive(true);
+            door.GetComponentInChildren<DoorSymbolManager>().UpdateSymbolMainType(mainType);
+        }
+    }
+    internal void UpdateSymbolRoomType()
+    {
+        foreach (GameObject door in doorMesh)
+        {
+            door.SetActive(true);
+            door.GetComponentInChildren<DoorSymbolManager>().UpdateSymbolRoomType(roomType);
         }
     }
 
