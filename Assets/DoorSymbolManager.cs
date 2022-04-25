@@ -16,6 +16,7 @@ public class DoorSymbolManager : MonoBehaviour
             child.gameObject.SetActive(false);
         }
 
+        //transform.parent.gameObject.SetActive(true);
 
         switch (type)
         {
@@ -48,6 +49,8 @@ public class DoorSymbolManager : MonoBehaviour
             child.gameObject.SetActive(false);
         }
 
+        //transform.parent.gameObject.SetActive(true);
+
         switch (roomType)
         {
             case RoomActivator.RoomType.Boss:
@@ -58,6 +61,7 @@ public class DoorSymbolManager : MonoBehaviour
 
             case RoomActivator.RoomType.Encounter:
                 {
+                    
                     encounter.SetActive(true);
                     break;
                 }

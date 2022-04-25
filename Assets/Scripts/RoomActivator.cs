@@ -346,9 +346,9 @@ public class RoomActivator : MonoBehaviour
         Bounds bounds = rawBounds;
         bounds.size /= 2;
         return new Vector3(
-        Random.Range(bounds.min.x, bounds.max.x),
-        Random.Range(bounds.min.y, bounds.max.y),
-        Random.Range(bounds.min.z, bounds.max.z)
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            Random.Range(bounds.min.z, bounds.max.z)
         );
     }
 
@@ -369,16 +369,20 @@ public class RoomActivator : MonoBehaviour
         }
     }
 
-    internal void UpdateSymbolMainType()
+    internal IEnumerator UpdateSymbolMainType()
     {
+        yield return new WaitForSecondsRealtime(1f);
+
         foreach (GameObject door in doorMesh)
         {
             door.SetActive(true);
             door.GetComponentInChildren<DoorSymbolManager>().UpdateSymbolMainType(mainType);
         }
     }
-    internal void UpdateSymbolRoomType()
+    internal IEnumerator UpdateSymbolRoomType()
     {
+        yield return new WaitForSecondsRealtime(1f);
+
         foreach (GameObject door in doorMesh)
         {
             door.SetActive(true);

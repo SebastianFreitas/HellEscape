@@ -338,9 +338,8 @@ public class RoomGenerator : MonoBehaviour
                         var specialRoomChance = 25 + mission.increasedChanceSpecialRooms;
                         if (Random.Range(1f, 100f) > 100 - specialRoomChance) x.roomType = RoomActivator.RoomType.Special;
                         else x.roomType = RoomActivator.RoomType.Encounter;
-
-						x.UpdateSymbolRoomType();
-					}
+                        StartCoroutine(x.UpdateSymbolRoomType());
+                    }
 
 
                     break;
@@ -385,7 +384,7 @@ public class RoomGenerator : MonoBehaviour
             var activator = room.GetComponentInChildren<RoomActivator>();
             activator.mainType = mainTypeList[mainCounter];
             activator.roomType = RoomActivator.RoomType.Main;
-            activator.UpdateSymbolMainType();
+            StartCoroutine( activator.UpdateSymbolMainType());
             mainCounter++;
             return false;
 		}
