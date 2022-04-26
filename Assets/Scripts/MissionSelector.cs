@@ -46,6 +46,7 @@ public class MissionSelector : ModDataRoom
 
 
     [SerializeField] MirrorManager mirror;
+    [SerializeField] internal GameObject openPortal;
 
     private void Awake()
     {
@@ -62,6 +63,8 @@ public class MissionSelector : ModDataRoom
     private void OnEnable()
     {
         beenLong = true;
+
+
     }
     internal void OpenPortal()
     {
@@ -104,8 +107,9 @@ public class MissionSelector : ModDataRoom
     internal void EnableSelector()
     {
 
-
+        mission = null;
         buttons.SetActive(true);
+        openPortal.SetActive(false);
 
         used = false;
         TurnGreen(meshSearchPath);
@@ -166,7 +170,7 @@ public class MissionSelector : ModDataRoom
     internal float additionalChance = 0;
     internal IEnumerator SearchPath()
     {
-        manager.startedRun = true;
+       // manager.startedRun = true;
         mirror.gameObject.SetActive(false);
 
         if (!used)

@@ -7,7 +7,7 @@ public class MonitorMission : ModDataRoom
 {
     internal GeneratedMission mission;
 
-    internal MissionSelector selector;
+    [SerializeField] MissionSelector selector;
 
     public MeshRenderer[] meshesGood;
     public MeshRenderer[] meshesBad;
@@ -17,16 +17,18 @@ public class MonitorMission : ModDataRoom
 
     private void Start()
     {
-        selector = GetComponentInParent<MissionSelector>();
+        //selector = GetComponentInParent<MissionSelector>();
 
         UIUnselect();
     }
+
 
     public void UISelect()
     {
         selector.TurnGreen(meshesGood);
 
         selector.mission = mission;
+        selector.openPortal.SetActive(true);
     }
 
     internal void UIUnselect()
@@ -41,5 +43,6 @@ public class MonitorMission : ModDataRoom
         mission = CreateMission(maxMods);
         textGood.text = mission.goodText;
         textBad.text = mission.badText;
+        UIUnselect();
     }
 }

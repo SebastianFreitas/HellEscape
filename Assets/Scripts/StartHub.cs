@@ -39,14 +39,15 @@ public class StartHub : MonoBehaviour
         StartPath();
         ui.SetActive(true);
 
-        if (!transform.root.GetComponent<GameMan>().startedRun)
+        if (transform.root.GetComponent<GameMan>().startedRun)
         {
-            foreach(Transform child in ui.transform) {
+            foreach (Transform child in ui.transform)
+            {
                 child.gameObject.SetActive(true);
             }
 
             GetComponentInChildren<MissionSelector>().EnableSelector();
-
+            transform.root.GetComponent<GameMan>().startedRun = false;
         }
 
 

@@ -62,7 +62,7 @@ public class PathFloor : PathAux
 
             if (maxSteps == 0)
             {
-                transform.root.GetComponent<GameMan>().startedRun = true;
+               transform.root.GetComponent<GameMan>().startedRun = true;
                 maxSteps--;
                 dificulty++;
                 SaveDificulty();

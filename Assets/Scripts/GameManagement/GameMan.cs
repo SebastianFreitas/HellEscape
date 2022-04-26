@@ -62,7 +62,7 @@ public class GameMan : ModDataRoom
     {
         currentHub.RefreshHub();
         roomGen.Clean();
-        startedRun = false;
+
         roomGen.ApplyMissionToPlayer(false);
         GoToHub();
 
@@ -107,10 +107,6 @@ public class GameMan : ModDataRoom
 
     internal void VoidPlayer()
     {
-        //player.GetComponent<CharacterController>().enabled = false;
-        //player.transform.position = currentStartPos;
-        //player.GetComponent<CharacterController>().enabled = true;
-        currentHub.RefreshHub();
         GoToHub();
 
 

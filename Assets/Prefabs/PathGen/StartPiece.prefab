@@ -5740,6 +5740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9224c63d7dd142745a4c6d9f02ae797b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 5430306716738253705}
   meshesGood:
   - {fileID: 5089341207357286844}
   - {fileID: 7583963048293010012}
@@ -6440,6 +6441,7 @@ MonoBehaviour:
   - {fileID: 5430306717959539941}
   click: {fileID: 8300000, guid: aa2f6c43ba43ff34b839e95da6168fed, type: 3}
   mirror: {fileID: 4993314860894369317}
+  openPortal: {fileID: 5430306717112261694}
   buttons: {fileID: 5430306716738253704}
 --- !u!82 &5430306716738253707
 AudioSource:
@@ -6584,6 +6586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9224c63d7dd142745a4c6d9f02ae797b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 5430306716738253705}
   meshesGood:
   - {fileID: 5430306717277246012}
   - {fileID: 5430306718105508699}
@@ -7341,12 +7344,12 @@ GameObject:
   - component: {fileID: 5430306717112261689}
   - component: {fileID: 5430306717112261688}
   m_Layer: 8
-  m_Name: Load Path
+  m_Name: Open Portal
   m_TagString: StartMission
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 65
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5430306717112261695
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7429,7 +7432,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Engage path
+  m_text: Open Portal
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6d3961683cf2a4f4285b6b6328e3d6b5, type: 2}
   m_sharedMaterial: {fileID: 4523335791939737096, guid: 6d3961683cf2a4f4285b6b6328e3d6b5, type: 2}
@@ -7621,6 +7624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9224c63d7dd142745a4c6d9f02ae797b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 5430306716738253705}
   meshesGood:
   - {fileID: 5430306716395946841}
   - {fileID: 5430306716652643428}
@@ -9100,6 +9104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9224c63d7dd142745a4c6d9f02ae797b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 5430306716738253705}
   meshesGood:
   - {fileID: 5430306716582330417}
   - {fileID: 5430306717581853800}
@@ -9426,6 +9431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9224c63d7dd142745a4c6d9f02ae797b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 5430306716738253705}
   meshesGood:
   - {fileID: 5430306717288695056}
   - {fileID: 5430306717433928402}
@@ -14034,6 +14040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9224c63d7dd142745a4c6d9f02ae797b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selector: {fileID: 5430306716738253705}
   meshesGood:
   - {fileID: 3213223329066480092}
   - {fileID: 4456291951813848444}
