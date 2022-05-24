@@ -26,11 +26,9 @@ public class BridgeHandler : MonoBehaviour
             child.gameObject.SetActive(true);
             if (Random.Range(1, 101) > 75) child.gameObject.SetActive(false);
         }
-
-        SpawnMonsters();
     }
 
-    private void SpawnMonsters()
+    internal void SpawnMonsters()
     {
         for (int i = 0; i < 2; i++)
         {
@@ -71,6 +69,7 @@ public class BridgeHandler : MonoBehaviour
                 nextPiece.transform.parent = transform.parent;
                 distance--;
                 nextPiece.SetDistance(distance--);
+                nextPiece.SpawnMonsters();
             }
 
             TurnOfLights();

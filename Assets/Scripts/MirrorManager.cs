@@ -135,6 +135,8 @@ public class MirrorManager : PlayerAcess
                 worked = MissionMaxMods(choice);
                 break;
         }
+
+        if (!worked) currentPoints++;
         UpdateUI();
         return worked;
     }
