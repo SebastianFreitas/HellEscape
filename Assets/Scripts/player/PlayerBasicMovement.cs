@@ -101,7 +101,7 @@ public class PlayerBasicMovement : MonoBehaviour
         if (velocity.y < -15)
         {
             fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
-            velocity.y += -.2f;
+            //velocity.y += -.2f;
         }
 
         if (!isGroundedOlder && isGrounded && fallingAtSomeSpeed)

@@ -47,12 +47,9 @@ public class Skull : Monster
 
         base.rigidBody.AddForce((randomHeight + direction_to_player) * Random.Range(minJumpForce, maxJumpForce) * forceSpeed);
 
-
         yield return new WaitForSeconds(finalWaitTime);
 
         StartCoroutine(randomJump());
-
-
     }
 
   

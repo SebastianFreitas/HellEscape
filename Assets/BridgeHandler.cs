@@ -10,6 +10,7 @@ public class BridgeHandler : MonoBehaviour
 
     [SerializeField] List<BridgeHandler> pieces;
     [SerializeField] GameObject meshPieces;
+    [SerializeField] GameObject lights;
     [SerializeField] Transform nextPosition;
 
     [SerializeField] List<Monster> monsters;
@@ -60,10 +61,10 @@ public class BridgeHandler : MonoBehaviour
             else
             {
                 Vector3 randomizer = new Vector3(Random.Range(-10f,10f), Random.Range(-5f, 5f), Random.Range(-2f, 10f));
-                Vector3 randomizerAngle = new Vector3(Random.Range(-30f, 30f), Random.Range(-30f,30f), Random.Range(-30f, 30f));
+                Vector3 randomizerAngle = new Vector3(Random.Range(-20f, 20f), Random.Range(-20f,20f), Random.Range(-20f, 20f));
                 Quaternion rotation;
 
-                if (Random.Range(0, 100) > 65)  rotation = Quaternion.identity * Quaternion.Euler(randomizerAngle);
+                if (Random.Range(0, 100) > 50)  rotation = Quaternion.identity * Quaternion.Euler(randomizerAngle);
                 else                            rotation = nextPosition.rotation * Quaternion.Euler(randomizerAngle);
 
                 var nextPiece = Instantiate(pieces[Random.Range(0, pieces.Count)], nextPosition.position + randomizer, rotation); //Random.Range(0, pieces.Count -1)
@@ -72,6 +73,15 @@ public class BridgeHandler : MonoBehaviour
                 nextPiece.SetDistance(distance--);
             }
 
+            TurnOfLights();
+        }
+    }
+
+    private void TurnOfLights()
+    {
+        foreach (Transform child in lights.transform)
+        {
+            child.gameObject.SetActive(false);
         }
     }
 
