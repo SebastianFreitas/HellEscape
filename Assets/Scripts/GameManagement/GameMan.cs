@@ -21,6 +21,8 @@ public class GameMan : ModDataRoom
 
     [SerializeField] PathFloor path;
 
+    //[SerializeField] GameObject player;
+
     internal ModDataRoom.GeneratedMission mission;
 
     internal StartHub currentHub;

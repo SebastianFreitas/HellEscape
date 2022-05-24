@@ -33,7 +33,7 @@ public class BridgeHandler : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
-            Instantiate(monsters[0], vector, Quaternion.identity, transform);
+            Instantiate(monsters[Random.Range(0,monsters.Count)], vector, Quaternion.identity, transform);
         }
     }
 
