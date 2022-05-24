@@ -290,14 +290,6 @@ public class RoomActivator : MonoBehaviour
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
 
-            //if (roomgen.encounterCounter >= roomgen.encounters.Count) x = Random.Range(0,3);
-            //else
-            //{
-            //    x = roomgen.encounters[Random.Range(0,roomgen.encounters.Count)][index];
-            //    index++;
-            //    if (index == 4) index = 0;
-            //}
-
             x = roomgen.encounters[Random.Range(0, roomgen.encounters.Count)][index];
             index++;
             if (index == 4) index = 0;

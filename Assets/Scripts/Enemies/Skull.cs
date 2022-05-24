@@ -35,7 +35,7 @@ public class Skull : Monster
     
     IEnumerator randomJump()
     {
-
+        transform.LookAt(player.transform);
         Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized;

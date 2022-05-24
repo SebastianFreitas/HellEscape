@@ -12,15 +12,29 @@ public class BridgeHandler : MonoBehaviour
     [SerializeField] GameObject meshPieces;
     [SerializeField] Transform nextPosition;
 
+    [SerializeField] List<Monster> monsters;
+
     [SerializeField] internal GameObject mainBase;
     void Start()
     {
         if (PlayerPrefs.HasKey("PathLevel")) dificulty = PlayerPrefs.GetInt("PathLevel");
+        else SaveDificulty();
         
         foreach(Transform child in meshPieces.transform)
         {
             child.gameObject.SetActive(true);
             if (Random.Range(1, 101) > 75) child.gameObject.SetActive(false);
+        }
+
+        SpawnMonsters();
+    }
+
+    private void SpawnMonsters()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
+            Instantiate(monsters[0], vector, Quaternion.identity, transform);
         }
     }
 
@@ -80,5 +94,16 @@ public class BridgeHandler : MonoBehaviour
         else dificulty = 0;
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
+    }
+
+    private Vector3 RandomPointInBounds(Bounds rawBounds)
+    {
+        Bounds bounds = rawBounds;
+        bounds.size /= 2;
+        return new Vector3(
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            Random.Range(bounds.min.z, bounds.max.z)
+        );
     }
 }

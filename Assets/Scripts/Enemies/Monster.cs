@@ -36,7 +36,7 @@ public class Monster : MonoBehaviour
     internal bool isElite = false;
     internal RoomActivator roomActivator;
     internal ModDataRoom.GeneratedMission mission;
-    internal PathFloor path;
+    internal BridgeHandler path;
 
     private PlayerBasicMovement playerMov;
     private PlayerHpManager playerHP;
@@ -67,8 +67,7 @@ public class Monster : MonoBehaviour
         else
         {
             mission = new ModDataRoom.GeneratedMission();
-            path = GetComponentInParent<PathFloor>();
-            level = path.dificulty;
+            level = PlayerPrefs.GetInt("PathLevel");
             UpdateStatsToLevel();
         }
 
@@ -257,7 +256,6 @@ public class Monster : MonoBehaviour
             }
 
             if (!isFiller && !isHub)roomActivator.IsEncounterDone();
-            if (isHub) GetComponentInParent<PathCombat>().IsEncounterDone();
             Drop();
         }
         died = true;
