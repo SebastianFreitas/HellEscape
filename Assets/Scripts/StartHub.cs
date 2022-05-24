@@ -13,30 +13,38 @@ public class StartHub : MonoBehaviour
     [SerializeField] GameObject message;
 
     internal PathFloor currentPath;
+
+
+
     [SerializeField] MissionSelector selector;
+
+    [SerializeField] BridgeHandler bridgePrefab;
+    [SerializeField] GameObject bridgeManager;
+    internal BridgeHandler currentBridge;
     void Awake()
     {
         ui.SetActive(false);
-        //selector = ;
         transform.root.GetComponent<GameMan>().currentHub = this;
     }
 
     internal void StartPath()
     {
-        if(currentPath != null)
+
+        if(currentBridge != null)
         {
-             GameObject.Destroy(currentPath.gameObject);
+            foreach (Transform child in bridgeManager.transform) Destroy(child.gameObject);
         }
 
+        var dificulty = 0;
+        if (PlayerPrefs.HasKey("PathLevel")) dificulty = PlayerPrefs.GetInt("PathLevel");
 
-        currentPath = Instantiate(path, pathStartPos.position, pathStartPos.rotation, transform) as PathFloor;
-        currentPath.Activate();
-        currentPath.isFirst = true;
+        currentBridge = Instantiate(bridgePrefab, pathStartPos.position, pathStartPos.rotation, bridgeManager.transform);
+        currentBridge.SetDistance(dificulty * 2 + 5);
     }
 
     internal void Activate()
     {
-       // StartPath();
+        StartPath();
         ui.SetActive(true);
 
         if (transform.root.GetComponent<GameMan>().startedRun)
@@ -49,18 +57,16 @@ public class StartHub : MonoBehaviour
             GetComponentInChildren<MissionSelector>().EnableSelector();
             transform.root.GetComponent<GameMan>().startedRun = false;
         }
-
-
-        
     }
 
     internal void RefreshHub()
     {
         ui.SetActive(false);
         message.SetActive(true);
-        if (currentPath != null)
+
+        if (currentBridge != null)
         {
-            GameObject.Destroy(currentPath.gameObject);
+            foreach (Transform child in bridgeManager.transform) Destroy(child.gameObject);
         }
 
     }
