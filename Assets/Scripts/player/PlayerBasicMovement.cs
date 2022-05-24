@@ -98,7 +98,11 @@ public class PlayerBasicMovement : MonoBehaviour
         IsGrounded();
 
 
-        if (velocity.y < -15) fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
+        if (velocity.y < -15)
+        {
+            fallingAtSomeSpeed = true; //it will only make the landing sound if landing at a decent speed
+            velocity.y += -.2f;
+        }
 
         if (!isGroundedOlder && isGrounded && fallingAtSomeSpeed)
         {
@@ -138,7 +142,7 @@ public class PlayerBasicMovement : MonoBehaviour
     public Animator animator;
     private void MoveState()
     {
-        if (transform.position.y < -100) GetComponent<PlayerHpManager>().TakeDamage(10000000);
+        if (transform.position.y < -1000) GetComponent<PlayerHpManager>().TakeDamage(10000000);
         transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
                                                                                                                          
         Inertia();
