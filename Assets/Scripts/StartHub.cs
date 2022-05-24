@@ -36,7 +36,7 @@ public class StartHub : MonoBehaviour
 
     internal void Activate()
     {
-        StartPath();
+       // StartPath();
         ui.SetActive(true);
 
         if (transform.root.GetComponent<GameMan>().startedRun)

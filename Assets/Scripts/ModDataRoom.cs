@@ -63,8 +63,6 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,5,   "Monsters are immune to cold damage",         Grade.interior, OperatorType.non,       100,      20),
                 new Mod(1,5,   "Monsters are immune to poison damage",         Grade.interior, OperatorType.non,     100,      23),
                 new Mod(1,5,   "Monsters are immune to physical damage",         Grade.interior, OperatorType.non,   100,      24),
-                
-
         };
 
 

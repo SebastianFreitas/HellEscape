@@ -7,7 +7,7 @@ public class SoundDevice : MonoBehaviour
     public Material green;
     public Material blue;
 
-    public AudioSource audioSource;
+    private AudioSource audioSource;
     public AudioClip[] sounds;
 
     public GameObject[] uiSlots;
@@ -22,6 +22,7 @@ public class SoundDevice : MonoBehaviour
 
     private void Start()
     {
+        audioSource = transform.root.GetComponent<AudioSource>();
 
         volume = PlayerPrefs.GetFloat("Volume");
 
@@ -49,7 +50,7 @@ public class SoundDevice : MonoBehaviour
 
     private void OnEnable()
     {
-        if (isPlaying) audioSource.Play();
+        //if (isPlaying) audioSource.Play();
     }
 
     IEnumerator RotateText()
