@@ -18,15 +18,9 @@ public class ConeMonster : Monster
     private float finalWaitTime;
     void Start()
     {
-
-        //StartCoroutine(Waiter());
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;
-        //isRunning = true;
         posOffset = transform.position;
-
-
-
     }
     private void OnEnable()
     {
@@ -37,6 +31,7 @@ public class ConeMonster : Monster
         }
 
     }
+
     private void OnDisable()
     {
         isRunning = false;
@@ -44,28 +39,19 @@ public class ConeMonster : Monster
 
     private IEnumerator Waiter()
     {
-
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
         isRunning = true;
         yield return new WaitForSecondsRealtime(Random.Range(0.5f, 1f));
         while (true)
         {
-
-
-
-
             shootPoint.transform.LookAt(player.transform);
             var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
             var bulletScript = bullet.GetComponent<TurretBullet>();
             bulletScript.speed = speed;
-            //explosionEffect.Play();
-
 
             yield return new WaitForSecondsRealtime(finalWaitTime);
-
         }
-
     }
 
     // User Inputs

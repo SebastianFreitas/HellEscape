@@ -120,11 +120,5 @@ public class GameMan : ModDataRoom
         roomGen.StartRun(mis); 
     }
 
-    internal void VoidPlayer()
-    {
-        GoToHub();
-
-
-    }
 
 }

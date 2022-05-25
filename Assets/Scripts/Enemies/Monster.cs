@@ -40,7 +40,7 @@ public class Monster : MonoBehaviour
 
     private PlayerBasicMovement playerMov;
     private PlayerHpManager playerHP;
-    protected void Awake()
+    void Awake()
     {
         audioSource = GetComponent<AudioSource>();
 
@@ -49,7 +49,12 @@ public class Monster : MonoBehaviour
         if (rigidBody == null) rigidBody = transform.GetComponent<Rigidbody>();
         if (monsterCollider == null) monsterCollider = rigidBody.GetComponent<Collider>();
 
-        if (player == null) player = transform.root.GetComponent<GameMan>().player;
+        if (player == null) 
+            player = transform.root.GetComponent<GameMan>().player;
+
+        if (player == null)
+            player = GetComponentInParent<PlayerBasicMovement>().gameObject;
+
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
 
         playerMov =  player.GetComponent<PlayerBasicMovement>();
@@ -141,7 +146,6 @@ public class Monster : MonoBehaviour
 
     [SerializeField] internal bool isHub = false;
     [SerializeField] GameObject explosion;
-    private bool isTick;
 
     internal void TakeDamage(BulletStats stats, bool isCrit,float critMulti)
     {

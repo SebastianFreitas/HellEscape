@@ -148,7 +148,7 @@ public class BridgeHandler : MonoBehaviour
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
             var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
-            mob.transform.parent = transform;
+            //mob.transform.parent = transform;
             if (type != EncounterType.normal) mob.TurnElite();
         }
 
@@ -156,7 +156,7 @@ public class BridgeHandler : MonoBehaviour
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
             var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
-            mob.transform.parent = transform;
+            //mob.transform.parent = transform;
             mob.TurnBig();
             mob.TurnBig();
             mob.TurnBig();

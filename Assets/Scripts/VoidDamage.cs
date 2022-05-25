@@ -10,7 +10,7 @@ public class VoidDamage : MonoBehaviour
     {
         if (other.transform.CompareTag("Dude"))
         {
-            gameMan.VoidPlayer();
+            //gameMan.VoidPlayer();
         }
     }
 
