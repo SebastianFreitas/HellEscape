@@ -7,7 +7,7 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] internal float health = 50f;
     [SerializeField] internal float damage = 10f;
-
+    [SerializeField] bool isBoss = false;
     internal GameObject player;
 
     public Rigidbody rigidBody;
@@ -70,8 +70,8 @@ public class Monster : MonoBehaviour
             level = PlayerPrefs.GetInt("PathLevel");
             UpdateStatsToLevel();
         }
-
-        if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
+        if (isBoss) gunparts += 25;
+        else if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
 
     }
     float eliteChance;

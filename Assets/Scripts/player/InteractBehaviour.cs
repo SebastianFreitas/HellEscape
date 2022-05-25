@@ -210,6 +210,11 @@ public class InteractBehaviour : MonoBehaviour
                     hit.collider.gameObject.SetActive(false);
                     AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
+                else if (hit.transform.CompareTag("Return"))
+                {
+                    transform.root.GetComponent<GameMan>().ReturnToHub();
+                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                }
                 else
                 {
                     AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);

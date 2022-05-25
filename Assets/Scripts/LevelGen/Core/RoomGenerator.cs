@@ -22,6 +22,7 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] internal GameObject changeInfluence;
 	[SerializeField] internal GameObject shop;
 	[SerializeField] internal GameObject influenceItem;
+	[SerializeField] internal GameObject exit;
 
 	[SerializeField] internal GameObject healthPack;
 	[SerializeField] internal GameObject CraftingBench;

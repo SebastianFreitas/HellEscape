@@ -301,9 +301,6 @@ public class RoomActivator : MonoBehaviour
 
         CloseDoors();
         ClearTrigger();
-        
-        
-        //if(roomgen.encounterCounter < roomgen.encounters.Count) roomgen.encounterCounter++;
     }
 
 
@@ -359,6 +356,13 @@ public class RoomActivator : MonoBehaviour
         {
             Instantiate(roomgen.itemRoom, spawnPos.position + Vector3.back, spawnPos.rotation, transform);
         }
+        if (roomType == RoomType.Boss) SpawnExit();
+    }
+
+    private void SpawnExit()
+    {
+        Instantiate(roomgen.exit, spawnPos.position + Vector3.down + Vector3.down, spawnPos.rotation, transform);
+
     }
 
     internal IEnumerator UpdateSymbolMainType()
