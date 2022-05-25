@@ -67,9 +67,16 @@ public class PlayerHpManager : MonoBehaviour
 
 
         var result = health + amount;
-        if (result > maxHealth) hp.SetHealth((int)maxHealth);
-        else hp.SetHealth((int)result);
-
+        if (result > maxHealth)
+        {
+            hp.SetHealth((int)maxHealth);
+            health = maxHealth;
+        }
+        else
+        {
+            hp.SetHealth((int)result);
+            health = result;
+        }
        
     }
 
@@ -81,10 +88,10 @@ public class PlayerHpManager : MonoBehaviour
     internal void SetHPToBase()
     {
         hp.SetMaxHealth((int)baseHealth);
-        //hp.SetHealth((int) baseHealth);
+        hp.SetHealth((int) baseHealth);
 
         maxHealth = baseHealth;
-        //health = baseHealth;
+        health = baseHealth;
     }
 
     internal void ChangeMaxHP(int amount)
