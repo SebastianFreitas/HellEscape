@@ -28,14 +28,7 @@ public class BridgeHandler : MonoBehaviour
         }
     }
 
-    internal void SpawnMonsters()
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
-            Instantiate(monsters[Random.Range(0,monsters.Count)], vector, Quaternion.identity, transform);
-        }
-    }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -73,12 +66,12 @@ public class BridgeHandler : MonoBehaviour
 
                 if (IsDivisible(distance, 2))
                 {
-
-                    nextPiece.SpawnMonsters();
+                    if (distance < dificulty) nextPiece.SpawnMonsters(EncounterType.elite);
+                    else nextPiece.SpawnMonsters(EncounterType.normal);
                 } 
                 else if (distance == 1)
                 {
-                    nextPiece.SpawnMonsters();
+                    nextPiece.SpawnMonsters(EncounterType.boss);
                 }
             }
 
@@ -128,5 +121,35 @@ public class BridgeHandler : MonoBehaviour
     public bool IsDivisible(int x, int n)
     {
         return (x % n) == 0;
+    }
+
+    internal enum EncounterType
+    {
+        normal,
+        elite,
+        boss
+    }
+
+    internal void SpawnMonsters(EncounterType type)
+    {
+        var total = 2;
+        if (EncounterType.normal != type) total *= 3;
+
+        for (int i = 0; i < total; i++)
+        {
+            var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
+            var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
+            if (type != EncounterType.normal) mob.TurnElite();
+        }
+
+        if (type == EncounterType.boss)
+        {
+            var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
+            var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
+            mob.TurnBig();
+            mob.TurnBig();
+            mob.TurnBig();
+
+        }
     }
 }
