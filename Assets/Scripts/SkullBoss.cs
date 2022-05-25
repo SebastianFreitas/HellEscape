@@ -16,7 +16,7 @@ public class SkullBoss : Monster
 
     [SerializeField] Skull miniSkull;
 
-    new void Start()
+    void Awake()
     {
         var x = Random.Range(-2, 3);
         rigidBody.angularVelocity = new Vector3(x, x, x);
@@ -36,8 +36,8 @@ public class SkullBoss : Monster
 
     private void OnEnable()
     {
-        StartCoroutine(RandomJump());
-       if (isRed) StartCoroutine(SummonSkulls());
+       StartCoroutine(RandomJump());
+       StartCoroutine(SummonSkulls());
     }
 
 

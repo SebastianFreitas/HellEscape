@@ -131,7 +131,7 @@ internal class VoidBoon
     {
         switch (name)
         {
-            case BoonName.MaxHp2:
+            case BoonName.MaxHp1:
                 Maxhp1(gain);
                 break;
 
