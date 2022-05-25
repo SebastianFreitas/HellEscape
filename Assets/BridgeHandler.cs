@@ -75,15 +75,24 @@ public class BridgeHandler : MonoBehaviour
                 }
             }
 
-            TurnOfLights();
         }
     }
 
-    private void TurnOfLights()
+    private void OnTriggerExit(Collider other)
+    {
+        TurnLights(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        TurnLights(true);
+    }
+
+    private void TurnLights(bool value)
     {
         foreach (Transform child in lights.transform)
         {
-            child.gameObject.SetActive(false);
+            child.gameObject.SetActive(value);
         }
     }
 
@@ -139,6 +148,7 @@ public class BridgeHandler : MonoBehaviour
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
             var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
+            mob.transform.parent = transform;
             if (type != EncounterType.normal) mob.TurnElite();
         }
 
@@ -146,6 +156,7 @@ public class BridgeHandler : MonoBehaviour
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
             var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
+            mob.transform.parent = transform;
             mob.TurnBig();
             mob.TurnBig();
             mob.TurnBig();
