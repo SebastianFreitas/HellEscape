@@ -212,7 +212,7 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("Return"))
                 {
-                    transform.root.GetComponent<GameMan>().ReturnToHub();
+                    transform.root.GetComponent<GameMan>().EndRun();
                     AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
                 else

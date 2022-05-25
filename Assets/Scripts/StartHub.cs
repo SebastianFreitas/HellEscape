@@ -54,9 +54,11 @@ public class StartHub : MonoBehaviour
                 child.gameObject.SetActive(true);
             }
 
-            GetComponentInChildren<MissionSelector>().EnableSelector();
+             GetComponentInChildren<MissionSelector>().EnableSelector();
             transform.root.GetComponent<GameMan>().startedRun = false;
         }
+
+        selector.gameObject.SetActive(!transform.root.GetComponent<GameMan>().runsucess);
     }
 
     internal void RefreshHub()

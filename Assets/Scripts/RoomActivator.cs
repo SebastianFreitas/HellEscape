@@ -303,8 +303,6 @@ public class RoomActivator : MonoBehaviour
         ClearTrigger();
     }
 
-
-
     private void SpawnBoss()
     {
         SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true,1);

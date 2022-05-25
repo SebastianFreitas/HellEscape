@@ -27,6 +27,8 @@ public class GameMan : ModDataRoom
 
     internal StartHub currentHub;
 
+    internal bool runsucess = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +64,7 @@ public class GameMan : ModDataRoom
     internal bool startedRun = false;
     internal void ReturnToHub()
     {
+        runsucess = false;
         currentHub.RefreshHub();
         roomGen.Clean();
 
@@ -86,6 +89,16 @@ public class GameMan : ModDataRoom
 
         player.GetComponent<PlayerHpManager>().HealForMax();
        
+    }
+
+    internal void EndRun()
+    {
+        runsucess = true;
+        currentHub.RefreshHub();
+        roomGen.Clean();
+
+        roomGen.ApplyMissionToPlayer(false);
+        GoToHub();
     }
 
     private void PlacePlayerInCurrentRoom()
