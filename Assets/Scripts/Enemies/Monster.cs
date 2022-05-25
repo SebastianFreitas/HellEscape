@@ -57,12 +57,9 @@ public class Monster : MonoBehaviour
 
         if (!isHub)
         {
-
             roomActivator = transform.GetComponentInParent<RoomActivator>();
             mission = roomActivator.mission;
             ApplyMission();
-
-
         }
         else
         {
@@ -70,6 +67,7 @@ public class Monster : MonoBehaviour
             level = PlayerPrefs.GetInt("PathLevel");
             UpdateStatsToLevel();
         }
+
         if (isBoss) gunparts += 25;
         else if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
 
