@@ -28,10 +28,10 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] internal GameObject CraftingBench;
 	[SerializeField] internal GameObject weaponDrop;
 
-	[SerializeField]internal Monster[] monstersRed;
-	[SerializeField]internal Monster[] monstersBlue;
+	[SerializeField] internal Monster[] monstersRed;
+	[SerializeField] internal Monster[] monstersBlue;
 					
-	[SerializeField]internal Monster[] BossRed;
+	[SerializeField] internal Monster[] BossRed;
 	[SerializeField] internal Monster[] BossBlue;
 
 
@@ -83,33 +83,15 @@ public class RoomGenerator : MonoBehaviour
             {
 				a++;
 				yield return interval;
-
 				var rando = Random.Range(0, mainRooms.Count);
+				var x = Random.Range(1, 4);
+				bool worked;
 
-				if (i == influencePos)
-				{
-					if (PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Main))
-					{
-						influencePos += 20;
-						break;
-					}
+				if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
+				else		worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
+				
 
-
-                }
-                else
-                {
-					var x = Random.Range(1, 4);
-					bool worked;
-					if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
-					else
-					{
-						worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
-					}
-
-					if (worked) break;
-                }
-
-
+				if (worked) break;
 
 				if (a > 10)
 				{
@@ -134,10 +116,7 @@ public class RoomGenerator : MonoBehaviour
 		ConnectRoomActivator();
 
 		yield return interval;
-		//for (int i = 1; i < placedRooms.Count; i++)
-		//	placedRooms[i].gameObject.SetActive(false);
 
-		//startRoom.gameObject.SetActive(true);
 
 		if (startAtBoss) currentStartPos = endRoom.GetComponentsInChildren<RoomActivator>()[0].spawnPos.position;
 
@@ -275,6 +254,7 @@ public class RoomGenerator : MonoBehaviour
             }
         }
     }
+
     internal void Clean()
     {
 		// Delete all rooms
@@ -369,7 +349,7 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
-    private List<RoomActivator.MainType> mainTypeList =  new List<RoomActivator.MainType>() {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop };
+    private List<RoomActivator.MainType> mainTypeList =  new List<RoomActivator.MainType>() {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop};
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {

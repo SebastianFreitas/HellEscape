@@ -21,16 +21,6 @@ public class SkullBoss : Monster
         var x = Random.Range(-2, 3);
         rigidBody.angularVelocity = new Vector3(x, x, x);
 
-        switch (roomActivator.influcence)
-        {
-            case VoidBoon.BoonType.Blue:
-                isRed = false;
-                break;
-
-            case VoidBoon.BoonType.Red:
-                isRed = true;
-                break;
-        }
     }
 
 
