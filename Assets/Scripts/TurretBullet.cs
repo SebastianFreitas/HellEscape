@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurretBullet : MonoBehaviour
 {
-
+    [SerializeField] int damage = 10;
     Rigidbody rb;
     internal float speed;
     void Start()
@@ -18,7 +18,7 @@ public class TurretBullet : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         if (collision.gameObject.CompareTag("Dude"))
         {
-            collision.transform.GetComponent<PlayerHpManager>().TakeDamage(10);
+            collision.transform.GetComponent<PlayerHpManager>().TakeDamage(damage);
 
            
         }

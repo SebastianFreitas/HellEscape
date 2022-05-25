@@ -206,9 +206,9 @@ public class Monster : MonoBehaviour
     {
         health *= 1f + ((float)level / 100f);
 
-        var speed = 1f + ((float)level / 100f);
-        if (speed > 1.3) speed = 1.3f;
-        actionSpeed *= speed;
+        //var speed = 1f + ((float)level / 100f);
+        //if (speed > 1.3) speed = 1.3f;
+        //actionSpeed *= speed;
 
         forceSpeed *= 1f + ((float)level / 100f );
 

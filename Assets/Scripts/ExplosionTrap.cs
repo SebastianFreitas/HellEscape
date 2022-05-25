@@ -19,9 +19,9 @@ public class ExplosionTrap : MonoBehaviour
             if (hasCollide == false)
             {
                 hasCollide = true;
-                other.transform.GetComponent<PlayerHpManager>().TakeDamage(10);
+                other.transform.GetComponent<PlayerHpManager>().TakeDamage(20);
                 var direction = other.transform.position - transform.position;
-                other.GetComponent<PlayerBasicMovement>().AddImpact(direction, 50f);
+                other.GetComponent<PlayerBasicMovement>().AddImpact(direction, 100f);
                 StartCoroutine("WaitDamage");
                 source.PlayOneShot(explodeSound, 0.1f);
             }

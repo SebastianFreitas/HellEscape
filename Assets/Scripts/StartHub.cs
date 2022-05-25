@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +18,7 @@ public class StartHub : MonoBehaviour
 
     [SerializeField] MissionSelector selector;
 
-    [SerializeField] BridgeHandler bridgePrefab;
+    [SerializeField] List<BridgeHandler> bridgePrefab;
     [SerializeField] GameObject bridgeManager;
     internal BridgeHandler currentBridge;
     void Awake()
@@ -38,7 +38,7 @@ public class StartHub : MonoBehaviour
         var dificulty = 0;
         if (PlayerPrefs.HasKey("PathLevel")) dificulty = PlayerPrefs.GetInt("PathLevel");
 
-        currentBridge = Instantiate(bridgePrefab, pathStartPos.position, pathStartPos.rotation, bridgeManager.transform);
+        currentBridge = Instantiate(bridgePrefab[Random.Range(0,bridgePrefab.Count)], pathStartPos.position, pathStartPos.rotation, bridgeManager.transform);
         currentBridge.SetDistance(dificulty * 2 + 5);
     }
 
@@ -69,5 +69,17 @@ public class StartHub : MonoBehaviour
             foreach (Transform child in bridgeManager.transform) Destroy(child.gameObject);
         }
 
+    }
+
+    private void OnEnable()
+    {
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), true);
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("BulletEnemy"), LayerMask.NameToLayer("Room"), true);
+    }
+
+    private void OnDisable()
+    {
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("BulletEnemy"), LayerMask.NameToLayer("Room"), false);
     }
 }

@@ -16,10 +16,9 @@ public class PlayerHpManager : MonoBehaviour
     public GameObject bloodScreen;
 
     private GameMan manager;
-    private ModDataRoom.GeneratedMission mission;
 
     private PlayerBasicMovement playerMov;
-    private int invincibilityDurationSeconds;
+
 
 
     void Awake()
@@ -47,22 +46,17 @@ public class PlayerHpManager : MonoBehaviour
         StartCoroutine(waiterImmunity());
         playerSounds.PlayTakeDamageSound();
 
-        Debug.LogError(amount + "damage taken");
-        Debug.LogError(health + "health");
+
 
         health -= amount;
 
         hp.SetHealth((int)health);
         if (health <= 0f) Die();
+
+        Debug.LogError(amount + "damage taken");
+        Debug.LogError(health + "health");
     }
 
-    void BecomeTemporarilyInvincible()
-    {
-        for (float i = 0; i < invincibilityDurationSeconds; i += Time.deltaTime)
-        {
-            // do stuff here
-        }
-    }
 
     internal void Heal(float amount)
     {

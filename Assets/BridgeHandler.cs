@@ -69,7 +69,17 @@ public class BridgeHandler : MonoBehaviour
                 nextPiece.transform.parent = transform.parent;
                 distance--;
                 nextPiece.SetDistance(distance--);
-                nextPiece.SpawnMonsters();
+                
+
+                if (IsDivisible(distance, 2))
+                {
+
+                    nextPiece.SpawnMonsters();
+                } 
+                else if (distance == 1)
+                {
+                    nextPiece.SpawnMonsters();
+                }
             }
 
             TurnOfLights();
@@ -102,7 +112,7 @@ public class BridgeHandler : MonoBehaviour
         }
         else dificulty = 0;
 
-        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
+       
     }
 
     private Vector3 RandomPointInBounds(Bounds rawBounds)
@@ -114,5 +124,9 @@ public class BridgeHandler : MonoBehaviour
             Random.Range(bounds.min.y, bounds.max.y),
             Random.Range(bounds.min.z, bounds.max.z)
         );
+    }
+    public bool IsDivisible(int x, int n)
+    {
+        return (x % n) == 0;
     }
 }
