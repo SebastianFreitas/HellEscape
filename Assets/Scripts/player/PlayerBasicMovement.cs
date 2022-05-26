@@ -23,6 +23,7 @@ public class PlayerBasicMovement : MonoBehaviour
     private Vector3 impact = Vector3.zero;
     private bool canDash = true; //check to stop player from dashing instantly after dashing
     internal bool isSideDashing = false;
+    internal bool isJumpDashing = false;
     public float dashCooldown; //ammount of time player needs to wait until dashing again right after dashing
     private Vector3 desiredDirection = Vector3.zero; // used to save the starting state of a jump or dash to simulate inertia
     private bool inputLocked = false;// in this state we are going to lock Horizontal and Vertical input to simulate inertia
@@ -78,7 +79,7 @@ public class PlayerBasicMovement : MonoBehaviour
         if (isChilled) increasedSpeed += chillValue;
 
         canDash = true;
-        
+        canJumpDash = true;       
 
     }
 
@@ -229,7 +230,11 @@ public class PlayerBasicMovement : MonoBehaviour
 
         coyoteTimeCounter = coyoteTime;
 
-        if (cd.cdUI <= 0) canDash = true;
+        if (cd.cdUI <= 0)
+        {
+            canDash = true;
+            canJumpDash = true;
+        }
 
         lastPos = transform;
         speed = 12;
@@ -290,7 +295,7 @@ public class PlayerBasicMovement : MonoBehaviour
                 inputLocked = true;
                 desiredDirection = new Vector3(xRaw, 0, zRaw);
             }
-            else if (canDash) //dashJump
+            else if (canJumpDash) //dashJump
             {
                 inputLocked = false; //remove input lock if player dashes/jumps
                 JumpDash(true);
@@ -327,8 +332,8 @@ public class PlayerBasicMovement : MonoBehaviour
         {
             cd.startCD((int)dashCooldown);
             playerSound.PlayDashSound();
-            canDash = false;
-            StartCoroutine(waiterDashDuration());
+            canJumpDash = false;
+            StartCoroutine(waiterJumpDashDuration());
         }
         else
         {
@@ -404,8 +409,18 @@ public class PlayerBasicMovement : MonoBehaviour
 
     }
 
+    IEnumerator waiterJumpDashDuration()
+    {
+
+        yield return new WaitForSecondsRealtime(.3f);
+        isJumpDashing = false;
+        inputLocked = false;
+
+    }
+
     private int chillValue = 50;
     private bool isChilled = false;
+    private bool canJumpDash;
 
     internal IEnumerator Chilled()
     {

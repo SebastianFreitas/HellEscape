@@ -94,7 +94,7 @@ public class GrenadeHolder : MonoBehaviour
             cd.startCDUP(basecolldown);
  
             baseCD = basecolldown;
-            StartCoroutine(TimerDown());
+            StartCoroutine(CoolDown1(basecolldown));
 
         }
 
@@ -123,7 +123,7 @@ public class GrenadeHolder : MonoBehaviour
     IEnumerator CoolDown1(int cooldown)
     {
         canShoot1 = false;
-        yield return new WaitForSeconds(cooldown);
+        yield return new WaitForSecondsRealtime(cooldown);
         canShoot1 = true;
     }
 
