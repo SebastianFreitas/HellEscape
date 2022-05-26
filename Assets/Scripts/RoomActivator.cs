@@ -347,6 +347,7 @@ public class RoomActivator : MonoBehaviour
         {
             OpenDoors();
             TurnLightsRed();
+            if (roomType == RoomType.Boss) SpawnExit();
         }
 
         if (Random.Range(1f, 100f) > 100 - roomgen.mission.healthChanceEncounter) SpawnHeal();
@@ -354,7 +355,7 @@ public class RoomActivator : MonoBehaviour
         {
             Instantiate(roomgen.itemRoom, spawnPos.position + Vector3.back, spawnPos.rotation, transform);
         }
-        if (roomType == RoomType.Boss) SpawnExit();
+        
     }
 
     private void SpawnExit()
