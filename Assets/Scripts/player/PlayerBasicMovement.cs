@@ -141,6 +141,8 @@ public class PlayerBasicMovement : MonoBehaviour
     }
 
     public Animator animator;
+
+    [SerializeField] PlayerInventory playerInv;
     private void MoveState()
     {
         if (transform.position.y < -1000) GetComponent<PlayerHpManager>().TakeDamage(10000000);
@@ -154,7 +156,7 @@ public class PlayerBasicMovement : MonoBehaviour
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
 
-        currentSpeed = (speed) *(1 + increasedSpeed / 100);
+        currentSpeed = (speed) *(1 + ((increasedSpeed + playerInv.increasedMovementSpeed) / 100));
 
         controller.Move(move * currentSpeed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);

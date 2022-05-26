@@ -184,9 +184,11 @@ public class Gun : MonoBehaviour
         bullet.initialFade = true;
         bullet.Gun = gun;
 
+        var speed = bulletSpeed * (1+(playerInv.increasedBulletSpeed / 100));
+
         bullet.SetStats((int)gun.increasedRicochetGuide,
             bounces         + playerInv.additionalBounces,
-            bulletSpeed     + playerInv.additionalBulletSpeed, 
+            speed, 
             fireDamage      + playerInv.additionalFireDamage, 
             coldDamage      + playerInv.additionalColdDamage, 
             poisonDamage    + playerInv.additionalPoisonDamage, 
@@ -196,6 +198,7 @@ public class Gun : MonoBehaviour
 
         bullet.playerMov = playerScript;
         bullet.gameObject.SetActive(true);
+        bullet.playerInv = playerInv;
         bullet.AwakeRemote();
         return bullet;
     }

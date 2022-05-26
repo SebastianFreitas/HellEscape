@@ -87,6 +87,7 @@ public class GrenadeHolder : MonoBehaviour
             projectile.playerMov = playerBasicMov;
             projectile.damage += playerInv.additionalGrenadeDamage;
             projectile.speed += playerInv.addtitionalGrenadeSpeed;
+            //projectile.cooldown 
            // projectile.
 
 
@@ -127,10 +128,4 @@ public class GrenadeHolder : MonoBehaviour
         canShoot1 = true;
     }
 
-    IEnumerator CoolDown2(int cooldown)
-    {
-        canShoot2 = false;
-        yield return new WaitForSeconds(cooldown);
-        canShoot2 = true;
-    }
 }

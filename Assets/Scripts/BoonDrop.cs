@@ -11,11 +11,8 @@ public class BoonDrop : MonoBehaviour
 
     private void Awake()
     {
-        boon = new VoidBoon(isInfluencePool, GetComponentInParent<RoomActivator>().influcence);
-        boon.player = GameObject.FindGameObjectsWithTag("Dude")[0];
-        boon.playerHP = boon.player.GetComponent<PlayerHpManager>();
-        boon.playerInv = boon.player.GetComponent<PlayerInventory>();
-        boon.playerMov = boon.player.GetComponent<PlayerBasicMovement>();
+        boon = new VoidBoon(GetComponentInParent<RoomActivator>().influcence);
+
 
         text.text = boon.text;
     }

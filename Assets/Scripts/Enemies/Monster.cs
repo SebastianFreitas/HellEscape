@@ -11,7 +11,7 @@ public class Monster : MonoBehaviour
     internal GameObject player;
 
     public Rigidbody rigidBody;
-    private Collider monsterCollider;
+    [SerializeField] private Collider monsterCollider;
 
     [Header("Sound")]
     private AudioSource audioSource;

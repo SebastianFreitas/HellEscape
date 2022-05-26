@@ -40,6 +40,7 @@ public class PlayerProjectile : MonoBehaviour
 
     public GameObject trails;
 
+    internal PlayerInventory playerInv;
 
     public GunOfAType Gun { get => gun; set => gun = value; }
 
@@ -142,7 +143,7 @@ public class PlayerProjectile : MonoBehaviour
 
         if (stats.fireDamage > 0)
         {
-            StartCoroutine(KillBullet());
+            if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
             FireExplode();
             
         }

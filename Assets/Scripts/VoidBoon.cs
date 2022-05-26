@@ -12,33 +12,18 @@ internal class VoidBoon
     internal List<(int, BoonName)> boonListWeight = new List<(int, BoonName)>();
 
     internal List<(string, BoonName)> boonListText = new List<(string, BoonName)>();
-    internal VoidBoon(bool isInfluence, BoonType type)
+
+    internal VoidBoon( BoonType type)
     {
+        player = GameObject.FindGameObjectsWithTag("Dude")[0];
+        playerHP = player.GetComponent<PlayerHpManager>();
+        playerInv = player.GetComponent<PlayerInventory>();
+        playerMov = player.GetComponent<PlayerBasicMovement>();
+
         influence = type;
 
-        if (isInfluence)
-        {
-           switch (type)
-            {
-                case BoonType.Red:
-
-                    GetBoonListTextRed();
-                    GetBoonListWeightRed();
-                    break;
-
-                case BoonType.Blue:
-                    GetBoonListTextBlue();
-                    GetBoonListWeightBlue();
-                    break;
-            }
-        }
-        else
-        {
-            GetBoonListWeight();
-            GetBoonListText();
-        }
-
-
+        GetBoonListWeight();
+        GetBoonListText();
 
         List<BoonName> weightList = GetWeightList(boonListWeight);
         name = weightList[Random.Range(0, weightList.Count)];
@@ -51,32 +36,16 @@ internal class VoidBoon
 
     private void GetBoonListText()
     {
-
+        //done ----------------------------------------------------------------------
         boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
         boonListText.Add(("Gain 20 Max Health", BoonName.MaxHp2));
         boonListText.Add(("Gain 30 Max Health", BoonName.MaxHp3));
-        //convert all of your damage randomly each shot
-        //heal full hp gain 100 max hp at most
 
+        boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.Greed));
+        boonListText.Add(("Gain 20% more movement speed and shoot speed", BoonName.Speed));
 
-    }
-
-    private void GetBoonListTextRed()
-    {
-        boonListText.Add(("Lose 20 max hp \n deal +10 fire damage", BoonName.Greed));
-        //whenever you dash deal aoe fire dmg
-        //convert all of your damage to fire damage
-
-    }
-
-    private void GetBoonListTextBlue()
-    {
-        boonListText.Add(("", BoonName.Greed));
-        //cold damage becomes horizontal slices
-        //lose fire rate gain damage
-        //next time you die come back to life at 50% hp
-
-
+        //not done ----------------------------------------------------------------------
+        boonListText.Add(("Explosive damage does not destroy the bullet", BoonName.RicochetExplosive));
     }
 
     private void GetBoonListWeight()
@@ -84,18 +53,34 @@ internal class VoidBoon
         boonListWeight.Add((100, BoonName.MaxHp1));
         boonListWeight.Add((10, BoonName.MaxHp2));
         boonListWeight.Add((1, BoonName.MaxHp3));
+
+        boonListWeight.Add((10, BoonName.Greed));
+        boonListWeight.Add((1000, BoonName.Speed));
+        boonListWeight.Add((1, BoonName.RicochetExplosive));
+
+
+        for (int i = 0; i < boonListWeight.Count; i++)
+        {
+            if (PlayerHasBoon(boonListWeight[i].Item2))
+            {
+                boonListWeight.Remove(boonListWeight[i]);
+            }
+        }
     }
 
-    private void GetBoonListWeightRed()
+
+    private bool PlayerHasBoon(BoonName name)
     {
-        boonListWeight.Add((1, BoonName.Greed));
 
+
+        foreach (var item in playerInv.listBoons)
+        {
+            if (item.name == name) return true;
+        }
+
+        return false;
     }
 
-    private void GetBoonListWeightBlue()
-    {
-
-    }
 
     private List<BoonName> GetWeightList(List<(int, BoonName)> boonList)
     {
@@ -119,7 +104,9 @@ internal class VoidBoon
         MaxHp2,
         Greed,
         MaxHp1,
-        MaxHp3
+        MaxHp3,
+        Speed,
+        RicochetExplosive
     }
 
     internal PlayerBasicMovement playerMov;
@@ -132,32 +119,45 @@ internal class VoidBoon
         switch (name)
         {
             case BoonName.MaxHp1:
-                Maxhp1(gain);
+                Maxhp1(gain, 10);
+                break;
+            case BoonName.MaxHp2:
+                Maxhp1(gain, 40);
+                break;
+            case BoonName.MaxHp3:
+                Maxhp1(gain, 60);
                 break;
 
             case BoonName.Greed:
                 Greed(gain);
                 break;
+
+            case BoonName.Speed:
+                Speed(gain);
+                break;
+
+            case BoonName.RicochetExplosive:
+                RicochetExplosive(gain);
+                break;
         }
 
     }
 
-    internal void Maxhp1(bool gain)
+    internal void Maxhp1(bool gain, int value)
     {
         if (gain)
         {
-            playerHP.ChangeMaxHP(10);
+            playerHP.ChangeMaxHP(value);
             playerInv.listBoons.Add(this);
         } 
         else
         {
-            playerHP.ChangeMaxHP(-10);
+            playerHP.ChangeMaxHP(-value);
             playerInv.listBoons.Remove(this);
         }
 
     }
 
-    //red
     internal void Greed(bool gain)
     {
         if (gain)
@@ -170,6 +170,38 @@ internal class VoidBoon
         {
             playerHP.ChangeMaxHP(20);
             playerInv.additionalFireDamage -= 10;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void Speed(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.increasedBulletSpeed += 20;
+            playerInv.increasedMovementSpeed += 20;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.increasedBulletSpeed -= 20;
+            playerInv.increasedMovementSpeed -= 20;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void RicochetExplosive(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.explosiveRicochet = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.explosiveRicochet = false;
             playerInv.listBoons.Remove(this);
         }
     }
