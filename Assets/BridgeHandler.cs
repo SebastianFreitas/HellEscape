@@ -28,8 +28,6 @@ public class BridgeHandler : MonoBehaviour
         }
     }
 
-
-
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Dude") && !passed)
@@ -139,8 +137,11 @@ public class BridgeHandler : MonoBehaviour
         boss
     }
 
+    private GameObject player;
     internal void SpawnMonsters(EncounterType type)
     {
+        player = transform.root.GetComponent<GameMan>().player;
+
         var total = 2;
         if (EncounterType.normal != type) total *= 3;
 
@@ -148,7 +149,7 @@ public class BridgeHandler : MonoBehaviour
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
             var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
-            //mob.transform.parent = transform;
+            mob.player = player;
             if (type != EncounterType.normal) mob.TurnElite();
         }
 
@@ -156,7 +157,7 @@ public class BridgeHandler : MonoBehaviour
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
             var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
-            //mob.transform.parent = transform;
+            mob.player = player;
             mob.TurnBig();
             mob.TurnBig();
             mob.TurnBig();

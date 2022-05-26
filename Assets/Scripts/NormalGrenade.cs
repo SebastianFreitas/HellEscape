@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class NormalGrenade : GrenadeData
 {
-    public int damage;
-    public int area;
-    public int timeToExplode;
-    public int bounces;
+
 
     public Rigidbody rb;
 

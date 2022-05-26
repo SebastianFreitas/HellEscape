@@ -16,7 +16,13 @@ public class PlayerInventory : MonoBehaviour
 
     //player stats
     internal int additionalFireDamage = 0;
-
+    internal int additionalColdDamage;
+    internal int additionalPoisonDamage;
+    internal int additionalPhysicalDamage;
+    internal float additionalincreasedCriticalDamage;
+    internal int additionalBounces;
+    internal int additionalBulletSpeed;
+    internal int additionalGrenadeDamage;
 
     private void OnEnable()
     {
@@ -42,7 +48,6 @@ public class PlayerInventory : MonoBehaviour
 
     internal void DisassembleGun(GunOfAType gun)
     {
-        //UpdateGunParts(gun.level * (gun.mods.Count + 1));
         inventoryUI.RemoveWeapon(gun, true); 
     }
 

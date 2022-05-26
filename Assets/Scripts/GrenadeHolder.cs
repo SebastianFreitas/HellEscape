@@ -9,11 +9,13 @@ public class GrenadeHolder : MonoBehaviour
     private bool canShoot1 = true;
     private bool canShoot2 = true;
 
-    public GameObject projectile1;
+    public GrenadeData projectile1;
     public GameObject projectile2;
 
     public Gun guna;
     internal bool possible = true;
+
+    [SerializeField] PlayerInventory playerInv;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -75,31 +77,25 @@ public class GrenadeHolder : MonoBehaviour
         pnt.transform.LookAt(targetPoint);
         Transform realpos = fpsCam.transform;
         realpos.LookAt(targetPoint);
-        GameObject projectile;
+        GrenadeData projectile;
 
         if (primary)
         {
-            projectile = Instantiate(projectile1, realBulletHolder.transform.position, realpos.rotation);
-            var specificGrenade = projectile.GetComponent<GrenadeData>();
-            specificGrenade.playerMov = playerBasicMov;
-            //StartCoroutine(CoolDown1(basecolldown));
-            var basecolldown = specificGrenade.cooldown;
+            projectile = Instantiate(projectile1, realBulletHolder.transform.position, realpos.rotation) as GrenadeData;
+
+
+            projectile.playerMov = playerBasicMov;
+            projectile.damage += playerInv.additionalGrenadeDamage;
+
+
+            var basecolldown = projectile.cooldown;
             cd.startCDUP(basecolldown);
  
             baseCD = basecolldown;
             StartCoroutine(TimerDown());
 
         }
-        else
-        {
-            projectile = Instantiate(projectile2, realBulletHolder.transform.position, realpos.rotation);
-            var specificGrenade = projectile.GetComponent<GrenadeData>();
-            specificGrenade.playerMov = playerBasicMov;
-            StartCoroutine(CoolDown2(specificGrenade.cooldown));
 
-            cd.SetMaxCD(specificGrenade.cooldown);
-            cd.SetCD(specificGrenade.cooldown);
-        }    
     }
 
     int baseCD =0;

@@ -57,6 +57,8 @@ public class Gun : MonoBehaviour
     int m_fired = 0;
     private bool isWaiting;
 
+    [SerializeField] PlayerInventory playerInv;
+ 
     void OnEnable()
     {
         m_start = m_time = Time.time;
@@ -181,7 +183,17 @@ public class Gun : MonoBehaviour
 
         bullet.initialFade = true;
         bullet.Gun = gun;
-        bullet.SetStats((int)gun.increasedRicochetGuide, bounces, bulletSpeed, fireDamage, coldDamage, poisonDamage, physicalDamage, gun.increasedCriticalDamage);
+
+        bullet.SetStats((int)gun.increasedRicochetGuide,
+            bounces         + playerInv.additionalBounces,
+            bulletSpeed     + playerInv.additionalBulletSpeed, 
+            fireDamage      + playerInv.additionalFireDamage, 
+            coldDamage      + playerInv.additionalColdDamage, 
+            poisonDamage    + playerInv.additionalPoisonDamage, 
+            physicalDamage  + playerInv.additionalPhysicalDamage, 
+            gun.increasedCriticalDamage + playerInv.additionalincreasedCriticalDamage
+            );
+
         bullet.playerMov = playerScript;
         bullet.gameObject.SetActive(true);
         bullet.AwakeRemote();
