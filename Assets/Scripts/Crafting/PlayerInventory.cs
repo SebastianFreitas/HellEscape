@@ -22,7 +22,10 @@ public class PlayerInventory : MonoBehaviour
     internal float additionalincreasedCriticalDamage;
     internal int additionalBounces;
     internal int additionalBulletSpeed;
+
+
     internal int additionalGrenadeDamage;
+    internal int addtitionalGrenadeSpeed;
 
     private void OnEnable()
     {

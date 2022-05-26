@@ -86,6 +86,8 @@ public class GrenadeHolder : MonoBehaviour
 
             projectile.playerMov = playerBasicMov;
             projectile.damage += playerInv.additionalGrenadeDamage;
+            projectile.speed += playerInv.addtitionalGrenadeSpeed;
+           // projectile.
 
 
             var basecolldown = projectile.cooldown;
