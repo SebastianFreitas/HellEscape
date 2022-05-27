@@ -189,7 +189,7 @@ public class Gun : MonoBehaviour
         bullet.SetStats((int)gun.increasedRicochetGuide,
             bounces         + playerInv.additionalBounces,
             speed, 
-            fireDamage      + playerInv.additionalFireDamage, 
+            (fireDamage      + playerInv.additionalFireDamage) * playerInv.fireMultiplier, 
             coldDamage      + playerInv.additionalColdDamage, 
             poisonDamage    + playerInv.additionalPoisonDamage, 
             physicalDamage  + playerInv.additionalPhysicalDamage, 

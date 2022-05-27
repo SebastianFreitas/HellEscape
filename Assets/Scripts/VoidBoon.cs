@@ -36,23 +36,26 @@ internal class VoidBoon
 
     private void GetBoonListText()
     {
-        //done ----------------------------------------------------------------------
+        //LIFE----------------------------------------------------------------
         boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
         boonListText.Add(("Gain 20 Max Health", BoonName.MaxHp2));
         boonListText.Add(("Gain 60 Max Health", BoonName.MaxHp3));
         boonListText.Add(("Gain 40 Max Health and heal fully", BoonName.MaxHpHeal));
         boonListText.Add(("Gain 10 Max Health and 10 physical damage", BoonName.MaxHPPhys));
-
-        boonListText.Add(("Gain 20% more movement speed and shoot speed", BoonName.Speed));
-
+        //SPEED----------------------------------------------------------------
+        boonListText.Add(("Gain 20% more movement speed and shot speed", BoonName.Speed));
+        boonListText.Add(("Ricochets get increasingly stronger", BoonName.RicochectStack));
+        boonListText.Add(("Gain 100% shot speed", BoonName.ShootSpeed));
+        //FIRE----------------------------------------------------------------
         boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed));
         boonListText.Add(("Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
         boonListText.Add(("Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea));
         boonListText.Add(("Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
         boonListText.Add(("Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
+        boonListText.Add(("Fire damage explodes in a 90% smaller area\n Fire damage is doubled", BoonName.DoubleFire));
 
         //not done ----------------------------------------------------------------------
-        boonListText.Add(("Ricochets get increasingly stronger", BoonName.RicochectStack));
+        boonListText.Add(("Fire damage explodes in a 100% reduced area\n Fire damage is doubled", BoonName.DoubleFire));
     }
 
     private void GetBoonListWeight()
@@ -64,13 +67,15 @@ internal class VoidBoon
         boonListWeight.Add((5, BoonName.MaxHPPhys));
 
         boonListWeight.Add((10, BoonName.Speed));
-        boonListWeight.Add((500000, BoonName.RicochectStack));
+        boonListWeight.Add((10, BoonName.ShootSpeed));
+        boonListWeight.Add((1, BoonName.RicochectStack));
 
         boonListWeight.Add((10, BoonName.FireGreed));
         boonListWeight.Add((5, BoonName.RicochetExplosive));
         boonListWeight.Add((10, BoonName.IncreasedFireArea));
         boonListWeight.Add((5, BoonName.IncreasedFireArea2));
         boonListWeight.Add((1, BoonName.IncreasedFireArea3));
+        boonListWeight.Add((1, BoonName.DoubleFire));
 
 
         for (int i = 0; i < boonListWeight.Count; i++)
@@ -123,7 +128,9 @@ internal class VoidBoon
         IncreasedFireArea3,
         MaxHpHeal,
         MaxHPPhys,
-        RicochectStack
+        RicochectStack,
+        ShootSpeed,
+        DoubleFire
     }
 
     internal PlayerBasicMovement playerMov;
@@ -159,6 +166,9 @@ internal class VoidBoon
             case BoonName.RicochectStack:
                 RicochectStack(gain);
                 break;
+            case BoonName.ShootSpeed:
+                RicochectStack(gain);
+                break;
 
             //FIRE----------------------------------------------------------------
             case BoonName.FireGreed:
@@ -175,6 +185,9 @@ internal class VoidBoon
                 break;
             case BoonName.IncreasedFireArea3:
                 IncreasedFireArea(gain, 100);
+                break;
+            case BoonName.DoubleFire:
+                DoubleFire(gain);
                 break;
         }
 
@@ -257,6 +270,37 @@ internal class VoidBoon
         {
             playerInv.increasedBulletSpeed -= 20;
             playerInv.increasedMovementSpeed -= 20;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void DoubleFire(bool gain)
+    {
+        if (gain)
+        {
+            playerInv.fireMultiplier = 2;
+            playerInv.increasedFireArea += -90;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMultiplier = 1;
+            playerInv.increasedFireArea += 90;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void ShootSpeed(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.increasedBulletSpeed += 100;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.increasedBulletSpeed -= 100;
             playerInv.listBoons.Remove(this);
         }
     }
