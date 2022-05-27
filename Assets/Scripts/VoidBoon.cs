@@ -39,9 +39,11 @@ internal class VoidBoon
         //done ----------------------------------------------------------------------
         boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
         boonListText.Add(("Gain 20 Max Health", BoonName.MaxHp2));
-        boonListText.Add(("Gain 30 Max Health", BoonName.MaxHp3));
+        boonListText.Add(("Gain 60 Max Health", BoonName.MaxHp3));
+        boonListText.Add(("Gain 40 Max Health and heal fully", BoonName.MaxHpHeal));
+        boonListText.Add(("Gain 10 Max Health and 10 physical damage", BoonName.MaxHPPhys));
 
-        boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.Greed));
+        boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed));
         boonListText.Add(("Gain 20% more movement speed and shoot speed", BoonName.Speed));
 
         boonListText.Add(("Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
@@ -50,16 +52,18 @@ internal class VoidBoon
         boonListText.Add(("Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
 
         //not done ----------------------------------------------------------------------
-
+        boonListText.Add(("Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
     }
 
     private void GetBoonListWeight()
     {
-        boonListWeight.Add((100, BoonName.MaxHp1));
-        boonListWeight.Add((10, BoonName.MaxHp2));
+        boonListWeight.Add((10, BoonName.MaxHp1));
+        boonListWeight.Add((5, BoonName.MaxHp2));
         boonListWeight.Add((1, BoonName.MaxHp3));
+        boonListWeight.Add((2, BoonName.MaxHpHeal));
+        boonListWeight.Add((5, BoonName.MaxHPPhys));
 
-        boonListWeight.Add((10, BoonName.Greed));
+        boonListWeight.Add((10, BoonName.FireGreed));
         boonListWeight.Add((10, BoonName.Speed));
         boonListWeight.Add((5, BoonName.RicochetExplosive));
 
@@ -80,8 +84,6 @@ internal class VoidBoon
 
     private bool PlayerHasBoon(BoonName name)
     {
-
-
         foreach (var item in playerInv.listBoons)
         {
             if (item.name == name) return true;
@@ -89,7 +91,6 @@ internal class VoidBoon
 
         return false;
     }
-
 
     private List<BoonName> GetWeightList(List<(int, BoonName)> boonList)
     {
@@ -111,14 +112,16 @@ internal class VoidBoon
     internal enum BoonName
     {
         MaxHp2,
-        Greed,
+        FireGreed,
         MaxHp1,
         MaxHp3,
         Speed,
         RicochetExplosive,
         IncreasedFireArea,
         IncreasedFireArea2,
-        IncreasedFireArea3
+        IncreasedFireArea3,
+        MaxHpHeal,
+        MaxHPPhys
     }
 
     internal PlayerBasicMovement playerMov;
@@ -139,15 +142,21 @@ internal class VoidBoon
             case BoonName.MaxHp3:
                 Maxhp1(gain, 60);
                 break;
-
-            case BoonName.Greed:
-                Greed(gain);
+            case BoonName.MaxHpHeal:
+                MaxHpHeal(gain);
                 break;
+            case BoonName.MaxHPPhys:
+                MaxHPPhys(gain);
+                break;
+
 
             case BoonName.Speed:
                 Speed(gain);
                 break;
 
+            case BoonName.FireGreed:
+                FireGreed(gain);
+                break;
             case BoonName.RicochetExplosive:
                 RicochetExplosive(gain);
                 break;
@@ -179,7 +188,40 @@ internal class VoidBoon
 
     }
 
-    internal void Greed(bool gain)
+    internal void MaxHpHeal(bool gain)
+    {
+        if (gain)
+        {
+            playerHP.ChangeMaxHP(40);
+            playerHP.HealForMax();
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerHP.ChangeMaxHP(-40);
+            playerInv.listBoons.Remove(this);
+        }
+
+    }
+
+    internal void MaxHPPhys(bool gain)
+    {
+        if (gain)
+        {
+            playerHP.ChangeMaxHP(10);
+            playerInv.additionalPhysicalDamage += 10;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerHP.ChangeMaxHP(-10);
+            playerInv.additionalPhysicalDamage -= 10;
+            playerInv.listBoons.Remove(this);
+        }
+
+    }
+
+    internal void FireGreed(bool gain)
     {
         if (gain)
         {
