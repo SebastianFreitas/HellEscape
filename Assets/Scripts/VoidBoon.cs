@@ -43,16 +43,16 @@ internal class VoidBoon
         boonListText.Add(("Gain 40 Max Health and heal fully", BoonName.MaxHpHeal));
         boonListText.Add(("Gain 10 Max Health and 10 physical damage", BoonName.MaxHPPhys));
 
-        boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed));
         boonListText.Add(("Gain 20% more movement speed and shoot speed", BoonName.Speed));
 
+        boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed));
         boonListText.Add(("Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
         boonListText.Add(("Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea));
         boonListText.Add(("Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
         boonListText.Add(("Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
 
         //not done ----------------------------------------------------------------------
-        boonListText.Add(("Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
+        boonListText.Add(("Ricochets get increasingly stronger", BoonName.RicochectStack));
     }
 
     private void GetBoonListWeight()
@@ -63,10 +63,11 @@ internal class VoidBoon
         boonListWeight.Add((2, BoonName.MaxHpHeal));
         boonListWeight.Add((5, BoonName.MaxHPPhys));
 
-        boonListWeight.Add((10, BoonName.FireGreed));
         boonListWeight.Add((10, BoonName.Speed));
-        boonListWeight.Add((5, BoonName.RicochetExplosive));
+        boonListWeight.Add((500000, BoonName.RicochectStack));
 
+        boonListWeight.Add((10, BoonName.FireGreed));
+        boonListWeight.Add((5, BoonName.RicochetExplosive));
         boonListWeight.Add((10, BoonName.IncreasedFireArea));
         boonListWeight.Add((5, BoonName.IncreasedFireArea2));
         boonListWeight.Add((1, BoonName.IncreasedFireArea3));
@@ -121,7 +122,8 @@ internal class VoidBoon
         IncreasedFireArea2,
         IncreasedFireArea3,
         MaxHpHeal,
-        MaxHPPhys
+        MaxHPPhys,
+        RicochectStack
     }
 
     internal PlayerBasicMovement playerMov;
@@ -133,6 +135,7 @@ internal class VoidBoon
     {
         switch (name)
         {
+            //LIFE----------------------------------------------------------------
             case BoonName.MaxHp1:
                 Maxhp1(gain, 10);
                 break;
@@ -149,11 +152,15 @@ internal class VoidBoon
                 MaxHPPhys(gain);
                 break;
 
-
+            //SPEED----------------------------------------------------------------
             case BoonName.Speed:
                 Speed(gain);
                 break;
+            case BoonName.RicochectStack:
+                RicochectStack(gain);
+                break;
 
+            //FIRE----------------------------------------------------------------
             case BoonName.FireGreed:
                 FireGreed(gain);
                 break;
@@ -250,6 +257,21 @@ internal class VoidBoon
         {
             playerInv.increasedBulletSpeed -= 20;
             playerInv.increasedMovementSpeed -= 20;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void RicochectStack(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.RicochetStack = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.RicochetStack = false;
             playerInv.listBoons.Remove(this);
         }
     }

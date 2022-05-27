@@ -28,7 +28,8 @@ public class PlayerInventory : MonoBehaviour
     internal int addtitionalGrenadeSpeed;
     internal int increasedMovementSpeed;
     internal bool explosiveRicochet;
-    internal int increasedFireArea;
+    internal float increasedFireArea;
+    internal bool RicochetStack;
 
     private void OnEnable()
     {

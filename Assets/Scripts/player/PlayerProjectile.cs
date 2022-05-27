@@ -145,6 +145,7 @@ public class PlayerProjectile : MonoBehaviour
         if (bounces > 0)
         {
             RicochetSparkAndSound();
+            if (playerInv.RicochetStack) bounceSpeed *= 2;
             rb.AddForce(contact.normal * bounceSpeed);
             transform.LookAt(contact.normal);
 
