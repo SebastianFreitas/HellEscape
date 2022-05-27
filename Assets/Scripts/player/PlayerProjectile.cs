@@ -165,7 +165,8 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void FireExplode()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3);
+        float areaModifier =  (1f + (playerInv.increasedFireArea / 100f));
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f* areaModifier);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Dude"))
@@ -187,12 +188,13 @@ public class PlayerProjectile : MonoBehaviour
 
             
         }
-        ExplodeParticule();
+        ExplodeParticule(areaModifier);
     }
 
-    internal void ExplodeParticule()
+    internal void ExplodeParticule(float area)
     {
         exp.gameObject.SetActive(true);
+        exp.transform.localScale *= area;
         var explode = exp.GetComponent<ParticleSystem>();
 
         //GetComponent<Rigidbody>().velocity = Vector3.zero;

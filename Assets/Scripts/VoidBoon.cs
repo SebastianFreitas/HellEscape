@@ -43,9 +43,10 @@ internal class VoidBoon
 
         boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.Greed));
         boonListText.Add(("Gain 20% more movement speed and shoot speed", BoonName.Speed));
+        boonListText.Add(("Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
 
         //not done ----------------------------------------------------------------------
-        boonListText.Add(("Explosive damage does not destroy the bullet", BoonName.RicochetExplosive));
+        boonListText.Add(("Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea));
     }
 
     private void GetBoonListWeight()
@@ -56,7 +57,9 @@ internal class VoidBoon
 
         boonListWeight.Add((10, BoonName.Greed));
         boonListWeight.Add((10, BoonName.Speed));
-        boonListWeight.Add((1000, BoonName.RicochetExplosive));
+        boonListWeight.Add((5, BoonName.RicochetExplosive));
+
+        boonListWeight.Add((100000, BoonName.IncreasedFireArea));
 
 
         for (int i = 0; i < boonListWeight.Count; i++)
@@ -106,7 +109,8 @@ internal class VoidBoon
         MaxHp1,
         MaxHp3,
         Speed,
-        RicochetExplosive
+        RicochetExplosive,
+        IncreasedFireArea
     }
 
     internal PlayerBasicMovement playerMov;
@@ -138,6 +142,9 @@ internal class VoidBoon
 
             case BoonName.RicochetExplosive:
                 RicochetExplosive(gain);
+                break;
+            case BoonName.IncreasedFireArea:
+                IncreasedFireArea(gain);
                 break;
         }
 
@@ -202,6 +209,21 @@ internal class VoidBoon
         else
         {
             playerInv.explosiveRicochet = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void IncreasedFireArea(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.increasedFireArea += 50;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.increasedFireArea -= 50;
             playerInv.listBoons.Remove(this);
         }
     }
