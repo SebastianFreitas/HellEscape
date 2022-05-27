@@ -55,8 +55,8 @@ internal class VoidBoon
         boonListWeight.Add((1, BoonName.MaxHp3));
 
         boonListWeight.Add((10, BoonName.Greed));
-        boonListWeight.Add((1000, BoonName.Speed));
-        boonListWeight.Add((1, BoonName.RicochetExplosive));
+        boonListWeight.Add((10, BoonName.Speed));
+        boonListWeight.Add((1000, BoonName.RicochetExplosive));
 
 
         for (int i = 0; i < boonListWeight.Count; i++)

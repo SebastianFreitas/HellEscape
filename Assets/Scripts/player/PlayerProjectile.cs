@@ -141,27 +141,25 @@ public class PlayerProjectile : MonoBehaviour
         }
 
 
-        if (stats.fireDamage > 0)
+
+        if (bounces > 0)
         {
-            if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
-            FireExplode();
-            
-        }
-        else 
-        {
-            if (bounces > 0)
+            RicochetSparkAndSound();
+            rb.AddForce(contact.normal * bounceSpeed);
+            transform.LookAt(contact.normal);
+
+            bounces--;
+
+            if (stats.fireDamage > 0)
             {
-              
+                if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
+                FireExplode();
+            }
 
-                RicochetSparkAndSound();
-                rb.AddForce(contact.normal * bounceSpeed);
-                transform.LookAt(contact.normal);
-
-                bounces--;
-            } else StartCoroutine(KillBullet());
+        } else StartCoroutine(KillBullet());
         
 
-        }
+        
     }
 
 
@@ -196,8 +194,10 @@ public class PlayerProjectile : MonoBehaviour
     {
         exp.gameObject.SetActive(true);
         var explode = exp.GetComponent<ParticleSystem>();
-        GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        //GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
         explode.Play();
         Destroy(gameObject, explode.main.duration);
     }
@@ -238,7 +238,7 @@ public class PlayerProjectile : MonoBehaviour
         trails.transform.parent = null;
 
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         Destroy(this.gameObject);
         
     }
