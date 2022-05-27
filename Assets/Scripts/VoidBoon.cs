@@ -43,10 +43,14 @@ internal class VoidBoon
 
         boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.Greed));
         boonListText.Add(("Gain 20% more movement speed and shoot speed", BoonName.Speed));
+
         boonListText.Add(("Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
+        boonListText.Add(("Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea));
+        boonListText.Add(("Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
+        boonListText.Add(("Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
 
         //not done ----------------------------------------------------------------------
-        boonListText.Add(("Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea));
+
     }
 
     private void GetBoonListWeight()
@@ -59,7 +63,9 @@ internal class VoidBoon
         boonListWeight.Add((10, BoonName.Speed));
         boonListWeight.Add((5, BoonName.RicochetExplosive));
 
-        boonListWeight.Add((100000, BoonName.IncreasedFireArea));
+        boonListWeight.Add((10, BoonName.IncreasedFireArea));
+        boonListWeight.Add((5, BoonName.IncreasedFireArea2));
+        boonListWeight.Add((1, BoonName.IncreasedFireArea3));
 
 
         for (int i = 0; i < boonListWeight.Count; i++)
@@ -110,7 +116,9 @@ internal class VoidBoon
         MaxHp3,
         Speed,
         RicochetExplosive,
-        IncreasedFireArea
+        IncreasedFireArea,
+        IncreasedFireArea2,
+        IncreasedFireArea3
     }
 
     internal PlayerBasicMovement playerMov;
@@ -144,7 +152,13 @@ internal class VoidBoon
                 RicochetExplosive(gain);
                 break;
             case BoonName.IncreasedFireArea:
-                IncreasedFireArea(gain);
+                IncreasedFireArea(gain, 20);
+                break;
+            case BoonName.IncreasedFireArea2:
+                IncreasedFireArea(gain, 50);
+                break;
+            case BoonName.IncreasedFireArea3:
+                IncreasedFireArea(gain, 100);
                 break;
         }
 
@@ -213,17 +227,17 @@ internal class VoidBoon
         }
     }
 
-    internal void IncreasedFireArea(bool gain)
+    internal void IncreasedFireArea(bool gain, float value)
     {
         if (gain)
         {
 
-            playerInv.increasedFireArea += 50;
+            playerInv.increasedFireArea += value;
             playerInv.listBoons.Add(this);
         }
         else
         {
-            playerInv.increasedFireArea -= 50;
+            playerInv.increasedFireArea -= value;
             playerInv.listBoons.Remove(this);
         }
     }
