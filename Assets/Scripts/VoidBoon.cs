@@ -13,7 +13,7 @@ internal class VoidBoon
 
     internal List<(string, BoonName)> boonListText = new List<(string, BoonName)>();
 
-    internal VoidBoon( BoonType type)
+    internal VoidBoon(BoonType type)
     {
         player = GameObject.FindGameObjectsWithTag("Dude")[0];
         playerHP = player.GetComponent<PlayerHpManager>();
@@ -22,8 +22,7 @@ internal class VoidBoon
 
         influence = type;
 
-        GetBoonListWeight();
-        GetBoonListText();
+        GetBoons();
 
         List<BoonName> weightList = GetWeightList(boonListWeight);
         name = weightList[Random.Range(0, weightList.Count)];
@@ -34,49 +33,50 @@ internal class VoidBoon
         }
     }
 
-    private void GetBoonListText()
+    private void AddBoon(int weight, string text, BoonName name)
     {
-        //LIFE----------------------------------------------------------------
-        boonListText.Add(("Gain 10 Max Health", BoonName.MaxHp1));
-        boonListText.Add(("Gain 20 Max Health", BoonName.MaxHp2));
-        boonListText.Add(("Gain 60 Max Health", BoonName.MaxHp3));
-        boonListText.Add(("Gain 40 Max Health and heal fully", BoonName.MaxHpHeal));
-        boonListText.Add(("Gain 10 Max Health and 10 physical damage", BoonName.MaxHPPhys));
-        //SPEED----------------------------------------------------------------
-        boonListText.Add(("Gain 20% more movement speed and shot speed", BoonName.Speed));
-        boonListText.Add(("Ricochets get increasingly stronger", BoonName.RicochectStack));
-        boonListText.Add(("Gain 100% shot speed", BoonName.ShootSpeed));
-        //FIRE----------------------------------------------------------------
-        boonListText.Add(("Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed));
-        boonListText.Add(("Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
-        boonListText.Add(("Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea));
-        boonListText.Add(("Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
-        boonListText.Add(("Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
-        boonListText.Add(("Fire damage explodes in a 90% smaller area\n Fire damage is doubled", BoonName.DoubleFire));
-
-        //not done ----------------------------------------------------------------------
-        boonListText.Add(("Fire damage explodes in a 100% reduced area\n Fire damage is doubled", BoonName.DoubleFire));
+        boonListText.Add((text, name));
+        boonListWeight.Add((weight, name));
     }
 
-    private void GetBoonListWeight()
+    private void GetBoons()
     {
-        boonListWeight.Add((10, BoonName.MaxHp1));
-        boonListWeight.Add((5, BoonName.MaxHp2));
-        boonListWeight.Add((1, BoonName.MaxHp3));
-        boonListWeight.Add((2, BoonName.MaxHpHeal));
-        boonListWeight.Add((5, BoonName.MaxHPPhys));
+        //LIFE----------------------------------------------------------------
+        AddBoon(10,     "Gain 10 Max Health",       BoonName.MaxHp1);
+        AddBoon(5,      "Gain 20 Max Health",       BoonName.MaxHp2);
+        AddBoon(1,      "Gain 60 Max Health",        BoonName.MaxHp3);
+        AddBoon(2,      "Gain 40 Max Health and heal fully",            BoonName.MaxHpHeal);
+        AddBoon(5,      "Gain 10 Max Health and 10 physical damage",    BoonName.MaxHPPhys);
+        //SPEED----------------------------------------------------------------
+        AddBoon(10,     "Gain 20% more movement speed and shot speed",  BoonName.Speed);
+        AddBoon(10,     "Ricochets get increasingly stronger",          BoonName.RicochectStack);
+        AddBoon(11,     "Gain 100% shot speed",                         BoonName.ShootSpeed);
+        //FIRE----------------------------------------------------------------
+        AddBoon(10,     "Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed);
+        AddBoon(5,      "Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive);
+        AddBoon(10,     "Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea);
+        AddBoon(5,      "Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2);
+        AddBoon(1,      "Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3);
+        AddBoon(1,      "Fire damage explodes in a 90% smaller area\n Fire damage is doubled", BoonName.DoubleFire);
+        //POISON----------------------------------------------------------------
+        //COLD------------------------------------------------------------------
 
-        boonListWeight.Add((10, BoonName.Speed));
-        boonListWeight.Add((10, BoonName.ShootSpeed));
-        boonListWeight.Add((1, BoonName.RicochectStack));
+        //not done -------------------------------------------------------------
+        AddBoon(1, "Explosions from fire damage repeat a second time", BoonName.DoubleFire);
+        AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.DoubleFire);
+        AddBoon(1, "Explosions from fire damage gain more push back force", BoonName.DoubleFire);
+        AddBoon(1, "Explosions from fire damage pull instead of pushing", BoonName.DoubleFire);
 
-        boonListWeight.Add((10, BoonName.FireGreed));
-        boonListWeight.Add((5, BoonName.RicochetExplosive));
-        boonListWeight.Add((10, BoonName.IncreasedFireArea));
-        boonListWeight.Add((5, BoonName.IncreasedFireArea2));
-        boonListWeight.Add((1, BoonName.IncreasedFireArea3));
-        boonListWeight.Add((1, BoonName.DoubleFire));
-
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
+        AddBoon(1, "", BoonName.DoubleFire);
 
         for (int i = 0; i < boonListWeight.Count; i++)
         {
@@ -86,7 +86,6 @@ internal class VoidBoon
             }
         }
     }
-
 
     private bool PlayerHasBoon(BoonName name)
     {
