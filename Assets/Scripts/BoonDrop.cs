@@ -11,8 +11,15 @@ public class BoonDrop : MonoBehaviour
 
     private void Awake()
     {
-        boon = new VoidBoon(GetComponentInParent<RoomActivator>().influcence);
+        //boon = new VoidBoon(GetComponentInParent<RoomActivator>().influcence);
 
+
+        //text.text = boon.text;
+    }
+
+    private void OnEnable()
+    {
+        boon = new VoidBoon();
 
         text.text = boon.text;
     }
@@ -20,9 +27,14 @@ public class BoonDrop : MonoBehaviour
     internal void Accept()
     {
         boon.AcceptOrRemoveBoon(true);
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        boon.RefreshBoon();
+
+        text.text = boon.text;
     }
 
+
+  
     internal void Deny()
     {
         boon.playerHP.TakeDamage(5);

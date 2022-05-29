@@ -13,24 +13,62 @@ internal class VoidBoon
 
     internal List<(string, BoonName)> boonListText = new List<(string, BoonName)>();
 
-    internal VoidBoon(BoonType type)
+
+    private bool gotBoons = false;
+    private int weight;
+    internal VoidBoon()
     {
         player = GameObject.FindGameObjectsWithTag("Dude")[0];
         playerHP = player.GetComponent<PlayerHpManager>();
         playerInv = player.GetComponent<PlayerInventory>();
         playerMov = player.GetComponent<PlayerBasicMovement>();
 
-        influence = type;
+        if (!gotBoons)
+        {
+            gotBoons = true;
+            GetBoons();
+        }
 
-        GetBoons();
 
-        List<BoonName> weightList = GetWeightList(boonListWeight);
+        List<BoonName> weightList = GetWeightList();
         name = weightList[Random.Range(0, weightList.Count)];
 
-        foreach(var current in boonListText)
+        RemoveBoon();
+
+    }
+
+    private void RemoveBoon()
+    {
+        foreach (var current in boonListText)
         {
-            if (current.Item2 == name) text = current.Item1;
+            if (current.Item2 == name)
+            {
+                text = current.Item1;
+            }
+
         }
+
+        foreach (var current in boonListWeight)
+        {
+            if (current.Item2 == name)
+            {
+                weight = current.Item1;
+            }
+
+        }
+
+        boonListText.Remove((text, name));
+        boonListWeight.Remove((weight, name));
+    }
+
+    internal void RefreshBoon()
+    {
+
+        List<BoonName> weightList = GetWeightList();
+        name = weightList[Random.Range(0, weightList.Count)];
+
+        RemoveBoon();
+
     }
 
     private void AddBoon(int weight, string text, BoonName name)
@@ -62,10 +100,12 @@ internal class VoidBoon
         //COLD------------------------------------------------------------------
 
         //not done -------------------------------------------------------------
-        AddBoon(1, "Explosions from fire damage repeat a second time", BoonName.DoubleFire);
-        AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.DoubleFire);
-        AddBoon(1, "Explosions from fire damage gain more push back force", BoonName.DoubleFire);
-        AddBoon(1, "Explosions from fire damage pull instead of pushing", BoonName.DoubleFire);
+        AddBoon(1, "Delayed Explosion", BoonName.DelayedFire);
+        AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.ScrapFire);
+        AddBoon(1, "Explosions from fire damage gain more push back force", BoonName.PushForceFire);
+        AddBoon(1, "Explosions from fire damage pull instead of pushing", BoonName.PullFire);
+        AddBoon(1, "Whenever you are pushed back from your own fire explosions gain more movement speed for a duration", BoonName.FireMovement);
+
 
         AddBoon(1, "", BoonName.DoubleFire);
         AddBoon(1, "", BoonName.DoubleFire);
@@ -76,15 +116,15 @@ internal class VoidBoon
         AddBoon(1, "", BoonName.DoubleFire);
         AddBoon(1, "", BoonName.DoubleFire);
         AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
 
-        for (int i = 0; i < boonListWeight.Count; i++)
-        {
-            if (PlayerHasBoon(boonListWeight[i].Item2))
-            {
-                boonListWeight.Remove(boonListWeight[i]);
-            }
-        }
+        //for (int i = 0; i < boonListWeight.Count; i++)
+        //{
+        //    if (PlayerHasBoon(boonListWeight[i].Item2))
+        //    {
+        //        boonListWeight.Remove(boonListWeight[i]);
+        //        boonListText.Remove(boonListText[i]);
+        //    }
+        //}
     }
 
     private bool PlayerHasBoon(BoonName name)
@@ -97,10 +137,10 @@ internal class VoidBoon
         return false;
     }
 
-    private List<BoonName> GetWeightList(List<(int, BoonName)> boonList)
+    private List<BoonName> GetWeightList()
     {
         List<BoonName> weightList = new List<BoonName>();
-        foreach(var current in boonList)
+        foreach(var current in boonListWeight)
         {
             for (int i = 0; i < current.Item1; i++) weightList.Add(current.Item2);
         }
@@ -129,7 +169,12 @@ internal class VoidBoon
         MaxHPPhys,
         RicochectStack,
         ShootSpeed,
-        DoubleFire
+        DoubleFire,
+        DelayedFire,
+        ScrapFire,
+        PushForceFire,
+        PullFire,
+        FireMovement
     }
 
     internal PlayerBasicMovement playerMov;
