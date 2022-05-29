@@ -162,7 +162,12 @@ public class PlayerProjectile : MonoBehaviour
 
         
     }
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+     //Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
+     Gizmos.DrawWireSphere(transform.position, 2f*(1f + (playerInv.increasedFireArea / 100f)));
+    }
 
     internal void FireExplode()
     {
@@ -199,14 +204,16 @@ public class PlayerProjectile : MonoBehaviour
     internal void ExplodeParticule(float area)
     {
         exp.gameObject.SetActive(true);
-        exp.transform.localScale *= area;
-        var explode = exp.GetComponent<ParticleSystem>();
+        var exp2 = Instantiate(exp, transform.position, transform.rotation);
+        exp2.transform.localScale *= area;
+        var explode = exp2.GetComponent<ParticleSystem>();
 
         //GetComponent<Rigidbody>().velocity = Vector3.zero;
         //GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         explode.Play();
-        Destroy(gameObject, explode.main.duration);
+        Destroy(exp2, explode.main.duration);
+        Destroy(this);
     }
 
 

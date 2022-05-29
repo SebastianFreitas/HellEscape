@@ -179,7 +179,7 @@ public class Gun : MonoBehaviour
 
     private PlayerProjectile SpawnBullet(Transform realpos)
     {
-        var bullet = Instantiate(projectile, realBulletHolder.transform.position, realpos.rotation); //shoot normal bullet
+        var bullet = Instantiate(projectile, realBulletHolder.transform.position , realpos.rotation); //shoot normal bullet
 
         bullet.initialFade = true;
         bullet.Gun = gun;

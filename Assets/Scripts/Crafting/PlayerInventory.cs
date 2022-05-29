@@ -30,7 +30,7 @@ public class PlayerInventory : MonoBehaviour
     internal bool explosiveRicochet;
     internal float increasedFireArea;
     internal bool RicochetStack;
-    internal int fireMultiplier;
+    internal int fireMultiplier = 1;
 
     private void OnEnable()
     {
