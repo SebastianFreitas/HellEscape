@@ -32,6 +32,8 @@ public class PlayerInventory : MonoBehaviour
     internal bool RicochetStack;
     internal int fireMultiplier = 1;
     internal bool delayedFire;
+    internal int pushForceModifier = 1;
+    internal bool pullfire;
 
     private void OnEnable()
     {

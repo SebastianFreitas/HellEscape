@@ -9,9 +9,8 @@ internal class VoidBoon
 
     internal string text;
 
-    internal List<(int, BoonName)> boonListWeight = new List<(int, BoonName)>();
 
-    internal List<(string, BoonName)> boonListText = new List<(string, BoonName)>();
+    internal List<(int, string, BoonName)> BoonList = new List<(int, string, BoonName)>();
 
 
     private bool gotBoons = false;
@@ -39,26 +38,20 @@ internal class VoidBoon
 
     private void RemoveBoon()
     {
-        foreach (var current in boonListText)
+        foreach (var current in BoonList)
         {
-            if (current.Item2 == name)
+            if (current.Item3 == name)
             {
-                text = current.Item1;
-            }
-
-        }
-
-        foreach (var current in boonListWeight)
-        {
-            if (current.Item2 == name)
-            {
+                text = current.Item2;
                 weight = current.Item1;
             }
 
         }
 
-        boonListText.Remove((text, name));
-        boonListWeight.Remove((weight, name));
+
+
+        BoonList.Remove((weight,text, name));
+       
     }
 
     internal void RefreshBoon()
@@ -71,51 +64,37 @@ internal class VoidBoon
 
     }
 
-    private void AddBoon(int weight, string text, BoonName name)
-    {
-        boonListText.Add((text, name));
-        boonListWeight.Add((weight, name));
-    }
-
     private void GetBoons()
     {
         //LIFE----------------------------------------------------------------
-        AddBoon(10,     "Gain 10 Max Health",       BoonName.MaxHp1);
-        AddBoon(5,      "Gain 20 Max Health",       BoonName.MaxHp2);
-        AddBoon(1,      "Gain 60 Max Health",        BoonName.MaxHp3);
-        AddBoon(2,      "Gain 40 Max Health and heal fully",            BoonName.MaxHpHeal);
-        AddBoon(5,      "Gain 10 Max Health and 10 physical damage",    BoonName.MaxHPPhys);
+        BoonList.Add((10,     "Gain 10 Max Health",       BoonName.MaxHp1));
+        BoonList.Add((5,      "Gain 20 Max Health",       BoonName.MaxHp2));
+        BoonList.Add((1,      "Gain 60 Max Health",        BoonName.MaxHp3));
+        BoonList.Add((2,      "Gain 40 Max Health and heal fully",            BoonName.MaxHpHeal));
+        BoonList.Add((5,      "Gain 10 Max Health and 10 physical damage",    BoonName.MaxHPPhys));
         //SPEED----------------------------------------------------------------
-        AddBoon(10,     "Gain 20% more movement speed and shot speed",  BoonName.Speed);
-        AddBoon(10,     "Ricochets get increasingly stronger",          BoonName.RicochectStack);
-        AddBoon(11,     "Gain 100% shot speed",                         BoonName.ShootSpeed);
+        BoonList.Add((10,     "Gain 20% more movement speed and shot speed",  BoonName.Speed));
+        BoonList.Add((10,     "Ricochets get increasingly stronger",          BoonName.RicochectStack));
+        BoonList.Add((11,     "Gain 100% shot speed",                         BoonName.ShootSpeed));
         //FIRE----------------------------------------------------------------
-        AddBoon(10,     "Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed);
-        AddBoon(5,      "Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive);
-        AddBoon(10,     "Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea);
-        AddBoon(5,      "Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2);
-        AddBoon(1,      "Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3);
-        AddBoon(1,      "Fire damage explodes in a 90% smaller area\n Fire damage is doubled", BoonName.DoubleFire);
+        BoonList.Add((10,     "Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed));
+        BoonList.Add((5,      "Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
+        BoonList.Add((10,     "Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea));
+        BoonList.Add((5,      "Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
+        BoonList.Add((1,      "Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
+        BoonList.Add((1,      "Fire damage explodes in a 90% smaller area\n Fire damage is doubled", BoonName.DoubleFire));
+        BoonList.Add((1, "Delayed Explosion", BoonName.DelayedFire));
+        BoonList.Add((1, "Explosions from fire damage gain more push back force", BoonName.PushForceFire));
         //POISON----------------------------------------------------------------
         //COLD------------------------------------------------------------------
 
         //not done -------------------------------------------------------------
-        AddBoon(1, "Delayed Explosion", BoonName.DelayedFire);
-        AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.ScrapFire);
-        AddBoon(1, "Explosions from fire damage gain more push back force", BoonName.PushForceFire);
-        AddBoon(1, "Explosions from fire damage pull instead of pushing", BoonName.PullFire);
-        AddBoon(1, "Whenever you are pushed back from your own fire explosions gain more movement speed for a duration", BoonName.FireMovement);
 
+        //AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.ScrapFire);
 
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
-        AddBoon(1, "", BoonName.DoubleFire);
+        BoonList.Add((11111, "Explosions from fire damage pull instead of pushing", BoonName.PullFire));
+        BoonList.Add((1, "Whenever you are pushed back from your own fire explosions gain more movement speed for a duration", BoonName.FireMovement));
+
 
         //for (int i = 0; i < boonListWeight.Count; i++)
         //{
@@ -140,9 +119,9 @@ internal class VoidBoon
     private List<BoonName> GetWeightList()
     {
         List<BoonName> weightList = new List<BoonName>();
-        foreach(var current in boonListWeight)
+        foreach(var current in BoonList)
         {
-            for (int i = 0; i < current.Item1; i++) weightList.Add(current.Item2);
+            for (int i = 0; i < current.Item1; i++) weightList.Add(current.Item3);
         }
         return weightList;
     }
@@ -237,6 +216,13 @@ internal class VoidBoon
             case BoonName.DelayedFire:
                 DelayedFire(gain);
                 break;
+
+            case BoonName.PushForceFire:
+                PushForceFire(gain);
+                break;
+            case BoonName.PullFire:
+                PullFire(gain);
+                break;
         }
 
     }
@@ -251,6 +237,35 @@ internal class VoidBoon
         else
         {
             playerInv.delayedFire = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void PullFire(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.pullfire = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.pullfire = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void PushForceFire(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.pushForceModifier += 1;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.pushForceModifier -= 1;
             playerInv.listBoons.Remove(this);
         }
     }

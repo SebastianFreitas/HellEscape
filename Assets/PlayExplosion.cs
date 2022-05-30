@@ -30,9 +30,11 @@ public class PlayExplosion : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1.5f * areaModifier);
         foreach (var hitCollider in hitColliders)
         {
+            Vector3 direction = hitCollider.transform.position - transform.position;
+            if (playerInv.pullfire) direction = transform.position - hitCollider.transform.position;
             if (hitCollider.CompareTag("Dude"))
             {
-                playerMov.AddImpact(hitCollider.transform.position - transform.position, stats.fireDamage * 5);
+                playerMov.AddImpact(direction, stats.fireDamage * 5 * playerInv.pushForceModifier);
             }
             else if (hitCollider.CompareTag("Monster"))
             {
@@ -44,11 +46,11 @@ public class PlayExplosion : MonoBehaviour
             {
                 var monster = hitCollider.GetComponentInParent<Monster>();
                 monster.TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
-                monster.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
+                monster.GetComponent<Rigidbody>().AddForce((direction) * 5f * playerInv.pushForceModifier, ForceMode.Impulse);
             }
             else if (hitCollider.CompareTag("Prop"))
             {
-                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
+                hitCollider.GetComponent<Rigidbody>().AddForce((direction) * 5f * playerInv.pushForceModifier, ForceMode.Impulse);
             }
 
 
