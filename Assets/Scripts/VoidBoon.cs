@@ -233,10 +233,27 @@ internal class VoidBoon
             case BoonName.DoubleFire:
                 DoubleFire(gain);
                 break;
+
+            case BoonName.DelayedFire:
+                DelayedFire(gain);
+                break;
         }
 
     }
+    internal void DelayedFire(bool gain)
+    {
+        if (gain)
+        {
 
+            playerInv.delayedFire = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.delayedFire = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
     internal void Maxhp1(bool gain, int value)
     {
         if (gain)

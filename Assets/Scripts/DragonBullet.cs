@@ -17,12 +17,21 @@ public class DragonBullet : PlayerProjectile
             other.transform.GetComponent<Monster>().TakeDamage(stats, true, stats.critMulti);    
         }
 
-        if (stats.fireDamage > 0)
+
+        if (bounces > 0)
         {
-            StartCoroutine(KillBullet());
-            FireExplode();
+            RicochetSparkAndSound();
+
+            bounces--;
+
+            if (stats.fireDamage > 0)
+            {
+                //if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
+                FireExplode();
+            }
 
         }
+        else StartCoroutine(KillBullet());
 
     }
 }

@@ -266,7 +266,11 @@ public class Gun : MonoBehaviour
 
         if (gun.horizontalShot > 0) projectile = horizontal;
         else if (gun.slowbullet > 0) projectile = slow;
-        else if (gun.piercing > 0) projectile = piercing;
+        else if (gun.piercing > 0)
+        {
+            projectile = piercing;
+
+        }
         else projectile = normal;
 
     }

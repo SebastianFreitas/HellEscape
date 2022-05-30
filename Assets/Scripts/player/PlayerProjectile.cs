@@ -36,7 +36,7 @@ public class PlayerProjectile : MonoBehaviour
 
     public PlayerBasicMovement playerMov;
 
-    public KillObject exp;
+    public PlayExplosion exp;
 
     public GameObject trails;
 
@@ -153,7 +153,7 @@ public class PlayerProjectile : MonoBehaviour
 
             if (stats.fireDamage > 0)
             {
-                if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
+                //if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
                 FireExplode();
             }
 
@@ -171,21 +171,27 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void FireExplode()
     {
-        float areaModifier =  (1f + (playerInv.increasedFireArea / 100f));
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 2f* areaModifier);
+        float areaModifier = DetectExplosion();
+        ExplodeParticule(areaModifier);
+    }
+
+    private float DetectExplosion()
+    {
+        float areaModifier = (1f + (playerInv.increasedFireArea / 100f));
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1.5f * areaModifier);
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Dude"))
             {
-                playerMov.AddImpact(hitCollider.transform.position - transform.position, stats.fireDamage*5);
+                playerMov.AddImpact(hitCollider.transform.position - transform.position, stats.fireDamage * 5);
             }
-            else if (hitCollider.CompareTag("Monster") )
+            else if (hitCollider.CompareTag("Monster"))
             {
                 var monster = hitCollider.GetComponentInParent<Monster>();
                 monster.TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
                 //monster.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
-            else if ( hitCollider.CompareTag("MonsterHead"))
+            else if (hitCollider.CompareTag("MonsterHead"))
             {
                 var monster = hitCollider.GetComponentInParent<Monster>();
                 monster.TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
@@ -196,26 +202,43 @@ public class PlayerProjectile : MonoBehaviour
                 hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
 
-            
+
         }
-        ExplodeParticule(areaModifier);
+
+        return areaModifier;
     }
 
     internal void ExplodeParticule(float area)
+    {
+        if (playerInv.delayedFire)
+        {
+            PlayExplosion play = Instantiate(exp, transform.position, transform.rotation) as PlayExplosion;
+            play.RemoteAwake(playerInv, playerMov, stats);
+        }
+
+        PLayExplosionAnimation(area);
+        if (!playerInv.explosiveRicochet)
+            Destroy(this);
+    }
+
+    private void PLayExplosionAnimation(float area)
     {
         exp.gameObject.SetActive(true);
         var exp2 = Instantiate(exp, transform.position, transform.rotation);
         exp2.transform.localScale *= area;
         var explode = exp2.GetComponent<ParticleSystem>();
 
-        //GetComponent<Rigidbody>().velocity = Vector3.zero;
-        //GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         explode.Play();
+
         Destroy(exp2, explode.main.duration);
-        Destroy(this);
     }
 
+    IEnumerator DelayedFire()
+    {
+        yield return new WaitForSecondsRealtime(.5f);
+        PLayExplosionAnimation(DetectExplosion());
+    }
 
     private bool GuidedBullet()
     {
