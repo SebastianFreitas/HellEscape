@@ -83,27 +83,68 @@ internal class VoidBoon
         BoonList.Add((5,      "Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
         BoonList.Add((1,      "Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
         BoonList.Add((1,      "Fire damage explodes in a 90% smaller area\n Fire damage is doubled", BoonName.DoubleFire));
-        BoonList.Add((1, "Delayed Explosion", BoonName.DelayedFire));
-        BoonList.Add((1, "Explosions from fire damage gain more push back force", BoonName.PushForceFire));
+        BoonList.Add((1,      "Delayed Explosion", BoonName.DelayedFire));
+        BoonList.Add((5,      "Explosions from fire damage gain more push back force", BoonName.PushForceFire));
+        BoonList.Add((5,      "Explosions from fire damage pull instead of pushing", BoonName.PullFire));
+        BoonList.Add((5,      "Whenever you are pushed back from your own fire explosions gain more movement speed for a duration", BoonName.FireMovement));
         //POISON----------------------------------------------------------------
         //COLD------------------------------------------------------------------
+        //PHYSICAL------------------------------------------------------------------
+
+
 
         //not done -------------------------------------------------------------
+        BoonList.Add((1, "Enemies explode into a fire explosion on death", BoonName.InstantPoison));
+        BoonList.Add((1, "Your dash and double jump are stronger", BoonName.InstantPoison));
+        BoonList.Add((1, "Gain 25% of poison damage as fire damage", BoonName.InstantPoison));
+
+
+        BoonList.Add((1, "Deal all poison damage instantly \n Deal half poison damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Poison deals damage twice as fast", BoonName.InstantPoison));
+        BoonList.Add((1, "Enemies who die from your poison have +5% chance of dropping healing packs", BoonName.InstantPoison));
+        BoonList.Add((1, "Fire explosions deal poison damage instead", BoonName.InstantPoison));
+        BoonList.Add((1, "Poison lasts 5 more seconds", BoonName.InstantPoison));
+        BoonList.Add((1, "Chilled enemies take 50% more poison damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Poisoned enemies deal 25% less damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Ricochets bounce into close poisoned enemies", BoonName.InstantPoison));
+        
+
+        BoonList.Add((1, "+1% Chance your cold damage freezes the enemy", BoonName.InstantPoison));
+        BoonList.Add((1, "+2% Chance your cold damage freezes the enemy", BoonName.InstantPoison));
+        BoonList.Add((1, "Poisoned enemies are more affected by chill", BoonName.InstantPoison));
+        BoonList.Add((1, "Freeze condition lasts one second longer", BoonName.InstantPoison));
+        BoonList.Add((1, "Deal 50% more damage agaisnt frozen targets", BoonName.InstantPoison));
+        BoonList.Add((1, "Enemies killed while chilled or frozen drop more gunparts", BoonName.InstantPoison));
+        BoonList.Add((1, "Enemies that die from cold damage shatter into cold projectiles", BoonName.InstantPoison));
+        BoonList.Add((1, "Ricochets shatter into extra cold projectiles", BoonName.InstantPoison));
+        BoonList.Add((1, "Shoot an additional  cold projectile", BoonName.InstantPoison));
+        BoonList.Add((1, "Physical damage is converted to cold on critical hits.", BoonName.InstantPoison));
+
+
+
+        BoonList.Add((1, "Gain +10 physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Gain +25 physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Gain +50 physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "+5% for physical damage to deal double damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Critical hits deal 3 times the physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Convert 50% of fire damage into physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Convert 100% of fire damage into physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "50% reduced bullet speed \n Gain + 50 physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Sources of increased movement speed also apply to physical damage", BoonName.InstantPoison));
+        BoonList.Add((1, "All physical damage dealt agaisnt frozen enemies is doubled", BoonName.InstantPoison));
+
+
+
+
+        BoonList.Add((1, "Critical hits increase weapon fire rate", BoonName.InstantPoison));
+
 
         //AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.ScrapFire);
 
-        BoonList.Add((11111, "Explosions from fire damage pull instead of pushing", BoonName.PullFire));
-        BoonList.Add((1, "Whenever you are pushed back from your own fire explosions gain more movement speed for a duration", BoonName.FireMovement));
+
+        Debug.Log("This is the total boons -> "+BoonList.Count);
 
 
-        //for (int i = 0; i < boonListWeight.Count; i++)
-        //{
-        //    if (PlayerHasBoon(boonListWeight[i].Item2))
-        //    {
-        //        boonListWeight.Remove(boonListWeight[i]);
-        //        boonListText.Remove(boonListText[i]);
-        //    }
-        //}
     }
 
     private bool PlayerHasBoon(BoonName name)
@@ -153,7 +194,8 @@ internal class VoidBoon
         ScrapFire,
         PushForceFire,
         PullFire,
-        FireMovement
+        FireMovement,
+        InstantPoison
     }
 
     internal PlayerBasicMovement playerMov;
@@ -223,9 +265,27 @@ internal class VoidBoon
             case BoonName.PullFire:
                 PullFire(gain);
                 break;
+            case BoonName.FireMovement:
+                FireMovement(gain);
+                break;
         }
 
     }
+    internal void FireMovement(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
     internal void DelayedFire(bool gain)
     {
         if (gain)

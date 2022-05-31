@@ -70,10 +70,24 @@ public class PlayerBasicMovement : MonoBehaviour
         }
     }
 
+    private bool isFireMovement = false;
+    private float fireMovementMod = 0;
+    internal IEnumerator FireMovement()
+    {
+        isFireMovement = true;
+        fireMovementMod = 10;
+        yield return new WaitForSecondsRealtime(3);
+        fireMovementMod = 0;
+        isFireMovement = false;
+    }
     private void OnEnable()
     {
 
-
+        if (isFireMovement)
+        {
+            isFireMovement = false;
+            fireMovementMod = 0;
+        }
         StartCoroutine(waiterDashDuration());
 
         if (isChilled) increasedSpeed += chillValue;
@@ -156,7 +170,7 @@ public class PlayerBasicMovement : MonoBehaviour
         Vector3.Normalize(moveRaw);
         Vector3.Normalize(move);
 
-        currentSpeed = (speed) *(1 + ((increasedSpeed + playerInv.increasedMovementSpeed) / 100));
+        currentSpeed = (speed + fireMovementMod) *(1 + ((increasedSpeed + playerInv.increasedMovementSpeed) / 100));
 
         controller.Move(move * currentSpeed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);

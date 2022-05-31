@@ -188,6 +188,7 @@ public class PlayerProjectile : MonoBehaviour
             if (hitCollider.CompareTag("Dude"))
             {
                 playerMov.AddImpact(direction, stats.fireDamage * 5 * playerInv.pushForceModifier);
+                if (playerInv.fireMovement) playerMov.StartCoroutine("FireMovement");
             }
             else if (hitCollider.CompareTag("Monster"))
             {

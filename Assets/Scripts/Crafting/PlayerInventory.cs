@@ -34,6 +34,7 @@ public class PlayerInventory : MonoBehaviour
     internal bool delayedFire;
     internal int pushForceModifier = 1;
     internal bool pullfire;
+    internal bool fireMovement;
 
     private void OnEnable()
     {
