@@ -196,6 +196,14 @@ public class Gun : MonoBehaviour
             gun.increasedCriticalDamage + playerInv.additionalincreasedCriticalDamage
             );
 
+        if(playerInv.fireToPhys > 0)
+        {
+            bullet.stats.physicalDamage += bullet.stats.fireDamage * playerInv.fireToPhys;
+            bullet.stats.fireDamage*= 1-playerInv.fireToPhys;
+        }
+
+        bullet.stats.fireDamage += bullet.stats.poisonDamage * playerInv.poisonToFixeAsExtra;
+        
         bullet.playerMov = playerScript;
         bullet.gameObject.SetActive(true);
         bullet.playerInv = playerInv;

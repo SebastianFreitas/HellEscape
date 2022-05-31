@@ -22,8 +22,6 @@ public class PlayerInventory : MonoBehaviour
     internal float additionalincreasedCriticalDamage;
     internal int additionalBounces;
     internal int increasedBulletSpeed;
-
-
     internal int additionalGrenadeDamage;
     internal int addtitionalGrenadeSpeed;
     internal int increasedMovementSpeed;
@@ -35,6 +33,22 @@ public class PlayerInventory : MonoBehaviour
     internal int pushForceModifier = 1;
     internal bool pullfire;
     internal bool fireMovement;
+    internal float poisonSpeedDouble = 1;
+    internal float poisonDuration;
+    internal bool poisonFollow;
+    internal bool weakerPoison;
+    internal float chillPoison;
+    internal int vampiricBonus;
+    internal int freezeChance;
+    internal float additionalFreezeDuration;
+    internal float doublePhysOnFreezes;
+    internal bool phyisToColdCrit;
+    internal int chancePhysDoubleDamage;
+    internal float critGlobalMultiplier;
+    internal int fireToPhys;
+    internal float poisonToFixeAsExtra;
+    internal float extraDamageWhileFrozen = 1f;
+    internal bool moreFrozenGunparts;
 
     private void OnEnable()
     {

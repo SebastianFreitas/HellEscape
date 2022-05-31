@@ -146,8 +146,21 @@ public class PlayerProjectile : MonoBehaviour
         {
             RicochetSparkAndSound();
             if (playerInv.RicochetStack) bounceSpeed *= 2;
-            rb.AddForce(contact.normal * bounceSpeed);
-            transform.LookAt(contact.normal);
+
+            if (playerInv.poisonFollow && stats.poisonDamage >0)
+            {
+                if (!GuidedBullet())
+                {
+                    rb.AddForce(contact.normal * bounceSpeed);
+                    transform.LookAt(contact.normal);
+                }
+            } 
+            else
+            {
+                rb.AddForce(contact.normal * bounceSpeed);
+                transform.LookAt(contact.normal);
+            }
+
 
             bounces--;
 
@@ -248,16 +261,19 @@ public class PlayerProjectile : MonoBehaviour
     private bool GuidedBullet()
     {
         var foundEnemy = false;
-        Collider[] hitColliders = Physics.OverlapSphere(rb.position, 10f);
+        Collider[] hitColliders = Physics.OverlapSphere(rb.position, 30f);
         foreach (var hitCollider in hitColliders)
         {
 
             if (hitCollider.CompareTag("Monster"))
             {
-                foundEnemy = true;
-                var direction = hitCollider.transform.position - transform.position;
-                rb.AddForce(direction * bounceSpeed);
-                break;
+                if (hitCollider.GetComponent<Monster>().IsPoisoned())
+                {
+                    foundEnemy = true;
+                    var direction = hitCollider.transform.position - transform.position;
+                    rb.AddForce(direction * bounceSpeed);
+                    return foundEnemy;
+                }
             }
         }
 

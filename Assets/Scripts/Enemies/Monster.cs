@@ -27,8 +27,9 @@ public class Monster : MonoBehaviour
     public ParticleSystem AshesDeath;
 
     public float level;
-
+    private float oldActionSpeed;
     internal float actionSpeed = 1f;
+    private bool isFrozzen;
     internal float forceSpeed = 1f;
 
     public DamagePopUp dmgPopUp;
@@ -39,42 +40,9 @@ public class Monster : MonoBehaviour
     internal BridgeHandler path;
 
     private PlayerBasicMovement playerMov;
+    private PlayerInventory playerInv;
     private PlayerHpManager playerHP;
-    void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
 
-        volume = PlayerPrefs.GetFloat("Volume");
-
-        if (rigidBody == null) rigidBody = transform.GetComponent<Rigidbody>();
-        if (monsterCollider == null) monsterCollider = rigidBody.GetComponent<Collider>();
-
-        if (player == null)
-            player = transform.root.GetComponent<GameMan>().player;
-
-
-        playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
-
-        playerMov =  player.GetComponent<PlayerBasicMovement>();
-        playerHP = player.GetComponent<PlayerHpManager>();
-
-        if (!isHub)
-        {
-            roomActivator = transform.GetComponentInParent<RoomActivator>();
-            mission = roomActivator.mission;
-            ApplyMission();
-        }
-        else
-        {
-            mission = new ModDataRoom.GeneratedMission();
-            level = PlayerPrefs.GetInt("PathLevel");
-            UpdateStatsToLevel();
-        }
-
-        if (isBoss) gunparts += 25;
-        else if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
-
-    }
     float eliteChance;
     int gunparts = 1;
     float totalDropChance = 1f;
@@ -101,7 +69,44 @@ public class Monster : MonoBehaviour
         if (mission.invisible) StartCoroutine("Invisible");
     }
 
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
 
+        volume = PlayerPrefs.GetFloat("Volume");
+
+        if (rigidBody == null) rigidBody = transform.GetComponent<Rigidbody>();
+        if (monsterCollider == null) monsterCollider = rigidBody.GetComponent<Collider>();
+
+        if (player == null)
+            player = transform.root.GetComponent<GameMan>().player;
+
+
+        playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
+
+        playerMov =  player.GetComponent<PlayerBasicMovement>();
+        playerHP = player.GetComponent<PlayerHpManager>();
+        playerInv = player.GetComponent<PlayerInventory>();
+
+        if(playerInv.moreFrozenGunparts) gunparts+=Random.Range(0,3);
+
+        if (!isHub)
+        {
+            roomActivator = transform.GetComponentInParent<RoomActivator>();
+            mission = roomActivator.mission;
+            ApplyMission();
+        }
+        else
+        {
+            mission = new ModDataRoom.GeneratedMission();
+            level = PlayerPrefs.GetInt("PathLevel");
+            UpdateStatsToLevel();
+        }
+
+        if (isBoss) gunparts += 25;
+        else if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
+
+    }
     private bool isInvisible = false;
     IEnumerator Invisible()
     {
@@ -156,6 +161,12 @@ public class Monster : MonoBehaviour
             {
                 StopCoroutine("Chilled");
                 StartCoroutine("Chilled");
+                if (Random.Range(1f, 100f) > 100 - (1+playerInv.freezeChance))
+                {
+                    StopCoroutine("Freezed");
+                    StartCoroutine("Freezed");
+                }
+
             }
 
         }
@@ -165,18 +176,42 @@ public class Monster : MonoBehaviour
         {
             if (stats.poisonDamage > 0)
             {
-                //StartCoroutine(Poisoned(stats.poisonDamage));
+                if (isChilled) stats.poisonDamage *= playerInv.chillPoison;
                 StartPoison(stats.poisonDamage);
             }
 
         }
 
         if (mission.physicalImmunity) stats.physicalDamage = 0;
- 
+        else
+        {
+            if(playerInv.chancePhysDoubleDamage > 0)
+            {
+                if (Random.Range(1f, 100f) > 100 - playerInv.chancePhysDoubleDamage) stats.physicalDamage *= 2;
+            }
+
+            if (isFrozzen) stats.physicalDamage *= playerInv.doublePhysOnFreezes;
+
+            if (isCrit)
+            {
+                
+                if(playerInv.phyisToColdCrit)
+                {
+                    stats.coldDamage = stats.physicalDamage;
+                    stats.physicalDamage = 0;
+                }
+
+                stats.physicalDamage *= playerInv.critGlobalMultiplier + critMulti / 100f;
+            }
+        }
+
+       
+
+       
         
-        if (isCrit) stats.physicalDamage *= 2f + critMulti/100f;
-        
-        float amount = stats.GetDamage();
+        float amount = stats.GetDamage() ;
+
+        if (isFrozzen) amount *= playerInv.extraDamageWhileFrozen;
 
         if(amount > 0)
         {
@@ -325,7 +360,7 @@ public class Monster : MonoBehaviour
 
             }
 
-            if (Random.Range(1f, 100f) > 100 - (totalDropChance*2 + mission.monsterHealthDropChance))
+            if (Random.Range(1f, 100f) > 100 - (totalDropChance*2 + mission.monsterHealthDropChance + playerInv.vampiricBonus))
             {
                 GameObject x = Instantiate(roomActivator.roomgen.healthPack, transform.position + Vector3.up, transform.rotation) as GameObject;
                 x.transform.parent = transform.parent;
@@ -359,20 +394,20 @@ public class Monster : MonoBehaviour
 
     IEnumerator Poisoned()
     {
-        WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.5f);
+        WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.5f / playerInv.poisonSpeedDouble);
         isPoisoned = true;
-
+        if (playerInv.weakerPoison) damage *= 0.75f;
         while (true)
         {
             TakeDamage((int)poisonValue);
 
             poisonTicks++;
-            if (poisonTicks > 9) break;
+            if (poisonTicks > 9+ playerInv.poisonDuration) break;
 
             yield return waiter;
 
         }
-
+        if (playerInv.weakerPoison) damage *= 1.25f;
         poisonTicks = 0;
         isPoisoned = false;
     }
@@ -382,13 +417,28 @@ public class Monster : MonoBehaviour
         if (isPoisoned)
         {
             poisonTicks = 0;
-            poisonValue += poisonDamage / 5;  
+
         }
         else
         {
-            poisonValue = poisonDamage / 5;
             StartCoroutine(Poisoned());
         }
+
+        poisonValue += (poisonDamage / 5);
     }
 
+    internal bool IsPoisoned()
+    {
+        return isPoisoned;
+    }
+
+    IEnumerator Freezed()
+    {
+        oldActionSpeed = actionSpeed;
+        actionSpeed =0f;
+        isFrozzen = true;
+        yield return new WaitForSecondsRealtime(1f + playerInv.additionalFreezeDuration);
+        isFrozzen = false;
+        actionSpeed = oldActionSpeed;
+    }
 }

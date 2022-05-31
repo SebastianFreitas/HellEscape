@@ -341,8 +341,8 @@ public class PlayerBasicMovement : MonoBehaviour
     private void JumpDash(bool isDash)
     {
         
-        AddImpact(Vector3.up, JumpDashForce);
-        JumpInput(3f);
+        AddImpact(Vector3.up, JumpDashForce * strongerDash);
+        JumpInput(3f * strongerDash);
 
         if (isDash)
         {
@@ -363,8 +363,8 @@ public class PlayerBasicMovement : MonoBehaviour
     {
         cd.startCD((int)dashCooldown);
         playerSound.PlayDashSound();
-        if (moveRaw == Vector3.zero) AddImpact(transform.forward, 250);
-        else AddImpact(moveRaw, 250);
+        if (moveRaw == Vector3.zero) AddImpact(transform.forward, 250 * strongerDash);
+        else AddImpact(moveRaw, 250 * strongerDash);
 
         canDash = false;
         isSideDashing = true;
@@ -437,6 +437,7 @@ public class PlayerBasicMovement : MonoBehaviour
     private int chillValue = 50;
     private bool isChilled = false;
     private bool canJumpDash;
+    internal float strongerDash = 1;
 
     internal IEnumerator Chilled()
     {
