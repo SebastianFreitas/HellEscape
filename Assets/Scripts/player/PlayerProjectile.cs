@@ -190,14 +190,13 @@ public class PlayerProjectile : MonoBehaviour
 
     private float DetectExplosion()
     {
+        var poison = stats.poisonDamage * playerInv.fireToPoisonExplosions;
         float areaModifier = (1f + (playerInv.increasedFireArea / 100f));
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1.5f * areaModifier);
         foreach (var hitCollider in hitColliders)
         {
             Vector3 direction = hitCollider.transform.position - transform.position;
-
             if (playerInv.pullfire) direction = transform.position - hitCollider.transform.position;
-
             if (hitCollider.CompareTag("Dude"))
             {
                 playerMov.AddImpact(direction, stats.fireDamage * 5 * playerInv.pushForceModifier);
@@ -206,18 +205,18 @@ public class PlayerProjectile : MonoBehaviour
             else if (hitCollider.CompareTag("Monster"))
             {
                 var monster = hitCollider.GetComponentInParent<Monster>();
-                monster.TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
+                monster.TakeDamage(new BulletStats(stats.fireDamage, 0, poison, 0, 0), false, 0);
                 //monster.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
             else if (hitCollider.CompareTag("MonsterHead"))
             {
                 var monster = hitCollider.GetComponentInParent<Monster>();
-                monster.TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
-                monster.GetComponent<Rigidbody>().AddForce(direction * 5f * playerInv.pushForceModifier, ForceMode.Impulse);
+                monster.TakeDamage(new BulletStats(stats.fireDamage, 0, poison, 0, 0), false, 0);
+                monster.GetComponent<Rigidbody>().AddForce((direction) * 5f * playerInv.pushForceModifier, ForceMode.Impulse);
             }
             else if (hitCollider.CompareTag("Prop"))
             {
-                hitCollider.GetComponent<Rigidbody>().AddForce(direction * 5f * playerInv.pushForceModifier, ForceMode.Impulse);
+                hitCollider.GetComponent<Rigidbody>().AddForce((direction) * 5f * playerInv.pushForceModifier, ForceMode.Impulse);
             }
 
 
@@ -228,7 +227,7 @@ public class PlayerProjectile : MonoBehaviour
 
     internal void ExplodeParticule(float area)
     {
-        if (playerInv.delayedFire)
+        if (playerInv.delayedFire && stats.fireDamage > 0)
         {
             PlayExplosion play = Instantiate(exp, transform.position, transform.rotation) as PlayExplosion;
             play.RemoteAwake(playerInv, playerMov, stats);

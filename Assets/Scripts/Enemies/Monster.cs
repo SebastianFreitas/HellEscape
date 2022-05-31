@@ -177,7 +177,7 @@ public class Monster : MonoBehaviour
             if (stats.poisonDamage > 0)
             {
                 if (isChilled) stats.poisonDamage *= playerInv.chillPoison;
-                StartPoison(stats.poisonDamage);
+                StartPoison(stats.poisonDamage, stats);
             }
 
         }
@@ -220,19 +220,19 @@ public class Monster : MonoBehaviour
             health -= amount;
             DmgPopUp(amount, isCrit);
 
-            if (health <= 0f ) Die();
+            if (health <= 0f ) Die(stats);
             else Bleed();  
         }
     }
 
-    internal void TakeDamage(int amount)
+    internal void TakeDamage(float amount, BulletStats stats)
     {
         health -= amount;
         DmgPopUp(amount, false);
         if (health <= 0f)
         {
 
-            Die();
+            Die(stats);
         }
 
     }
@@ -271,7 +271,7 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
     }
 
-    void Die()
+    void Die(BulletStats stats)
     {
 
         Bleed();
@@ -283,13 +283,11 @@ public class Monster : MonoBehaviour
         if (!died)
         {
             died = true;
-            if (mission.deathExplosion)
+            if (playerInv.fireDeath)
             {
-                var explo = Instantiate(explosion, transform.position, transform.rotation, transform);
-                explo.transform.parent = null;
-                explo.GetComponent<ExplosiveCilinder>().Explode(transform.position, 5f);
+                PlayExplosion explo = Instantiate(playExplosion, transform.position, transform.rotation, transform);
+                explo.RemoteAwake(playerInv, playerMov, stats);
             }
-
             if (!isFiller && !isHub)roomActivator.IsEncounterDone();
             Drop();
         }
@@ -391,15 +389,16 @@ public class Monster : MonoBehaviour
     private bool isPoisoned = false;
     private int poisonTicks = 0;
     internal bool isFiller = false;
+    [SerializeField] PlayExplosion playExplosion;
 
-    IEnumerator Poisoned()
+    IEnumerator Poisoned(BulletStats stats)
     {
         WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.5f / playerInv.poisonSpeedDouble);
         isPoisoned = true;
         if (playerInv.weakerPoison) damage *= 0.75f;
         while (true)
         {
-            TakeDamage((int)poisonValue);
+            TakeDamage((int)poisonValue, stats);
 
             poisonTicks++;
             if (poisonTicks > 9+ playerInv.poisonDuration) break;
@@ -412,19 +411,27 @@ public class Monster : MonoBehaviour
         isPoisoned = false;
     }
 
-    void StartPoison(float poisonDamage)
+    void StartPoison(float poisonDamage, BulletStats stats)
     {
-        if (isPoisoned)
+        if (playerInv.instantPoison)
         {
-            poisonTicks = 0;
-
-        }
+            TakeDamage(poisonDamage/5f * (9f + (float)playerInv.poisonDuration), stats);
+        }  
         else
         {
-            StartCoroutine(Poisoned());
+            if (isPoisoned)
+            {
+                poisonTicks = 0;
+
+            }
+            else
+            {
+                StartCoroutine(Poisoned(stats));
+            }
+
+            poisonValue += (poisonDamage / 5);
         }
 
-        poisonValue += (poisonDamage / 5);
     }
 
     internal bool IsPoisoned()

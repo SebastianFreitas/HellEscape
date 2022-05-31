@@ -14,7 +14,7 @@ public class PlayExplosion : MonoBehaviour
         playerInv = inv;
         playerMov = mov;
         this.stats = stats;
-
+        transform.parent = null;
         StartCoroutine(StartUp());
 
     }
@@ -26,6 +26,7 @@ public class PlayExplosion : MonoBehaviour
     }
     private float DetectExplosion()
     {
+        
         float areaModifier = (1f + (playerInv.increasedFireArea / 100f));
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 1.5f * areaModifier);
         foreach (var hitCollider in hitColliders)
@@ -40,7 +41,7 @@ public class PlayExplosion : MonoBehaviour
             else if (hitCollider.CompareTag("Monster"))
             {
                 var monster = hitCollider.GetComponentInParent<Monster>();
-                monster.TakeDamage(new BulletStats(stats.fireDamage, 0, 0, 0, 0), false, 0);
+                monster.TakeDamage(new BulletStats(stats.fireDamage, 0, stats.poisonDamage, 0, 0), false, 0);
                 //monster.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 5f, ForceMode.Impulse);
             }
             else if (hitCollider.CompareTag("MonsterHead"))

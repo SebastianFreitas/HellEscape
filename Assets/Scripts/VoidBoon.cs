@@ -141,6 +141,7 @@ internal class VoidBoon
         BoonList.Add((5,      "Whenever you are pushed back from your own fire explosions gain more movement speed for a duration", BoonName.FireMovement));
         BoonList.Add((1,      "Gain 25% of poison damage as fire damage", BoonName.ExtraPoisonToFire));
         BoonList.Add((1,      "Your dash and double jump are stronger", BoonName.StrongerDash));
+        BoonList.Add((11111,      "Enemies explode on death into a fire explosion", BoonName.FireDeath));
         //POISON----------------------------------------------------------------
         BoonList.Add((1, "Poison deals damage twice as fast", BoonName.TwiceFastPoison));
         BoonList.Add((1, "Poison lasts 5 more seconds", BoonName.PoisonDuration));
@@ -148,6 +149,8 @@ internal class VoidBoon
         BoonList.Add((1, "Poisoned enemies deal 25% less damage", BoonName.WeakerPoison));
         BoonList.Add((1, "Chilled enemies take 30% more poison damage", BoonName.PoisonedCold));
         BoonList.Add((1, "Enemies who die from your poison have +5% chance of dropping healing packs", BoonName.VampiricPoison));
+        BoonList.Add((1, "Deal all poison damage instantly \n Deal half poison damage", BoonName.InstantPoison));
+        BoonList.Add((1, "Fire explosions also deal poison damage", BoonName.PoisonExplosions));
         //COLD------------------------------------------------------------------
         BoonList.Add((1, "+1% Chance your cold damage freezes the enemy", BoonName.ChanceFreeze1));
         BoonList.Add((1, "+2% Chance your cold damage freezes the enemy", BoonName.ChanceFreeze2));
@@ -164,20 +167,21 @@ internal class VoidBoon
         BoonList.Add((1, "Critical hits deal 3 times the physical damage", BoonName.TripleCritPhys));
         BoonList.Add((1, "Convert 50% of fire damage into physical damage", BoonName.FireToPhys50));
         BoonList.Add((1, "Convert 100% of fire damage into physical damage", BoonName.FireToPhys100));
+        BoonList.Add((1, "50% reduced bullet speed \n Gain + 50 physical damage", BoonName.ReducedSpeedMorePhys));
+        BoonList.Add((5, "Sources of increased movement speed also apply to physical damage", BoonName.MovementToPhys));
         //NOTDONE ----------NOTDONE----------------NOTDONE-------------NOTDONE-----------NOTDONE-----------
         //NOTDONE ----------NOTDONE----------------NOTDONE-------------NOTDONE-----------NOTDONE-----------
-        BoonList.Add((1, "Enemies explode on death into a fire explosion", BoonName.FireDeath));
+ 
         //--------
-        BoonList.Add((1, "Deal all poison damage instantly \n Deal half poison damage", BoonName.InstantPoison));
-        BoonList.Add((1, "Fire explosions deal poison damage instead", BoonName.PoisonExplosions));
+        
+   
         //--------
         BoonList.Add((1, "Poisoned enemies are more affected by chill", BoonName.PoisonedChill));
         BoonList.Add((1, "Enemies that die from cold damage shatter into cold projectiles", BoonName.ColdShatter));
         BoonList.Add((1, "Ricochets shatter into extra cold projectiles", BoonName.ColdShatteringRicochet));
         BoonList.Add((1, "Shoot an additional cold projectile", BoonName.AddedColdProjectile));
-        //--------
-        BoonList.Add((1, "50% reduced bullet speed \n Gain + 50 physical damage", BoonName.ReducedSpeedMorePhys));
-        BoonList.Add((1, "Sources of increased movement speed also apply to physical damage", BoonName.MovementToPhys));
+       
+   
 
 
 
@@ -412,34 +416,7 @@ internal class VoidBoon
 
 
 
-    internal void ReducedSpeedMorePhys(bool gain)
-    {
-        if (gain)
-        {
 
-            playerInv.fireMovement = true;
-            playerInv.listBoons.Add(this);
-        }
-        else
-        {
-            playerInv.fireMovement = false;
-            playerInv.listBoons.Remove(this);
-        }
-    }
-    internal void MovementToPhys(bool gain)
-    {
-        if (gain)
-        {
-
-            playerInv.fireMovement = true;
-            playerInv.listBoons.Add(this);
-        }
-        else
-        {
-            playerInv.fireMovement = false;
-            playerInv.listBoons.Remove(this);
-        }
-    }
     internal void PoisonedChill(bool gain)
     {
         if (gain)
@@ -498,31 +475,40 @@ internal class VoidBoon
             playerInv.listBoons.Remove(this);
         }
     }
-    internal void InstantPoison(bool gain)
-    {
-        if (gain)
-        {
 
-            playerInv.fireMovement = true;
-            playerInv.listBoons.Add(this);
-        }
-        else
-        {
-            playerInv.fireMovement = false;
-            playerInv.listBoons.Remove(this);
-        }
-    }
+
+
+
+
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
     internal void PoisonExplosions(bool gain)
     {
         if (gain)
         {
 
-            playerInv.fireMovement = true;
+            playerInv.fireToPoisonExplosions += 1;
             playerInv.listBoons.Add(this);
         }
         else
         {
-            playerInv.fireMovement = false;
+            playerInv.fireToPoisonExplosions -= 1;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void InstantPoison(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.instantPoison = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.instantPoison = false;
             playerInv.listBoons.Remove(this);
         }
     }
@@ -531,21 +517,45 @@ internal class VoidBoon
         if (gain)
         {
 
-            playerInv.fireMovement = true;
+            playerInv.fireDeath = true;
             playerInv.listBoons.Add(this);
         }
         else
         {
-            playerInv.fireMovement = false;
+            playerInv.fireDeath = false;
             playerInv.listBoons.Remove(this);
         }
     }
+    internal void MovementToPhys(bool gain)
+    {
+        if (gain)
+        {
 
+            playerInv.movementToPhys += 1f;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.movementToPhys -= 1f;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void ReducedSpeedMorePhys(bool gain)
+    {
+        if (gain)
+        {
 
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
+            playerInv.additionalPhysicalDamage += 50;
+            playerInv.increasedBulletSpeed -= 50;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.additionalPhysicalDamage -= 50;
+            playerInv.increasedBulletSpeed += 50;
+            playerInv.listBoons.Remove(this);
+        }
+    }
     internal void MoreFrozenGunparts(bool gain)
     {
         if (gain)

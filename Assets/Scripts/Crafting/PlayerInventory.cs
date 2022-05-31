@@ -49,6 +49,11 @@ public class PlayerInventory : MonoBehaviour
     internal float poisonToFixeAsExtra;
     internal float extraDamageWhileFrozen = 1f;
     internal bool moreFrozenGunparts;
+    internal float movementToPhys;
+    internal bool fireDeath;
+    internal bool instantPoison;
+    internal bool poisonToFireExplosions;
+    internal float fireToPoisonExplosions;
 
     private void OnEnable()
     {

@@ -806,7 +806,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 400
   damage: 10
+  isBoss: 0
   rigidBody: {fileID: 8572838250442706154}
+  monsterCollider: {fileID: 0}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -818,6 +820,7 @@ MonoBehaviour:
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   isHub: 1
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  playExplosion: {fileID: 3532266850117581443, guid: 4f14f4e777f5a1e4eb9799d9e5ec53c0, type: 3}
   shootPoint: {fileID: 6385579057160975505}
   turretBullet: {fileID: 6382422305777069614, guid: 5fbed5e1bdd6c9043a9713744bfea2bc, type: 3}
   explosionEffect: {fileID: 3292496303209535602, guid: fefa5b832ee6c004c87aa6b61e744a48, type: 3}
