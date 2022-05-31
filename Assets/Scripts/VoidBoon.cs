@@ -94,7 +94,7 @@ internal class VoidBoon
 
 
         //not done -------------------------------------------------------------
-        BoonList.Add((1, "Enemies explode into a fire explosion on death", BoonName.FireDeath));
+        BoonList.Add((1, "Enemies explode on death into a fire explosion", BoonName.FireDeath));
         BoonList.Add((1, "Your dash and double jump are stronger", BoonName.StrongerDash));
         BoonList.Add((1, "Gain 25% of poison damage as fire damage", BoonName.ExtraPoisonToFire));
 
@@ -238,7 +238,7 @@ internal class VoidBoon
     {
         switch (name)
         {
-            //LIFE----------------------------------------------------------------
+            //LIFE---------------------------LIFE---------------------LIFE----------------
             case BoonName.MaxHp1:
                 Maxhp1(gain, 10);
                 break;
@@ -255,7 +255,7 @@ internal class VoidBoon
                 MaxHPPhys(gain);
                 break;
 
-            //SPEED----------------------------------------------------------------
+            //SPEED---------------------SPEED-----------------------SPEED--------------------
             case BoonName.Speed:
                 Speed(gain);
                 break;
@@ -266,7 +266,7 @@ internal class VoidBoon
                 RicochectStack(gain);
                 break;
 
-            //FIRE----------------------------------------------------------------
+            //FIRE---------------------FIRE--------------------------FIRE-----------------
             case BoonName.FireGreed:
                 FireGreed(gain);
                 break;
@@ -299,9 +299,569 @@ internal class VoidBoon
             case BoonName.FireMovement:
                 FireMovement(gain);
                 break;
+
+            case BoonName.FireDeath:
+                FireDeath(gain);
+                break;
+            case BoonName.StrongerDash:
+                StrongerDash(gain);
+                break;
+            case BoonName.ExtraPoisonToFire:
+                ExtraPoisonToFire(gain);
+                break;
+
+            //POISON------------------------POISON----------------------------------------
+            case BoonName.InstantPoison:
+                InstantPoison(gain);
+                break;
+
+            case BoonName.TwiceFastPoison:
+                TwiceFastPoison(gain);
+                break;
+
+            case BoonName.VampiricPoison:
+                VampiricPoison(gain);
+                break;
+            case BoonName.PoisonExplosions:
+                PoisonExplosions(gain);
+                break;
+            case BoonName.PoisonDuration:
+                PoisonDuration(gain);
+                break;
+
+            case BoonName.PoisonedCold:
+                PoisonedCold(gain);
+                break;
+            case BoonName.WeakerPoison:
+                WeakerPoison(gain);
+                break;
+            case BoonName.PoisonFollow:
+                PoisonFollow(gain);
+                break;
+            //COLD------------------------COLD----------------------------------------
+            case BoonName.ColdShatteringRicochet:
+                ColdShatteringRicochet(gain);
+                break;
+
+            case BoonName.PhyisToColdCrit:
+                PhyisToColdCrit(gain);
+                break;
+
+            case BoonName.AddedColdProjectile:
+                AddedColdProjectile(gain);
+                break;
+            case BoonName.ColdShatter:
+                ColdShatter(gain);
+                break;
+            case BoonName.MoreFrozenGunparts:
+                MoreFrozenGunparts(gain);
+                break;
+
+            case BoonName.FrozenDamage:
+                FrozenDamage(gain);
+                break;
+            case BoonName.LongerFreeze:
+                LongerFreeze(gain);
+                break;
+            case BoonName.PoisonedChill:
+                PoisonedChill(gain);
+                break;
+
+            case BoonName.ChanceFreeze2:
+                ChanceFreeze2(gain);
+                break;
+
+            case BoonName.ChanceFreeze1:
+                ChanceFreeze1(gain);
+                break;
+            //PHYSICAL------------------------PHYSICAL----------------------------------------
+            case BoonName.MorePhys10:
+                MorePhys10(gain);
+                break;
+
+            case BoonName.MorePhys25:
+                MorePhys25(gain);
+                break;
+
+            case BoonName.MorePhys50:
+                MorePhys50(gain);
+                break;
+
+            case BoonName.DoubleDamagePhys:
+                DoubleDamagePhys(gain);
+                break;
+
+            case BoonName.TripleCritPhys:
+                TripleCritPhys(gain);
+                break;
+
+            case BoonName.FireToPhys50:
+                FireToPhys50(gain);
+                break;
+            case BoonName.FireToPhys100:
+                FireToPhys100(gain);
+                break;
+            case BoonName.ReducedSpeedMorePhys:
+                ReducedSpeedMorePhys(gain);
+                break;
+
+            case BoonName.MovementToPhys:
+                MovementToPhys(gain);
+                break;
+
+            case BoonName.DoublePhysCold:
+                DoublePhysCold(gain);
+                break;
         }
 
     }
+    internal void MorePhys10(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void MorePhys25(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void MorePhys50(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void DoubleDamagePhys(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void TripleCritPhys(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void FireToPhys50(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void FireToPhys100(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void ReducedSpeedMorePhys(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void MovementToPhys(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void DoublePhysCold(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void ChanceFreeze1(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void ChanceFreeze2(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void PoisonedChill(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void LongerFreeze(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void FrozenDamage(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void MoreFrozenGunparts(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void ColdShatter(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void AddedColdProjectile(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void PhyisToColdCrit(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void ColdShatteringRicochet(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void InstantPoison(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void TwiceFastPoison(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void VampiricPoison(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void PoisonExplosions(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void PoisonDuration(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void PoisonedCold(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void WeakerPoison(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void PoisonFollow(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void FireDeath(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void StrongerDash(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    internal void ExtraPoisonToFire(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.fireMovement = true;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.fireMovement = false;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
     internal void FireMovement(bool gain)
     {
         if (gain)
