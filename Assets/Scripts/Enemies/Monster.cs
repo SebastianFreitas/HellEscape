@@ -153,6 +153,17 @@ public class Monster : MonoBehaviour
     internal void TakeDamage(BulletStats stats, bool isCrit,float critMulti)
     {
         if (mission.fireImmunity) stats.fireDamage = 0;
+        else
+        {
+            if (stats.fireDamage > 0)
+            {
+                if (Random.Range(1f, 100f) > 100 - playerInv.igniteChance)
+                {
+                    StartIgnite( stats);
+                }
+            }
+
+        }
 
         if (mission.coldImmunity ) stats.coldDamage = 0;
         else
@@ -177,7 +188,7 @@ public class Monster : MonoBehaviour
             if (stats.poisonDamage > 0)
             {
                 if (isChilled) stats.poisonDamage *= playerInv.chillPoison;
-                StartPoison(stats.poisonDamage, stats);
+                StartPoison( stats);
             }
 
         }
@@ -202,6 +213,11 @@ public class Monster : MonoBehaviour
                 }
 
                 stats.physicalDamage *= playerInv.critGlobalMultiplier + critMulti / 100f;
+            }
+
+            if (Random.Range(1f, 100f) > 100 - (1 + playerInv.bleedChance))
+            {
+                StartBleeding(stats);
             }
         }
 
@@ -429,11 +445,11 @@ public class Monster : MonoBehaviour
         isPoisoned = false;
     }
 
-    void StartPoison(float poisonDamage, BulletStats stats)
+    void StartPoison( BulletStats stats)
     {
         if (playerInv.instantPoison)
         {
-            TakeDamage(poisonDamage/5f * ((float)playerInv.poisonDuration), stats);
+            TakeDamage(stats.poisonDamage/5f * ((float)playerInv.poisonDuration), stats);
         }  
         else
         {
@@ -447,7 +463,7 @@ public class Monster : MonoBehaviour
                 StartCoroutine(Poisoned(stats));
             }
 
-            poisonValue += (poisonDamage / 5);
+            poisonValue += (stats.poisonDamage / 5);
         }
 
     }
@@ -465,5 +481,102 @@ public class Monster : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f + playerInv.additionalFreezeDuration);
         isFrozzen = false;
         actionSpeed = oldActionSpeed;
+    }
+
+    private float igniteValue = 0;
+    private bool isIgnited = false;
+    private int igniteTicks = 0;
+
+    IEnumerator Ignited(BulletStats stats)
+    {
+        WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.75f);
+        isIgnited = true;
+
+        while (true)
+        {
+            TakeDamage(igniteValue, stats);
+
+            igniteTicks++;
+            if (igniteTicks > playerInv.igniteDuration) break;
+
+            yield return waiter;
+
+        }
+
+        igniteTicks = 0;
+        isIgnited = false;
+    }
+
+    void StartIgnite( BulletStats stats)
+    {
+
+        
+        if (isIgnited)
+        {
+            igniteTicks = 0;
+
+        }
+        else
+        {
+            StartCoroutine(Ignited(stats));
+        }
+
+        igniteValue += (stats.fireDamage / 2);
+        
+
+    }
+
+    internal bool IsIgnited()
+    {
+        return isIgnited;
+    }
+
+    //Bleeding ------------------------------
+    private float bleedValue = 0;
+    private bool isBleeding = false;
+    private int bleedingTicks = 0;
+
+    IEnumerator Bleeding(BulletStats stats)
+    {
+        WaitForSecondsRealtime waiter = new WaitForSecondsRealtime(.1f);
+        isBleeding = true;
+
+        while (true)
+        {
+            TakeDamage(bleedValue, stats);
+
+            bleedingTicks++;
+            if (bleedingTicks > playerInv.bleedingDuration) break;
+
+            yield return waiter;
+
+        }
+
+        bleedingTicks = 0;
+        isBleeding = false;
+    }
+
+    void StartBleeding (BulletStats stats)
+    {
+
+
+        if (isBleeding)
+        {
+            bleedingTicks = 0;
+
+        }
+        else
+        {
+            StartCoroutine(Bleeding(stats));
+        }
+
+        bleedValue += (stats.physicalDamage / 10);
+
+
+    }
+
+    internal bool IsBleeding()
+    {
+        return isBleeding;
     }
 }

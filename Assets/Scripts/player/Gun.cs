@@ -300,8 +300,10 @@ public class Gun : MonoBehaviour
             playerInv.poisonDuration /= 1 + gun.poisonDurationModifier / 100;
 
             playerInv.freezeChance /= 1 + gun.freezeChance / 100;
+            playerInv.coldProjectileChance -= gun.ColdProjectileChance;
 
-            playerInv.chancePhysDoubleDamage += gun.doubleDamageChance;
+            playerInv.chancePhysDoubleDamage -= gun.doubleDamageChance;
+            playerInv.bleedChance -= gun.bleedChance;
         }
 
         this.gun = gun;
@@ -314,8 +316,10 @@ public class Gun : MonoBehaviour
         playerInv.poisonDuration *= 1+ gun.poisonDurationModifier/100;
 
         playerInv.freezeChance *= 1 + gun.freezeChance / 100;
+        playerInv.coldProjectileChance += gun.ColdProjectileChance;
 
         playerInv.chancePhysDoubleDamage += gun.doubleDamageChance;
+        playerInv.bleedChance += gun.bleedChance;
 
 
         playerScript.increasedSpeed = gun.increasedSpeed;

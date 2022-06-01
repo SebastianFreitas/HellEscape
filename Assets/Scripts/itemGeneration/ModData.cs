@@ -21,7 +21,7 @@ public class ModData : MonoBehaviour
                 new Mod(1,6,    "Ricochets",                 Grade.exterior, OperatorType.increased, 0,2),
                 new Mod(1, 3,   "Fire Rate",                 Grade.exterior, OperatorType.increased, 0,3),
                 new Mod(2,5,    "Bullet Speed",              Grade.exterior, OperatorType.increased, 0,4),
-                new Mod(1, 5,   "Bullet Size",              Grade.exterior, OperatorType.increased, 0,5),
+                new Mod(1, 5,   "Bullet Size",               Grade.exterior, OperatorType.increased, 0,5),
               
         };
 
@@ -34,10 +34,10 @@ public class ModData : MonoBehaviour
                 new Mod(2,6,   "Poison Duration",                   Grade.special, OperatorType.increased, 0,4),
 
                 new Mod(1,2,   "Freeze Chance",                     Grade.special, OperatorType.increased, 0,5),
-                new Mod(2,6,   "",                                  Grade.special, OperatorType.plus,      0,6),
+                new Mod(2,6,   "Cold projectile Chance",            Grade.special, OperatorType.increased, 0,6),
 
-                new Mod(1,2,   "Double Damage chance",              Grade.special, OperatorType.plus,      0,7),
-                new Mod(2,6,   "",                                  Grade.special, OperatorType.plus,      0,8),
+                new Mod(1,2,   "Double Damage Chance",              Grade.special, OperatorType.plus,      0,7),
+                new Mod(1,2,   "Bleeding Chance",                   Grade.special, OperatorType.plus,      0,8),
 
         };
 
@@ -50,8 +50,8 @@ public class ModData : MonoBehaviour
         { 
         30, 15, 
         10, 35,
-        5, 0,
-        30, 0
+        10, 303,
+        30, 30
     };// 1, 1, 1, 1, 1, 1 };
 
     public static int[] modWeight = { 1000, 900, 800, 700, 600, 500, 400, 300, 200, 100 };
@@ -242,6 +242,10 @@ public class GunOfAType : ScriptableObject
     internal int poisonDurationModifier;
     internal int freezeChance;
     internal int doubleDamageChance;
+    internal int bleedChance;
+    internal int increasedColdProjectileChance;
+
+    public int ColdProjectileChance { get; internal set; }
 
     public float GetShotSpeed()
     {

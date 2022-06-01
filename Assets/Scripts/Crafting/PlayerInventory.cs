@@ -59,6 +59,10 @@ public class PlayerInventory : MonoBehaviour
     internal int additionalColdProj;
     internal int coldShatterBounces;
     internal int igniteChance = 5;
+    internal int coldProjectileChance;
+    internal int bleedChance;
+    internal float igniteDuration = 3;
+    internal int bleedingDuration = 15;
 
     private void OnEnable()
     {

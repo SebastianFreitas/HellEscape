@@ -220,16 +220,16 @@ public class GunGenerator : ModData
                 ret.freezeChance += newMod.upperBound;
                 break;
 
-            case "":
-                ret.slowbullet += newMod.upperBound;
+            case "Cold projectile Chance":
+                ret.ColdProjectileChance += newMod.upperBound;
                 break;
             //-----------------------------------------------------------
             case "Double Damage chance":
                 ret.doubleDamageChance += newMod.upperBound;
                 break;
 
-            case " ":
-                ret.slowbullet += newMod.upperBound;
+            case "Bleeding Chance":
+                ret.bleedChance += newMod.upperBound;
                 break;
 
         }
