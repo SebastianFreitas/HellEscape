@@ -46,7 +46,7 @@ public class PlayerProjectile : MonoBehaviour
 
     
     private float newSizeMulti;
-
+    internal bool isFilter = false;
 
 
     internal void AwakeRemote()
@@ -161,14 +161,26 @@ public class PlayerProjectile : MonoBehaviour
                 transform.LookAt(contact.normal);
             }
 
-
             bounces--;
 
-            if (stats.fireDamage > 0)
+            if (!isFilter)
             {
-                //if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
-                FireExplode();
+                if(playerInv.coldShatterBounces> 0 && stats.coldDamage > 0)
+                {
+                    var x = playerInv.GetComponentInChildren<Gun>().SpawnBullet(transform, true);
+                    x.isFilter = true;
+                    x.stats.fireDamage = 0;
+                    x.stats.physicalDamage = 0;
+                    x.stats.poisonDamage = 0;
+
+                }
+                if (stats.fireDamage > 0)
+                {
+                    //if (!playerInv.explosiveRicochet) StartCoroutine(KillBullet());
+                    FireExplode();
+                }
             }
+
 
         } else StartCoroutine(KillBullet());
         

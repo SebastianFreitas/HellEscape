@@ -54,6 +54,10 @@ public class PlayerInventory : MonoBehaviour
     internal bool instantPoison;
     internal bool poisonToFireExplosions;
     internal float fireToPoisonExplosions;
+    internal float poisonedChill;
+    internal int coldShatter;
+    internal int additionalColdProj;
+    internal int coldShatterBounces;
 
     private void OnEnable()
     {

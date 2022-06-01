@@ -141,7 +141,7 @@ internal class VoidBoon
         BoonList.Add((5,      "Whenever you are pushed back from your own fire explosions gain more movement speed for a duration", BoonName.FireMovement));
         BoonList.Add((1,      "Gain 25% of poison damage as fire damage", BoonName.ExtraPoisonToFire));
         BoonList.Add((1,      "Your dash and double jump are stronger", BoonName.StrongerDash));
-        BoonList.Add((11111,      "Enemies explode on death into a fire explosion", BoonName.FireDeath));
+        BoonList.Add((1,      "Enemies explode on death into a fire explosion", BoonName.FireDeath));
         //POISON----------------------------------------------------------------
         BoonList.Add((1, "Poison deals damage twice as fast", BoonName.TwiceFastPoison));
         BoonList.Add((1, "Poison lasts 5 more seconds", BoonName.PoisonDuration));
@@ -158,6 +158,8 @@ internal class VoidBoon
         BoonList.Add((1, "Physical damage is converted to cold on critical hits.", BoonName.PhyisToColdCrit));
         BoonList.Add((1, "Deal 50% more damage agaisnt frozen targets", BoonName.FrozenDamage));
         BoonList.Add((1, "Enemies killed while chilled or frozen drop more gunparts", BoonName.MoreFrozenGunparts));
+        BoonList.Add((1, "Shoot an additional cold projectile", BoonName.AddedColdProjectile));
+        BoonList.Add((1, "Ricochets shatter into extra cold projectiles", BoonName.ColdShatteringRicochet));
         //PHYSICAL------------------------------------------------------------------
         BoonList.Add((1, "Gain +10 physical damage", BoonName.MorePhys10));
         BoonList.Add((1, "Gain +25 physical damage", BoonName.MorePhys25));
@@ -169,17 +171,18 @@ internal class VoidBoon
         BoonList.Add((1, "Convert 100% of fire damage into physical damage", BoonName.FireToPhys100));
         BoonList.Add((1, "50% reduced bullet speed \n Gain + 50 physical damage", BoonName.ReducedSpeedMorePhys));
         BoonList.Add((5, "Sources of increased movement speed also apply to physical damage", BoonName.MovementToPhys));
-        //NOTDONE ----------NOTDONE----------------NOTDONE-------------NOTDONE-----------NOTDONE-----------
-        //NOTDONE ----------NOTDONE----------------NOTDONE-------------NOTDONE-----------NOTDONE-----------
- 
-        //--------
-        
-   
-        //--------
         BoonList.Add((1, "Poisoned enemies are more affected by chill", BoonName.PoisonedChill));
-        BoonList.Add((1, "Enemies that die from cold damage shatter into cold projectiles", BoonName.ColdShatter));
-        BoonList.Add((1, "Ricochets shatter into extra cold projectiles", BoonName.ColdShatteringRicochet));
-        BoonList.Add((1, "Shoot an additional cold projectile", BoonName.AddedColdProjectile));
+        //NOTDONE ----------NOTDONE----------------NOTDONE-------------NOTDONE-----------NOTDONE-----------
+        //NOTDONE ----------NOTDONE----------------NOTDONE-------------NOTDONE-----------NOTDONE-----------
+
+        //--------
+
+
+        //--------
+       // BoonList.Add((1111111, "Enemies that die from cold damage shatter into cold projectiles", BoonName.ColdShatter));
+
+        
+
        
    
 
@@ -187,7 +190,7 @@ internal class VoidBoon
 
 
 
-        BoonList.Add((1, "Critical hits increase weapon fire rate", BoonName.CritFireRate));
+      //  BoonList.Add((1, "Critical hits increase weapon fire rate", BoonName.CritFireRate));
 
 
         //AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.ScrapFire);
@@ -417,33 +420,31 @@ internal class VoidBoon
 
 
 
-    internal void PoisonedChill(bool gain)
+
+
+
+
+
+
+
+
+
+
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
+    //DONE------------------------------DONE---------------------------------
+    internal void ColdShatteringRicochet(bool gain)
     {
         if (gain)
         {
 
-            playerInv.fireMovement = true;
+            playerInv.coldShatterBounces += 1;
             playerInv.listBoons.Add(this);
         }
         else
         {
-            playerInv.fireMovement = false;
-            playerInv.listBoons.Remove(this);
-        }
-    }
-
-
-    internal void ColdShatter(bool gain)
-    {
-        if (gain)
-        {
-
-            playerInv.fireMovement = true;
-            playerInv.listBoons.Add(this);
-        }
-        else
-        {
-            playerInv.fireMovement = false;
+            playerInv.coldShatterBounces -= 1;
             playerInv.listBoons.Remove(this);
         }
     }
@@ -452,38 +453,44 @@ internal class VoidBoon
         if (gain)
         {
 
-            playerInv.fireMovement = true;
+            playerInv.additionalColdProj += 1;
             playerInv.listBoons.Add(this);
         }
         else
         {
-            playerInv.fireMovement = false;
+            playerInv.additionalColdProj -= 1;
             playerInv.listBoons.Remove(this);
         }
     }
-    internal void ColdShatteringRicochet(bool gain)
+    internal void ColdShatter(bool gain)
     {
         if (gain)
         {
 
-            playerInv.fireMovement = true;
+            playerInv.coldShatter += 1;
             playerInv.listBoons.Add(this);
         }
         else
         {
-            playerInv.fireMovement = false;
+            playerInv.coldShatter -= 1;
+            playerInv.listBoons.Remove(this);
+        }
+    }
+    internal void PoisonedChill(bool gain)
+    {
+        if (gain)
+        {
+
+            playerInv.poisonedChill += .25f;
+            playerInv.listBoons.Add(this);
+        }
+        else
+        {
+            playerInv.poisonedChill -= .25f;
             playerInv.listBoons.Remove(this);
         }
     }
 
-
-
-
-
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
     internal void PoisonExplosions(bool gain)
     {
         if (gain)

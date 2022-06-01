@@ -288,6 +288,20 @@ public class Monster : MonoBehaviour
                 PlayExplosion explo = Instantiate(playExplosion, transform.position, transform.rotation, transform);
                 explo.RemoteAwake(playerInv, playerMov, stats);
             }
+
+            for (int i = 0; i < playerInv.coldShatter; i++)
+            {
+                var gun = playerInv.GetComponentInChildren<Gun>();
+                for (int a = 0; a < 8; a++)
+                {
+                    var y = gun.SpawnBullet(rigidBody.transform, true);
+                    //var newRotation = y.transform.rotation * Quaternion.AngleAxis(60f, Random.insideUnitCircle);
+                    //y.transform.rotation = newRotation;
+                    y.isFilter = true;
+                }
+
+            }
+
             if (!isFiller && !isHub)roomActivator.IsEncounterDone();
             Drop();
         }
@@ -378,11 +392,14 @@ public class Monster : MonoBehaviour
     private bool isChilled = false;
     IEnumerator Chilled()
     {
-        actionSpeed -= 0.5f;
+        var x = 0;
+        var baseAct = actionSpeed;
+        if (isPoisoned) x = 1;
+        actionSpeed -= 0.5f + playerInv.poisonedChill*x;
         isChilled = true;
         yield return new WaitForSecondsRealtime(3f);
         isChilled = false;
-        actionSpeed += 0.5f;
+        actionSpeed = baseAct;
     }
 
     private float poisonValue = 0;

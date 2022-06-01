@@ -162,7 +162,7 @@ public class Gun : MonoBehaviour
         realpos.transform.position = fpsCam.transform.position;
         realpos.transform.LookAt(targetPoint);
 
-        SpawnBullet(realpos.transform);
+        SpawnBullet(realpos.transform, false);
 
         for (var i = 0; i < gun.baseBulletsPerShot - 1; i++) //shoot extra bullets
         {
@@ -170,16 +170,22 @@ public class Gun : MonoBehaviour
             var spread = 5f;
             pelletRot.transform.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
-            SpawnBullet(pelletRot.transform);
+            SpawnBullet(pelletRot.transform, false);
         }
 
-        if (gun.delayedBullet > 0) StartCoroutine(DelayedBullet(realpos.transform));
+        //if (gun.delayedBullet > 0) StartCoroutine(DelayedBullet(realpos.transform));
         StartCoroutine(waiter(attackRate));
     }
 
-    private PlayerProjectile SpawnBullet(Transform realpos)
+    internal PlayerProjectile SpawnBullet(Transform realpos, bool isCold)
     {
-        var bullet = Instantiate(projectile, realBulletHolder.transform.position , realpos.rotation); //shoot normal bullet
+        var pos = realBulletHolder.transform.position;
+        if (isCold)
+        {
+            pos = realpos.transform.position;
+        }
+
+        var bullet = Instantiate(projectile, pos, realpos.rotation); //shoot normal bullet
 
         bullet.initialFade = true;
         bullet.Gun = gun;
@@ -208,24 +214,36 @@ public class Gun : MonoBehaviour
 
         bullet.stats.fireDamage += bullet.stats.poisonDamage * playerInv.poisonToFixeAsExtra;
 
-        
+        if (isCold)
+        {
+            bullet.stats.fireDamage = 0;
+            bullet.stats.physicalDamage = 0;
+            bullet.stats.poisonDamage = 0;
+            bullet.isFilter = true;
+
+        }
+
         bullet.playerMov = playerScript;
         bullet.gameObject.SetActive(true);
         bullet.playerInv = playerInv;
+        if (playerInv.additionalColdProj > 0 && bullet.stats.coldDamage > 0 )
+        {
+            if (!isCold) SpawnBullet(realBulletHolder2.transform, true);
+        }
         bullet.AwakeRemote();
         return bullet;
     }
     IEnumerator DelayedBullet(Transform realpos)
     {
         yield return new WaitForSecondsRealtime(0.2f);
-        SpawnBullet(realpos);
+        SpawnBullet(realpos, false);
         for (var i = 0; i < gun.baseBulletsPerShot - 1; i++) //shoot extra bullets
         {
             var pelletRot = realpos;
             var spread = 5f;
             pelletRot.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
-            SpawnBullet(pelletRot);
+            SpawnBullet(pelletRot, false);
         }
     }
 
@@ -268,6 +286,8 @@ public class Gun : MonoBehaviour
     [SerializeField] PlayerProjectile slow;
     [SerializeField] PlayerProjectile piercing;
     [SerializeField] PlayerProjectile normal;
+    [SerializeField] GameObject realBulletHolder2;
+
     public void SetGun(GunOfAType gun)
     {
         this.gun = gun;
