@@ -32,7 +32,7 @@ public class GunGenerator : ModData
         var type = RandomiseGunType();
         if (isBase) type = GunType.basic;
         ret = ret.ChangeType(ret, type);
-
+        if (maxLevel > 2) maxLevel /= 2;
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
         var newMod = new Mod();
 
@@ -113,7 +113,7 @@ public class GunGenerator : ModData
         ret.text = CreateGunText(ret);
         ret.finalFireRate = ret.GetFireRate();
         ret.finalDamage = ret.GetDamage();
-        ret.finalBounces = ret.GetBounces();
+        ret.finalBounces = (int)ret.GetBounces();
         ret.averageDamage = ret.GetAverageDamage();
         return ret;
     }
@@ -177,7 +177,7 @@ public class GunGenerator : ModData
                 break;
 
             case "Ricochets":
-                ret.baseBounces += newMod.upperBound;
+                ret.increasedBounces +=  newMod.upperBound;
                 break;
 
             case "Fire Rate":
@@ -229,7 +229,7 @@ public class GunGenerator : ModData
         ret.text = CreateGunText(ret);
         ret.finalFireRate = ret.GetFireRate();
         ret.finalDamage = ret.GetDamage();
-        ret.finalBounces = ret.GetBounces();
+        ret.finalBounces = (int)ret.GetBounces();
         ret.averageDamage = ret.GetAverageDamage();
 
         return ret;
@@ -400,17 +400,34 @@ public class GunGenerator : ModData
 
     public string CreateGunStats(GunOfAType gun)
     {
-        int x = (int)gun.GetAverageDamage();
+        int x = (int)gun.GetShotSpeed() / 100;
         string text = "";
-        text +=  x.ToString("F2")+ "\n";
-        text += gun.baseRate + "\n";
-        text += gun.basePhysicalDamage + "\n";
-        text += gun.baseColdDamage + "\n";
-        text += gun.basePoisonDamage + "\n";
-        text += gun.baseshotSpeed+ "\n";
-        text += gun.basebounceSpeed + "\n";
+        text += gun.GetPhysicalDamage().ToString("F0") + "\n";
+        text += gun.GetFireDamage().ToString("F0") + "\n";
+        text += gun.GetColdDamage().ToString("F0") + "\n";
+        text += gun.GetPoisonDamage().ToString("F0") + "\n";
 
+        text += gun.GetFireRate().ToString("F0") + "\n";
+        text += x.ToString("F0") + "\n";
 
+        text += gun.GetBounces().ToString("F0") + "\n";
+
+        return text;
+    }
+
+    private static string GetBaseText(GunOfAType gun)
+    {
+        int x = gun.baseshotSpeed / 100;
+        string text = "";
+        text += gun.basePhysicalDamage.ToString("F0") + "\n";
+        text += gun.baseFireDamage.ToString("F0") + "\n";
+        text += gun.baseColdDamage.ToString("F0") + "\n";
+        text += gun.basePoisonDamage.ToString("F0") + "\n";
+
+        text += gun.baseRate.ToString("F0") + "\n";
+        text += x.ToString("F0") + "\n";
+
+        text += gun.baseBounces.ToString("F0") + "\n";
         return text;
     }
 

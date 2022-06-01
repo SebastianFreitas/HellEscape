@@ -64,6 +64,7 @@ public class PlayerInventory : MonoBehaviour
         if (PlayerPrefs.HasKey("GunParts"))
         {
             gunParts = PlayerPrefs.GetInt("GunParts");
+            gunParts = 10000;
             inventoryUI.SetGunParts(gunParts.ToString());
         }
     }

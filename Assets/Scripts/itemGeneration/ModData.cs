@@ -182,7 +182,7 @@ public class GunOfAType : ScriptableObject
 
     public float baseRate;
     public int basePhysicalDamage;
-    public int baseBounces;
+    public float baseBounces;
     public int basebounceSpeed;
     public int level;
     public int baseBulletsPerShot;
@@ -285,9 +285,9 @@ public class GunOfAType : ScriptableObject
 
     }
 
-    public int GetBounces()
+    public float GetBounces()
     {
-        return baseBounces * (1 + (increasedBounces / 100));
+        return baseBounces * (1f + ((float)increasedBounces / 100f));
     }
 
     public float GetAverageDamage()
