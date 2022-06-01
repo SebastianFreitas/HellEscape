@@ -38,13 +38,13 @@ public class WeaponStatsCrafting : MonoBehaviour
                         if (mod.grade.Equals(Grade.interior))
                         {
                             valuesInterior[i].text = mod.text;
-                            tiers[i].text = "tier "+mod.tier.ToString();
+                            //tiers[i].text = "tier "+mod.tier.ToString();
                             mods[i].SetActive(true);
                             i++;
                         }else if (mod.grade.Equals(Grade.exterior))
                         {
                             valuesExterior[e].text = mod.text;
-                            tiers[e+2].text = "tier " + mod.tier.ToString();
+                            //tiers[e+2].text = "tier " + mod.tier.ToString();
                             mods[e+2].SetActive(true);
                             e++;
                         }
@@ -52,7 +52,7 @@ public class WeaponStatsCrafting : MonoBehaviour
                         else if (mod.grade.Equals(Grade.special))
                         {
                             valuesSpecial[s].text = mod.text;
-                            tiers[s+4].text = "tier " + mod.tier.ToString();
+                            //tiers[s+4].text = "tier " + mod.tier.ToString();
                             mods[s+4].SetActive(true);
                             s++;
                         }
