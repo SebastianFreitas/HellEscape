@@ -34,12 +34,12 @@ public class PlayerInventory : MonoBehaviour
     internal bool pullfire;
     internal bool fireMovement;
     internal float poisonSpeedDouble = 1;
-    internal float poisonDuration;
+    internal float poisonDuration = 9;
     internal bool poisonFollow;
     internal bool weakerPoison;
     internal float chillPoison;
     internal int vampiricBonus;
-    internal int freezeChance;
+    internal int freezeChance = 2;
     internal float additionalFreezeDuration;
     internal float doublePhysOnFreezes;
     internal bool phyisToColdCrit;
@@ -58,6 +58,7 @@ public class PlayerInventory : MonoBehaviour
     internal int coldShatter;
     internal int additionalColdProj;
     internal int coldShatterBounces;
+    internal int igniteChance = 5;
 
     private void OnEnable()
     {

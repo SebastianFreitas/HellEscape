@@ -290,10 +290,34 @@ public class Gun : MonoBehaviour
 
     public void SetGun(GunOfAType gun)
     {
+
+        if(gun != null)
+        {
+            playerInv.increasedFireArea -= gun.fireExplosionAreaModifier;
+            playerInv.igniteChance -= gun.igniteChance;
+
+            playerInv.poisonSpeedDouble -= gun.poisonRateModifier;
+            playerInv.poisonDuration /= 1 + gun.poisonDurationModifier / 100;
+
+            playerInv.freezeChance /= 1 + gun.freezeChance / 100;
+
+            playerInv.chancePhysDoubleDamage += gun.doubleDamageChance;
+        }
+
         this.gun = gun;
         SetBulletStats();
-  
-        
+
+        playerInv.increasedFireArea += gun.fireExplosionAreaModifier;
+        playerInv.igniteChance *= 1 + gun.igniteChance / 100;
+
+        playerInv.poisonSpeedDouble += gun.poisonRateModifier;
+        playerInv.poisonDuration *= 1+ gun.poisonDurationModifier/100;
+
+        playerInv.freezeChance *= 1 + gun.freezeChance / 100;
+
+        playerInv.chancePhysDoubleDamage += gun.doubleDamageChance;
+
+
         playerScript.increasedSpeed = gun.increasedSpeed;
         firerate = 1 / gun.finalFireRate;
 

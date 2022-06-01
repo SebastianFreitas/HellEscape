@@ -196,25 +196,42 @@ public class GunGenerator : ModData
                 ret.increasedshotSpeed += newMod.upperBound;
                 break;
 
-            case "Ricochets follow enemies":
-                ret.increasedRicochetGuide += newMod.upperBound;
-                break;
-
             case "Delayed Shot":
                 ret.delayedBullet += newMod.upperBound;
                 break;
-
-            case "Horizontal Shot":
-                ret.horizontalShot += newMod.upperBound;
+            //-----------------------------------------------------------
+            case "Explosion Area":
+                ret.fireExplosionAreaModifier += newMod.upperBound;
                 break;
 
-            case "Zero-gravity Shot":
+            case "Ignite Chance":
+                ret.igniteChance += newMod.upperBound;
+                break;
+            //-----------------------------------------------------------
+            case "Poison Rate":
+                ret.poisonRateModifier += newMod.upperBound;
+                break;
+
+            case "Poison Duration":
+                ret.poisonDurationModifier += newMod.upperBound;
+                break;
+            //-----------------------------------------------------------
+            case "Freeze Chance":
+                ret.freezeChance += newMod.upperBound;
+                break;
+
+            case "":
+                ret.slowbullet += newMod.upperBound;
+                break;
+            //-----------------------------------------------------------
+            case "Double Damage chance":
+                ret.doubleDamageChance += newMod.upperBound;
+                break;
+
+            case " ":
                 ret.slowbullet += newMod.upperBound;
                 break;
 
-            case "Piercing Shot":
-                ret.piercing += newMod.upperBound;
-                break;
         }
     }
 

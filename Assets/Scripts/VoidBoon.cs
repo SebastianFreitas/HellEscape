@@ -131,9 +131,7 @@ internal class VoidBoon
         //FIRE----------------------------------------------------------------
         BoonList.Add((10,     "Lose 20 max hp \n Deal +10 fire damage", BoonName.FireGreed));
         BoonList.Add((5,      "Fire damage does not destroy the bullet on impact", BoonName.RicochetExplosive));
-        BoonList.Add((10,     "Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea));
-        BoonList.Add((5,      "Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
-        BoonList.Add((1,      "Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
+
         BoonList.Add((1,      "Fire damage explodes in a 90% smaller area\n Fire damage is doubled", BoonName.DoubleFire));
         BoonList.Add((1,      "Delayed Explosion", BoonName.DelayedFire));
         BoonList.Add((5,      "Explosions from fire damage gain more push back force", BoonName.PushForceFire));
@@ -143,8 +141,7 @@ internal class VoidBoon
         BoonList.Add((1,      "Your dash and double jump are stronger", BoonName.StrongerDash));
         BoonList.Add((1,      "Enemies explode on death into a fire explosion", BoonName.FireDeath));
         //POISON----------------------------------------------------------------
-        BoonList.Add((1,      "Poison deals damage twice as fast", BoonName.TwiceFastPoison));
-        BoonList.Add((1,      "Poison lasts 5 more seconds", BoonName.PoisonDuration));
+
         BoonList.Add((1,      "Ricochets bounce into close poisoned enemies", BoonName.PoisonFollow));
         BoonList.Add((1,      "Poisoned enemies deal 25% less damage", BoonName.WeakerPoison));
         BoonList.Add((1,      "Chilled enemies take 30% more poison damage", BoonName.PoisonedCold));
@@ -152,8 +149,7 @@ internal class VoidBoon
         BoonList.Add((1,      "Deal all poison damage instantly \n Deal half poison damage", BoonName.InstantPoison));
         BoonList.Add((1,      "Fire explosions also deal poison damage", BoonName.PoisonExplosions));
         //COLD------------------------------------------------------------------
-        BoonList.Add((1,      "+1% Chance your cold damage freezes the enemy", BoonName.ChanceFreeze1));
-        BoonList.Add((1,      "+2% Chance your cold damage freezes the enemy", BoonName.ChanceFreeze2));
+
         BoonList.Add((1,      "Freeze condition lasts one second longer", BoonName.LongerFreeze));
         BoonList.Add((1,      "Physical damage is converted to cold on critical hits.", BoonName.PhyisToColdCrit));
         BoonList.Add((1,      "Deal 50% more damage agaisnt frozen targets", BoonName.FrozenDamage));
@@ -166,7 +162,7 @@ internal class VoidBoon
         BoonList.Add((1,      "Gain +10 physical damage", BoonName.MorePhys10));
         BoonList.Add((1,      "Gain +25 physical damage", BoonName.MorePhys25));
         BoonList.Add((1,      "Gain +50 physical damage", BoonName.MorePhys50));
-        BoonList.Add((1,      "+5% for physical damage to deal double damage", BoonName.DoubleDamagePhys));
+      
         BoonList.Add((1,      "All physical damage dealt agaisnt frozen enemies is doubled", BoonName.DoublePhysCold));
         BoonList.Add((1,      "Critical hits deal 3 times the physical damage", BoonName.TripleCritPhys));
         BoonList.Add((1,      "Convert 50% of fire damage into physical damage", BoonName.FireToPhys50));
@@ -177,21 +173,25 @@ internal class VoidBoon
         //NOTDONE ----------NOTDONE----------------NOTDONE-------------NOTDONE-----------NOTDONE-----------
 
         //--------
-
+        BoonList.Add((10, "Fire damage explodes in a 20% larger area", BoonName.IncreasedFireArea));
+        BoonList.Add((5, "Fire damage explodes in a 50% larger area", BoonName.IncreasedFireArea2));
+        BoonList.Add((1, "Fire damage explodes in a 100% larger area", BoonName.IncreasedFireArea3));
 
         //--------
 
+        BoonList.Add((1, "Poison deals damage twice as fast", BoonName.TwiceFastPoison));
+        BoonList.Add((1, "Poison lasts 5 more seconds", BoonName.PoisonDuration));
 
-        
-
-       
-   
-
-
+        BoonList.Add((1, "+1% Chance your cold damage freezes the enemy", BoonName.ChanceFreeze1));
+        BoonList.Add((1, "+2% Chance your cold damage freezes the enemy", BoonName.ChanceFreeze2));
 
 
+        BoonList.Add((1, "+5% for physical damage to deal double damage", BoonName.DoubleDamagePhys));
 
-      //  BoonList.Add((1, "Critical hits increase weapon fire rate", BoonName.CritFireRate));
+
+
+
+        //  BoonList.Add((1, "Critical hits increase weapon fire rate", BoonName.CritFireRate));
 
 
         //AddBoon(1, "Explosions from fire damage shoot bullets", BoonName.ScrapFire);

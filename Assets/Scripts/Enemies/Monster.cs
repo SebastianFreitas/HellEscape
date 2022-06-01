@@ -419,7 +419,7 @@ public class Monster : MonoBehaviour
             TakeDamage((int)poisonValue, stats);
 
             poisonTicks++;
-            if (poisonTicks > 9+ playerInv.poisonDuration) break;
+            if (poisonTicks >  playerInv.poisonDuration) break;
 
             yield return waiter;
 
@@ -433,7 +433,7 @@ public class Monster : MonoBehaviour
     {
         if (playerInv.instantPoison)
         {
-            TakeDamage(poisonDamage/5f * (9f + (float)playerInv.poisonDuration), stats);
+            TakeDamage(poisonDamage/5f * ((float)playerInv.poisonDuration), stats);
         }  
         else
         {
