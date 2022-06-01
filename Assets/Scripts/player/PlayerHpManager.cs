@@ -53,8 +53,8 @@ public class PlayerHpManager : MonoBehaviour
         hp.SetHealth((int)health);
         if (health <= 0f) Die();
 
-        Debug.LogError(amount + "damage taken");
-        Debug.LogError(health + "health");
+        //Debug.LogError(amount + "damage taken");
+        //Debug.LogError(health + "health");
     }
 
 

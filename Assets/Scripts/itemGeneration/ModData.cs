@@ -104,10 +104,11 @@ public enum Grade
 
 public enum GunType
 {
-    normal,
+    basic,
     shotgun,
     machinegun,
-    sniper
+    sniper,
+    BasicA1
 }
 
 public class Mod
@@ -324,13 +325,22 @@ public class GunOfAType : ScriptableObject
 
         switch (type)
         {
-            case GunType.normal:
+            case GunType.basic:
                 baseRate = 2f;
                 basePhysicalDamage = 50;
                 baseBounces = 5;
                 baseBulletsPerShot = 1;
                 baseshotSpeed = 2500;
                 basebounceSpeed = 250;
+                break;
+
+            case GunType.BasicA1:
+                baseRate = 1.25f;
+                basePhysicalDamage = 150;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 4000;
+                basebounceSpeed = 500;
                 break;
 
             case GunType.shotgun:

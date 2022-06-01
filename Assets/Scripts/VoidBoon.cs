@@ -179,7 +179,7 @@ internal class VoidBoon
 
 
         //--------
-       // BoonList.Add((1111111, "Enemies that die from cold damage shatter into cold projectiles", BoonName.ColdShatter));
+        BoonList.Add((1111111, "Enemies that die from cold damage shatter into cold projectiles", BoonName.ColdShatter));
 
         
 

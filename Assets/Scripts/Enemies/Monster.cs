@@ -295,6 +295,7 @@ public class Monster : MonoBehaviour
                 for (int a = 0; a < 8; a++)
                 {
                     var y = gun.SpawnBullet(rigidBody.transform, true);
+                    y.transform.parent = null;
                     //var newRotation = y.transform.rotation * Quaternion.AngleAxis(60f, Random.insideUnitCircle);
                     //y.transform.rotation = newRotation;
                     y.isFilter = true;

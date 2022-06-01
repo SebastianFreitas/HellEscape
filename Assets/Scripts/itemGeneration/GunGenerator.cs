@@ -30,7 +30,7 @@ public class GunGenerator : ModData
             basePoisonDamage = 0,
         };
         var type = RandomiseGunType();
-        if (isBase) type = GunType.normal;
+        if (isBase) type = GunType.basic;
         ret = ret.ChangeType(ret, type);
 
         int totalMods = GetRandomWeightedIndex(maxModsWeight) + 1;
@@ -221,7 +221,7 @@ public class GunGenerator : ModData
     public GunOfAType CreateWeaponEmpty()
     {
         GunOfAType ret = new GunOfAType();
-        ret = ret.ChangeType(ret, GunType.normal);
+        ret = ret.ChangeType(ret, GunType.basic);
 
         ret.mods = new HashSet<Mod>();
 
@@ -237,26 +237,24 @@ public class GunGenerator : ModData
     private GunType RandomiseGunType()
     {
         var x = UnityEngine.Random.Range(0, 4);
+        var list = new List<(int, GunType)>();
 
-        GunType ret = GunType.normal;
-        switch (x)
+        list.Add((100, GunType.basic));
+        list.Add((75, GunType.sniper));
+        list.Add((75, GunType.machinegun));
+        list.Add((75, GunType.shotgun));
+
+        list.Add((20, GunType.BasicA1));
+        var listweight = new List<GunType>();
+        foreach (var item in list)
         {
-            case 0:
-                ret = GunType.normal;
-                break;
-
-            case 1:
-                ret = GunType.sniper;
-                break;
-
-            case 2:
-                ret = GunType.machinegun;
-                break;
-
-            case 3:
-                ret = GunType.shotgun;
-                break;
+            for (int i = 0; i < item.Item1; i++)
+            {
+                listweight.Add(item.Item2);
+            }
         }
+
+        GunType ret = listweight[UnityEngine.Random.Range(0, listweight.Count)];
 
         return ret;
     }
@@ -384,12 +382,14 @@ public class GunGenerator : ModData
 
     public string CreateGunStats(GunOfAType gun)
     {
+        int x = (int)gun.GetAverageDamage();
         string text = "";
-        text += gun.GetAverageDamage() + "\n";
+        text +=  x.ToString("F2")+ "\n";
         text += gun.GetDamage() + "\n";
         text += gun.GetFireRate() + "\n";
         text += gun.GetShotSpeed() + "\n";
         text += gun.GetBounces() + "\n";
+
 
         return text;
     }
