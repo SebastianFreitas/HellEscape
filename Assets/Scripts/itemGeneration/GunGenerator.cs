@@ -403,10 +403,12 @@ public class GunGenerator : ModData
         int x = (int)gun.GetAverageDamage();
         string text = "";
         text +=  x.ToString("F2")+ "\n";
-        text += gun.GetDamage() + "\n";
-        text += gun.GetFireRate() + "\n";
-        text += gun.GetShotSpeed() + "\n";
-        text += gun.GetBounces() + "\n";
+        text += gun.baseRate + "\n";
+        text += gun.basePhysicalDamage + "\n";
+        text += gun.baseColdDamage + "\n";
+        text += gun.basePoisonDamage + "\n";
+        text += gun.baseshotSpeed+ "\n";
+        text += gun.basebounceSpeed + "\n";
 
 
         return text;
