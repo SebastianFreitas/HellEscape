@@ -108,7 +108,22 @@ public enum GunType
     shotgun,
     machinegun,
     sniper,
-    BasicA1
+    BasicA1,
+    BasicA1FD,
+    BasicA1CD,
+    BasicA1PD,
+    shotgunA1,
+    shotgunA1FD,
+    shotgunA1CD,
+    shotgunA1PD,
+    machinegunA1,
+    machinegunA1FD,
+    machinegunA1CD,
+    machinegunA1PD,
+    sniperA1,
+    sniperA1CD,
+    sniperA1PD,
+    sniperA1FD
 }
 
 public class Mod
@@ -325,6 +340,7 @@ public class GunOfAType : ScriptableObject
 
         switch (type)
         {
+            //Basic---------------------------
             case GunType.basic:
                 baseRate = 2f;
                 basePhysicalDamage = 50;
@@ -343,6 +359,37 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
+            case GunType.BasicA1FD:
+                baseRate = 1.25f;
+                basePhysicalDamage = 0;
+                baseFireDamage = 100;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 4000;
+                basebounceSpeed = 500;
+                break;
+
+            case GunType.BasicA1CD:
+                baseRate = 1.25f;
+                basePhysicalDamage = 0;
+                baseColdDamage = 100;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 4000;
+                basebounceSpeed = 500;
+                break;
+
+            case GunType.BasicA1PD:
+                baseRate = 1.25f;
+                basePhysicalDamage = 0;
+                basePoisonDamage = 100;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 4000;
+                basebounceSpeed = 500;
+                break;
+
+            //SHOTGUN---------------------------
             case GunType.shotgun:
                 baseRate = 1f;
                 basePhysicalDamage = 20;
@@ -352,6 +399,46 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 150;
                 break;
 
+            case GunType.shotgunA1:
+                baseRate = 1.2f;
+                basePhysicalDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 10;
+                baseshotSpeed = 1500;
+                basebounceSpeed = 500;
+                break;
+
+            case GunType.shotgunA1FD:
+                baseRate = 1.2f;
+                basePhysicalDamage = 0;
+                baseFireDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 10;
+                baseshotSpeed = 1500;
+                basebounceSpeed = 500;
+                break;
+
+            case GunType.shotgunA1CD:
+                baseRate = 1.2f;
+                basePhysicalDamage = 0;
+                baseColdDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 10;
+                baseshotSpeed = 1500;
+                basebounceSpeed = 500;
+                break;
+
+            case GunType.shotgunA1PD:
+                baseRate = 1.2f;
+                basePhysicalDamage = 0;
+                basePoisonDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 10;
+                baseshotSpeed = 1500;
+                basebounceSpeed = 500;
+                break;
+
+            //Automatic---------------------------
             case GunType.machinegun:
                 baseRate = 5f;
                 basePhysicalDamage = 20;
@@ -361,6 +448,46 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 150;
                 break;
 
+            case GunType.machinegunA1:
+                baseRate = 4f;
+                basePhysicalDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 2000;
+                basebounceSpeed = 200;
+                break;
+
+            case GunType.machinegunA1FD:
+                baseRate = 4f;
+                basePhysicalDamage = 0;
+                baseFireDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 2000;
+                basebounceSpeed = 200;
+                break;
+
+            case GunType.machinegunA1CD:
+                baseRate = 4f;
+                basePhysicalDamage = 40;
+                baseColdDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 2000;
+                basebounceSpeed = 200;
+                break;
+
+            case GunType.machinegunA1PD:
+                baseRate = 4f;
+                basePhysicalDamage = 40;
+                basePoisonDamage = 40;
+                baseBounces = 5;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 2000;
+                basebounceSpeed = 200;
+                break;
+
+            //BoltAction---------------------------
             case GunType.sniper:
                 baseRate = .5f;
                 basePhysicalDamage = 200;
@@ -369,6 +496,49 @@ public class GunOfAType : ScriptableObject
                 baseshotSpeed = 5000;
                 basebounceSpeed = 500;
                 break;
+
+            case GunType.sniperA1:
+                baseRate = .75f;
+                basePhysicalDamage = 300;
+                baseBounces = 10;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 5000;
+                basebounceSpeed = 2000;
+                break;
+
+            case GunType.sniperA1FD:
+                baseRate = .75f;
+                basePhysicalDamage = 0;
+                baseFireDamage = 300;
+                baseBounces = 10;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 5000;
+                basebounceSpeed = 2000;
+                break;
+
+            case GunType.sniperA1PD:
+                baseRate = .75f;
+                basePhysicalDamage = 0;
+                basePoisonDamage = 300;
+                baseBounces = 10;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 5000;
+                basebounceSpeed = 2000;
+                break;
+
+            case GunType.sniperA1CD:
+                baseRate = .75f;
+                basePhysicalDamage = 0;
+                baseColdDamage = 300;
+                baseBounces = 10;
+                baseBulletsPerShot = 1;
+                baseshotSpeed = 5000;
+                basebounceSpeed = 2000;
+                break;
+
+
+
+
         }
         return gun;
     }

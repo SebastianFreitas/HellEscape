@@ -245,6 +245,24 @@ public class GunGenerator : ModData
         list.Add((75, GunType.shotgun));
 
         list.Add((20, GunType.BasicA1));
+        list.Add((15, GunType.BasicA1PD));
+        list.Add((15, GunType.BasicA1FD));
+        list.Add((15, GunType.BasicA1CD));
+
+        list.Add((20, GunType.sniperA1));
+        list.Add((15, GunType.sniperA1PD));
+        list.Add((15, GunType.sniperA1FD));
+        list.Add((15, GunType.sniperA1CD));
+
+        list.Add((20, GunType.machinegunA1));
+        list.Add((15, GunType.machinegunA1PD));
+        list.Add((15, GunType.machinegunA1FD));
+        list.Add((15, GunType.machinegunA1CD));
+
+        list.Add((20, GunType.shotgunA1));
+        list.Add((15, GunType.shotgunA1PD));
+        list.Add((15, GunType.shotgunA1FD));
+        list.Add((15, GunType.shotgunA1CD));
         var listweight = new List<GunType>();
         foreach (var item in list)
         {
