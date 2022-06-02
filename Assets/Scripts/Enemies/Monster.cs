@@ -403,6 +403,8 @@ public class Monster : MonoBehaviour
         if (isInvisible) StartCoroutine("Invisible");
         if (isPoisoned) StartCoroutine("Poisoned");
         if (isChilled) StartCoroutine("Chilled");
+        if (isIgnited) StartCoroutine("Ignited");
+        if (isBleeding) StartCoroutine("Bleeding");
     }
 
 
