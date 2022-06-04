@@ -125,7 +125,7 @@ public class MainMenuManager : MonoBehaviour
     private IEnumerator StartGameCoroutine()
     {
         started = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.1f);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         canvasMenu.SetActive(false);

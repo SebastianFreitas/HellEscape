@@ -22,7 +22,7 @@ public class PlayerSounds : MonoBehaviour
 
     public void PlayDashSound()
     {
-        audioSource.PlayOneShot(dash, volume / 2);
+        audioSource.PlayOneShot(dash, volume  *.1f);
     }
 
     public void PlayLandSound()
