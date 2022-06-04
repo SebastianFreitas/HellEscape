@@ -29,17 +29,17 @@ public class GeneratedGuns : MonoBehaviour
 
         GetGunLayout();
 
-        //foreach (var currenGun in generatedGuns)
-        //{
-        //    if (currenGun.gun != null)
-        //    {
-        //        if (currenGun.gun.Equals(craftingTable.gun))
-        //        {
-        //            SelectSlot(currenGun.position);
-        //        }
-        //    }
+        foreach (var currenGun in generatedGuns)
+        {
+            if (currenGun.gun != null)
+            {
+                if (currenGun.gun.Equals(craftingTable.gun))
+                {
+                    SelectSlot(currenGun.position);
+                }
+            }
 
-        //}
+        }
 
         foreach (var currenGun in generatedGuns)
         {

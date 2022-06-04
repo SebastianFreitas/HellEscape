@@ -36,8 +36,8 @@ public class ModData : MonoBehaviour
                 new Mod(1,2,   "Freeze Chance",                     Grade.special, OperatorType.increased, 0,5),
                 new Mod(2,6,   "Cold projectile Chance",            Grade.special, OperatorType.increased, 0,6),
 
-                new Mod(1,2,   "Double Damage Chance",              Grade.special, OperatorType.plus,      0,7),
-                new Mod(1,2,   "Bleeding Chance",                   Grade.special, OperatorType.plus,      0,8),
+                new Mod(1,2,   "Double Damage Chance",              Grade.special, OperatorType.plusPercentage,      0,7),
+                new Mod(1,2,   "Bleeding Chance",                   Grade.special, OperatorType.plusPercentage,      0,8),
 
         };
 
@@ -97,7 +97,8 @@ public enum OperatorType
     reduced,
     decreased,
     non,
-    minus
+    minus,
+    plusPercentage
 }
 
 public enum Grade

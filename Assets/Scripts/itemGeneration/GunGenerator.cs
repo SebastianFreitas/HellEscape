@@ -395,6 +395,9 @@ public class GunGenerator : ModData
             case OperatorType.non:
                 ret = mod.text;
                 break;
+            case OperatorType.plusPercentage:
+                ret = "+" + mod.upperBound + "% " + mod.text;
+                break;
         }
 
         return ret;
