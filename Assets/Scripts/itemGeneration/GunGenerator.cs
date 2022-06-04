@@ -476,4 +476,27 @@ public class GunGenerator : ModData
         gun.GenerateTotalDamage();
 
     }
+
+    public void AddMod(GunOfAType gun, Mod mod)
+    {
+        gun.mods.Add(mod);
+        switch (mod.grade.ToString())
+        {
+            case "interior":
+                gun.gradeWeight[0] -= 100;
+                break;
+
+            case "exterior":
+                gun.gradeWeight[1] -= 100;
+                break;
+
+            case "special":
+                gun.gradeWeight[2] -= 1;
+                break;
+        }
+        mod.upperBound = -mod.upperBound;
+        ModToStat(gun, mod);
+        gun.GenerateTotalDamage();
+
+    }
 }

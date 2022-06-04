@@ -256,7 +256,9 @@ public class CraftingDevice : GunGenerator
 
         if (gun.gradeWeight[((int)savedMod.grade)] == 0) return 4;
 
-        gun.mods.Add(savedMod);
+        AddMod(gun, savedMod);
+
+
 
         FinishWeaponText(gun);
         guntext.text = gun.text;
