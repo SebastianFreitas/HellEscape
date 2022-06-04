@@ -148,6 +148,12 @@ public class GunGenerator : ModData
         return newMod;
     }
 
+    public void AddMod(Mod mod, GunOfAType ret)
+    {
+        ret.mods.Add(mod);
+        ret.GenerateTotalDamage();
+    }
+
     private static void ModToStat(GunOfAType ret, Mod newMod)
     {
         switch (newMod.basicText)

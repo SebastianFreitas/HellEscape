@@ -54,6 +54,10 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponent<RemoveMod>().Function();
                 }
+                else if (hit.transform.CompareTag("RemoveAndSaveMod"))
+                {
+                    hit.collider.transform.GetComponent<RemoveAndSave>().Function();
+                }
                 else if (hit.transform.CompareTag("DestroyGun"))
                 {
                     hit.collider.transform.GetComponent<Destroy>().Function();

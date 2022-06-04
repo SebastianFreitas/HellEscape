@@ -51,6 +51,9 @@ public class CraftingDevice : GunGenerator
 
     public AddModUI addMod;
     public RemoveMod removeMod;
+
+
+
     public Destroy destroyGun;
     public GeneratedGuns slotGuns;
 
@@ -213,6 +216,83 @@ public class CraftingDevice : GunGenerator
         return worked;
     }
 
+    internal Mod savedMod = null;
+    internal int RemoveAndSaveMod()
+    {
+        if (gun.mods.Count == 0) return 1;
+        if ((GetRemoveAndSaveModPrice()) > playerInventory.gunParts) return 2;
+
+        int i = Random.Range(0, gun.mods.Count);
+        int a = 0;
+        foreach (Mod x in gun.mods)
+        {
+            if (i == a)
+            {
+                savedMod = x;
+                RemoveMod(gun, x);
+
+                break;
+            }
+            a++;
+        }
+
+        UpdateRemovedMod();
+        playerInventory.UpdateGunParts(-GetRemoveAndSaveModPrice());
+        weaponStats.ResetUI();
+        FinishWeaponText(gun);
+        guntext.text = gun.text;
+        weaponStats.UpdateUI();
+        UpdateStats();
+        playerInventory.UpdateEquipedGun(gun);
+
+        return 0;
+      
+    }
+
+    internal int AddSavedMod()
+    {
+        if (gun.mods.Count == 6) return 3;
+        if ((GetRemoveAndSaveModPrice()) > playerInventory.gunParts) return 2;
+
+        if (gun.gradeWeight[((int)savedMod.grade)] == 0) return 4;
+
+        gun.mods.Add(savedMod);
+
+        FinishWeaponText(gun);
+        guntext.text = gun.text;
+        weaponStats.gun = gun;
+        UpdateStats();
+        playerInventory.UpdateEquipedGun(gun);
+        weaponStats.UpdateUI();
+
+        savedMod = null;
+
+        return 0;
+    }
+
+    [SerializeField] internal GameObject removedModGameObject;
+    [SerializeField] TMPro.TextMeshPro removedModText;
+    [SerializeField] MeshRenderer[] removedModMesh;
+    private void UpdateRemovedMod()
+    {
+        if (savedMod != null)
+        {
+            removedModGameObject.SetActive(true);
+            removedModText.text = savedMod.text;
+
+
+            if (savedMod.grade == Grade.interior) TurnGreen(removedModMesh);
+            if (savedMod.grade == Grade.exterior) TurnBlue(removedModMesh);
+            if (savedMod.grade == Grade.special) TurnRed(removedModMesh);
+        } else removedModGameObject.SetActive(false);
+    }
+
+    internal int GetRemoveAndSaveModPrice()
+    {
+        if (gun != null) return (gun.level - 9) * (10);
+        else return 1000;
+    }
+
     public void UpdateStats()
     {
         stats.text = CreateGunStats(gun);
@@ -276,9 +356,9 @@ public class CraftingDevice : GunGenerator
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
                 //craftingRecipes.SetActive(true);
-                destroyGun2.SetActive(true);
-                addmod2.SetActive(true);
-                removeMod2.SetActive(true);
+                //destroyGun2.SetActive(true);
+                //addmod2.SetActive(true);
+                //removeMod2.SetActive(true);
 
                 deconstruct.SetActive(true);
                 generate.SetActive(false);
@@ -293,9 +373,9 @@ public class CraftingDevice : GunGenerator
                 slotGuns.SelectSlot(currenGun.position);
                 pos = currenGun.position;
 
-                destroyGun2.SetActive(true);
-                addmod2.SetActive(false);
-                removeMod2.SetActive(false);
+                //destroyGun2.SetActive(true);
+                //addmod2.SetActive(false);
+                //removeMod2.SetActive(false);
 
                 deconstruct.SetActive(false);
                 generate.SetActive(true);
