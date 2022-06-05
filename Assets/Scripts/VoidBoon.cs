@@ -65,7 +65,6 @@ internal class VoidBoon
     }
     internal List<(int, string, BoonName)> BoonList = new List<(int, string, BoonName)>();
 
-    private bool gotBoons = false;
     private int weight;
     internal VoidBoon()
     {
@@ -74,21 +73,12 @@ internal class VoidBoon
         playerInv = player.GetComponent<PlayerInventory>();
         playerMov = player.GetComponent<PlayerBasicMovement>();
 
-        if (!gotBoons)
-        {
-            gotBoons = true;
-            GetBoons();
-        }
 
-
-        List<BoonName> weightList = GetWeightList();
-        name = weightList[Random.Range(0, weightList.Count)];
-
-        RemoveBoon();
+        GetBoons();
 
     }
 
-    private void RemoveBoon()
+    internal void RemoveBoon()
     {
         foreach (var current in BoonList)
         {
@@ -112,8 +102,10 @@ internal class VoidBoon
         List<BoonName> weightList = GetWeightList();
         name = weightList[Random.Range(0, weightList.Count)];
 
-        RemoveBoon();
-
+        foreach (var item in BoonList)
+        {
+            if (item.Item3 == name) text = item.Item2;
+        }
     }
 
     private void GetBoons()
@@ -226,8 +218,6 @@ internal class VoidBoon
         Red,
         Normal
     }
-
-
 
     internal PlayerBasicMovement playerMov;
     internal PlayerHpManager playerHP;
@@ -415,26 +405,7 @@ internal class VoidBoon
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
-    //DONE------------------------------DONE---------------------------------
+    //--------------------------------------------------------------------------------------------------
     internal void ColdShatteringRicochet(bool gain)
     {
         if (gain)
@@ -491,7 +462,6 @@ internal class VoidBoon
             playerInv.listBoons.Remove(this);
         }
     }
-
     internal void PoisonExplosions(bool gain)
     {
         if (gain)

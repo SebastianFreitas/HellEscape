@@ -29,10 +29,12 @@ public class GameMan : ModDataRoom
 
     internal bool runsucess = false;
 
+    internal VoidBoon boonManager;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        boonManager = new VoidBoon();
 
         if (startAtHub)
         {
@@ -115,6 +117,7 @@ public class GameMan : ModDataRoom
     public void StartRun(GeneratedMission mis)
     {
         mission = mis;
+        boonManager = new VoidBoon();
         hub.gameObject.SetActive(false);
 
         roomGen.StartRun(mis); 

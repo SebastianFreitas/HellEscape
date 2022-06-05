@@ -37,7 +37,7 @@ public class PlayerInventory : MonoBehaviour
     internal float poisonDuration = 9;
     internal bool poisonFollow;
     internal bool weakerPoison;
-    internal float chillPoison;
+    internal float chillPoison = 1f;
     internal int vampiricBonus;
     internal int freezeChance = 2;
     internal float additionalFreezeDuration;
