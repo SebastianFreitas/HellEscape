@@ -75,7 +75,7 @@ public class RoomGenerator : MonoBehaviour
 		
 		int influencePos = Random.Range(1,5);
 		//place pathway
-		for (int i = 1; i <=mission.totalLenght + mission.aditionalLength; i++) //
+		for (int i = 1; i <= mission.totalLenght + mission.aditionalLength; i++) //
 		{
 
 			int a = 0;
@@ -86,12 +86,20 @@ public class RoomGenerator : MonoBehaviour
 				var rando = Random.Range(0, mainRooms.Count);
 				var x = Random.Range(1, 4);
 				bool worked;
+				bool isCorridor = false;
+                if (x >= 2)
+                {
+                    worked = PlaceCorridor(Random.Range(5, 10));
+                    isCorridor = true;
+                }
+                else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
 
-				if (x >= 2) worked = PlaceCorridor(Random.Range(5, 10));
-				else		worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
-				
-
-				if (worked) break;
+                
+				if (worked)
+				{
+					if (isCorridor) i--;
+					break;
+				}
 
 				if (a > 10)
 				{
@@ -374,8 +382,7 @@ public class RoomGenerator : MonoBehaviour
     private bool PlaceCorridor(int length)
     {
 		PlaceRoom(stairs, false, RoomActivator.RoomType.Corridor);
-		 PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomActivator.RoomType.Corridor);
-		return PlaceRoom(stairs, false, RoomActivator.RoomType.Corridor);
+		return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomActivator.RoomType.Corridor);
 	}
 
     private bool PlaceEndRoom()
