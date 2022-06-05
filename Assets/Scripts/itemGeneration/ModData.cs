@@ -34,7 +34,7 @@ public class ModData : MonoBehaviour
                 new Mod(2,6,   "Poison Duration",                   Grade.special, OperatorType.increased, 0,4),
 
                 new Mod(1,2,   "Freeze Chance",                     Grade.special, OperatorType.increased, 0,5),
-                new Mod(2,6,   "Cold projectile Chance",            Grade.special, OperatorType.increased, 0,6),
+                new Mod(2,6,   "Cold projectile Chance",            Grade.special, OperatorType.plusPercentage, 0,6),
 
                 new Mod(1,2,   "Double Damage Chance",              Grade.special, OperatorType.plusPercentage,      0,7),
                 new Mod(1,2,   "Bleeding Chance",                   Grade.special, OperatorType.plusPercentage,      0,8),

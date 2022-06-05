@@ -43,28 +43,44 @@ public class MainMenuManager : MonoBehaviour
             SetVolume(PlayerPrefs.GetFloat("Volume"));
             volumeSlider.value = PlayerPrefs.GetFloat("Volume");
         }
-        else SetVolume(.3f);
+        else
+        {
+            SetVolume(.3f);
+            volumeSlider.value = .3f;
+        }
 
         if (PlayerPrefs.HasKey("Sensitivity"))
         {
             SetSensitivity(PlayerPrefs.GetFloat("Sensitivity"));
             sensitivitySlider.value = PlayerPrefs.GetFloat("Sensitivity");
         }
-        else SetSensitivity(1);
+        else
+        {
+            SetSensitivity(1);
+            sensitivitySlider.value = 1;
+        }
 
         if (PlayerPrefs.HasKey("FOV"))
         {
             SetFov(PlayerPrefs.GetFloat("FOV"));
             fovSlider.value = PlayerPrefs.GetFloat("FOV");
         }
-        else SetFov(90);
+        else
+        {
+            SetFov(90);
+            fovSlider.value = 90;
+        }
 
         if (PlayerPrefs.HasKey("BRIGHT"))
         {
             SetBrightness(PlayerPrefs.GetFloat("BRIGHT"));
             brightSlider.value = PlayerPrefs.GetFloat("BRIGHT");
         }
-        else SetBrightness(.5f);
+        else
+        {
+            SetBrightness(0);
+            brightSlider.value = 0;
+        }
 
         ReadResolution();
     }

@@ -17,6 +17,8 @@ public class RoomActivator : MonoBehaviour
     private Light[] lightsComponent;
 
     internal RoomGenerator roomgen;
+
+    private GameMan gameMan;
     internal enum RoomType
     {
         Boss,
@@ -63,6 +65,8 @@ public class RoomActivator : MonoBehaviour
 
     private void Start()
     {
+        gameMan = transform.root.GetComponent<GameMan>();
+
         if (transform.childCount > 0) spawnPos = transform.GetChild(0);
         roomgen = GetComponentInParent<RoomGenerator>();
         lightsComponent = lights.GetComponentsInChildren<Light>();
@@ -71,12 +75,12 @@ public class RoomActivator : MonoBehaviour
 
         boxColliders = transform.GetComponents<BoxCollider>();
 
-        if (trapLayouts)
-        {
-            foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
+        //if (trapLayouts)
+        //{
+        //    foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
             
-        }
+        //}
 
     }
 
@@ -96,14 +100,14 @@ public class RoomActivator : MonoBehaviour
                     case RoomType.Boss:
                     {
                         SpawnBoss();
-                            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
+                           // trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
                             break;
                     }
 
                     case RoomType.Encounter:
                     {
                         SpawnEncounter(Random.Range(2,mission.encounterMobCount), false);
-                            trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
+                            //trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
                             break;
                     }
 
@@ -156,7 +160,7 @@ public class RoomActivator : MonoBehaviour
         {
             case MainType.choiceSpecial:
                 Instantiate(roomgen.choseSpecial, spawnPos.position, spawnPos.rotation, transform);
-                foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
+               // foreach (Transform child in trapLayouts.transform) child.gameObject.SetActive(false);
 
                 break;
 
@@ -188,8 +192,6 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnSpecial()
     {
-  
-
         SpecialType type = (SpecialType)Random.Range(0, System.Enum.GetValues(typeof(SpecialType)).Length);
 
         switch (type)
@@ -204,7 +206,7 @@ public class RoomActivator : MonoBehaviour
             case SpecialType.Hard:
                 {
                     SpawnEncounter(Random.Range(2, mission.encounterMobCount), true);
-                    trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
+                   // trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
 
                     break;
                 }
@@ -218,7 +220,7 @@ public class RoomActivator : MonoBehaviour
             case SpecialType.Extreme:
                 {
                     SpawnEncounter(Random.Range(mission.encounterMobCount, mission.encounterMobCount*2), true);
-                    trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
+                   // trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
                     break;
                 }
             case SpecialType.weapon:
@@ -233,7 +235,7 @@ public class RoomActivator : MonoBehaviour
     {
         Monster currentMob;
         Monster spawn;
-
+        gameMan.isInEncounter = true;
         switch (influcence)
         {
             case VoidBoon.BoonType.Blue:
@@ -348,13 +350,18 @@ public class RoomActivator : MonoBehaviour
             OpenDoors();
             TurnLightsRed();
             if (roomType == RoomType.Boss) SpawnExit();
+
+
+
+            if (Random.Range(1f, 100f) > 100 - roomgen.mission.healthChanceEncounter) SpawnHeal();
+            if (Random.Range(1f, 100f) > 100 - roomgen.mirrorBoonChance)
+            {
+                Instantiate(roomgen.itemRoom, spawnPos.position + Vector3.back, spawnPos.rotation, transform);
+            }
+
+            gameMan.isInEncounter = false;
         }
 
-        if (Random.Range(1f, 100f) > 100 - roomgen.mission.healthChanceEncounter) SpawnHeal();
-        if (Random.Range(1f, 100f) > 100 - roomgen.mirrorBoonChance)
-        {
-            Instantiate(roomgen.itemRoom, spawnPos.position + Vector3.back, spawnPos.rotation, transform);
-        }
         
     }
 

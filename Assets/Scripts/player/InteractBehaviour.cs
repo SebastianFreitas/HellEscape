@@ -13,9 +13,12 @@ public class InteractBehaviour : MonoBehaviour
 
     private float volume = 1f;
 
+    private GameMan gameMan;
+
     void OnEnable()
     {
         volume = PlayerPrefs.GetFloat("Volume");
+        gameMan = transform.root.GetComponent<GameMan>();
         
     }
 
@@ -211,8 +214,13 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("door"))
                 {
-                    hit.collider.gameObject.SetActive(false);
-                    AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                    if (!gameMan.isInEncounter)
+                    {
+                        hit.collider.gameObject.SetActive(false);
+                        AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                    }
+                    else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
+
                 }
                 else if (hit.transform.CompareTag("Return"))
                 {

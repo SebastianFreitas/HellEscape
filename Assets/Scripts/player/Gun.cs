@@ -96,7 +96,6 @@ public class Gun : MonoBehaviour
         muzzleFlashFront.transform.parent = transform.parent;
         muzzleFlashFront.SetActive(false);
 
-        //playerScript.speed *= ((gun.increasedSpeed/100)+1);
     }
 
 
@@ -226,9 +225,33 @@ public class Gun : MonoBehaviour
         bullet.playerMov = playerScript;
         bullet.gameObject.SetActive(true);
         bullet.playerInv = playerInv;
-        if (playerInv.additionalColdProj > 0 && bullet.stats.coldDamage > 0 )
+        if ((playerInv.additionalColdProj > 0 || playerInv.coldProjectileChance > 0) && bullet.stats.coldDamage > 0 )
         {
-            if (!isCold) SpawnBullet(realBulletHolder2.transform, true);
+            if (!isCold)
+            {
+                var coldProjs = playerInv.additionalColdProj;
+                var coldChance = playerInv.coldProjectileChance;
+                for (int i = 0; i < 10; i++)
+                {
+                    if (coldChance > 100)
+                    {
+                        coldChance -= 100;
+                        coldProjs++;
+                    }
+                }
+
+                if (Random.Range(1f, 100f) > 100 - (1 + coldChance))
+                {
+                    coldProjs++;
+                }
+
+                for (int i = 0; i < coldProjs; i++)
+                {
+                    SpawnBullet(realBulletHolder2.transform, true);
+                }
+
+
+            }
         }
         bullet.AwakeRemote();
         return bullet;
@@ -271,17 +294,21 @@ public class Gun : MonoBehaviour
 
     internal void EquipBaseGun()
     {
-        gun = gunGen.CreateWeapon(10,true);
-        playerScript.increasedSpeed = gun.increasedSpeed;
-        firerate = 1 / gun.finalFireRate;
+        //gun = gunGen.CreateWeapon(10, true);
+        //playerScript.increasedSpeed = gun.increasedSpeed;
+        //firerate = 1 / gun.finalFireRate;
 
-        SetBulletStats();
+        //SetBulletStats();
 
+
+
+        SetGun(gunGen.CreateWeapon(10, true));
         var x = GameObject.FindGameObjectWithTag("Inventory").transform;
         x.GetComponent<Inventory>().AddWeapon(gun, true);
 
-       // GameObject.FindGameObjectWithTag("Slot").GetComponent<Slot>().EquipGun();
+        GameObject.FindGameObjectWithTag("Slot").GetComponent<Slot>().EquipGun();
     }
+
     [SerializeField] PlayerProjectile horizontal;
     [SerializeField] PlayerProjectile slow;
     [SerializeField] PlayerProjectile piercing;
@@ -291,7 +318,7 @@ public class Gun : MonoBehaviour
     public void SetGun(GunOfAType gun)
     {
 
-        if(gun != null)
+        if(this.gun != null)
         {
             playerInv.increasedFireArea -= gun.fireExplosionAreaModifier;
             playerInv.igniteChance -= gun.igniteChance;
