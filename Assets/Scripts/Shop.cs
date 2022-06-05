@@ -9,7 +9,7 @@ public class Shop : GunGenerator
     [SerializeField] TMPro.TextMeshPro buyText;
     [SerializeField] TMPro.TextMeshPro priceText;
     [SerializeField] TMPro.TextMeshPro itemType;
-
+    [SerializeField] TMPro.TextMeshPro stats;
 
     [SerializeField] Material green;
     [SerializeField] Material red;
@@ -66,6 +66,8 @@ public class Shop : GunGenerator
         weaponUI.UpdateUI();
 
         priceText.text = "" + price;
+
+        stats.text = CreateGunStats(gun);
     }
 
     internal void Buy()

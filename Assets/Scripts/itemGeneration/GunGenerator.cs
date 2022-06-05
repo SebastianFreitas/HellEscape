@@ -428,6 +428,7 @@ public class GunGenerator : ModData
     {
         int x = (int)gun.GetShotSpeed() / 100;
         string text = "";
+        text += (gun.level-9).ToString("F0") + "\n";
         text += gun.GetPhysicalDamage().ToString("F0") + "\n";
         text += gun.GetFireDamage().ToString("F0") + "\n";
         text += gun.GetColdDamage().ToString("F0") + "\n";
