@@ -26,7 +26,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Awake()
     {
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -80,6 +80,17 @@ public class MainMenuManager : MonoBehaviour
         {
             SetBrightness(0);
             brightSlider.value = 0;
+        }
+
+        if (PlayerPrefs.HasKey("REFRESH"))
+        {
+            SetRefreshRate(PlayerPrefs.GetFloat("REFRESH"));
+            refreshRateSlider.value = PlayerPrefs.GetFloat("REFRESH");
+        }
+        else
+        {
+            SetRefreshRate(60f);
+            refreshRateSlider.value = 60f;
         }
 
         ReadResolution();
@@ -201,6 +212,17 @@ public class MainMenuManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("FOV", valueFov);
         fovValue.text = valueFov.ToString("F0");
+    }
+
+    [SerializeField] Slider refreshRateSlider;
+    [SerializeField] TMPro.TextMeshProUGUI refreshRateValue;
+
+    public void SetRefreshRate(float valueRefreshRate)
+    {
+        PlayerPrefs.SetFloat("REFRESH", valueRefreshRate);
+        refreshRateValue.text = valueRefreshRate.ToString("F0");
+        Application.targetFrameRate = (int)valueRefreshRate;
+        //refreshRateSlider.value = valueRefreshRate;
     }
 
     [SerializeField] Slider brightSlider;
