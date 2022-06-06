@@ -96,27 +96,7 @@ public class MainMenuManager : MonoBehaviour
         ReadResolution();
     }
 
-    private void ReadResolution()
-    {
-        for (int x = 0; x < widths.Count; x++)
-        {
-            if (Screen.width == widths[x])
-            {
-                for (int y = 0; y < heights.Count; y++)
-                {
-                    if (Screen.height == heights[y])
-                    {
-                        if (x == y)
-                        {
-                            resolutionDropDown.value = x;
-                            return;
-                        }
-                        return;
-                    }
-                }
-            }
-        }
-    }
+
 
     public void GoToMain()
     {
@@ -170,8 +150,39 @@ public class MainMenuManager : MonoBehaviour
 #endif
     }
 
-    List<int> widths = new List<int>() {568, 960, 1280, 1366, 1920};
-    List<int> heights = new List<int>() {320, 540, 800, 768, 1080};
+    private void ReadResolution()
+    {
+        //Resolution[] resolutions = Screen.resolutions;
+        //foreach (var res in resolutions)
+        //{
+        //    widths.Add(res.width);
+        //    heights.Add(res.height);
+        //}
+
+        for (int x = 0; x < widths.Count; x++)
+        {
+            if (Screen.width == widths[x])
+            {
+                for (int y = 0; y < heights.Count; y++)
+                {
+                    if (Screen.height == heights[y])
+                    {
+                        if (x == y)
+                        {
+                            resolutionDropDown.value = x;
+                            return;
+                        }
+                        return;
+                    }
+                }
+            }
+        }
+        
+
+    }
+
+    List<int> widths = new List<int>(){568, 960, 1280, 1366, 1920};
+    List<int> heights = new List<int>() {320, 540, 800, 768, 1080};     
 
     public void SetScreenSize(int index)
     {
