@@ -46,7 +46,7 @@ public class Triangle : Monster
         {
             float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distance >15)//!Approximately(transform.position, player.transform.position, 5)
+            if (distance >8)//!Approximately(transform.position, player.transform.position, 5)
             {
                 Vector3 direction_to_player = (player.transform.position - this.transform.position).normalized;
                 transform.position = transform.position + direction_to_player * Random.Range(1, 10);
