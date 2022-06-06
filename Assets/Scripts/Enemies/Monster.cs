@@ -130,9 +130,9 @@ public class Monster : MonoBehaviour
         {
             if (hasCollide == false)
             {
-                var direction = player.transform.position- transform.position;
+                //var direction = player.transform.position- transform.position;
 
-                playerMov.AddImpact(direction, 100f + mission.kockBack);
+                //playerMov.AddImpact(direction, 100f + mission.kockBack);
                 playerHP.TakeDamage((int)damage);
 
                 if (mission.chill) playerMov.StartCoroutine("Chilled");
