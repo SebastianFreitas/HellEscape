@@ -231,13 +231,11 @@ public class Gun : MonoBehaviour
             {
                 var coldProjs = playerInv.additionalColdProj;
                 var coldChance = playerInv.coldProjectileChance;
-                for (int i = 0; i < 10; i++)
+
+                while (coldChance > 100)
                 {
-                    if (coldChance > 100)
-                    {
-                        coldChance -= 100;
-                        coldProjs++;
-                    }
+                    coldChance -= 100;
+                    coldProjs++;
                 }
 
                 if (Random.Range(1f, 100f) > 100 - (1 + coldChance))

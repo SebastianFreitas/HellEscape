@@ -44,7 +44,7 @@ public class PlayerInventory : MonoBehaviour
     internal float doublePhysOnFreezes;
     internal bool phyisToColdCrit;
     internal int chancePhysDoubleDamage;
-    internal float critGlobalMultiplier;
+    internal float critGlobalMultiplier = 2;
     internal int fireToPhys;
     internal float poisonToFixeAsExtra;
     internal float extraDamageWhileFrozen = 1f;

@@ -43,6 +43,7 @@ public class RoomActivator : MonoBehaviour
         weapon,
         Hard,
         Extreme,
+        Mutation,
     }
 
     internal enum MainType
@@ -229,6 +230,12 @@ public class RoomActivator : MonoBehaviour
                     TurnLightsRed();
                     break;
                 }
+            case SpecialType.Mutation:
+                {
+                    Instantiate(roomgen.itemRoom, spawnPos.position, spawnPos.rotation, transform);
+                    TurnLightsRed();
+                    break;
+                }
         }
     }
     internal Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss, int mobIndex)
@@ -354,7 +361,7 @@ public class RoomActivator : MonoBehaviour
 
 
             if (Random.Range(1f, 100f) > 100 - roomgen.mission.healthChanceEncounter) SpawnHeal();
-            if (Random.Range(1f, 100f) > 100 - roomgen.mirrorBoonChance)
+            if (Random.Range(1f, 100f) > 100 - (roomgen.mirrorBoonChance  + 5))
             {
                 Instantiate(roomgen.itemRoom, spawnPos.position + Vector3.back, spawnPos.rotation, transform);
             }

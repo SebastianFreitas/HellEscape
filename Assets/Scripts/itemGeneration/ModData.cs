@@ -115,22 +115,22 @@ public enum GunType
     shotgun,
     machinegun,
     sniper,
-    BasicA1,
-    BasicA1FD,
-    BasicA1CD,
-    BasicA1PD,
-    shotgunA1,
-    shotgunA1FD,
-    shotgunA1CD,
-    shotgunA1PD,
-    machinegunA1,
-    machinegunA1FD,
-    machinegunA1CD,
-    machinegunA1PD,
-    sniperA1,
-    sniperA1CD,
-    sniperA1PD,
-    sniperA1FD
+    Basic_A1,
+    Basic_A1FD,
+    Basic_A1CD,
+    Basic_A1PD,
+    shotgun_A1,
+    shotgun_A1FD,
+    shotgun_A1CD,
+    shotgun_A1PD,
+    machinegun_A1,
+    machinegun_A1FD,
+    machinegun_A1CD,
+    machinegun_A1PD,
+    sniper_A1,
+    sniper_A1CD,
+    sniper_A1PD,
+    sniper_A1FD
 }
 
 public class Mod
@@ -367,7 +367,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 250;
                 break;
 
-            case GunType.BasicA1:
+            case GunType.Basic_A1:
                 baseRate = 1.25f;
                 basePhysicalDamage = 150;
                 baseBounces = 5;
@@ -376,7 +376,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
-            case GunType.BasicA1FD:
+            case GunType.Basic_A1FD:
                 baseRate = 1.25f;
                 basePhysicalDamage = 0;
                 baseFireDamage = 100;
@@ -386,7 +386,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
-            case GunType.BasicA1CD:
+            case GunType.Basic_A1CD:
                 baseRate = 1.25f;
                 basePhysicalDamage = 0;
                 baseColdDamage = 100;
@@ -396,7 +396,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
-            case GunType.BasicA1PD:
+            case GunType.Basic_A1PD:
                 baseRate = 1.25f;
                 basePhysicalDamage = 0;
                 basePoisonDamage = 100;
@@ -416,7 +416,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 150;
                 break;
 
-            case GunType.shotgunA1:
+            case GunType.shotgun_A1:
                 baseRate = 1.2f;
                 basePhysicalDamage = 40;
                 baseBounces = 5;
@@ -425,7 +425,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
-            case GunType.shotgunA1FD:
+            case GunType.shotgun_A1FD:
                 baseRate = 1.2f;
                 basePhysicalDamage = 0;
                 baseFireDamage = 40;
@@ -435,7 +435,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
-            case GunType.shotgunA1CD:
+            case GunType.shotgun_A1CD:
                 baseRate = 1.2f;
                 basePhysicalDamage = 0;
                 baseColdDamage = 40;
@@ -445,7 +445,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
-            case GunType.shotgunA1PD:
+            case GunType.shotgun_A1PD:
                 baseRate = 1.2f;
                 basePhysicalDamage = 0;
                 basePoisonDamage = 40;
@@ -465,7 +465,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 150;
                 break;
 
-            case GunType.machinegunA1:
+            case GunType.machinegun_A1:
                 baseRate = 4f;
                 basePhysicalDamage = 40;
                 baseBounces = 5;
@@ -474,7 +474,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 200;
                 break;
 
-            case GunType.machinegunA1FD:
+            case GunType.machinegun_A1FD:
                 baseRate = 4f;
                 basePhysicalDamage = 0;
                 baseFireDamage = 40;
@@ -484,7 +484,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 200;
                 break;
 
-            case GunType.machinegunA1CD:
+            case GunType.machinegun_A1CD:
                 baseRate = 4f;
                 basePhysicalDamage = 40;
                 baseColdDamage = 40;
@@ -494,7 +494,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 200;
                 break;
 
-            case GunType.machinegunA1PD:
+            case GunType.machinegun_A1PD:
                 baseRate = 4f;
                 basePhysicalDamage = 40;
                 basePoisonDamage = 40;
@@ -514,7 +514,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 500;
                 break;
 
-            case GunType.sniperA1:
+            case GunType.sniper_A1:
                 baseRate = .75f;
                 basePhysicalDamage = 300;
                 baseBounces = 10;
@@ -523,7 +523,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 2000;
                 break;
 
-            case GunType.sniperA1FD:
+            case GunType.sniper_A1FD:
                 baseRate = .75f;
                 basePhysicalDamage = 0;
                 baseFireDamage = 300;
@@ -533,7 +533,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 2000;
                 break;
 
-            case GunType.sniperA1PD:
+            case GunType.sniper_A1PD:
                 baseRate = .75f;
                 basePhysicalDamage = 0;
                 basePoisonDamage = 300;
@@ -543,7 +543,7 @@ public class GunOfAType : ScriptableObject
                 basebounceSpeed = 2000;
                 break;
 
-            case GunType.sniperA1CD:
+            case GunType.sniper_A1CD:
                 baseRate = .75f;
                 basePhysicalDamage = 0;
                 baseColdDamage = 300;
