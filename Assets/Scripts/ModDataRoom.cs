@@ -42,7 +42,7 @@ public class ModDataRoom : MonoBehaviour
                 new Mod(1,10,  "Mission length",            Grade.interior, OperatorType.plus,                       100,    5),
             
                 new Mod(1,1,   "Double drop chance",        Grade.interior, OperatorType.non,                        25,     7),
-                new Mod(1,5,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       100,    8),
+                new Mod(2,6,   "Monsters potentially found per room",       Grade.interior, OperatorType.plus,       100,    8),
                 new Mod(1,5,   "All side rooms are special",Grade.interior, OperatorType.non,                        25,     9),
                 new Mod(1,15,  "Chance for encounters to drop health",        Grade.interior, OperatorType.non,     100,    10),
                 new Mod(1,5,   "Danger",                    Grade.interior, OperatorType.non,                        4,     11),
@@ -333,7 +333,7 @@ public class ModDataRoom : MonoBehaviour
         public int increasedChanceSpecialRooms = 0;
         public int increasedChanceElite        = 0;
         public int totalLenght;
-        public int encounterMobCount = 4;
+        public int encounterMobCount = 6;
 
         public int level = 0;
 

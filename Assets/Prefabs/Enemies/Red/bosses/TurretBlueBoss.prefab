@@ -976,7 +976,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ace87ba1f0f2dfd44bc1075a1ce30448, type: 2}
+  - {fileID: 2100000, guid: 423e13a150d6ab44ca74d4c38055dac0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1148,6 +1148,7 @@ MonoBehaviour:
   damage: 10
   isBoss: 0
   rigidBody: {fileID: 2744360416404962617}
+  monsterCollider: {fileID: 0}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -1159,9 +1160,10 @@ MonoBehaviour:
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   isHub: 0
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  playExplosion: {fileID: 0}
   shootPoint: {fileID: 2236643407364647289}
   shootDir: {fileID: 5229742437571892419}
-  turretBullet: {fileID: 5001703177229529540, guid: 131112c6d8bf824489f065b91b6dcba3, type: 3}
+  turretBullet: {fileID: 5001703177229529540, guid: e0b1086ec3dfa6640a89c58ff6520858, type: 3}
   speed: 5
   waitingTime: 0.2
 --- !u!1 &3631181994211728947
@@ -1956,7 +1958,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ace87ba1f0f2dfd44bc1075a1ce30448, type: 2}
+  - {fileID: 2100000, guid: 423e13a150d6ab44ca74d4c38055dac0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2128,6 +2130,7 @@ MonoBehaviour:
   damage: 10
   isBoss: 0
   rigidBody: {fileID: 3416756902965404356}
+  monsterCollider: {fileID: 0}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -2139,9 +2142,10 @@ MonoBehaviour:
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   isHub: 0
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  playExplosion: {fileID: 0}
   shootPoint: {fileID: 2583127988275459253}
   shootDir: {fileID: 3105965674684948505}
-  turretBullet: {fileID: 5001703177229529540, guid: 131112c6d8bf824489f065b91b6dcba3, type: 3}
+  turretBullet: {fileID: 5001703177229529540, guid: e0b1086ec3dfa6640a89c58ff6520858, type: 3}
   speed: 5
   waitingTime: 0.2
 --- !u!1 &6188868566039918680
@@ -2876,7 +2880,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ace87ba1f0f2dfd44bc1075a1ce30448, type: 2}
+  - {fileID: 2100000, guid: 423e13a150d6ab44ca74d4c38055dac0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3048,6 +3052,7 @@ MonoBehaviour:
   damage: 10
   isBoss: 0
   rigidBody: {fileID: 9089504716748890218}
+  monsterCollider: {fileID: 0}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -3059,9 +3064,10 @@ MonoBehaviour:
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   isHub: 0
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  playExplosion: {fileID: 0}
   shootPoint: {fileID: 513476343223302252}
   shootDir: {fileID: 4255494409349920203}
-  turretBullet: {fileID: 5001703177229529540, guid: 131112c6d8bf824489f065b91b6dcba3, type: 3}
+  turretBullet: {fileID: 5001703177229529540, guid: e0b1086ec3dfa6640a89c58ff6520858, type: 3}
   speed: 5
   waitingTime: 0.2
 --- !u!1 &8559570685909935143
@@ -3798,7 +3804,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ace87ba1f0f2dfd44bc1075a1ce30448, type: 2}
+  - {fileID: 2100000, guid: 423e13a150d6ab44ca74d4c38055dac0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3874,6 +3880,7 @@ MonoBehaviour:
   damage: 20
   isBoss: 1
   rigidBody: {fileID: 1793126189686632794}
+  monsterCollider: {fileID: 0}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -3885,6 +3892,7 @@ MonoBehaviour:
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   isHub: 0
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  playExplosion: {fileID: 0}
   shootPoint: {fileID: 6725181727504716784}
   turretBullet: {fileID: 5001703177229529540, guid: 131112c6d8bf824489f065b91b6dcba3, type: 3}
   explosionEffect: {fileID: 3292496303209535602, guid: fefa5b832ee6c004c87aa6b61e744a48, type: 3}
@@ -4005,6 +4013,7 @@ MonoBehaviour:
   damage: 10
   isBoss: 0
   rigidBody: {fileID: 1793126189686632794}
+  monsterCollider: {fileID: 0}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -4016,6 +4025,7 @@ MonoBehaviour:
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   isHub: 0
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  playExplosion: {fileID: 0}
   shootPoint: {fileID: 6725181727504716784}
   turretBullet: {fileID: 5001703177229529540, guid: e0b1086ec3dfa6640a89c58ff6520858, type: 3}
   explosionEffect: {fileID: 0}
@@ -4786,7 +4796,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ace87ba1f0f2dfd44bc1075a1ce30448, type: 2}
+  - {fileID: 2100000, guid: 423e13a150d6ab44ca74d4c38055dac0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4958,6 +4968,7 @@ MonoBehaviour:
   damage: 10
   isBoss: 0
   rigidBody: {fileID: 6680467936720688599}
+  monsterCollider: {fileID: 0}
   die: {fileID: 8300000, guid: c7dd4f9c88118bb458eedcce31d2c68f, type: 3}
   hurts:
   - {fileID: 8300000, guid: 60ee49ed175b76741abbface8b50f100, type: 3}
@@ -4969,8 +4980,9 @@ MonoBehaviour:
   dmgPopUp: {fileID: 3295704562443827835, guid: 0ee3cee2b99102f4c82f2aac86dd3bc1, type: 3}
   isHub: 0
   explosion: {fileID: 185080, guid: b10df5365ca4d7545889e7d94740221e, type: 3}
+  playExplosion: {fileID: 0}
   shootPoint: {fileID: 5962198318172984840}
   shootDir: {fileID: 846367951720080168}
-  turretBullet: {fileID: 5001703177229529540, guid: 131112c6d8bf824489f065b91b6dcba3, type: 3}
+  turretBullet: {fileID: 5001703177229529540, guid: e0b1086ec3dfa6640a89c58ff6520858, type: 3}
   speed: 5
   waitingTime: 0.2

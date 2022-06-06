@@ -190,10 +190,7 @@ public class Gun : MonoBehaviour
         bullet.Gun = gun;
 
         var speed = bulletSpeed * (1+(playerInv.increasedBulletSpeed / 100));
-        if(playerInv.movementToPhys > 0)
-        {
-            physicalDamage *= 1+(int)gun.increasedSpeed/100;
-        }
+
 
         bullet.SetStats((int)gun.increasedRicochetGuide,
             bounces         + playerInv.additionalBounces,
@@ -201,11 +198,16 @@ public class Gun : MonoBehaviour
             (fireDamage      + playerInv.additionalFireDamage) * playerInv.fireMultiplier, 
             coldDamage      + playerInv.additionalColdDamage, 
             poisonDamage    + playerInv.additionalPoisonDamage, 
-            (physicalDamage  + playerInv.additionalPhysicalDamage)*(int)playerInv.movementToPhys* (int)gun.increasedSpeed, 
+            (physicalDamage  + playerInv.additionalPhysicalDamage), 
             gun.increasedCriticalDamage + playerInv.additionalincreasedCriticalDamage
             );
 
-        if(playerInv.fireToPhys > 0)
+        if (playerInv.movementToPhys > 0)
+        {
+            bullet.stats.physicalDamage *= 1 + (int)gun.increasedSpeed / 100;
+        }
+
+        if (playerInv.fireToPhys > 0)
         {
             bullet.stats.physicalDamage += bullet.stats.fireDamage * playerInv.fireToPhys;
             bullet.stats.fireDamage*= 1-playerInv.fireToPhys;

@@ -107,7 +107,7 @@ public class RoomActivator : MonoBehaviour
 
                     case RoomType.Encounter:
                     {
-                        SpawnEncounter(Random.Range(2,mission.encounterMobCount), false);
+                        SpawnEncounter(Random.Range(3,mission.encounterMobCount), false);
                             //trapLayouts.transform.GetChild(Random.Range(0, trapLayouts.transform.childCount - 1)).gameObject.SetActive(true);
                             break;
                     }
@@ -238,34 +238,17 @@ public class RoomActivator : MonoBehaviour
                 }
         }
     }
-    internal Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss, int mobIndex)
+    internal Monster SpawnByInfluence(Vector3 position, Quaternion rotation, bool elite, bool Isboss, Monster mob)
     {
         Monster currentMob;
-        Monster spawn;
+
         gameMan.isInEncounter = true;
-        switch (influcence)
-        {
-            case VoidBoon.BoonType.Blue:
-                if (Isboss) spawn = roomgen.BossBlue[Random.Range(0, roomgen.BossBlue.Length)];
-                else spawn = roomgen.monstersBlue[mobIndex];
 
-                currentMob = Instantiate(spawn, position, rotation, transform);
-                if (roomgen.mission.doubleMobs) 
+        currentMob = Instantiate(mob, position, rotation, transform);
 
-                currentMob.isElite = elite;
-                return currentMob;
-
-            case VoidBoon.BoonType.Red:
-                if (Isboss) spawn = roomgen.BossRed[Random.Range(0, roomgen.BossRed.Length)];
-                else spawn = roomgen.monstersRed[mobIndex];
-
-                currentMob = Instantiate(spawn, position, rotation, transform);
-
-                currentMob.isElite = elite;
-                return currentMob;
-        }
-        currentMob = Instantiate(roomgen.monstersRed[0], position, rotation, transform);
+        currentMob.isElite = elite;
         return currentMob;
+       
     }
 
     internal void SpawnWeapon()
@@ -292,14 +275,15 @@ public class RoomActivator : MonoBehaviour
         if (roomgen.mission.doubleMobs) totalMobs *= 2;
 
         int index = 0;
-        int x;
+        int pick = Random.Range(roomgen.encounterCounter/2, roomgen.encounterCounter);
+        Monster x;
 
         for (int i = 0; i < totalMobs; i++)
         {
             var chosenCollider = boxColliders[Random.Range(0, boxColliders.Length)];
 
 
-            x = roomgen.encounters[Random.Range(0, roomgen.encounters.Count)][index];
+            x = roomgen.encounters[pick][index];
             index++;
             if (index == 4) index = 0;
 
@@ -310,16 +294,20 @@ public class RoomActivator : MonoBehaviour
 
         CloseDoors();
         ClearTrigger();
+
+        if(roomgen.encounterCounter < roomgen.encounters.Count)
+            roomgen.encounterCounter++;
     }
 
     private void SpawnBoss()
     {
-        SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true,1);
+        var x = Random.Range(0, roomgen.BossRed.Length);
+        SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true,roomgen.BossRed[x]);
         numberOfEnemies++;
 
         if (roomgen.mission.doubleMobs)
         {
-            SpawnByInfluence(spawnPos.position + Vector3.forward, Quaternion.identity, false, true, 1);
+            SpawnByInfluence(spawnPos.position + Vector3.forward, Quaternion.identity, false, true, roomgen.BossRed[x]);
             numberOfEnemies++;
         }
         CloseDoors();

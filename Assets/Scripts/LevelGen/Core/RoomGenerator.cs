@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+
 public class RoomGenerator : MonoBehaviour
 {
+
+
 
 	[SerializeField] Room corridor1;
 	[SerializeField] Room corridorLight;
@@ -51,8 +54,8 @@ public class RoomGenerator : MonoBehaviour
 
 	internal ModDataRoom.GeneratedMission mission;
 
-	internal int encounterCounter = 0;
-	internal List<List<int>> encounters = new List<List<int>>();
+	internal int encounterCounter = 1;
+	[SerializeField] internal List<Monster[]> encounters = new List<Monster[]>();
 
 	[SerializeField] bool startAtBoss = false;
 	internal IEnumerator GenerateLevel()
@@ -191,15 +194,26 @@ public class RoomGenerator : MonoBehaviour
 		playerInv = player.GetComponent<PlayerInventory>();
 		playerMov = player.GetComponent<PlayerBasicMovement>();
 
+		encounters.Add(new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[0] });
+		encounters.Add(new Monster[]  { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[0] });
+		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[1] });
+		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[1], monstersRed[1] });
+		encounters.Add (new Monster[] { monstersRed[0], monstersRed[1], monstersRed[1], monstersRed[1] });
+		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[2] });
+		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[1], monstersRed[1] });
+		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[1], monstersRed[2] });
+		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[2], monstersRed[2] });
+		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[2], monstersRed[2] });
+		encounters.Add (new Monster[] { monstersRed[2], monstersRed[2], monstersRed[2], monstersRed[2] });
+		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[3] });
+		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[1], monstersRed[3] });
+		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[3], monstersRed[3] });
+		encounters.Add (new Monster[] { monstersRed[2], monstersRed[2], monstersRed[2], monstersRed[3] });
+		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[3], monstersRed[3] });
+		encounters.Add(new Monster[] { monstersRed[2], monstersRed[2], monstersRed[3], monstersRed[3] });
+		encounters.Add(new Monster[] { monstersRed[3], monstersRed[3], monstersRed[3], monstersRed[3] });
 
-		encounters.Add(new List<int> { 0, 0, 0, 0 });
-		encounters.Add(new List<int> { 0, 0, 0, 1 });
-		encounters.Add(new List<int> { 0, 0, 1, 1 });
-		encounters.Add(new List<int> { 0, 1, 1, 1 });
-		encounters.Add(new List<int> { 1, 1, 1, 1 });
-		//encounters.Add(new List<int> { 0, 0, 0, 2 });
-		//encounters.Add(new List<int> { 1, 1, 2, 2 });
-		//encounters.Add(new List<int> { 1, 2, 2, 2 });
+
 
 	}
 
