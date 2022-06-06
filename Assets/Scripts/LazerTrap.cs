@@ -6,6 +6,8 @@ public class LazerTrap : MonoBehaviour
 {
     private LineRenderer lr;
 
+    internal int damage = 10;
+
     [SerializeField] private bool isRotating = false;
     [SerializeField] private float rotationSpeed = 45f;
 
@@ -45,24 +47,10 @@ public class LazerTrap : MonoBehaviour
 
             if(hit.transform.CompareTag("Dude"))
             {
-                hit.transform.GetComponent<PlayerHpManager>().TakeDamage(10f);
+                hit.transform.GetComponent<PlayerHpManager>().TakeDamage(damage);
             }
 
         }
     }
 
-    public bool Approximately(Vector3 me, Vector3 other, float allowedDifference)
-    {
-        var dx = me.x - other.x;
-        if (Mathf.Abs(dx) > allowedDifference)
-            return false;
-
-        var dy = me.y - other.y;
-        if (Mathf.Abs(dy) > allowedDifference)
-            return false;
-
-        var dz = me.z - other.z;
-
-        return Mathf.Abs(dz) >= allowedDifference;
-    }
 }

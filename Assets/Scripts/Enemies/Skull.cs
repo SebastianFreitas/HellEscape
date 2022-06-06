@@ -38,6 +38,8 @@ public class Skull : Monster
         transform.LookAt(player.transform);
         Vector3 playerPos = new Vector3(base.player.transform.position.x, base.player.transform.position.y, base.player.transform.position.z);
 
+
+        
         Vector3 direction_to_player = (playerPos - this.transform.position).normalized;
 
         var x = false;
@@ -50,6 +52,10 @@ public class Skull : Monster
         yield return new WaitForSeconds(finalWaitTime);
 
         StartCoroutine(randomJump());
+
+       
+
+
     }
 
   
@@ -62,18 +68,5 @@ public class Skull : Monster
         StartCoroutine(randomJump());
     }
 
-    public bool Approximately(Vector3 me, Vector3 other, float allowedDifference)
-    {
-        var dx = me.x - other.x;
-        if (Mathf.Abs(dx) > allowedDifference)
-            return false;
 
-        var dy = me.y - other.y;
-        if (Mathf.Abs(dy) > allowedDifference)
-            return false;
-
-        var dz = me.z - other.z;
-
-        return Mathf.Abs(dz) >= allowedDifference;
-    }
 }
