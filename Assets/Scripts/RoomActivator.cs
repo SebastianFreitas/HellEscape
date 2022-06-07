@@ -301,6 +301,7 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnBoss()
     {
+        TurnLightsRed();
         var x = Random.Range(0, roomgen.BossRed.Length);
         SpawnByInfluence(spawnPos.position, Quaternion.identity, false, true,roomgen.BossRed[x]);
         numberOfEnemies++;

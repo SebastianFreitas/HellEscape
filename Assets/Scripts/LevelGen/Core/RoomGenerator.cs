@@ -108,11 +108,16 @@ public class RoomGenerator : MonoBehaviour
 				{
 					Debug.Log(i+" "+ influencePos);
 					ResetLevelGenerator();
+					break;
 				}
 
 			}
 			yield return interval;
+			if (a > 10)
+			{
+				StopCoroutine("GenerateLevel");
 
+			}
 		}
 
 
