@@ -78,7 +78,7 @@ public class RoomGenerator : MonoBehaviour
 		
 		int influencePos = Random.Range(1,5);
 		//place pathway
-		for (int i = 1; i <= mission.totalLenght + mission.aditionalLength; i++) //
+		for (int i = 1; i <= (mission.totalLenght + mission.aditionalLength)/4; i++) //
 		{
 
 			int a = 0;
@@ -113,11 +113,6 @@ public class RoomGenerator : MonoBehaviour
 
 			}
 			yield return interval;
-			if (a > 10)
-			{
-				StopCoroutine("GenerateLevel");
-
-			}
 		}
 
 
