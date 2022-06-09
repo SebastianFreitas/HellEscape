@@ -159,7 +159,7 @@ public class PlayerBasicMovement : MonoBehaviour
     [SerializeField] PlayerInventory playerInv;
     private void MoveState()
     {
-        if (transform.position.y < -1000) GetComponent<PlayerHpManager>().TakeDamage(10000000);
+        if (transform.position.y < -500) GetComponent<PlayerHpManager>().TakeDamage(10000000);
         transform.forward = new Vector3(playerView.transform.forward.x, 0f, playerView.transform.forward.z).normalized;   //align view with camera
                                                                                                                          
         Inertia();

@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class TowerBoss : Monster
 {
+    [SerializeField] Transform shootPoint;
+
+    [SerializeField] Transform shootPointdowndown;
+    [SerializeField] GameObject turretBullet;
+    [SerializeField] float fireRateshotDown;
+
+
     [SerializeField] Transform[] steps;
     [SerializeField] float waitingTime;
-    [SerializeField] float fireRate;
+
+    [SerializeField] float shotDownSpeed = 100;
     private float finalWaitTime;
 
     List<string> text = new List<string>();
@@ -48,15 +56,13 @@ public class TowerBoss : Monster
     {
 
         StartCoroutine(waiterStart());
+        StartCoroutine(ShotDown());
         cantClimb = false;
     }
     IEnumerator waiterStart()
     {
         yield return new WaitForSeconds(.5f);
-        foreach (var item in transform.GetComponentsInChildren<MeshRenderer>())
-        {
-            item.enabled = true;
-        }
+
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
         StartCoroutine(randomJump());
@@ -100,5 +106,24 @@ public class TowerBoss : Monster
             yield return new WaitForSecondsRealtime(.15f);
         }
 
+    }
+
+
+    private IEnumerator ShotDown()
+    {
+        finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
+        if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
+       // isRunning = true;
+
+ 
+        while (true)
+        {
+            //shootPoint.transform.LookAt(shootPointdowndown);
+            //var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
+            //var bulletScript = bullet.GetComponent<TurretBullet>();
+            //bulletScript.speed = shotDownSpeed;
+
+            yield return new WaitForSecondsRealtime(finalWaitTime);
+        }
     }
 }
