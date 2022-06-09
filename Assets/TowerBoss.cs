@@ -53,8 +53,7 @@ public class TowerBoss : Monster
     }
 
     private void OnEnable()
-    {
-
+    { 
         StartCoroutine(waiterStart());
         StartCoroutine(ShotDown());
         cantClimb = false;
@@ -65,6 +64,7 @@ public class TowerBoss : Monster
 
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
+      
         StartCoroutine(randomJump());
     }
 
@@ -76,6 +76,9 @@ public class TowerBoss : Monster
         cantClimb = false;
     }
 
+
+ 
+
     private void FixedUpdate()
     {
         if (transform.position.y < player.transform.position.y + 5 && !cantClimb)
@@ -83,31 +86,25 @@ public class TowerBoss : Monster
             transform.position += Vector3.up * 10;
 
         }
+
     }
     IEnumerator randomJump()
     {
         while (true)
         {
-            float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            //if(distance > 5)
-            //{
-                Vector3 direction_to_player;
+            Vector3 direction_to_player;
 
-                var noheight = player.transform.position;
-                noheight.y = transform.position.y;
-                direction_to_player = (noheight - this.transform.position).normalized;
-                transform.position = transform.position + direction_to_player;
-
-
-            
+            var noheight = player.transform.position;
+            noheight.y = transform.position.y;
+            direction_to_player = (noheight - this.transform.position).normalized;
+            transform.position = transform.position + direction_to_player;
 
 
             yield return new WaitForSecondsRealtime(.15f);
         }
 
     }
-
 
     private IEnumerator ShotDown()
     {
