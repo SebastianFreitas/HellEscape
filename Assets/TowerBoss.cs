@@ -83,7 +83,13 @@ public class TowerBoss : Monster
     {
         if (transform.position.y < player.transform.position.y + 5 && !cantClimb)
         {
-            transform.position += Vector3.up * 10;
+            transform.position += Vector3.up * 5;
+
+        }
+
+        if (transform.position.y > player.transform.position.y + 10)
+        {
+            transform.position -= Vector3.up * 5;
 
         }
 
