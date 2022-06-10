@@ -97,8 +97,13 @@ public class TowerBoss : Monster
 
             var noheight = player.transform.position;
             noheight.y = transform.position.y;
-            direction_to_player = (noheight - this.transform.position).normalized;
-            transform.position = transform.position + direction_to_player;
+
+            if(Vector3.Distance(noheight, transform.position) > 1)
+            {
+                direction_to_player = (noheight - this.transform.position).normalized;
+                transform.position = transform.position + direction_to_player;
+            }
+
 
 
             yield return new WaitForSecondsRealtime(.15f);

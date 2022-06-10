@@ -5,6 +5,11 @@ using UnityEngine;
 public class StopTower : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] GameObject[] turnOffList;
+
+    [SerializeField] GameObject door;
+    [SerializeField] bool isFinal = false;
+
     bool hasBeenFound = false;
     private void OnTriggerEnter(Collider other)
     {
@@ -12,6 +17,21 @@ public class StopTower : MonoBehaviour
         {
             hasBeenFound = true;
             other.GetComponentInParent<TowerBoss>().StartCoroutine("Stop");
+
+        }
+
+        if ((other.CompareTag("Dude") ) && isFinal)
+        {
+
+
+            isFinal = false;
+            foreach (var item in turnOffList)
+            {
+                item.gameObject.SetActive(false);
+            }
+
+            door.SetActive(true);
+            
         }
     }
 }
