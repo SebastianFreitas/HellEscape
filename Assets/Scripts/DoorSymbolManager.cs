@@ -81,11 +81,11 @@ public class DoorSymbolManager : MonoBehaviour
 
                     break;
                 }
-            case RoomActivator.RoomType.Trap:
-                {
+            //case RoomActivator.RoomType.Trap:
+            //    {
 
-                    break;
-                }
+            //        break;
+            //    }
             case RoomActivator.RoomType.Boon:
                 {
 

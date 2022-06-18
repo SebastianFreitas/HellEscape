@@ -78,7 +78,7 @@ public class RoomGenerator : MonoBehaviour
 		
 		int influencePos = Random.Range(1,5);
 		//place pathway
-		for (int i = 1; i <=2 ; i++) //(mission.totalLenght + mission.aditionalLength)/4
+		for (int i = 1; i <= (mission.totalLenght + mission.aditionalLength) / 2; i++) //(mission.totalLenght + mission.aditionalLength)/4
 		{
 
 			int a = 0;

@@ -26,7 +26,6 @@ public class RoomActivator : MonoBehaviour
         Special,
         Main,
         Corridor,
-        Trap,
         Boon
     }
 
@@ -127,11 +126,11 @@ public class RoomActivator : MonoBehaviour
                         TurnLightsRed();
                         break;
                     }
-                    case RoomType.Trap:
-                    {
-                        ActivateTraps();
-                        break;
-                    }
+                    //case RoomType.Trap:
+                    //{
+                    //    ActivateTraps();
+                    //    break;
+                    //}
                     case RoomType.Boon:
                     {
                         Instantiate(roomgen.itemRoom, spawnPos.position, spawnPos.rotation, transform);
