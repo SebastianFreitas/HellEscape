@@ -58,6 +58,8 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] internal List<Monster[]> encounters = new List<Monster[]>();
 
 	[SerializeField] bool startAtBoss = false;
+
+	private bool wasCorridor = false;
 	internal IEnumerator GenerateLevel()
 	{
 		WaitForSeconds startup = new WaitForSeconds(.2f);
@@ -78,7 +80,7 @@ public class RoomGenerator : MonoBehaviour
 		
 		int influencePos = Random.Range(1,5);
 		//place pathway
-		for (int i = 1; i <= (mission.totalLenght + mission.aditionalLength) / 2; i++) //(mission.totalLenght + mission.aditionalLength)/4
+		for (int i = 1; i <= (mission.totalLenght + mission.aditionalLength); i++) //(mission.totalLenght + mission.aditionalLength)/4
 		{
 
 			int a = 0;
@@ -100,7 +102,7 @@ public class RoomGenerator : MonoBehaviour
                 
 				if (worked)
 				{
-					if (isCorridor) i--;
+					if (wasCorridor = isCorridor) i--;
 
 					break;
 				}
@@ -395,7 +397,7 @@ public class RoomGenerator : MonoBehaviour
 
     private bool PlaceCorridor(int length)
     {
-		if (Random.Range(0,4) >= 2) return PlaceRoom(stairs, false, RoomActivator.RoomType.Corridor);
+		if (!wasCorridor) return PlaceRoom(stairs, false, RoomActivator.RoomType.Corridor) && PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomActivator.RoomType.Corridor);
 		else return PlaceRoom(corridorPrefabs[Random.Range(0, corridorPrefabs.Count)], true, RoomActivator.RoomType.Corridor);
 	}
 
