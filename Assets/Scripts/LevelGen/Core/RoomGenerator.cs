@@ -78,7 +78,7 @@ public class RoomGenerator : MonoBehaviour
 		
 		int influencePos = Random.Range(1,5);
 		//place pathway
-		for (int i = 1; i <= (mission.totalLenght + mission.aditionalLength)/4; i++) //
+		for (int i = 1; i <=2 ; i++) //(mission.totalLenght + mission.aditionalLength)/4
 		{
 
 			int a = 0;
@@ -101,6 +101,7 @@ public class RoomGenerator : MonoBehaviour
 				if (worked)
 				{
 					if (isCorridor) i--;
+
 					break;
 				}
 
@@ -170,7 +171,6 @@ public class RoomGenerator : MonoBehaviour
 			mainTypeList.Add(RoomActivator.MainType.choiceSpecial);
 			mainTypeList.Add(RoomActivator.MainType.itemOrDrop);
 			mainTypeList.Add(RoomActivator.MainType.Shop);
-			mainTypeList.Add(RoomActivator.MainType.redOrBlue);
 
 		}
 

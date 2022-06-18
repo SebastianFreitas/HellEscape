@@ -30,7 +30,7 @@ public class StopTower : MonoBehaviour
                 item.gameObject.SetActive(false);
             }
 
-            door.SetActive(true);
+           if(door) door.SetActive(true);
             
         }
     }

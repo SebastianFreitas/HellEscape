@@ -31,7 +31,7 @@ public class TowerBoss : Monster
 
        //Speak(text[attempts]); //this crashes stuff
 
-        StartCoroutine("Stop");
+        //StartCoroutine("Stop");
 
 
         attempts++;
