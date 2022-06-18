@@ -76,6 +76,7 @@ public class Gun : MonoBehaviour
 
     void Start()
     {
+        realPos = new GameObject();
         projectile = normal;
         gunGen = new GunGenerator();
         //EquipBaseGun();
@@ -121,7 +122,7 @@ public class Gun : MonoBehaviour
         }
     }
 
-    private GameObject realPos = new GameObject(); 
+    private GameObject realPos;
     public void ShootBlank()
     {
         StartCoroutine(waiterFlash());

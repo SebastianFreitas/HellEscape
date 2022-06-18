@@ -20,15 +20,18 @@ public class StopTower : MonoBehaviour
 
         }
 
-        if ((other.CompareTag("Dude") ) && isFinal)
+        if (other.CompareTag("Dude"))
         {
 
-
-            isFinal = false;
-            foreach (var item in turnOffList)
+            if (isFinal)
             {
-                item.gameObject.SetActive(false);
+                isFinal = false;
+                foreach (var item in turnOffList)
+                {
+                    item.gameObject.SetActive(false);
+                }
             }
+
 
            if(door) door.SetActive(true);
             

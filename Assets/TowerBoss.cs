@@ -21,7 +21,7 @@ public class TowerBoss : Monster
     int attempts = 0;
     int victories = 0;
 
-    bool cantClimb = false;
+    bool IsFight = false;
     private void Start()
     {
 
@@ -56,7 +56,7 @@ public class TowerBoss : Monster
     { 
         StartCoroutine(waiterStart());
         StartCoroutine(ShotDown());
-        cantClimb = false;
+        IsFight = false;
     }
     IEnumerator waiterStart()
     {
@@ -71,29 +71,57 @@ public class TowerBoss : Monster
     [SerializeField] float phaseOneWaitTime;
     internal IEnumerator Stop()
     {
-        cantClimb = true;
+        IsFight = true;
         yield return new WaitForSeconds(phaseOneWaitTime);
-        cantClimb = false;
+        IsFight = false;
     }
 
-
- 
+    bool isBusy = false;
 
     private void FixedUpdate()
     {
-        if (transform.position.y < player.transform.position.y + 5 && !cantClimb)
+        if (!IsFight)
         {
-            transform.position += Vector3.up * 5;
+            if (transform.position.y < player.transform.position.y + 5)
+            {
+                transform.position += Vector3.up * 5;
 
+            }
+
+            if (transform.position.y > player.transform.position.y + 10 )
+            {
+                transform.position -= Vector3.up * 5;
+
+            }
+        } 
+        else if (!isBusy)
+        {
+            isBusy = true;
+            var dis = Vector3.Distance(player.transform.position, transform.position);
+
+            if (dis < 5)
+            {
+                Explode();
+            }
+            else
+            {
+                RangedAttack();
+            }
         }
 
-        if (transform.position.y > player.transform.position.y + 10)
-        {
-            transform.position -= Vector3.up * 5;
-
-        }
 
     }
+
+    private void Explode()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void RangedAttack()
+    {
+        throw new System.NotImplementedException();
+    }
+
     IEnumerator randomJump()
     {
         while (true)
