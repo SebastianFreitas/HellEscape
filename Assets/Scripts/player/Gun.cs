@@ -121,7 +121,7 @@ public class Gun : MonoBehaviour
         }
     }
 
-
+    private GameObject realPos = new GameObject(); 
     public void ShootBlank()
     {
         StartCoroutine(waiterFlash());
@@ -155,17 +155,17 @@ public class Gun : MonoBehaviour
             targetPoint = ray.GetPoint(1000);
 
         pnt.transform.LookAt(targetPoint);
-        var realpos = new GameObject();
-        //Transform realpos;// = fpsCam.transform;
-        realpos.transform.rotation = fpsCam.transform.rotation;
-        realpos.transform.position = fpsCam.transform.position;
-        realpos.transform.LookAt(targetPoint);
 
-        SpawnBullet(realpos.transform, false);
+        //Transform realpos;// = fpsCam.transform;
+        realPos.transform.rotation = fpsCam.transform.rotation;
+        realPos.transform.position = fpsCam.transform.position;
+        realPos.transform.LookAt(targetPoint);
+
+        SpawnBullet(realPos.transform, false);
 
         for (var i = 0; i < gun.baseBulletsPerShot - 1; i++) //shoot extra bullets
         {
-            var pelletRot = realpos;
+            var pelletRot = realPos;
             var spread = 5f;
             pelletRot.transform.Rotate(Random.Range(-spread, spread), Random.Range(-spread, spread), 0);
 
