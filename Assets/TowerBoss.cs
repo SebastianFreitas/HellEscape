@@ -21,6 +21,7 @@ public class TowerBoss : Monster
     int attempts = 0;
     int victories = 0;
 
+
     bool IsFight = false;
     private void Start()
     {
@@ -35,7 +36,9 @@ public class TowerBoss : Monster
 
 
         attempts++;
+        timer = phaseOneWaitTime;
         //PlayerPrefs.SetInt("attemptsTower", attempts);
+        StartCoroutine(waiterStart());
     }
 
     private void Speak(string text)
@@ -53,10 +56,12 @@ public class TowerBoss : Monster
     }
 
     private void OnEnable()
-    { 
-        StartCoroutine(waiterStart());
-        StartCoroutine(ShotDown());
-        IsFight = false;
+    {
+
+        if (IsFight) StartCoroutine("Stop");
+        else StartCoroutine("FollowPlayer");
+
+        isBusy = false;
     }
     IEnumerator waiterStart()
     {
@@ -64,19 +69,36 @@ public class TowerBoss : Monster
 
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
-      
-        StartCoroutine(randomJump());
+
+        //StartCoroutine("FollowPlayer");
     }
 
     [SerializeField] float phaseOneWaitTime;
+    [SerializeField] float delayTime;
+    private float timer;
     internal IEnumerator Stop()
     {
         IsFight = true;
-        yield return new WaitForSeconds(phaseOneWaitTime);
+        StopCoroutine("FollowPlayer");
+        StartCoroutine("WaitAndMove");
+
+
+        while (timer > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            timer--;
+        }
+       
+
         IsFight = false;
+        StartCoroutine("FollowPlayer");
+        StopCoroutine("WaitAndMove");
+
+        timer = phaseOneWaitTime;
     }
 
     bool isBusy = false;
+    internal Transform[] currentMovementList;
 
     private void FixedUpdate()
     {
@@ -87,8 +109,7 @@ public class TowerBoss : Monster
                 transform.position += Vector3.up * 5;
 
             }
-
-            if (transform.position.y > player.transform.position.y + 10 )
+            else if (transform.position.y > player.transform.position.y + 10 )
             {
                 transform.position -= Vector3.up * 5;
 
@@ -101,28 +122,32 @@ public class TowerBoss : Monster
 
             if (dis < 5)
             {
-                Explode();
+               StartCoroutine("Explode");
             }
             else
             {
-                RangedAttack();
+                StartCoroutine("RangedAttack");
             }
         }
 
 
     }
 
-    private void Explode()
+    private IEnumerator Explode()
     {
-        throw new System.NotImplementedException();
+        yield return new WaitForSeconds(10);
+        isBusy = false;
     }
 
-    private void RangedAttack()
+    private IEnumerator RangedAttack()
     {
-        throw new System.NotImplementedException();
+
+        yield return new WaitForSeconds(3f);
+        isBusy = false;
     }
 
-    IEnumerator randomJump()
+    [SerializeField] float delayFollowPlayer;
+    IEnumerator FollowPlayer()
     {
         while (true)
         {
@@ -140,11 +165,25 @@ public class TowerBoss : Monster
 
 
 
-            yield return new WaitForSecondsRealtime(.15f);
+            yield return new WaitForSecondsRealtime(delayFollowPlayer);
         }
 
     }
+    IEnumerator WaitAndMove()
+    {
+        var posA = transform.position;
+        var posB = currentMovementList[Random.Range(0,currentMovementList.Length)].position;
 
+        yield return new WaitForSeconds(delayTime); // start at time X
+        float startTime = Time.time; // Time.time contains current frame time, so remember starting point
+        while (Time.time - startTime <= 2)
+        { // until one second passed
+            transform.position = Vector3.Lerp(posA, posB, Time.time - startTime); // lerp from A to B in one second
+            yield return 1; // wait for next frame
+        }
+
+        StartCoroutine("WaitAndMove");
+    }
     private IEnumerator ShotDown()
     {
         finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);

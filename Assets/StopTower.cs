@@ -10,14 +10,19 @@ public class StopTower : MonoBehaviour
     [SerializeField] GameObject door;
     [SerializeField] bool isFinal = false;
 
+    [SerializeField] Transform[] positionsList;
+
     bool hasBeenFound = false;
     private void OnTriggerEnter(Collider other)
     {
         if((other.CompareTag("Monster") || other.CompareTag("MonsterHead")) &&!hasBeenFound)
         {
             hasBeenFound = true;
-            other.GetComponentInParent<TowerBoss>().StartCoroutine("Stop");
+            var monster = other.GetComponentInParent<TowerBoss>();
+            if (positionsList != null) monster.currentMovementList = positionsList;
+            monster.StartCoroutine("Stop");
 
+           
         }
 
         if (other.CompareTag("Dude"))
@@ -32,8 +37,7 @@ public class StopTower : MonoBehaviour
                 }
             }
 
-
-           if(door) door.SetActive(true);
+            if(door) door.SetActive(true);
             
         }
     }
