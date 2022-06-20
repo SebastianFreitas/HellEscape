@@ -12,7 +12,7 @@ public class TowerBoss : Monster
     [SerializeField] float fireRateshotDown;
 
 
-    [SerializeField] Transform[] steps;
+    [SerializeField] internal GameObject steps;
     [SerializeField] float waitingTime;
 
     [SerializeField] float shotDownSpeed = 100;
@@ -91,10 +91,12 @@ public class TowerBoss : Monster
     private float timer;
     internal IEnumerator Stop()
     {
-        IsFight = true;
+       
         StopCoroutine("FollowPlayer");
         StartCoroutine("WaitAndMove");
 
+        yield return new WaitForSeconds(2f);
+        IsFight = true;
 
         while (timer > 0)
         {
@@ -106,6 +108,18 @@ public class TowerBoss : Monster
         IsFight = false;
         StartCoroutine("FollowPlayer");
         StopCoroutine("WaitAndMove");
+
+        if (steps)
+        {
+
+            foreach (Transform child in steps.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+            steps = null;
+
+        }
+
 
         timer = phaseOneWaitTime;
     }

@@ -8,6 +8,7 @@ public class StopTower : MonoBehaviour
     [SerializeField] GameObject[] turnOffList;
 
     [SerializeField] GameObject door;
+    [SerializeField] GameObject exitDoor;
     [SerializeField] bool isFinal = false;
 
     [SerializeField] Transform[] positionsList;
@@ -22,7 +23,7 @@ public class StopTower : MonoBehaviour
             if (positionsList != null) monster.currentMovementList = positionsList;
             monster.StartCoroutine("Stop");
 
-           
+            if (exitDoor) monster.steps = exitDoor;
         }
 
         if (other.CompareTag("Dude"))

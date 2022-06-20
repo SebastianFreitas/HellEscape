@@ -8,6 +8,7 @@ public class TowerBossExplosion : MonsterDamageRay
     private bool isExploding = false;
     internal void StartUp()
     {
+        transform.parent.parent = null;
         StartCoroutine("Explode");
     }
 
@@ -26,7 +27,7 @@ public class TowerBossExplosion : MonsterDamageRay
     {
         if (isExploding)
         {
-            Destroy(this.gameObject);
+            Destroy(this.transform.parent.gameObject);
         }
     }
 }
