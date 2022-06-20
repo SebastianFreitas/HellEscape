@@ -5,9 +5,8 @@ using UnityEngine;
 public class TowerBoss : Monster
 {
     [SerializeField] GameObject ball;
-    [SerializeField] Transform shootPoint;
+    [SerializeField] Monster mob;
 
-    [SerializeField] Transform shootPointdowndown;
     [SerializeField] GameObject turretBullet;
     [SerializeField] float fireRateshotDown;
 
@@ -154,12 +153,36 @@ public class TowerBoss : Monster
             }
             else
             {
-                StartCoroutine("RangedAttack");
+                if(Random.Range(1f,4f) > 2)
+                {
+                    StartCoroutine("RangedAttack");
+                }
+                else
+                {
+                    StartCoroutine("SpawnLitleDudes");
+                }
+
             }
         }
 
 
     }
+
+    private IEnumerator SpawnLitleDudes()
+    {
+        var pos = currentMovementList[Random.Range(0, currentMovementList.Length)];
+        for (int i = 0; i < Random.Range(2,8); i++)
+        {       
+            var currentMob = Instantiate(mob, pos.position, pos.rotation, transform.parent);
+            currentMob.transform.parent = transform.parent;
+            currentMob.isFiller = true;
+        }
+
+
+        yield return new WaitForSecondsRealtime(5f);
+        isBusy = false;
+    }
+
     private IEnumerator Explode()
     {
         var explo = Instantiate(ball, transform);
@@ -185,7 +208,6 @@ public class TowerBoss : Monster
     {
         while (true)
         {
-
             Vector3 direction_to_player;
 
             var noheight = player.transform.position;
@@ -196,8 +218,6 @@ public class TowerBoss : Monster
                 direction_to_player = (noheight - this.transform.position).normalized;
                 transform.position = transform.position + direction_to_player;
             }
-
-
 
             yield return new WaitForSecondsRealtime(delayFollowPlayer / actionSpeed);
         }
@@ -219,21 +239,5 @@ public class TowerBoss : Monster
 
         StartCoroutine("WaitAndMove");
     }
-    private IEnumerator ShotDown()
-    {
-        finalWaitTime = waitingTime - ((actionSpeed - 1) * waitingTime);
-        if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
-       // isRunning = true;
 
- 
-        while (true)
-        {
-            //shootPoint.transform.LookAt(shootPointdowndown);
-            //var bullet = Instantiate(turretBullet, shootPoint.position, shootPoint.rotation, null);
-            //var bulletScript = bullet.GetComponent<TurretBullet>();
-            //bulletScript.speed = shotDownSpeed;
-
-            yield return new WaitForSecondsRealtime(finalWaitTime);
-        }
-    }
 }

@@ -15,7 +15,7 @@ public class TowerBossExplosion : MonsterDamageRay
     private IEnumerator Explode()
     {
         isExploding = true;
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 12; i++)
         {
            transform.parent.transform.localScale *= 1.2f;
             yield return new WaitForSecondsRealtime(.15f);
