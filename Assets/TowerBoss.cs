@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerBoss : Monster
 {
+    [SerializeField] GameObject ball;
     [SerializeField] Transform shootPoint;
 
     [SerializeField] Transform shootPointdowndown;
@@ -23,14 +24,17 @@ public class TowerBoss : Monster
 
 
     bool IsFight = false;
+    private ShootForwardMonster[] shooters;
     private void Start()
     {
-
+        ball.SetActive(false);
+        shooters = GetComponentsInChildren<ShootForwardMonster>();
+        ActivateShooters(false);
         //if (PlayerPrefs.HasKey("attemptsTower")) attempts = PlayerPrefs.GetInt("attemptsTower");
 
         text.Add("It's not the first time one of you has made it here.");
 
-       //Speak(text[attempts]); //this crashes stuff
+        //Speak(text[attempts]); //this crashes stuff
 
         //StartCoroutine("Stop");
 
@@ -39,6 +43,14 @@ public class TowerBoss : Monster
         timer = phaseOneWaitTime;
         //PlayerPrefs.SetInt("attemptsTower", attempts);
         StartCoroutine(waiterStart());
+    }
+
+    private void ActivateShooters(bool isActive)
+    {
+        foreach (var item in shooters)
+        {
+            item.gameObject.SetActive(isActive);
+        }
     }
 
     private void Speak(string text)
@@ -62,6 +74,7 @@ public class TowerBoss : Monster
         else StartCoroutine("FollowPlayer");
 
         isBusy = false;
+        ball.SetActive(false);
     }
     IEnumerator waiterStart()
     {
@@ -120,9 +133,9 @@ public class TowerBoss : Monster
             isBusy = true;
             var dis = Vector3.Distance(player.transform.position, transform.position);
 
-            if (dis < 5)
+            if (dis < 30)
             {
-               StartCoroutine("Explode");
+                StartCoroutine("Explode");
             }
             else
             {
@@ -132,17 +145,26 @@ public class TowerBoss : Monster
 
 
     }
-
     private IEnumerator Explode()
     {
-        yield return new WaitForSeconds(10);
-        isBusy = false;
-    }
+        ball.transform.localScale = new Vector3(1, 1, 1);
+        ball.SetActive(true);
+        for (int i = 0; i < 15; i++)
+        {
+            ball.transform.localScale *= 1.2f;
+            yield return new WaitForSecondsRealtime(.15f);
+        }
 
+        isBusy = false;
+
+        ball.SetActive(false);
+    }
     private IEnumerator RangedAttack()
     {
-
+        ActivateShooters(true);
         yield return new WaitForSeconds(3f);
+
+        ActivateShooters(false);
         isBusy = false;
     }
 
@@ -169,6 +191,7 @@ public class TowerBoss : Monster
         }
 
     }
+
     IEnumerator WaitAndMove()
     {
         var posA = transform.position;

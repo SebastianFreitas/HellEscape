@@ -5,6 +5,7 @@ using UnityEngine;
 public class MonsterDamageRay : MonoBehaviour
 {
     Monster mob;
+    [SerializeField] bool desableOnContact = false;
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class MonsterDamageRay : MonoBehaviour
         if (other.CompareTag("Dude"))
         {
             mob.player.GetComponent<PlayerHpManager>().TakeDamage(mob.damage);
-                
+            if(desableOnContact) this.transform.parent.gameObject.SetActive(false);
         }
     }
 }

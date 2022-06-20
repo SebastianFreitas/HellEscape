@@ -102,9 +102,12 @@ public class Monster : MonoBehaviour
             level = PlayerPrefs.GetInt("PathLevel");
             UpdateStatsToLevel();
         }
+        if (!isFiller)
+        {
+            if (isBoss) gunparts += 25;
+            else if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
+        }
 
-        if (isBoss) gunparts += 25;
-        else if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
 
     }
     private bool isInvisible = false;
