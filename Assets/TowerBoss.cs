@@ -27,7 +27,7 @@ public class TowerBoss : Monster
     private ShootForwardMonster[] shooters;
     private void Start()
     {
-        ball.SetActive(false);
+        ball.gameObject.SetActive(false);
         shooters = GetComponentsInChildren<ShootForwardMonster>();
         ActivateShooters(false);
         //if (PlayerPrefs.HasKey("attemptsTower")) attempts = PlayerPrefs.GetInt("attemptsTower");
@@ -74,7 +74,7 @@ public class TowerBoss : Monster
         else StartCoroutine("FollowPlayer");
 
         isBusy = false;
-        ball.SetActive(false);
+
     }
     IEnumerator waiterStart()
     {
@@ -133,7 +133,7 @@ public class TowerBoss : Monster
             isBusy = true;
             var dis = Vector3.Distance(player.transform.position, transform.position);
 
-            if (dis < 30)
+            if (dis < 15)
             {
                 StartCoroutine("Explode");
             }
@@ -147,17 +147,14 @@ public class TowerBoss : Monster
     }
     private IEnumerator Explode()
     {
-        ball.transform.localScale = new Vector3(1, 1, 1);
-        ball.SetActive(true);
-        for (int i = 0; i < 15; i++)
-        {
-            ball.transform.localScale *= 1.2f;
-            yield return new WaitForSecondsRealtime(.15f);
-        }
+        var explo = Instantiate(ball, transform);
+        explo.gameObject.SetActive(true);
+        explo.GetComponentInChildren<TowerBossExplosion>().StartUp();
+        yield return new WaitForSecondsRealtime(2f);
+        
 
         isBusy = false;
 
-        ball.SetActive(false);
     }
     private IEnumerator RangedAttack()
     {

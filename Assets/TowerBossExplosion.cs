@@ -2,17 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerBossExplosion : MonoBehaviour
+public class TowerBossExplosion : MonsterDamageRay
 {
-    // Start is called before the first frame update
-    void Start()
+
+    private bool isExploding = false;
+    internal void StartUp()
     {
-        
+        StartCoroutine("Explode");
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator Explode()
     {
-        
+        isExploding = true;
+        for (int i = 0; i < 15; i++)
+        {
+           transform.parent.transform.localScale *= 1.2f;
+            yield return new WaitForSecondsRealtime(.15f);
+        }
+        Destroy(this.gameObject);
+    }
+
+    private void OnEnable()
+    {
+        if (isExploding)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

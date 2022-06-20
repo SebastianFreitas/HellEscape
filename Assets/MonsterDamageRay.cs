@@ -7,7 +7,7 @@ public class MonsterDamageRay : MonoBehaviour
     Monster mob;
     [SerializeField] bool desableOnContact = false;
 
-    private void Start()
+    private void Awake()
     {
         mob = GetComponentInParent<Monster>();
     }
