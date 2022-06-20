@@ -10,6 +10,7 @@ public class GameMan : ModDataRoom
 
     [Header("References")]
     public HealthBar hpBar;
+    public HealthBar hpBarBoss;
     public GameObject player;
 
     public Transform runningGame;

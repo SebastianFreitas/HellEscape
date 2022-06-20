@@ -46,6 +46,7 @@ public class Monster : MonoBehaviour
     float eliteChance;
     int gunparts = 1;
     float totalDropChance = 1f;
+    private HealthBar healthUI;
     private void ApplyMission()
     {
         health += mission.aditionalLife;
@@ -104,7 +105,14 @@ public class Monster : MonoBehaviour
         }
         if (!isFiller)
         {
-            if (isBoss) gunparts += 25;
+            if (isBoss)
+            {
+                gunparts += 25;
+                healthUI = transform.root.GetComponent<GameMan>().hpBarBoss;
+                healthUI.gameObject.SetActive(true);
+                healthUI.SetMaxHealth((int)health);
+                healthUI.SetHealth((int)health);
+            }
             else if (Random.Range(1f, 100f) > 100 - eliteChance) TurnElite();
         }
 
@@ -237,6 +245,7 @@ public class Monster : MonoBehaviour
             amount +=(int) Random.Range(-amount*.30f, amount * .30f);
     
             health -= amount;
+            if (isBoss) healthUI.SetHealth((int)health);
             DmgPopUp(amount, isCrit);
 
             if (health <= 0f ) Die(stats);
@@ -247,6 +256,7 @@ public class Monster : MonoBehaviour
     internal void TakeDamage(float amount, BulletStats stats)
     {
         health -= amount;
+        if (isBoss) healthUI.SetHealth((int)health);
         DmgPopUp(amount, false);
         if (health <= 0f)
         {
@@ -301,6 +311,9 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
         if (!died)
         {
+
+            if (isBoss) healthUI.gameObject.SetActive(false);
+
             died = true;
             if (playerInv.fireDeath)
             {

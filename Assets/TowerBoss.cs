@@ -39,6 +39,7 @@ public class TowerBoss : Monster
         //StartCoroutine("Stop");
 
 
+
         attempts++;
         timer = phaseOneWaitTime;
         //PlayerPrefs.SetInt("attemptsTower", attempts);
@@ -162,7 +163,7 @@ public class TowerBoss : Monster
     private IEnumerator Explode()
     {
         var explo = Instantiate(ball, transform);
-        explo.gameObject.SetActive(true);
+        explo.SetActive(true);
         explo.GetComponentInChildren<TowerBossExplosion>().StartUp();
         yield return new WaitForSecondsRealtime(2f);
         
@@ -198,7 +199,7 @@ public class TowerBoss : Monster
 
 
 
-            yield return new WaitForSecondsRealtime(delayFollowPlayer);
+            yield return new WaitForSecondsRealtime(delayFollowPlayer / actionSpeed);
         }
 
     }

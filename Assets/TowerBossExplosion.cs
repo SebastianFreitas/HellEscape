@@ -20,7 +20,7 @@ public class TowerBossExplosion : MonsterDamageRay
            transform.parent.transform.localScale *= 1.2f;
             yield return new WaitForSecondsRealtime(.15f);
         }
-        Destroy(this.gameObject);
+        Destroy(this.transform.parent.gameObject);
     }
 
     private void OnEnable()
