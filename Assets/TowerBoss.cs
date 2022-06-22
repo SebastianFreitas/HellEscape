@@ -22,7 +22,7 @@ public class TowerBoss : Monster
     int victories = 0;
 
 
-    bool IsFight = false;
+    internal bool IsFight = false;
     private ShootForwardMonster[] shooters;
     private void Start()
     {
@@ -91,7 +91,7 @@ public class TowerBoss : Monster
     private float timer;
     internal IEnumerator Stop()
     {
-       
+
         StopCoroutine("FollowPlayer");
         StartCoroutine("WaitAndMove");
 
@@ -103,8 +103,12 @@ public class TowerBoss : Monster
             yield return new WaitForSeconds(1f);
             timer--;
         }
-       
 
+        StopBoss();
+    }
+
+    internal void StopBoss()
+    {
         IsFight = false;
         StartCoroutine("FollowPlayer");
         StopCoroutine("WaitAndMove");

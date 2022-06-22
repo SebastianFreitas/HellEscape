@@ -27,6 +27,7 @@ public class Lava : MonoBehaviour
         }
         else if (other.CompareTag("MonsterHead"))
         {
+            other.GetComponentInParent<TowerBoss>().StopBoss();
 
         }
 
@@ -35,6 +36,7 @@ public class Lava : MonoBehaviour
     private void FixedUpdate()
     {
         transform.Translate(Vector3.up * Time.deltaTime *3, Space.World);
+        transform.Rotate(.05f, 0, 0, Space.World);
     }
 
     
