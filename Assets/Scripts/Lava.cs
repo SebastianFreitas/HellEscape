@@ -35,6 +35,8 @@ public class Lava : MonoBehaviour
     {
         transform.Translate(3 * Time.deltaTime * Vector3.up, Space.World);
         transform.Rotate(.05f, 0, 0, Space.World);
+
+        if (transform.position.y > 215) transform.gameObject.SetActive(false);
     }
 
     
