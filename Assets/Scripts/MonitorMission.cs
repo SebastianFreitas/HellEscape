@@ -28,7 +28,11 @@ public class MonitorMission : ModDataRoom
         selector.TurnGreen(meshesGood);
 
         selector.mission = mission;
+        selector.currentMonitor = this;
+        selector.empowerMission.SetActive(true);
         selector.openPortal.SetActive(true);
+
+        selector.RefreshPrices();
     }
 
     internal void UIUnselect()
@@ -41,8 +45,15 @@ public class MonitorMission : ModDataRoom
     internal void RefreshMission(int maxMods)
     {
         mission = CreateMission(maxMods);
-        textGood.text = mission.goodText;
-        textBad.text = mission.badText;
+        RefreshUI();
         UIUnselect();
     }
+
+    internal void RefreshUI()
+    {
+        textGood.text = mission.goodText;
+        textBad.text = mission.badText;
+    }
+
+     
 }

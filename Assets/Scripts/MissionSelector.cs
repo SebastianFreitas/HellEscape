@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class MissionSelector : ModDataRoom
 {
-    public PlayerInventory playerInventory;
+
 
 
     public AudioSource source;
@@ -31,25 +31,39 @@ public class MissionSelector : ModDataRoom
 
     //public GameObject[] monitors;
     public MonitorMission[] missions;
-    public GeneratedMission currentMission;
 
     internal int level = 1;
 
     public int totalChance { get; private set; }
 
     public MeshRenderer[] meshEngagePath;
+
+    public TMPro.TextMeshPro reloadPrice;
+    public TMPro.TextMeshPro empowerPrice;
+
+    internal void RefreshPrices()
+    {
+        empowerPrice.text = GetEmpowerPrice() +"";
+    }
+
     public MeshRenderer[] meshSearchPath;
     public MeshRenderer[] meshReloadSearch;
     private bool beenLong = true;
-
+    public GeneratedMission currentMission;
     public AudioClip click;
 
 
     [SerializeField] MirrorManager mirror;
     [SerializeField] internal GameObject openPortal;
+    private PlayerInventory playerInv;
+
 
     private void Awake()
     {
+        playerInv = transform.root.GetComponent<GameMan>().player.GetComponent<PlayerInventory>();
+        reloadMissions.SetActive(false);
+        empowerMission.SetActive(false);
+
         manager = transform.root.GetComponent<GameMan>();
 
         foreach (MonitorMission mis in missions)
@@ -86,7 +100,7 @@ public class MissionSelector : ModDataRoom
         }
         else
         {
-            AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+            AudioSource.PlayClipAtPoint(wrong, transform.position,.1f);
             StartCoroutine(ErrorWaiter(meshEngagePath));
         }
     }
@@ -95,7 +109,6 @@ public class MissionSelector : ModDataRoom
     {
 
 
-        StopCoroutine("SearchPath");
         StopCoroutine("SearchPath");
         foreach (MonitorMission mis in missions)
         {
@@ -146,39 +159,32 @@ public class MissionSelector : ModDataRoom
     {
         foreach(MonitorMission mon in missions)
         {
-            if (mon.mission != mi && mon.isActiveAndEnabled) mon.UIUnselect();
+            //if (mon.mission != mi && mon.isActiveAndEnabled) mon.UIUnselect();
+            mon.UIUnselect();
         }
     }
 
-    internal void ReloadMissions()
-    {
-
-        if (beenLong)
-        {
-            used = false;
-            beenLong = false;
-            StartCoroutine(SearchPath());
-            StartCoroutine(BeenLong());
-            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
-        }
-
-
-    }
 
     bool used = false;
 
     internal float additionalChance = 0;
+    [SerializeField] GameObject reloadMissions;
+    [SerializeField] GameObject search;
+    [SerializeField] internal GameObject empowerMission;
     internal IEnumerator SearchPath()
     {
        // manager.startedRun = true;
         mirror.gameObject.SetActive(false);
+        reloadMissions.SetActive(false);
+        empowerMission.SetActive(false);
+        search.SetActive(false);
 
         if (!used)
         {
-            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+            
             source.PlayOneShot(poweringUP, .1f);
             used = true;
-            TurnRed(meshSearchPath);
+           // TurnRed(meshSearchPath);
 
 
             totalChance = missions.Length;
@@ -203,25 +209,35 @@ public class MissionSelector : ModDataRoom
                         mis.gameObject.SetActive(true);
                         mis.RefreshMission(1 + maxMods);
                         
-                        AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
+                        AudioSource.PlayClipAtPoint(correct, transform.position,.1f);
                         cantFind = false;
                     }
-                    else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+                    else AudioSource.PlayClipAtPoint(wrong, transform.position,.1f);
                     totalChance--;
                     yield return new WaitForSecondsRealtime(1f);
                 } 
             }
         }
-        else AudioSource.PlayClipAtPoint(wrong, transform.position, 1f);
+        else AudioSource.PlayClipAtPoint(wrong, transform.position,.1f);
 
         if (!missions[0].isActiveAndEnabled)
         {
             missions[0].gameObject.SetActive(true);
             missions[0].RefreshMission(1 + maxMods);
-            AudioSource.PlayClipAtPoint(correct, transform.position, 1f);
+            AudioSource.PlayClipAtPoint(correct, transform.position,.1f);
         }
+
+        reloadMissions.SetActive(true);
+        reloadPrice.text = GetReloadMissionsPrice() + "";
     }
 
+    internal void StartSearch()
+    {
+        AudioSource.PlayClipAtPoint(click, transform.position,.1f);
+        reloadMissionsCounter = 1;
+        search.SetActive(false);
+        StartCoroutine("SearchPath");
+    }
 
     IEnumerator ErrorWaiter(MeshRenderer[] materials)
     {
@@ -229,16 +245,60 @@ public class MissionSelector : ModDataRoom
         yield return new WaitForSecondsRealtime(.4f);
         TurnGreen(materials);
     }
-
     IEnumerator BeenLong()
     {
         beenLong = false;
         yield return new WaitForSecondsRealtime(5f);
         beenLong = true;
     }
-
+    internal MonitorMission currentMonitor;
     internal void EmpowerSelected()
     {
-        throw new NotImplementedException();
+        if(playerInv.gunParts >= GetEmpowerPrice())
+        {
+            AddMod(currentMonitor.mission);
+            CreatePositives(currentMonitor.mission);
+
+            CreateMissionText(currentMonitor.mission);
+            mission = currentMonitor.mission;
+            currentMonitor.RefreshUI();
+
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+
+            playerInv.UpdateGunParts(-GetEmpowerPrice());
+            RefreshPrices();
+
+        }
+        else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
+
+
+    }
+
+    internal void ReloadMissions()
+    {
+        if (playerInv.gunParts >= GetReloadMissionsPrice())
+        {
+            used = false;
+            StartCoroutine("SearchPath");
+            AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+
+            playerInv.UpdateGunParts(-GetReloadMissionsPrice());
+            reloadMissionsCounter++;
+        }
+        else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
+    }
+
+
+    private int GetEmpowerPrice()
+    {
+        return mission.mods.Count * 4;
+    }
+
+    private int reloadMissionsCounter = 1;
+
+
+    private int GetReloadMissionsPrice()
+    {
+        return 5*reloadMissionsCounter;
     }
 }

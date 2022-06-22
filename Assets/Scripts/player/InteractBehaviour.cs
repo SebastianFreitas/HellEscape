@@ -106,12 +106,14 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                     var x = hit.collider.transform.GetComponentInParent<MonitorMission>();
-                    x.UISelect();
+                    
                     var mi = x.mission;
 
                     var selector = hit.collider.transform.parent.GetComponentInParent<MissionSelector>();
                     selector.currentMission = mi;
                     selector.UIUnselect(mi);
+
+                    x.UISelect();
                 }
                 else if (hit.transform.CompareTag("ReloadMissions"))
                 {
@@ -122,7 +124,7 @@ public class InteractBehaviour : MonoBehaviour
                 else if (hit.transform.CompareTag("SearchPath"))
                 {
 
-                    StartCoroutine(hit.collider.transform.parent.GetComponentInParent<MissionSelector>().SearchPath());
+                    hit.collider.transform.parent.GetComponentInParent<MissionSelector>().StartSearch();
 
                 }
                 else if (hit.transform.CompareTag("Symbol"))
@@ -227,9 +229,9 @@ public class InteractBehaviour : MonoBehaviour
                     transform.root.GetComponent<GameMan>().EndRun();
                     AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
-                else if (hit.transform.CompareTag("EmpowerSeleter"))
+                else if (hit.transform.CompareTag("EmpowerSelecter"))
                 {
-                    transform.root.GetComponentInParent<MissionSelector>().EmpowerSelected();
+                    hit.collider.transform.GetComponentInParent<MissionSelector>().EmpowerSelected();
                 }
                 else
                 {

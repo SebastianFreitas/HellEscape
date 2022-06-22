@@ -2548,7 +2548,7 @@ GameObject:
   - component: {fileID: 906912600945915434}
   - component: {fileID: 4422168509880969756}
   m_Layer: 8
-  m_Name: AddModPrice
+  m_Name: EmpowerPrice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8529,7 +8529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e688013e3d44054ead893fc34dfe24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInventory: {fileID: 0}
   source: {fileID: 5430306716738253707}
   wrong: {fileID: 8300000, guid: 6b709a1c97d3b7c409f73812458d7f1e, type: 3}
   poweringUP: {fileID: 8300000, guid: c089b5510a0901745a5d6019d436c33c, type: 3}
@@ -8548,6 +8547,8 @@ MonoBehaviour:
   - {fileID: 811191922322414046}
   meshEngagePath:
   - {fileID: 813331001139004974}
+  reloadPrice: {fileID: 458283833606487595}
+  empowerPrice: {fileID: 4422168509880969756}
   meshSearchPath:
   - {fileID: 5429214450195263554}
   meshReloadSearch:
@@ -8555,7 +8556,10 @@ MonoBehaviour:
   click: {fileID: 8300000, guid: aa2f6c43ba43ff34b839e95da6168fed, type: 3}
   mirror: {fileID: 4993314860894369317}
   openPortal: {fileID: 8639847127814267347}
-  buttons: {fileID: 5430306716738253704}
+  buttons: {fileID: 5430306716999353321}
+  reloadMissions: {fileID: 7892935454374784830}
+  search: {fileID: 1493771474718997900}
+  empowerMission: {fileID: 6163377919941233649}
 --- !u!82 &5430306716738253707
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14327,7 +14331,7 @@ GameObject:
   - component: {fileID: 3993935709061450944}
   - component: {fileID: 458283833606487595}
   m_Layer: 8
-  m_Name: AddModPrice
+  m_Name: ReloadPrice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

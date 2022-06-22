@@ -115,7 +115,7 @@ public class ModDataRoom : MonoBehaviour
         return ret;
     }
 
-    private void CreatePositives(GeneratedMission result)
+    internal void CreatePositives(GeneratedMission result)
     {
         var bonus = result.mods.Count ;
         result.increasedChanceElite         += bonus + Random.Range(0, bonus);
@@ -123,7 +123,7 @@ public class ModDataRoom : MonoBehaviour
         result.increasedMonsterDrops        += bonus + Random.Range(0, bonus);
         
     }
-    private void CreateMissionText(GeneratedMission result)
+    internal void CreateMissionText(GeneratedMission result)
     {
         result.goodText = GetMissionGood(result);
         result.badText = GetMissionBad(result);
@@ -152,7 +152,7 @@ public class ModDataRoom : MonoBehaviour
         return text;
     }
 
-    private void AddMod(GeneratedMission mission)
+    internal void AddMod(GeneratedMission mission)
     {
         var list = Yep();
         while (true)
@@ -317,7 +317,7 @@ public class ModDataRoom : MonoBehaviour
 
     }
 
-    public class GeneratedMission
+    public class GeneratedMission : ModDataRoom
     {
 
         public int aditionalLife           = 0;
@@ -377,5 +377,7 @@ public class ModDataRoom : MonoBehaviour
             totalLenght = Random.Range(10, 20);
 
         }
+
+
     }
 }
