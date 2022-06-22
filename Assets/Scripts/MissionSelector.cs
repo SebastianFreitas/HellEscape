@@ -175,6 +175,7 @@ public class MissionSelector : ModDataRoom
         reloadMissions.SetActive(false);
         empowerMission.SetActive(false);
         search.SetActive(false);
+        openPortal.SetActive(false);
 
         if (!used)
         {
