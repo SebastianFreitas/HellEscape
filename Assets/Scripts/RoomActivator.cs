@@ -11,6 +11,7 @@ public class RoomActivator : MonoBehaviour
     [SerializeField] GameObject trapLayouts;
 
     internal Transform spawnPos;
+    private Transform spawnPosBoss;
 
     internal int numberOfEnemies = 0;
     private BoxCollider[] boxColliders;
@@ -67,7 +68,11 @@ public class RoomActivator : MonoBehaviour
     {
         gameMan = transform.root.GetComponent<GameMan>();
 
-        if (transform.childCount > 0) spawnPos = transform.GetChild(0);
+        if (transform.childCount > 0)
+        {
+            spawnPos = transform.GetChild(0);
+            if(roomType == RoomType.Boss) spawnPosBoss = transform.GetChild(1);
+        }
         roomgen = GetComponentInParent<RoomGenerator>();
         lightsComponent = lights.GetComponentsInChildren<Light>();
 
@@ -362,7 +367,11 @@ public class RoomActivator : MonoBehaviour
 
     private void SpawnExit()
     {
-        Instantiate(roomgen.exit, spawnPos.position + Vector3.down + Vector3.down, spawnPos.rotation, transform);
+        Transform newPos = spawnPos;
+        if (roomType == RoomType.Boss) newPos = transform.GetChild(1);
+
+
+        Instantiate(roomgen.exit, newPos.position , newPos.rotation, transform);
 
     }
 

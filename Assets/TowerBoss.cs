@@ -170,9 +170,10 @@ public class TowerBoss : Monster
 
     private IEnumerator SpawnLitleDudes()
     {
-        var pos = currentMovementList[Random.Range(0, currentMovementList.Length)];
+        
         for (int i = 0; i < Random.Range(2,8); i++)
-        {       
+        {
+            var pos = currentMovementList[Random.Range(0, currentMovementList.Length)];
             var currentMob = Instantiate(mob, pos.position, pos.rotation, transform.parent);
             currentMob.transform.parent = transform.parent;
             currentMob.isFiller = true;

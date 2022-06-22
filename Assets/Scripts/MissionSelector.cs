@@ -237,4 +237,8 @@ public class MissionSelector : ModDataRoom
         beenLong = true;
     }
 
+    internal void EmpowerSelected()
+    {
+        throw new NotImplementedException();
+    }
 }
