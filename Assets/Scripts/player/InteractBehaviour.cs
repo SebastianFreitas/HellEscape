@@ -227,6 +227,10 @@ public class InteractBehaviour : MonoBehaviour
                     transform.root.GetComponent<GameMan>().EndRun();
                     AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                 }
+                else if (hit.transform.CompareTag("EmpowerSeleter"))
+                {
+                    transform.root.GetComponentInParent<MissionSelector>().EmpowerSelected();
+                }
                 else
                 {
                     AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
