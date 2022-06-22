@@ -110,7 +110,7 @@ public class InteractBehaviour : MonoBehaviour
                     var mi = x.mission;
 
                     var selector = hit.collider.transform.parent.GetComponentInParent<MissionSelector>();
-                    selector.currentMission = mi;
+                    selector.mission = mi;
                     selector.UIUnselect(mi);
 
                     x.UISelect();

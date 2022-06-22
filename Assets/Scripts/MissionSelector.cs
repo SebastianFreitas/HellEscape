@@ -41,10 +41,7 @@ public class MissionSelector : ModDataRoom
     public TMPro.TextMeshPro reloadPrice;
     public TMPro.TextMeshPro empowerPrice;
 
-    internal void RefreshPrices()
-    {
-        empowerPrice.text = GetEmpowerPrice() +"";
-    }
+
 
     public MeshRenderer[] meshSearchPath;
     public MeshRenderer[] meshReloadSearch;
@@ -256,6 +253,9 @@ public class MissionSelector : ModDataRoom
     {
         if(playerInv.gunParts >= GetEmpowerPrice())
         {
+
+            playerInv.UpdateGunParts(-GetEmpowerPrice());
+
             AddMod(currentMonitor.mission);
             CreatePositives(currentMonitor.mission);
 
@@ -265,24 +265,24 @@ public class MissionSelector : ModDataRoom
 
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
 
-            playerInv.UpdateGunParts(-GetEmpowerPrice());
+            
             RefreshPrices();
 
         }
         else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
-
-
     }
 
     internal void ReloadMissions()
     {
         if (playerInv.gunParts >= GetReloadMissionsPrice())
         {
+            playerInv.UpdateGunParts(-GetReloadMissionsPrice());
+
             used = false;
-            StartCoroutine("SearchPath");
+            StartCoroutine(nameof(SearchPath));
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
 
-            playerInv.UpdateGunParts(-GetReloadMissionsPrice());
+            
             reloadMissionsCounter++;
         }
         else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
@@ -300,5 +300,10 @@ public class MissionSelector : ModDataRoom
     private int GetReloadMissionsPrice()
     {
         return 5*reloadMissionsCounter;
+    }
+
+    internal void RefreshPrices()
+    {
+        empowerPrice.text = GetEmpowerPrice() + "";
     }
 }

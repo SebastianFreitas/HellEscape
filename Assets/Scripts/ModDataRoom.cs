@@ -317,7 +317,7 @@ public class ModDataRoom : MonoBehaviour
 
     }
 
-    public class GeneratedMission : ModDataRoom
+    public class GeneratedMission //: ModDataRoom
     {
 
         public int aditionalLife           = 0;
