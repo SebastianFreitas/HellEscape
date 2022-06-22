@@ -8,8 +8,26 @@ public class Lava : MonoBehaviour
     {
         if (other.CompareTag("Dude"))
         {
-             other.GetComponent<PlayerHpManager>().TakeDamage(10);
-            other.GetComponent<PlayerBasicMovement>().AddImpact(Vector3.up,100);
+            other.GetComponent<PlayerHpManager>().TakeDamage(5);
+            var mov = other.GetComponent<PlayerBasicMovement>();
+            mov.velocity = Vector3.zero;
+                mov.AddImpact(Vector3.up,500);
+        }
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Dude"))
+        {
+            other.GetComponent<PlayerHpManager>().TakeDamage(5);
+            var mov = other.GetComponent<PlayerBasicMovement>();
+            mov.velocity = Vector3.zero;
+            mov.AddImpact(Vector3.up, 100);
+        }
+        else if (other.CompareTag("MonsterHead"))
+        {
+
         }
 
     }

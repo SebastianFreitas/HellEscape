@@ -340,12 +340,16 @@ public class PlayerBasicMovement : MonoBehaviour
 
     private void JumpDash(bool isDash)
     {
-        
-        AddImpact(Vector3.up, JumpDashForce * strongerDash);
-        JumpInput(3f * strongerDash);
+
+        inputLocked = false;
+        isSideDashing = false;
 
         if (isDash)
         {
+            JumpInput(3f * strongerDash );
+            AddImpact(Vector3.up, JumpDashForce * strongerDash);
+
+
             cd.startCD((int)dashCooldown);
             playerSound.PlayDashSound();
             canJumpDash = false;
@@ -353,6 +357,10 @@ public class PlayerBasicMovement : MonoBehaviour
         }
         else
         {
+            JumpInput(3f * strongerDash);
+            AddImpact(Vector3.up, JumpDashForce * strongerDash);
+
+
             coyoteTimeCounter = 0f;
             jumpBufferCounter = 0f;
         }
