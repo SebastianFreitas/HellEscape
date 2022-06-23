@@ -143,7 +143,7 @@ public class BridgeHandler : MonoBehaviour
         player = transform.root.GetComponent<GameMan>().player;
 
         var total = 2;
-        if (EncounterType.normal != type) total *= 3;
+        if (EncounterType.normal != type) total *= 2;
 
         for (int i = 0; i < total; i++)
         {
@@ -153,15 +153,13 @@ public class BridgeHandler : MonoBehaviour
             if (type != EncounterType.normal) mob.TurnElite();
         }
 
-        if (type == EncounterType.boss)
-        {
-            var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
-            var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
-            mob.player = player;
-            mob.TurnBig();
-            mob.TurnBig();
-            mob.TurnBig();
+        //if (type == EncounterType.boss)
+        //{
+        //    var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
+        //    var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
+        //    mob.player = player;
+        //    mob.TurnElite();
 
-        }
+        //}
     }
 }

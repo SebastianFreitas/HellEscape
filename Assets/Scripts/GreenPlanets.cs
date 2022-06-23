@@ -31,6 +31,10 @@ public class GreenPlanets : MonoBehaviour
 
             newPlanet.transform.position = angle * radius;
             newPlanet.transform.localScale *= Random.Range(0.0001f, .5f);
+
+            //newPlanet.GetComponent<MeshFilter>().sharedMesh = mesh;
+            newPlanet.GetComponent<MeshFilter>().sharedMesh.RecalculateBounds();
+            newPlanet.GetComponent<MeshFilter>().sharedMesh.RecalculateNormals();
         }
         planet.SetActive(false);
     }

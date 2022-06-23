@@ -224,7 +224,7 @@ public class TowerBoss : Monster
                 transform.position = transform.position + direction_to_player;
             }
 
-            yield return new WaitForSecondsRealtime(delayFollowPlayer / actionSpeed);
+            yield return new WaitForSecondsRealtime(delayFollowPlayer);
         }
 
     }

@@ -11,10 +11,14 @@ public class Triangle : Monster
 
     private void Start()
     {
-        foreach (var item in lasers)
+        if(lasers != null)
         {
-            item.damage = (int)damage;
+            foreach (var item in lasers)
+            {
+                item.damage = (int)damage;
+            }
         }
+
 
         foreach (var item in transform.GetComponentsInChildren<MeshRenderer>())
         {
@@ -30,6 +34,7 @@ public class Triangle : Monster
 
     IEnumerator waiterStart()
     {
+        isMoving = false;
         yield return new WaitForSeconds(.5f);
         foreach (var item in transform.GetComponentsInChildren<MeshRenderer>())
         {
@@ -39,29 +44,41 @@ public class Triangle : Monster
         if (finalWaitTime < 0.4) finalWaitTime = 0.4f;
         StartCoroutine(randomJump());
     }
-
+    private bool isMoving = false;
     IEnumerator randomJump()
     {
+
         while (true)
         {
+           
             float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distance >8)//!Approximately(transform.position, player.transform.position, 5)
+            if (distance >8)
             {
-                Vector3 direction_to_player = (player.transform.position - this.transform.position).normalized;
-                transform.position = transform.position + direction_to_player * Random.Range(1, 10);
-            }
+               if(!isMoving) StartCoroutine("WaitAndMove");
 
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 100, -1, QueryTriggerInteraction.Ignore))
+                //Vector3 direction_to_player = (player.transform.position - this.transform.position).normalized;
+                //transform.position = transform.position + direction_to_player * Random.Range(1, 10);
+            }
+            
+            if(lasers != null)
             {
-                if (hit.collider)
+                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 100, -1, QueryTriggerInteraction.Ignore) && (hit.collider))
                 {
+
                     foreach (LazerTrap lazer in lasers)
                     {
                         lazer.transform.LookAt(hit.collider.transform);
                     }
+                    
                 }
+            } 
+            else
+            {
+
             }
+
+
 
             yield return new WaitForSeconds(finalWaitTime);
         }
@@ -74,18 +91,24 @@ public class Triangle : Monster
         Quaternion toRotation = Quaternion.LookRotation(relativePos);
         transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, 2 * Time.deltaTime);
     }
-    public bool Approximately(Vector3 me, Vector3 other, float allowedDifference)
+
+
+
+    IEnumerator WaitAndMove()
     {
-        var dx = me.x - other.x;
-        if (Mathf.Abs(dx) > allowedDifference)
-            return false;
+        var posA = transform.position;
+        var posB = player.transform.position;
 
-        var dy = me.y - other.y;
-        if (Mathf.Abs(dy) > allowedDifference)
-            return false;
+        isMoving = true;
 
-        var dz = me.z - other.z;
+        yield return new WaitForSeconds(1); // start at time X
+        float startTime = Time.time; // Time.time contains current frame time, so remember starting point
+        while (Time.time - startTime <= .9)
+        { // until one second passed
+            transform.position = Vector3.Lerp(posA, posB, Time.time - startTime); // lerp from A to B in one second
+            yield return 1; // wait for next frame
+        }
 
-        return Mathf.Abs(dz) >= allowedDifference;
+        isMoving = false;
     }
 }
