@@ -11,7 +11,7 @@ public class Triangle : Monster
 
     private void Start()
     {
-        if(lasers != null)
+        if(lasers.Length > 0)
         {
             foreach (var item in lasers)
             {
@@ -45,6 +45,8 @@ public class Triangle : Monster
         StartCoroutine(randomJump());
     }
     private bool isMoving = false;
+    private bool isBusy = false;
+
     IEnumerator randomJump()
     {
 
@@ -61,7 +63,7 @@ public class Triangle : Monster
                 //transform.position = transform.position + direction_to_player * Random.Range(1, 10);
             }
             
-            if(lasers != null)
+            if(lasers.Length > 0)
             {
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 100, -1, QueryTriggerInteraction.Ignore) && (hit.collider))
                 {
@@ -75,7 +77,10 @@ public class Triangle : Monster
             } 
             else
             {
-
+                if(!isBusy && distance < 5)
+                {
+                    StartCoroutine("Explode");
+                }
             }
 
 
@@ -110,5 +115,20 @@ public class Triangle : Monster
         }
 
         isMoving = false;
+    }
+    [SerializeField] GameObject ball;
+    private IEnumerator Explode()
+    {
+
+        isBusy = true;
+
+        var explo = Instantiate(ball, transform);
+        explo.SetActive(true);
+        explo.GetComponentInChildren<TowerBossExplosion>().StartUp();
+        yield return new WaitForSecondsRealtime(2f);
+
+
+        isBusy = false;
+
     }
 }

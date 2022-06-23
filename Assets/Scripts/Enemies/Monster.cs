@@ -81,7 +81,8 @@ public class Monster : MonoBehaviour
 
         if (player == null)
             player = transform.root.GetComponent<GameMan>().player;
-
+        if (player == null)
+            player = FindObjectOfType<PlayerBasicMovement>().gameObject;
 
         playerCollider = player.transform.GetComponent<Rigidbody>().GetComponent<Collider>();
 

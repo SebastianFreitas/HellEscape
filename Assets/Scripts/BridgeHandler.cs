@@ -142,7 +142,8 @@ public class BridgeHandler : MonoBehaviour
     {
         player = transform.root.GetComponent<GameMan>().player;
 
-        var total = 2;
+        var total = 2 + dificulty/2;
+
         if (EncounterType.normal != type) total *= 2;
 
         for (int i = 0; i < total; i++)
