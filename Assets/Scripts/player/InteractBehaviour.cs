@@ -233,6 +233,14 @@ public class InteractBehaviour : MonoBehaviour
                 {
                     hit.collider.transform.GetComponentInParent<MissionSelector>().EmpowerSelected();
                 }
+                else if (hit.transform.CompareTag("RerollMutation"))
+                {
+                    if (hit.collider.transform.GetComponentInParent<BoonDrop>().Reroll())
+                    {
+                        AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                    } 
+                    else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
+                }
                 else
                 {
                     AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
