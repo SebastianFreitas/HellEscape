@@ -53,6 +53,7 @@ public class RoomActivator : MonoBehaviour
         itemOrDrop,
         redOrBlue,
         switchInfluence,
+        Exit,
     }
 
     internal RoomType roomType;
@@ -190,6 +191,11 @@ public class RoomActivator : MonoBehaviour
             case MainType.switchInfluence:
                 Instantiate(roomgen.changeInfluence, spawnPos.position, spawnPos.rotation, transform);
                 CloseDoors();
+
+                break;
+
+            case MainType.Exit:
+                SpawnExit();
 
                 break;
         }

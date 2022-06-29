@@ -32,10 +32,10 @@ public class RoomGenerator : MonoBehaviour
 	[SerializeField] internal GameObject weaponDrop;
 
 	[SerializeField] internal Monster[] monstersRed;
-	[SerializeField] internal Monster[] monstersBlue;
+
 					
 	[SerializeField] internal Monster[] BossRed;
-	[SerializeField] internal Monster[] BossBlue;
+
 
 
 	List<Doorway> availableDoorways = new List<Doorway>();
@@ -373,7 +373,7 @@ public class RoomGenerator : MonoBehaviour
         }
     }
 
-    private List<RoomActivator.MainType> mainTypeList =  new List<RoomActivator.MainType>() {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop};
+    private List<RoomActivator.MainType> mainTypeList =  new List<RoomActivator.MainType>() {RoomActivator.MainType.choiceSpecial, RoomActivator.MainType.itemOrDrop, RoomActivator.MainType.Shop, RoomActivator.MainType.Exit };
 	private int mainCounter = 0;
     private bool ChangeToNextMain(Room room)
     {

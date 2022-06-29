@@ -8,6 +8,7 @@ public class DoorSymbolManager : MonoBehaviour
     [SerializeField] GameObject choiceSpecial;
     [SerializeField] GameObject itemOrDrop;
     [SerializeField] GameObject shop;
+    [SerializeField] GameObject exit;
 
     internal void UpdateSymbolMainType(RoomActivator.MainType type)
     {
@@ -32,6 +33,10 @@ public class DoorSymbolManager : MonoBehaviour
 
             case RoomActivator.MainType.Shop:
                 shop.SetActive(true);
+                break;
+
+            case RoomActivator.MainType.Exit:
+                exit.SetActive(true);
                 break;
 
 
