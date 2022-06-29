@@ -20,6 +20,7 @@ public class StopTower : MonoBehaviour
         {
             hasBeenFound = true;
             var monster = other.GetComponentInParent<TowerBoss>();
+            monster.isFinal = isFinal;
             if (positionsList != null) monster.currentMovementList = positionsList;
             monster.StartCoroutine("Stop");
 
@@ -31,7 +32,7 @@ public class StopTower : MonoBehaviour
 
             if (isFinal)
             {
-                isFinal = false;
+                //isFinal = false;
                 foreach (var item in turnOffList)
                 {
                     item.gameObject.SetActive(false);

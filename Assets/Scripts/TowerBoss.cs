@@ -124,8 +124,9 @@ public class TowerBoss : Monster
 
         }
 
-
-        timer = phaseOneWaitTime;
+        if(!isFinal)
+            timer = phaseOneWaitTime;
+        else timer = 1000000;
     }
 
     bool isBusy = false;
@@ -209,6 +210,8 @@ public class TowerBoss : Monster
     }
 
     [SerializeField] float delayFollowPlayer;
+    internal bool isFinal;
+
     IEnumerator FollowPlayer()
     {
         while (true)

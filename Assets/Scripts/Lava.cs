@@ -34,10 +34,12 @@ public class Lava : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.Translate(2 * Time.deltaTime * Vector3.up, Space.World);
+        if (transform.position.y < 215)
+        {
+            transform.Translate(2 * Time.deltaTime * Vector3.up, Space.World);
+            
+        }
         transform.Rotate(.05f, 0, 0, Space.World);
-
-        if (transform.position.y > 215) transform.gameObject.SetActive(false);
     }
 
     
