@@ -130,6 +130,10 @@ public class Inventory : GunGenerator
                 else
                 {
                     if (i < 4)  slots[i].GetComponent<Slot>().gun = null;
+                    else
+                    {
+                        layouts[i - 4] = null;
+                    }
 
                 }
             }
@@ -174,14 +178,20 @@ public class Inventory : GunGenerator
 
     internal void RemoveWeapon(GunOfAType gun, bool isAdded)
     {
+        var flag =false;
+
         foreach (GameObject slot in slots)
         {
             var x = slot.GetComponent<Slot>();
-            if (x.gun == gun) x.DismantleGun();
-
+            if (x.gun == gun)
+            {
+                flag = true;
+                x.DismantleGun();
+            }
+            
         }
 
-        RemoveLayout(gun);
+       if(!flag) RemoveLayout(gun);
 
         if (isAdded) AddGunLayout(gun);
     }
