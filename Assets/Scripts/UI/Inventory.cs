@@ -11,7 +11,7 @@ public class Inventory : GunGenerator
 
     public TextUI fragmentText;
     public TextUI layoutsText;
-    public int fragments = 11110;
+    public int fragments = 0;
 
     private int previousEquipedGun = -1;
 

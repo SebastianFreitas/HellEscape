@@ -230,6 +230,13 @@ public class RoomGenerator : MonoBehaviour
 		encounters.Add (new Monster[] { monstersRed[2], monstersRed[2], monstersRed[3], monstersRed[3] });
 		encounters.Add (new Monster[] { monstersRed[3], monstersRed[3], monstersRed[3], monstersRed[3] });
 
+		encounters.Add(new Monster[] { monstersRed[3], monstersRed[3], monstersRed[3], monstersRed[1] });
+		encounters.Add(new Monster[] { monstersRed[3], monstersRed[3], monstersRed[3], monstersRed[2] });
+		encounters.Add(new Monster[] { monstersRed[3], monstersRed[3], monstersRed[3], monstersRed[4] });
+		encounters.Add(new Monster[] { monstersRed[3], monstersRed[3], monstersRed[4], monstersRed[4] });
+		encounters.Add(new Monster[] { monstersRed[4], monstersRed[4], monstersRed[4], monstersRed[4] });
+
+
 
 
 	}
