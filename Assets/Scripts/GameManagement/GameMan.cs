@@ -62,6 +62,8 @@ public class GameMan : ModDataRoom
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("OnlyEnemy"), false);
 
+        Physics.IgnoreLayerCollision(LayerMask.NameToLayer("GhostEnemy"), LayerMask.NameToLayer("Room"));
+
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("Enemy"), LayerMask.NameToLayer("Room"), false);
     }
     internal bool startedRun = false;

@@ -76,7 +76,7 @@ public class RoomGenerator : MonoBehaviour
 		PlaceStartRoom();
 		yield return interval;
 		
-
+		bool wasRoom = true;
 		
 		int influencePos = Random.Range(1,5);
 		//place pathway
@@ -92,14 +92,26 @@ public class RoomGenerator : MonoBehaviour
 				var x = Random.Range(1, 4);
 				bool worked;
 				bool isCorridor = false;
-                if (x >= 2)
-                {
-                    worked = PlaceCorridor(Random.Range(5, 10));
-                    isCorridor = true;
-                }
-                else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
+				//if (x >= 2)
+				//{
+				//    worked = PlaceCorridor(Random.Range(5, 10));
+				//    isCorridor = true;
+				//}
+				//else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
 
-                
+				if (wasRoom)
+				{
+					worked = PlaceCorridor(Random.Range(5, 10));
+					isCorridor = true;
+					wasRoom = false;
+				}
+				else
+				{
+					worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
+					wasRoom = true;
+				}
+
+
 				if (worked)
 				{
 					if (wasCorridor = isCorridor) i--;
@@ -196,24 +208,27 @@ public class RoomGenerator : MonoBehaviour
 		playerInv = player.GetComponent<PlayerInventory>();
 		playerMov = player.GetComponent<PlayerBasicMovement>();
 
-		encounters.Add(new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[0] });
+		encounters.Add(new Monster[]  { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[0] });
 		encounters.Add(new Monster[]  { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[0] });
 		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[1] });
 		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[1], monstersRed[1] });
 		encounters.Add (new Monster[] { monstersRed[0], monstersRed[1], monstersRed[1], monstersRed[1] });
+
+
 		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[2] });
 		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[1], monstersRed[1] });
 		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[1], monstersRed[2] });
 		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[2], monstersRed[2] });
 		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[2], monstersRed[2] });
 		encounters.Add (new Monster[] { monstersRed[2], monstersRed[2], monstersRed[2], monstersRed[2] });
+
 		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[0], monstersRed[3] });
 		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[1], monstersRed[3] });
 		encounters.Add (new Monster[] { monstersRed[0], monstersRed[0], monstersRed[3], monstersRed[3] });
 		encounters.Add (new Monster[] { monstersRed[2], monstersRed[2], monstersRed[2], monstersRed[3] });
 		encounters.Add (new Monster[] { monstersRed[1], monstersRed[1], monstersRed[3], monstersRed[3] });
-		encounters.Add(new Monster[] { monstersRed[2], monstersRed[2], monstersRed[3], monstersRed[3] });
-		encounters.Add(new Monster[] { monstersRed[3], monstersRed[3], monstersRed[3], monstersRed[3] });
+		encounters.Add (new Monster[] { monstersRed[2], monstersRed[2], monstersRed[3], monstersRed[3] });
+		encounters.Add (new Monster[] { monstersRed[3], monstersRed[3], monstersRed[3], monstersRed[3] });
 
 
 

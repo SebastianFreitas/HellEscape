@@ -252,9 +252,8 @@ public class MissionSelector : ModDataRoom
     internal MonitorMission currentMonitor;
     internal void EmpowerSelected()
     {
-        if(playerInv.gunParts >= GetEmpowerPrice())
+        if(playerInv.gunParts >= GetEmpowerPrice() && mission.mods.Count <= 8)
         {
-
             playerInv.UpdateGunParts(-GetEmpowerPrice());
 
             AddMod(currentMonitor.mission);
@@ -266,9 +265,7 @@ public class MissionSelector : ModDataRoom
 
             AudioSource.PlayClipAtPoint(click, transform.position, .1f);
 
-            
             RefreshPrices();
-
         }
         else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
     }
