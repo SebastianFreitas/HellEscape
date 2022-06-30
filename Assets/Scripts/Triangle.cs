@@ -77,7 +77,7 @@ public class Triangle : Monster
             } 
             else
             {
-                if(!isBusy && distance < 5)
+                if(!isBusy && distance < 5 && lasers.Length <= 0)
                 {
                     StartCoroutine("Explode");
                 }

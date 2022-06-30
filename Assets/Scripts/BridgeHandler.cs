@@ -18,14 +18,31 @@ public class BridgeHandler : MonoBehaviour
     [SerializeField] internal GameObject mainBase;
     void Start()
     {
-        if (PlayerPrefs.HasKey("PathLevel")) dificulty = PlayerPrefs.GetInt("PathLevel");
-        else SaveDificulty();
-        
-        foreach(Transform child in meshPieces.transform)
+        foreach (Transform child in meshPieces.transform)
         {
             child.gameObject.SetActive(true);
             if (Random.Range(1, 101) > 75) child.gameObject.SetActive(false);
         }
+
+        StartCoroutine("Starter");
+    }
+
+    IEnumerator Starter()
+    {
+        yield return new WaitForSeconds(1);
+        if (PlayerPrefs.HasKey("PathLevel")) dificulty = PlayerPrefs.GetInt("PathLevel");
+        else SaveDificulty();
+
+        if (IsDivisible(distance, 2))
+        {
+            if (distance < dificulty) SpawnMonsters(EncounterType.elite);
+            else SpawnMonsters(EncounterType.normal);
+        }
+        else if (distance == 1)
+        {
+            SpawnMonsters(EncounterType.boss);
+        }
+
     }
 
     private void OnTriggerStay(Collider other)
@@ -62,15 +79,7 @@ public class BridgeHandler : MonoBehaviour
                 nextPiece.SetDistance(distance--);
                 
 
-                if (IsDivisible(distance, 2))
-                {
-                    if (distance < dificulty) nextPiece.SpawnMonsters(EncounterType.elite);
-                    else nextPiece.SpawnMonsters(EncounterType.normal);
-                } 
-                else if (distance == 1)
-                {
-                    nextPiece.SpawnMonsters(EncounterType.boss);
-                }
+
             }
 
         }
@@ -146,7 +155,7 @@ public class BridgeHandler : MonoBehaviour
 
         if (EncounterType.normal != type) total *= 2;
 
-        for (int i = 0; i < total; i++)
+        for (int i = 0; i < Random.Range(total, total *2); i++)
         {
             var vector = RandomPointInBounds(GetComponent<BoxCollider>().bounds);
             var mob = Instantiate(monsters[Random.Range(0, monsters.Count)], vector, Quaternion.identity, transform);
