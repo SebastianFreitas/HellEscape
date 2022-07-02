@@ -8,6 +8,7 @@ public class Monster : MonoBehaviour
     [SerializeField] internal float health = 50f;
     [SerializeField] internal float damage = 10f;
     [SerializeField] bool isBoss = false;
+    [SerializeField] bool isGreen = false;
     internal GameObject player;
 
     public Rigidbody rigidBody;
@@ -312,7 +313,7 @@ public class Monster : MonoBehaviour
         bloodSplat.Play();
         if (!died)
         {
-
+            if (isGreen) playerHP.Heal(15);
             if (isBoss) healthUI.gameObject.SetActive(false);
 
             died = true;

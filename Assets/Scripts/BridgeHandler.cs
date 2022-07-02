@@ -66,7 +66,7 @@ public class BridgeHandler : MonoBehaviour
             }
             else
             {
-                Vector3 randomizer = new Vector3(Random.Range(-10f,10f), Random.Range(-5f, 15f), Random.Range(-2f, 10f));
+                Vector3 randomizer = new Vector3(Random.Range(-10f,10f), Random.Range(-5f, 15f), Random.Range(-20f, 1f));
                 Vector3 randomizerAngle = new Vector3(Random.Range(-20f, 20f), Random.Range(-20f,20f), Random.Range(-20f, 20f));
                 Quaternion rotation;
 
