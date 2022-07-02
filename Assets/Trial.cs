@@ -5,6 +5,7 @@ using UnityEngine;
 public class Trial : MonoBehaviour
 {
     [SerializeField] TMPro.TextMeshPro price;
+    [SerializeField] StartHub hub;
 
     private PlayerInventory playerInv;
     private void Awake()
@@ -14,6 +15,7 @@ public class Trial : MonoBehaviour
 
     private void OnEnable()
     {
+        
         price.text = GetPrice().ToString();
     }
     internal bool StartTrial()
@@ -31,6 +33,8 @@ public class Trial : MonoBehaviour
 
     private int GetPrice()
     {
+        if (transform.root.GetComponent<GameMan>().runsucess) return 0;
+        
         var dificulty = 0;
         if (PlayerPrefs.HasKey("PathLevel")) dificulty = PlayerPrefs.GetInt("PathLevel");
 
