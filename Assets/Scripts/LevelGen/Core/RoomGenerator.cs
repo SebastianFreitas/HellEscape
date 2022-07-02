@@ -64,7 +64,7 @@ public class RoomGenerator : MonoBehaviour
 	{
 		WaitForSeconds startup = new WaitForSeconds(.2f);
 		WaitForFixedUpdate interval = new WaitForFixedUpdate();
-
+		encounterCounter =1;
 		weaponLevel = playerInv.weaponLevel;
 		player.SetActive(false);
 		yield return startup;
@@ -89,15 +89,10 @@ public class RoomGenerator : MonoBehaviour
 				a++;
 				yield return interval;
 				var rando = Random.Range(0, mainRooms.Count);
-				var x = Random.Range(1, 4);
+
 				bool worked;
 				bool isCorridor = false;
-				//if (x >= 2)
-				//{
-				//    worked = PlaceCorridor(Random.Range(5, 10));
-				//    isCorridor = true;
-				//}
-				//else worked = PlaceRoom(mainRooms[rando], true, RoomActivator.RoomType.Encounter);
+
 
 				if (wasRoom)
 				{
@@ -135,10 +130,12 @@ public class RoomGenerator : MonoBehaviour
 		PlaceCorridor(20);
 
 		if (!PlaceEndRoom()) ResetLevelGenerator();
-		yield return interval;
+		yield return new WaitForSeconds(1);
 
 		//fill the rest of the level
 		FillEmptyDoors();
+
+		yield return new WaitForSeconds(1);
 		ConnectRoomActivator();
 
 		yield return interval;
@@ -150,10 +147,11 @@ public class RoomGenerator : MonoBehaviour
 		player.GetComponent<CharacterController>().enabled = false;
 		player.transform.position = currentStartPos;
 		player.GetComponent<CharacterController>().enabled = true;
-
+		yield return interval;
 		ApplyMissionToPlayer(true);
+		yield return interval;
 		ApplyMission();
-
+		yield return interval;
 		CreateMainRooms();
 
 		yield return interval;

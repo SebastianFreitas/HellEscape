@@ -262,10 +262,10 @@ public class GunGenerator : ModData
         var x = UnityEngine.Random.Range(0, 4);
         var list = new List<(int, GunType)>();
 
-        list.Add((100, GunType.basic));
-        list.Add((75, GunType.sniper));
-        list.Add((75, GunType.machinegun));
-        list.Add((75, GunType.shotgun));
+        list.Add((1000, GunType.basic));
+        list.Add((750, GunType.sniper));
+        list.Add((750, GunType.machinegun));
+        list.Add((750, GunType.shotgun));
 
         list.Add((20, GunType.Basic_A1));
         list.Add((15, GunType.Basic_A1PD));

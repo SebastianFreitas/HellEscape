@@ -14,7 +14,7 @@ public class StartHub : MonoBehaviour
 
     internal PathFloor currentPath;
 
-
+    [SerializeField] Trial trial;
 
     [SerializeField] MissionSelector selector;
 
@@ -44,8 +44,10 @@ public class StartHub : MonoBehaviour
 
     internal void Activate()
     {
-        StartPath();
+        //StartPath();
+        
         ui.SetActive(true);
+        trial.gameObject.SetActive(true);
 
         if (transform.root.GetComponent<GameMan>().startedRun)
         {
@@ -54,7 +56,7 @@ public class StartHub : MonoBehaviour
                 child.gameObject.SetActive(true);
             }
 
-             GetComponentInChildren<MissionSelector>().EnableSelector();
+            GetComponentInChildren<MissionSelector>().EnableSelector();
             transform.root.GetComponent<GameMan>().startedRun = false;
         }
 

@@ -198,7 +198,11 @@ public class InteractBehaviour : MonoBehaviour
                 }
                 else if (hit.transform.CompareTag("ShopNext"))
                 {
-                    hit.collider.transform.GetComponentInParent<Shop>().PressNext();
+                   if(hit.collider.transform.GetComponentInParent<Shop>().PressNext())
+                    {
+                        AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                    }
+                    else AudioSource.PlayClipAtPoint(wrong, transform.position, .3f);
                 }
                 else if (hit.transform.CompareTag("Mirror"))
                 {
@@ -239,6 +243,14 @@ public class InteractBehaviour : MonoBehaviour
                     {
                         AudioSource.PlayClipAtPoint(click, transform.position, .1f);
                     } 
+                    else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
+                }
+                else if (hit.transform.CompareTag("Trial"))
+                {
+                    if (hit.collider.transform.GetComponentInParent<Trial>().StartTrial())
+                    {
+                        AudioSource.PlayClipAtPoint(click, transform.position, .1f);
+                    }
                     else AudioSource.PlayClipAtPoint(wrong, transform.position, .1f);
                 }
                 else

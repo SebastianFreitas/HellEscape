@@ -15,10 +15,11 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameMan gameManager;
 
     [SerializeField] GameObject runningGame;
+    [SerializeField] MissionSelector selector;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !selector.isSearching)
         {
             GoToPauseScreen();
         }

@@ -291,7 +291,7 @@ public class CraftingDevice : GunGenerator
 
     internal int GetRemoveAndSaveModPrice()
     {
-        if (gun != null) return (gun.level - 9) * (20);
+        if (gun != null) return (gun.level - 9) * (20) + 20;
         else return 1000;
     }
 

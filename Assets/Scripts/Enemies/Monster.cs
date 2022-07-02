@@ -152,7 +152,7 @@ public class Monster : MonoBehaviour
             }
         }
     }
-
+  
     IEnumerator WaitDamage()
     {
         yield return new WaitForSecondsRealtime(.5f);
@@ -424,6 +424,10 @@ public class Monster : MonoBehaviour
         if (isBleeding) StartCoroutine("Bleeding");
     }
 
+    private void OnDisable()
+    {
+        if(healthUI)healthUI.gameObject.SetActive(false);
+    }
 
     private bool isChilled = false;
     IEnumerator Chilled()

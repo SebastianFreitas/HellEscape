@@ -285,7 +285,7 @@ public class RoomActivator : MonoBehaviour
         if (roomgen.mission.doubleMobs) totalMobs *= 2;
 
         int index = 0;
-        int pick = Random.Range(roomgen.encounterCounter/2, roomgen.encounterCounter);
+        int pick = Random.Range(roomgen.encounterCounter/4, roomgen.encounterCounter);
         Monster x;
 
         for (int i = 0; i < totalMobs; i++)

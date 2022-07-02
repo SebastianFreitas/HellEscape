@@ -29,6 +29,12 @@ public class MissionSelector : ModDataRoom
 
     private GameMan manager;
 
+    internal void TurnOffToTurial()
+    {
+        search.SetActive(false);
+        SearchButtontext.text = startMessage;
+    }
+
     //public GameObject[] monitors;
     public MonitorMission[] missions;
 
@@ -41,7 +47,7 @@ public class MissionSelector : ModDataRoom
     public TMPro.TextMeshPro reloadPrice;
     public TMPro.TextMeshPro empowerPrice;
 
-
+    [SerializeField] TMPro.TextMeshPro SearchButtontext;
 
     public MeshRenderer[] meshSearchPath;
     public MeshRenderer[] meshReloadSearch;
@@ -75,7 +81,7 @@ public class MissionSelector : ModDataRoom
     {
         beenLong = true;
 
-
+        
     }
     internal void OpenPortal()
     {
@@ -129,6 +135,14 @@ public class MissionSelector : ModDataRoom
 
             mis.gameObject.SetActive(false);
         }
+
+        foreach (Transform mis in buttons.gameObject.transform)
+        {
+
+            mis.gameObject.SetActive(false);
+        }
+
+        search.gameObject.SetActive(true);
     }
     internal bool startedRun = false;
     internal void StartSelectedMission()
@@ -163,23 +177,30 @@ public class MissionSelector : ModDataRoom
 
 
     bool used = false;
+    internal bool isSearching = false;
 
     internal float additionalChance = 0;
     [SerializeField] GameObject reloadMissions;
     [SerializeField] GameObject search;
     [SerializeField] internal GameObject empowerMission;
+
+    private string startMessage = "Fire main objective searcher";
+    private string toturialMessage = "Point to an objective and press <E> to select it";
     internal IEnumerator SearchPath()
     {
        // manager.startedRun = true;
+
+
+
         mirror.gameObject.SetActive(false);
         reloadMissions.SetActive(false);
         empowerMission.SetActive(false);
-        search.SetActive(false);
+        
         openPortal.SetActive(false);
 
         if (!used)
         {
-            
+            isSearching = true;
             source.PlayOneShot(poweringUP, .1f);
             used = true;
            // TurnRed(meshSearchPath);
@@ -227,13 +248,16 @@ public class MissionSelector : ModDataRoom
 
         reloadMissions.SetActive(true);
         reloadPrice.text = GetReloadMissionsPrice() + "";
+
+
+        isSearching = false;
     }
 
     internal void StartSearch()
     {
         AudioSource.PlayClipAtPoint(click, transform.position,.1f);
         reloadMissionsCounter = 1;
-        search.SetActive(false);
+        SearchButtontext.text = toturialMessage;
         StartCoroutine("SearchPath");
     }
 

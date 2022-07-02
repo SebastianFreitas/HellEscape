@@ -95,7 +95,7 @@ public class GameMan : ModDataRoom
         currentStartPos = hub.statspos.position;
 
         player.GetComponent<PlayerHpManager>().HealForMax();
-       
+
     }
 
     internal void EndRun()

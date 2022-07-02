@@ -49,7 +49,7 @@ public class ExplosiveCilinder : PropBehaviour
                 hitCollider.transform.parent.GetComponentInParent<Monster>().TakeDamage(new BulletStats(50, 0, 0, 0, 0), false, 0);
 
                 var direction = hitCollider.transform.position - transform.position;
-                hitCollider.GetComponent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 50f, ForceMode.Impulse);
+                hitCollider.GetComponentInParent<Rigidbody>().AddForce((hitCollider.transform.position - transform.position) * 50f, ForceMode.Impulse);
             }
             else if (hitCollider.gameObject.CompareTag("MonsterHead"))
             {

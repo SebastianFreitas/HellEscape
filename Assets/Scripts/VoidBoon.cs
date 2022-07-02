@@ -63,6 +63,7 @@ internal class VoidBoon
         DoublePhysCold,
         CritFireRate
     }
+
     internal List<(int, string, BoonName)> BoonList = new List<(int, string, BoonName)>();
 
     private int weight;

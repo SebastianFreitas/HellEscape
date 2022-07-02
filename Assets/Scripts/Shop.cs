@@ -38,21 +38,30 @@ public class Shop : GunGenerator
 
     private void InitiateItemList()
     {
-        for(int i = 0; i < Random.Range(3,7); i++)
+        var addMaxWeaponChance = 24;
+        var maxWeapons = 1;
+        if(Random.Range(0,100) > 100 - addMaxWeaponChance)
+        {
+            maxWeapons += Random.Range(1, 3);
+        }
+
+        for (int i = 0; i < Random.Range(1,maxWeapons); i++)
         {
             var x = CreateWeapon(weaponLevel, false);
-            var currentPrice = x.mods.Count * (x.level - 9);
+            var currentPrice = x.mods.Count * (x.level - 9) + 20;
             weapons.Add((x, Random.Range(currentPrice + 1, currentPrice * 2)));
         }
     }
 
 
-    internal void PressNext()
+    internal bool PressNext()
     {
+        if (weapons.Count < 1) return false;
         if (weaponNumber == weapons.Count - 1) weaponNumber = 0;
         else weaponNumber++;
 
         UpdateShop();
+        return true;
     }
 
     private void UpdateShop()

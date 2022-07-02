@@ -26,7 +26,7 @@ public class MonitorMission : ModDataRoom
     public void UISelect()
     {
         selector.TurnGreen(meshesGood);
-
+        selector.TurnOffToTurial();
         selector.mission = mission;
         selector.currentMonitor = this;
         selector.empowerMission.SetActive(true);
