@@ -146,6 +146,8 @@ Made by Phase 3 on 2026-09-25. All of it lives in
 - **Git tag `v0-unity2020.3`:** the last 2020.3 state. It is the
   original game (up to `691cf353`, "trial becomes 0 cost on win") plus
   the revival's `PLAN.md`, `docs/` and `tools/`, and nothing else.
-  A fresh clone of it matches the working project, apart from two
-  Editor-written settings files (ProBuilder `Settings.json` line endings
-  and `UserSettings/`).
+  A fresh clone of it matches the working project: the same 4,849
+  tracked files, a clean `git fsck`, and identical contents once line
+  endings are ignored. The working folder only adds `UserSettings/`
+  (Editor-written) and 11 empty folders that git can't track. Clone
+  with `core.longpaths=true`, or some pack paths fail to check out.
