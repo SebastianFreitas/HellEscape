@@ -83,7 +83,7 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
 | 2 | Baseline: see the game as it was | [x] (cut short, see Log) |
 | 3 | Safety net | [x] (tag push is the owner's) |
 | **B** | **Repo** | |
-| 4 | Asset audit | [ ] |
+| 4 | Asset audit | [x] (R1 to R3 await the owner's OK) |
 | 5 | Prune | [ ] |
 | 6 | Repo home and Git LFS | [ ] |
 | **C** | **Claude environment (thin layer, before the migration)** | |
@@ -209,6 +209,9 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
 - **`Assets/` is about 5.4 GB:**
   - Third-party packs take 3.4 GB. The Cobble Games Spaceship pack alone
     is **2.4 GB**, and its 64 MB TGAs are near GitHub's 100 MB limit.
+  - **Phase 4 found:** only 762 MB is visible in the game. 2.5 GB ships
+    but is only used by inactive objects in MainLevel (the Space Station
+    and two F3 ships), and 2.2 GB is unused. See `docs/assets.md`.
   - `Materials/NotReduced` is 804 MB.
   - `Prefabs/rest/Props` is 572 MB.
   - `SciFi Warehouse Kit` is 482 MB.
@@ -485,6 +488,20 @@ read-only and produces a keep/drop list.
 has approved it line by line for the risky ones.
 
 **Log:**
+- 2026-09-25, done. The owner still has to answer R1 to R3 before
+  Phase 5 starts.
+  - **New tool:** `tools/assetaudit.py`. It is read-only, needs no Unity
+    and runs in 5 seconds. The results are in `docs/assets.md`.
+  - **The split:** of 5,473 MB, 762 MB is used, 2,546 MB is hidden and
+    2,165 MB is unused. The pruned `Assets/` would be about 3.3 GB after
+    the unused drops, or about 0.77 GB with R1 and R2 as well.
+  - **Plan corrected:** the Cobble Games Spaceship is **not** unused.
+    MainLevel holds an inactive `Space Station` instance that nothing
+    ever activates. Phase 5 now removes such instances in the Editor
+    first (see its directions).
+  - **Closed from Phase 2:** after the bridge was moved out, the Editor
+    was refreshed with Ctrl+R. It recompiled with zero errors.
+  - **For Phase 6:** add `dae`, `bmp` and `aiff` to the LFS list.
 
 ---
 
@@ -497,8 +514,17 @@ reference.
 - **Work on a `prune` branch.** Delete assets together with their `.meta`
   files (in Unity 2020.3 if it is installed, or on disk with the Editor
   closed).
+- **The list is `docs/assets.md`,** plus the owner's answers on R1 to
+  R3 in Phase 4's Log.
+- **Hidden ships first (R1, R2, if approved):** delete the `Space
+  Station`, `F3_Green Variant` and `F3_Grey Variant` instances from
+  MainLevel **in the Editor**, save the scene, and only then delete their
+  packs. Scene YAML must not be hand-edited. The Phase 2 bridge is in
+  `.claude-bridge/removed-from-assets/`; copy it back into `Assets/`
+  for this step, then move it out again.
 - **Delete in batches** (one pack per commit), re-running the Phase 1
   reference scan after each batch. Zero new unresolved GUIDs is the gate.
+  Also re-run `tools/assetaudit.py`: "used" must stay at 762 MB.
 - **Also remove:**
   - the pack demo scenes
   - the TMP "Examples & Extras"
