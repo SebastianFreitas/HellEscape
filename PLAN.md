@@ -39,6 +39,15 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
     6.3, compiling with zero errors, and playable.
 - **If a phase is too big for one session,** it writes a handoff (see
   Phase 7) and the next session continues it. It does not skip ahead.
+- **The owner is away from the PC.** Claude drives Unity itself (open,
+  play, click, screenshot, read the console) and never asks the owner to
+  play, click or watch. The owner's jobs are decisions, logins, pushes
+  and anything outward-facing. Leave the Editor open; Claude closes and
+  reopens it when a step needs batch mode.
+  - Up to Phase 9 (Unity 2020.3), Claude uses the local-only bridge
+    built in Phase 2 (`.claude-bridge/`, see `docs/baseline.md`).
+  - From Phase 9 on, Unity's official Claude Code plugin and the Unity
+    CLI (Unity 6+ only).
 - **If a phase finds that this plan is wrong,** it fixes the plan (the
   phase text, the snapshot, the order) and says so in its Log.
 
@@ -71,7 +80,7 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
 | 0 | Owner setup (you, no Claude) | [ ] |
 | **A** | **Save what exists** | |
 | 1 | Hunt for missing files | [x] |
-| 2 | Baseline: see the game as it was | [ ] |
+| 2 | Baseline: see the game as it was | [~] handoff |
 | 3 | Safety net | [ ] |
 | **B** | **Repo** | |
 | 4 | Asset audit | [ ] |
@@ -113,6 +122,8 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
 ## Where the project stands (snapshot, 2026-09-25)
 
 **Engine and settings**
+- **Batch mode does not work in 2020.3 with the Personal licence**
+  (credentials error). Only the Hub-opened GUI Editor works.
 - Unity **2020.3.35f1**, an LTS release. **URP 10.9** is already in use
   (`Assets/Base/Settings/UniversalRP-*.asset`), so there is no render
   pipeline switch to make, only a big URP version jump.
@@ -348,45 +359,70 @@ with its impact.
 ## Phase 2: Baseline: see the game as it was
 
 **Goal:** a record of how the game looked and played before anything
-changes. Every later phase compares against it. You drive Unity; Claude
-guides and writes things down.
-
-**Research first:**
-- Unity 2020.3 command-line options (`-batchmode`, `-logFile`,
-  `-quit`), for a headless check after the first open.
+changes. Every later phase compares against it. **Claude plays it
+itself** through the local bridge; the owner is not needed.
 
 **Directions**
-1. **Open the project in 2020.3.35f1** (it is installed). No old build
-   exists (see Phase 1), so this is the only way to see the game.
-   - Make sure `Library/` stays gitignored.
-   - The first import is long.
-   - Then read `Editor.log` for errors, missing scripts and missing
-     references, and cross-check them against `docs/recovery.md`.
-   - Check the three open questions at the end of `docs/recovery.md`.
-3. **Play through with the owner:**
-   - main menu and hub, the Mirror, the Shop, the Mission Selector, the
-     Portal
-   - a full run (rooms, an elite, a boss, a boon pick, a weapon drop,
-     crafting)
-   - the Path, Bridge and Trial
-   - death, and restarting
-   - For each one, note whether it works, looks broken or throws errors.
-4. **Write `docs/baseline.md`:**
-   - the controls as they really are
-   - the flow of the game
-   - what works and what doesn't
-   - console errors seen
-   - FPS roughly
-   - screenshots, which stay outside the repo; link them by describing
-     them
-5. **Note all PlayerPrefs keys in use.** Saves in the 2020 build live in
-   the Windows registry under the company and product name. Later phases
-   must not lose the old saves' meaning.
+1. Open the project in 2020.3.35f1 (from the Hub; batch mode can't be
+   licensed). Read `Editor.log` and cross-check it against
+   `docs/recovery.md`.
+2. Drive the game through the bridge: the main menu, the hub (Mirror,
+   Shop, Mission Selector, Portal), a full run (rooms, an elite, a boss,
+   a boon pick, a weapon drop, crafting), the Path/Bridge/Trial, death
+   and restart, the inventory and pause. Note whether each one works,
+   looks broken or throws errors, with screenshots.
+3. Check the three open questions at the end of `docs/recovery.md`.
+4. Write `docs/baseline.md`: controls, flow, what works, console errors,
+   FPS, and every PlayerPrefs key.
+5. At the end: delete `Assets/Editor/ClaudeBridge/` (plus its `.meta`
+   and `Assets/Editor.meta`) and the `.git/info/exclude` lines, but keep
+   `.claude-bridge/saves/` until Phase 3 has moved it off-repo.
 
-**Done when:** `docs/baseline.md` exists and you agree it describes the
-game you remember.
+**Done when:** `docs/baseline.md` covers every flow above.
+
+**Handoff (for the next session, 2026-09-25):**
+- **Done:**
+  - The project opens clean.
+  - The bridge works.
+  - Recorded so far: the menu, the hub, the mission roll, the portal,
+    run generation, and encounters (cleared with real fire).
+  - `docs/baseline.md` is written up to there.
+  - The old build saves are exported to `.claude-bridge/saves/`.
+- **Left:** the flows listed as *not yet* in `docs/baseline.md`, then
+  step 5.
+- **How to resume:**
+  - The Editor should already be open on MainLevel. If it isn't, open it
+    from the Hub.
+  - Tools are in `.claude-bridge/tools/`, run with Git Bash:
+    - `boot.sh`: Play, then the hub goes live.
+    - `startrun.sh`: search, pick a mission, drop through the portal.
+    - `ub.sh "cmd"`: a raw bridge command.
+    - `goroom.sh N` and `walkrun.sh [maxRooms]`: walk rooms in order.
+    - `fight.sh`: aim and fire until clear.
+    - `use.sh <target>`: aim, then press E.
+    - `in.sh <key|LMB|RMB>`: real input into the Game view.
+  - After editing the bridge `.cs`: `ub.sh stop`, then `ub.sh refresh`,
+    wait about 25 s.
+  - Always walk rooms in order; skipped rooms have no floor yet.
+  - Set `PlayerHpManager.health` high before fights.
+- **Unfinished lead:** the `walkrun.sh` fights time out with 2 enemies
+  left in some rooms. Find out why (aim, or unreachable enemies) before
+  trusting it for the boss.
+- **Budget:** keep the rest to one session. Batch commands, and use
+  `sheet.py` contact sheets instead of single screenshots.
 
 **Log:**
+- 2026-09-25 (session 1, stopped at about 125k tokens for a handoff):
+  - **Plan changed:** the owner won't play. Claude drives Unity itself,
+    and Phase 2 builds a local bridge for 2020.3, because no official
+    tool supports 2020.3 (the Unity plugin needs Unity 6+, and unity-mcp
+    needs 2021.3+).
+  - **Found:**
+    - 2020.3 batch mode can't use the Personal licence.
+    - The old build's saves survive in the registry.
+    - `MainMenuManager`'s `DeleteAll` is commented out (earlier notes
+      said it ran).
+    - Bug candidates are listed in `docs/baseline.md`.
 
 ---
 
@@ -476,8 +512,9 @@ reference.
   Phase 27 handles it, once there is a bridge and tests.
 - **Downsizing textures** (max-size import settings) is a Phase 28
   job. Don't do it here.
-- **If 2020.3 is installed,** open the project and play MainLevel for a
-  minute to confirm nothing went pink or missing.
+- **Claude plays MainLevel for a minute** in 2020.3 through the Phase 2
+  bridge (a run start and one encounter) to confirm nothing went pink or
+  missing.
 
 **Done when:** the pruned project has zero new unresolved references, you
 have played it (if 2020.3 is available), and `docs/assets.md` records
@@ -723,6 +760,9 @@ about the migration.
      upgrade.
    - Commit each package step separately.
 5. **Explain the API Updater diff** in the Log.
+6. **Install Unity's official Claude Code plugin and the Unity CLI now**
+   (the minimal part of Phase 13), so Phases 10 to 12 are checked by
+   Claude without the owner. Phase 13 finishes the setup.
 
 **Done when:** the project opens in 6.3 (errors are allowed at this
 point), the packages are at their 6.3 versions, and every step is its own
@@ -790,7 +830,8 @@ pink materials and no rendering errors.
 ## Phase 12: Parity play-test and the first 6.3 build
 
 **Directions**
-- **Replay the `docs/baseline.md` checklist on 6.3** with the owner.
+- **Replay the `docs/baseline.md` checklist on 6.3,** with Claude
+  driving it through the bridge.
   Every difference is either an upgrade regression, which gets fixed
   here, or a pre-existing bug, which gets logged for Phase 16.
 - **Produce a Windows build** with the Editor closed. Research the
