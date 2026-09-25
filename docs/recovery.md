@@ -131,4 +131,21 @@ confirm these in the running game:
 
 ## Backups
 
-To be filled in by Phase 3.
+Made by Phase 3 on 2026-09-25. All of it lives in
+`C:\Users\Traff\Backups\VoidScape\`, outside the repo.
+
+- **`VoidScape-2026-09-25-unity2020.3.zip`** (5.8 GiB, 4,962 files,
+  8.3 GiB unpacked): the whole working folder, `.git/` included, without
+  `Library/` and `Temp/`. `7z t` passes. The only files left out are 24
+  shader-compiler logs in `Logs/` that a stray process had locked.
+  To restore, unzip it and open the folder from the Hub in 2020.3.35f1.
+- **`oldsaves-registry/`:** the old build's PlayerPrefs, exported from
+  the registry in Phase 2 (`oldsaves.reg`, plus a readable
+  `oldsaves.txt`). The same files are still in `.claude-bridge/saves/`,
+  which is untracked.
+- **Git tag `v0-unity2020.3`:** the last 2020.3 state. It is the
+  original game (up to `691cf353`, "trial becomes 0 cost on win") plus
+  the revival's `PLAN.md`, `docs/` and `tools/`, and nothing else.
+  A fresh clone of it matches the working project, apart from two
+  Editor-written settings files (ProBuilder `Settings.json` line endings
+  and `UserSettings/`).

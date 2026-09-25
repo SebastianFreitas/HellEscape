@@ -81,7 +81,7 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
 | **A** | **Save what exists** | |
 | 1 | Hunt for missing files | [x] |
 | 2 | Baseline: see the game as it was | [x] (cut short, see Log) |
-| 3 | Safety net | [ ] |
+| 3 | Safety net | [x] (tag push is the owner's) |
 | **B** | **Repo** | |
 | 4 | Asset audit | [ ] |
 | 5 | Prune | [ ] |
@@ -406,10 +406,8 @@ itself** through the local bridge; the owner is not needed.
     bridge, so it was **moved** out of `Assets/` into
     `.claude-bridge/removed-from-assets/` instead (untracked, nothing
     lost). Two things are still open:
-    - **Owner, when back at the PC:** trim `.git/info/exclude` to just
-      `/.claude-bridge/`. It still ignores `/Assets/Editor/`, so any
-      real Editor scripts added later would be silently left out of
-      git. **This must happen before Phase 7 or 9 adds Editor code.**
+    - ~~Trim `.git/info/exclude` to just `/.claude-bridge/`.~~ Done in
+      Phase 3.
     - **Next session:** confirm the Editor recompiled with zero errors
       after the move (Phase 3 doesn't need the Editor, so this can wait
       until Phase 4).
@@ -434,6 +432,15 @@ itself** through the local bridge; the owner is not needed.
 the tag equals the working project.
 
 **Log:**
+- 2026-09-25, done except the push (the owner pushes).
+  - The zip, the old saves and the tag are listed in
+    `docs/recovery.md` under Backups.
+  - A fresh clone of the tag matches the working project.
+  - **Owner:** push the tag (the command is in the session's last
+    message). Until then the tag exists only on this PC, next to the
+    zip.
+  - Also closed from Phase 2: `.git/info/exclude` is trimmed to
+    `/.claude-bridge/`, so `Assets/Editor/` is tracked again.
 
 ---
 
