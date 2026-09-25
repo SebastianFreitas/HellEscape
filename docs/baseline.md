@@ -2,7 +2,7 @@
 
 Recorded 2026-09-25 by Claude, driving the 2020.3 Editor itself through a
 local-only bridge (see "How this was captured"). **Partial:** the flows
-marked *not yet* are for the next session (see PLAN.md Phase 2 handoff).
+under "Not played" were left for Phase 12 (see "Why the baseline stops here").
 
 ## Opening the project
 
@@ -31,8 +31,9 @@ marked *not yet* are for the next session (see PLAN.md Phase 2 handoff).
 | Dash | **Right mouse only** (no key) |
 | Interact | E (raycast, 10 m, from screen centre) |
 | Grenade | Q |
-| Inventory | I, then Tab and 1 to 4 inside it |
-| Pause | Esc |
+| Weapon slots | 1 to 4 equip a slot. Tab shows the equipped gun's stats and mods |
+| Inventory | I does nothing: `AcessInventory` is not in the scene. The slot list is an always-on HUD panel, top left |
+| Pause | Esc (see "Pause" below) |
 
 ## Flow of the game (verified by play)
 
@@ -58,10 +59,54 @@ marked *not yet* are for the next session (see PLAN.md Phase 2 handoff).
    - Gun parts drop: 16 became 21 after one room.
    - Clearing works with real mouse fire.
 
-**Not yet covered:** boon pick, weapon drop, crafting, the shop, elites,
-the TowerBoss fight, the Path/Bridge/Trial, death and restart, the
-inventory screen, pause. Also still open: the three visual checks at the
-end of `docs/recovery.md`.
+   - A second run: 43 main rooms (Boon room at 41, TowerBoss at 43).
+6. **Weapon drops:** a cleared encounter can leave a `Drop` (tag `Item`).
+   Walking over it (or E) puts a random gun in the first free slot of 4.
+   Seen: a BASIC gun with 4 mods (+8% move speed, +10% fire rate, +7
+   fire, +9 poison), 145 DPS against the starting gun's 100. When all 4
+   slots are full, it goes to the 8 "layouts" instead.
+7. **Pause (Esc):** shows the main menu (PLAY/OPTIONS/QUIT) by switching
+   off the whole `RunningGame` object. `Time.timeScale` stays 1. PLAY
+   resumes the run intact (same position, health and rooms). A second
+   Esc does not close the menu. `PauseMenu.cs` (the timeScale version)
+   is not in use.
+8. **Death and restart:** falling below y = −500 kills the player and
+   returns them to the hub. Health resets to 50 and the hub goes back to
+   dormant (press E on the Message again). **Weapons and gun parts are
+   kept.** `isInEncounter` was false this time.
+9. **The Path/Bridge/Trial (from the code, not played):** the hub's Trial
+   costs 10 + PathLevel gun parts, or 0 after a won run. It builds a
+   chain of floating bridge pieces, PathLevel × 2 + 5 long. Every second
+   piece spawns monsters (elites once the distance is under PathLevel),
+   and the last one spawns a boss. At the end, a new hub is built,
+   PathLevel goes up by 1, and the Mission Selector unlocks.
+
+**Not played (stopped by the owner's call, see below):** a boon pick,
+crafting, the shop, elites, the TowerBoss fight and the Path. Phase 12's
+parity play-test on 6.3 covers them for the first time, with the proper
+tools from Phases 13 to 15, and compares against the code rather than
+this file.
+
+## Why the baseline stops here
+
+The 2020.3 bridge works: it sends real keys and clicks. But it teleports
+between rooms, snaps aim onto enemies and needs health set to 100000.
+Each fight takes about 30 s, and a teleport once dropped the player
+through a corridor. The owner decided (2026-09-25) that deep play-testing
+waits for Unity 6.3 and real test tools, so this baseline records only
+what was reached.
+
+## Recovery open questions (from `docs/recovery.md`)
+
+1. **White `Image` in `CanvasInventory`:** never visible. The prefab is
+   only referenced by `Gun.inventory`, a field no code reads, so it is
+   never instantiated.
+2. **Pink mesh on the Path start piece (`old/Path.prefab`):** never
+   visible. It is only referenced by `StartHub.path`, which no code uses
+   (`StartPath` builds bridge pieces instead).
+3. **SkullBoss and TriangleGreen with the untextured material:** not
+   seen. TriangleGreen spawns on Path pieces and SkullBoss is referenced
+   from `MainLevel`. Check them in Phase 12.
 
 ## Performance
 
@@ -91,7 +136,12 @@ end of `docs/recovery.md`.
   10 damage every quarter-second and dies in about 1 s.
 - **Some enemies were out of reach:** in 2 of 5 rooms, 2 enemies were
   never killed in 90 s of aimed fire, and they followed the player into
-  corridors. It could be the aim harness; check.
+  corridors. It happened again in run 2 (1 enemy left in a RoomDonut).
+  It could be the aim harness; check.
+- **Esc can't be closed with Esc,** and it doesn't pause time (see Pause).
+- **The I key does nothing** (`AcessInventory` isn't in the scene).
+- **A corridor teleport fell through the world** (run 1, room 10). This
+  may be the harness teleporting before the floor was enabled.
 - **Options:** the Brightness label reads 0.00 with its slider at full.
 - **`PlayerInventory`:** the first-run fallback writes `"Gunparts"`
   (lowercase p) but reads `"GunParts"`. It's harmless, because

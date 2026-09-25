@@ -80,7 +80,7 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
 | 0 | Owner setup (you, no Claude) | [ ] |
 | **A** | **Save what exists** | |
 | 1 | Hunt for missing files | [x] |
-| 2 | Baseline: see the game as it was | [~] handoff |
+| 2 | Baseline: see the game as it was | [x] (cut short, see Log) |
 | 3 | Safety net | [ ] |
 | **B** | **Repo** | |
 | 4 | Asset audit | [ ] |
@@ -380,37 +380,6 @@ itself** through the local bridge; the owner is not needed.
 
 **Done when:** `docs/baseline.md` covers every flow above.
 
-**Handoff (for the next session, 2026-09-25):**
-- **Done:**
-  - The project opens clean.
-  - The bridge works.
-  - Recorded so far: the menu, the hub, the mission roll, the portal,
-    run generation, and encounters (cleared with real fire).
-  - `docs/baseline.md` is written up to there.
-  - The old build saves are exported to `.claude-bridge/saves/`.
-- **Left:** the flows listed as *not yet* in `docs/baseline.md`, then
-  step 5.
-- **How to resume:**
-  - The Editor should already be open on MainLevel. If it isn't, open it
-    from the Hub.
-  - Tools are in `.claude-bridge/tools/`, run with Git Bash:
-    - `boot.sh`: Play, then the hub goes live.
-    - `startrun.sh`: search, pick a mission, drop through the portal.
-    - `ub.sh "cmd"`: a raw bridge command.
-    - `goroom.sh N` and `walkrun.sh [maxRooms]`: walk rooms in order.
-    - `fight.sh`: aim and fire until clear.
-    - `use.sh <target>`: aim, then press E.
-    - `in.sh <key|LMB|RMB>`: real input into the Game view.
-  - After editing the bridge `.cs`: `ub.sh stop`, then `ub.sh refresh`,
-    wait about 25 s.
-  - Always walk rooms in order; skipped rooms have no floor yet.
-  - Set `PlayerHpManager.health` high before fights.
-- **Unfinished lead:** the `walkrun.sh` fights time out with 2 enemies
-  left in some rooms. Find out why (aim, or unreachable enemies) before
-  trusting it for the boss.
-- **Budget:** keep the rest to one session. Batch commands, and use
-  `sheet.py` contact sheets instead of single screenshots.
-
 **Log:**
 - 2026-09-25 (session 1, stopped at about 125k tokens for a handoff):
   - **Plan changed:** the owner won't play. Claude drives Unity itself,
@@ -423,6 +392,20 @@ itself** through the local bridge; the owner is not needed.
     - `MainMenuManager`'s `DeleteAll` is commented out (earlier notes
       said it ran).
     - Bug candidates are listed in `docs/baseline.md`.
+- 2026-09-25 (session 2, **closed early by the owner's call**):
+  - Recorded weapon drops, the slots HUD, pause, death and restart, and
+    the Path from its code. Answered recovery questions 1 and 2 (neither
+    asset is ever shown). Question 3 moves to Phase 12.
+  - **Not played:** a boon pick, crafting, the shop, elites, the
+    TowerBoss and the Path. The 2020.3 bridge was too slow and fragile
+    (teleports, aim snapping, health 100000). The owner chose to
+    convert to 6.3 first and build real play/test tools there, and only
+    then fix bugs and refactor. That was already the plan's order, so
+    only Phase 12 changed.
+  - **Step 5 left to the owner:** the auto-mode guard blocked Claude
+    from deleting `Assets/Editor/` (the bridge only, untracked). A copy
+    is kept in `.claude-bridge/ClaudeBridge.cs.bak`. The owner deletes
+    the folder and trims `.git/info/exclude` to `/.claude-bridge/`.
 
 ---
 
@@ -831,9 +814,14 @@ pink materials and no rendering errors.
 
 **Directions**
 - **Replay the `docs/baseline.md` checklist on 6.3,** with Claude
-  driving it through the bridge.
+  driving it through the official Unity plugin/CLI.
   Every difference is either an upgrade regression, which gets fixed
   here, or a pre-existing bug, which gets logged for Phase 16.
+- **Smoke-check the flows Phase 2 never played** (a boon pick,
+  crafting, the shop, an elite, the TowerBoss, the Path), plus recovery
+  question 3 (SkullBoss and TriangleGreen materials). Compare against
+  the code, since no 2020.3 record exists. Keep it to "does it run and
+  look right"; deep testing waits for Phases 13 to 15.
 - **Produce a Windows build** with the Editor closed. Research the
   6.3 build command-line (Build Profiles changed how builds are set up).
   Launch the build and play for a minute.
