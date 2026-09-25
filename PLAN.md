@@ -579,6 +579,25 @@ the final size.
     delete the R1/R2 ship instances. The bridge needs `destroy` and
     `savescene` commands for this, which aren't written yet.
   - **Baselines:** 63 unresolved GUIDs, and "used" is 762 MB.
+- 2026-09-25, part 2. **Batch 1 is deleted,** with one commit per pack
+  (36 commits).
+  - **How:** `.claude-bridge/tools/prune.py`, which is local only. It
+    refuses to delete a file unless the file and its `.meta` are in the
+    zip.
+  - **Permissions:** the owner allowed it in
+    `.claude/settings.local.json`, which git ignores.
+  - **Size:** `Assets/` went from 5,473 MB to 3,460 MB.
+  - **Gates passed:**
+    - Unresolved GUIDs went from 63 to 31, with none new.
+    - "Used" is unchanged: 762 MB visible plus 2,546 MB hidden.
+  - **Still open:**
+    - Remove `SampleScene` from Build Settings (the scene file is
+      gone).
+    - R1/R2: delete the ship instances in the Editor, then their packs.
+    - The one-minute play check.
+    - The final numbers in `docs/assets.md`.
+  - **Blocked:** auto mode refuses to copy the bridge back into
+    `Assets/`. The owner has to run that step.
 
 ---
 
