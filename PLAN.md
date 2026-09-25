@@ -554,6 +554,24 @@ have played it (if 2020.3 is available), and `docs/assets.md` records
 the final size.
 
 **Log:**
+- 2026-09-25, part 1 (handoff). On branch `prune`. Nothing deleted yet.
+  - The session's auto mode blocked the deletes and the Editor scene
+    edit. **It needs the owner's yes in chat** before it goes on.
+  - **Batch 1 (the unused list) is ready:** 1,042 files, 2,013 MB. It
+    is archived and tested in `Archive/pruned-assets.zip` (2,289
+    entries, including metas and the metas of 205 folders that end up
+    empty). The list is `Archive/batch1.json`.
+  - **The list is smaller than `docs/assets.md`:** 22 files stay
+    because kept files use them.
+    - The ProBuilder palette uses two rock materials.
+    - R3 orphans (`Dumpster`, `crate 1`, `jerry can 2`,
+      `Particle System_A`) use Dumpster, `_Pack` and blood files.
+  - **Added to the list:** the unused Warehouse Kit prefabs, the sample
+    scenes and their settings, and the Warehouse Kit readme.
+  - **Needs the Editor:** remove `SampleScene` from Build Settings, and
+    delete the R1/R2 ship instances. The bridge needs `destroy` and
+    `savescene` commands for this, which aren't written yet.
+  - **Baselines:** 63 unresolved GUIDs, and "used" is 762 MB.
 
 ---
 
