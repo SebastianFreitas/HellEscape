@@ -402,10 +402,17 @@ itself** through the local bridge; the owner is not needed.
     convert to 6.3 first and build real play/test tools there, and only
     then fix bugs and refactor. That was already the plan's order, so
     only Phase 12 changed.
-  - **Step 5 left to the owner:** the auto-mode guard blocked Claude
-    from deleting `Assets/Editor/` (the bridge only, untracked). A copy
-    is kept in `.claude-bridge/ClaudeBridge.cs.bak`. The owner deletes
-    the folder and trims `.git/info/exclude` to `/.claude-bridge/`.
+  - **Step 5, mostly done:** the auto-mode guard blocked deleting the
+    bridge, so it was **moved** out of `Assets/` into
+    `.claude-bridge/removed-from-assets/` instead (untracked, nothing
+    lost). Two things are still open:
+    - **Owner, when back at the PC:** trim `.git/info/exclude` to just
+      `/.claude-bridge/`. It still ignores `/Assets/Editor/`, so any
+      real Editor scripts added later would be silently left out of
+      git. **This must happen before Phase 7 or 9 adds Editor code.**
+    - **Next session:** confirm the Editor recompiled with zero errors
+      after the move (Phase 3 doesn't need the Editor, so this can wait
+      until Phase 4).
 
 ---
 
