@@ -19,13 +19,20 @@ The goals, in order:
 
 ## How to use this file
 
-**One phase = one fresh Claude session.** Start each one with:
-
-```
-Read PLAN.md at the repo root and do Phase <N>. Start with the phase's
-research pass, show me a short plan for the phase, wait for my OK, then
-do it. Finish by filling in the phase's Log and ticking it in Progress.
-```
+**Phases run back to back (the owner's rule, 2026-09-25).** Start a
+session with "go". Claude picks up the first open phase in Progress.
+- **Each phase:** do its research pass, then do the phase, then fill in
+  its Log, tick it in Progress, commit, and give the push block.
+- **Then go straight on to the next phase** in the same session. Let
+  the context compact as needed; don't wait for a new session.
+- **Stop and tell the owner to `/clear` and "go"** only when it's worth
+  it. For example:
+  - the context is getting heavy or muddled after several compactions
+  - a decision is the owner's to make
+  - a phase boundary makes for a clean handover
+  Before stopping, write the handoff into the phase's Log.
+- Don't wait for an OK on a phase plan. Do ask when the phase says the
+  owner decides something.
 
 - **Directions, not recipes.** Each phase says what to reach and what to
   watch out for. The session works out the how, and it researches first
