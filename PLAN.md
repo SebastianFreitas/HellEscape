@@ -83,7 +83,7 @@ do it. Finish by filling in the phase's Log and ticking it in Progress.
 | 2 | Baseline: see the game as it was | [x] (cut short, see Log) |
 | 3 | Safety net | [x] (tag push is the owner's) |
 | **B** | **Repo** | |
-| 4 | Asset audit | [x] (R1 to R3 await the owner's OK) |
+| 4 | Asset audit | [x] |
 | 5 | Prune | [ ] |
 | 6 | Repo home and Git LFS | [ ] |
 | **C** | **Claude environment (thin layer, before the migration)** | |
@@ -488,8 +488,12 @@ read-only and produces a keep/drop list.
 has approved it line by line for the risky ones.
 
 **Log:**
-- 2026-09-25, done. The owner still has to answer R1 to R3 before
-  Phase 5 starts.
+- 2026-09-25, done.
+  - **The owner's answers:**
+    - R1 and R2: drop them.
+    - R3: keep them.
+    - Nothing gets thrown away. Every dropped file goes into a local zip
+      in `/Archive/`, which git ignores (see Phase 5).
   - **New tool:** `tools/assetaudit.py`. It is read-only, needs no Unity
     and runs in 5 seconds. The results are in `docs/assets.md`.
   - **The split:** of 5,473 MB, 762 MB is used, 2,546 MB is hidden and
@@ -514,6 +518,12 @@ reference.
 - **Work on a `prune` branch.** Delete assets together with their `.meta`
   files (in Unity 2020.3 if it is installed, or on disk with the Editor
   closed).
+- **Archive before deleting (the owner's rule):** zip every file you drop,
+  with its `.meta` and its path under `Assets/`, into
+  `Archive/pruned-assets.zip` at the repo root. Add each batch to the
+  same zip. `/Archive/` is in `.gitignore`, so the zip stays on this PC
+  only. It sits outside `Assets/`, so Unity never imports it. Check the
+  zip (`7z t`) before deleting anything.
 - **The list is `docs/assets.md`,** plus the owner's answers on R1 to
   R3 in Phase 4's Log.
 - **Hidden ships first (R1, R2, if approved):** delete the `Space
@@ -585,6 +595,7 @@ Unity-aware merging, and a clean ignore list.
   - `.claude/worktrees/`
   - `.claude/handoff.md`
   - `Logs/`, `UserSettings/`
+  - `/Archive/` (Phase 5's zip of pruned assets; keep this line)
   - `Builds/`
   - the Claude verify/screenshot output folder (Phase 14)
 - **Doing the push:** Claude prepares everything and gives the exact
