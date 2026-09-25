@@ -91,7 +91,7 @@ session with "go". Claude picks up the first open phase in Progress.
 | 3 | Safety net | [x] (tag push is the owner's) |
 | **B** | **Repo** | |
 | 4 | Asset audit | [x] |
-| 5 | Prune | [ ] |
+| 5 | Prune | [x] |
 | 6 | Repo home and Git LFS | [ ] |
 | **C** | **Claude environment (thin layer, before the migration)** | |
 | 7 | Claude foundations (port the Portfolio setup) | [ ] |
@@ -598,6 +598,33 @@ the final size.
     - The final numbers in `docs/assets.md`.
   - **Blocked:** auto mode refuses to copy the bridge back into
     `Assets/`. The owner has to run that step.
+- 2026-09-26, done.
+  - **Bridge step:** the owner switched to the permission mode that asks
+    first. The bridge went in with two new commands, `destroy` and
+    `savescene`, plus a `buildscenes` command.
+  - **Editor edits:** deleted `Space Station`, `F3_Green Variant` and
+    `F3_Grey Variant` from MainLevel. Removed `SampleScene` from Build
+    Settings.
+  - **Batch 2:** the Cobble Games and F3 Corvette packs (2,609 MB),
+    archived first, then deleted.
+  - **Gates:**
+    - Unresolved GUIDs: 63 went to 31, with none new.
+    - "Used" stayed at 762 MB.
+  - **Result:** `Assets/` is 850 MB. The numbers are in
+    `docs/assets.md`.
+  - **Play check (2020.3, through the bridge):**
+    - hub, run start, and one RoomD encounter with 3 enemies, cleared in
+      22 s
+    - no pink or missing materials
+    - no new console messages (the same two old warnings)
+    - 54–59 FPS
+  - **Afterwards:** the bridge is back out of `Assets/`.
+  - **Two findings:**
+    - The bridge splits commands on spaces. Quote names that contain
+      spaces: `destroy "a/b c"`.
+    - `Explode.prefab` shows a line-ending-only change after the
+      reimport. It was left uncommitted, and Phase 6's
+      `.gitattributes` settles line endings.
 
 ---
 

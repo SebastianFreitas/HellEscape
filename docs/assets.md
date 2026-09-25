@@ -67,6 +67,23 @@ Corvette ships (`F3_Green Variant`, `F3_Grey Variant`) are the same case.
 | Today | 5.47 GB |
 | After dropping the **unused** list below (no scene edits needed) | ~3.31 GB |
 | After also dropping the **hidden** ships (R1, R2) | **~0.77 GB** |
+| **Done in Phase 5** (measured) | **0.85 GB** (1,001 files) |
+
+**What Phase 5 did:**
+- **Dropped 4.6 GB:** 1,042 unused files (2,013 MB) and the two ship
+  packs (2,609 MB).
+  - Everything dropped is in `Archive/pruned-assets.zip`: 2,479 entries,
+    2.4 GB. It stays on this PC and git ignores it.
+  - The lists are in `Archive/batches/`.
+- **What's left:**
+  - 762 MB used by the game.
+  - 88 MB unused but kept on purpose: the "keep anyway" list, R3, and
+    22 pack files that kept files use. Those are two rock materials in
+    the ProBuilder palette, plus the Dumpster, `_Pack` and blood files
+    that R3 prefabs use.
+- **The gate held:** unresolved GUIDs went from 63 to 31, with none
+  new. Played in 2020.3 afterwards (hub, run start, one encounter), and
+  nothing went pink or missing.
 
 These numbers are for the working tree. The git history (2.93 GiB) keeps
 every old file unless Phase 6 starts a fresh repo (its option A). A fresh
